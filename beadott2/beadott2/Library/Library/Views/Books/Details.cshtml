@@ -1,0 +1,140 @@
+﻿@model Library.Models.Book
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+
+@{
+    ViewData["Title"] = "Details";
+    var isEmpty = true;
+}
+<div class="details">
+    <h2>Book details</h2>
+
+    <div>
+
+        <hr />
+        <table>
+            <tr>
+                <td colspan="2">
+                    @*<a asp-action="Edit" asp-route-id="@Model.ID">Edit</a>*@
+                    <a asp-action="Index">Back to List</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="@Url.Action("ImageForBook", new { bookISBN = Model.ISBN })" class="contentImage" height="300" />
+                </td>
+                <td>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Title)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Author)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Author)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ReleaseYear)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ReleaseYear)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ISBN)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ISBN)
+                        </dd>
+                        <dt>
+                            Volumes' IDs
+                        </dt>
+                        <dd>
+                            <ul>
+                                @{
+                                    foreach (var item in Model.Vols)
+                                    {
+                                        <li>
+                                            @item.ID
+
+                                            @if (ViewBag.CurrentGuestName != null)
+                                            {
+                                                <a asp-controller="Lendings" asp-action="Create" asp-route-lendVolParam="@JsonConvert.SerializeObject(new LendVolParam
+                                                                                                                    {
+                                                                                                                        UserName = ViewBag.CurrentGuestName,
+                                                                                                                        VolID = item.ID
+                                                                                                                    })">Lend this volume.</a>
+                                            }
+                                        </li>
+                                    };
+
+                                }
+                            </ul>
+                        </dd>
+                    </dl>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <hr />
+
+    <h4>Lendings</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <td>
+                    Volume ID
+                </td>
+                <td>
+                    Start day
+                </td>
+                <td>
+                    End day
+                </td>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @foreach (var item in Model.Vols)
+            {
+                @if (item.Lendings.Count() > 0)
+                {
+                    isEmpty = false;
+                }
+                @foreach (var lend in item.Lendings)
+                {
+                    <tr>
+                        <td>
+                            @lend.Vol.ID
+                        </td>
+                        <td>
+                            @lend.StartDay
+                        </td>
+                        <td>
+                            @lend.EndDay
+                        </td>
+
+                    </tr>
+                }
+
+            }
+            @if (isEmpty)
+            {
+                <tr>
+                    <td colspan="3">
+                        No lendings to display.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>

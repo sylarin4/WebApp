@@ -1,0 +1,33 @@
+﻿@model Library.Models.Lending
+
+@{
+    ViewData["Title"] = "Succesful lending";
+}
+
+<div class="details">
+    <h2>Successful lending</h2>
+
+    <div>
+        <h4>Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDay)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StartDay)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDay)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EndDay)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-controller="Books" asp-action="Index">Back to List</a>
+    </div>
+
+</div>
+

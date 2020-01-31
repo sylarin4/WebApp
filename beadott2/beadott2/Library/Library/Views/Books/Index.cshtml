@@ -1,0 +1,138 @@
+﻿@model Library.Models.BooksIndexModel
+@using Newtonsoft.Json
+@*@model IEnumerable<Library.Models.Book>*@
+
+@{
+    ViewData["Title"] = "Books";
+    GetPageParameters pageParam = new GetPageParameters
+    {
+        PageNumber = Model.PageNumber,
+        IsDefaultOrdered = Model.IsDefaultOrdered
+    };
+    
+}
+
+
+<div class="secondLeftColumn">
+    <h3>
+        Search
+    </h3>
+
+    <form asp-controller="Books" asp-action="SearchByAuthorAndTitle" >
+        <table>
+            <tr>
+                <td width="40" height="40">
+                    Title:
+                </td>
+                <td width="60">
+                    <input asp-for="BookSearchData.Title" size="15" />
+                </td>
+
+
+            </tr>
+            <tr>
+                <td width="40" height="40">
+                    Author:
+                </td>
+                <td width="60">
+                    <input asp-for="BookSearchData.Author" size="15" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2">
+                    <input type="submit" value="Search" class="button"  width="140"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+<div class="leftColumn">
+    <h3>Menu</h3>
+    <ul class="nav navbar-nav">
+        <li><a asp-area="" asp-controller="Books" asp-action="ListBooksByPopularity" asp-route-pageNumber="@Model.PageNumber">Order by popularity</a></li>
+        <li><a asp-area="" asp-controller="Books" asp-action="ListBooksByTitle" asp-route-pageNumber="@Model.PageNumber">Order by title</a></li>
+       
+    </ul>
+
+</div>
+
+
+<div class="middleColumn">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>
+                    Title
+                </td>
+                <td>
+                    Author
+                </td>
+                <td>
+                    Release Year
+                </td>
+                <td>
+                    ISBN
+                </td>
+                <td>
+                    Cover
+                </td>
+                <td>
+                </td>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @foreach (var item in Model.Books.Take(20))
+            {
+            
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem=> item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ISBN)
+                    </td>
+                    <td>
+                        <img src="@Url.Action("ImageForBook", new { bookISBN = item.ISBN })" class="contentImage" width="35" height="50" />
+                    </td>
+                    <td>
+                        <a asp-controller="Books" asp-action="ShowBookDetail" asp-route-bookID="@item.ID">Details</a>
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    @if (!Model.Books.Any())
+    {
+        <h3>There are no books to display.</h3>
+    }
+
+</div>
+
+<div class="search">
+    <table>
+        <tr>
+            <td width="330px">
+                <a asp-area="" asp-controller="Books" asp-action="GetPreviousPage" asp-route-parameter="@JsonConvert.SerializeObject(pageParam)"> ⌫ Previous page </a>
+            </td>
+            <td width="330px">
+                Current page: @Model.PageNumber
+            </td>
+            <td width="330px">
+                <a asp-controller="Books" asp-action="GetNextPage" asp-route-parameter="@JsonConvert.SerializeObject(pageParam)"> Next page ⌦ </a>
+            </td>
+        </tr>
+    </table>
+</div>

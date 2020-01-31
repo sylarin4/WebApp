@@ -1,0 +1,101 @@
+\chapter{Adatbázis táblák tervei} % User guide
+\label{ch:databases_plan}
+
+\section{Felhasználók autentikációja}
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Identity táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Password  & String  & Jelszó titkosított tárolása.  \\
+		\hline
+		UserName & String & user nevek tárolása azonosítás céljából\\
+		\hline
+	\end{tabular}
+	\caption[Rövid cím a táblázatjegyzékbe]{Vivamus ac arcu fringilla, fermentum neque sed, interdum erat. Mauris bibendum mauris vitae enim mollis, et eleifend turpis aliquet.}
+	\label{tab:example-2}
+\end{table}
+
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{User táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		UserName  & String  & bejelentkezéshez, egyedi  \\
+		\hline
+		NickName & String & játékon belól használt név, egyedi\\
+		\hline
+		Messages & <(String, Date)> & játékon belüli értesítések\\
+		\hline
+		FriendList & <User> & barát lista\\
+		\hline
+		FriendRequstSent & <User> & elküldött barát meghívók\\
+		\hline
+		FriendRequestGet & <User> & kapott barát meghívások \\
+		\hline
+	\end{tabular}
+	\caption[Rövid cím a táblázatjegyzékbe]{Vivamus ac arcu fringilla, fermentum neque sed, interdum erat. Mauris bibendum mauris vitae enim mollis, et eleifend turpis aliquet.}
+	\label{tab:example-2}
+\end{table}
+
+\section{Kalandjáték}
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Game táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Map  & <Field>  & a játékhoz tartozó térkép  \\
+		\hline
+		TargetField & Field & célmező, ahova a játékosnak el kell jutnia a nyeréshez\\
+		\hline
+		PlayCounter & Int & hányszor játszottak vele\\
+		\hline
+		Visibility & Visibility & kik láthatják \newline (csak én/barátok/bejelentkezettek/midnenki)\\
+		\hline
+	\end{tabular}
+	\caption[Rövid cím a táblázatjegyzékbe]{Vivamus ac arcu fringilla, fermentum neque sed, interdum erat. Mauris bibendum mauris vitae enim mollis, et eleifend turpis aliquet.}
+	\label{tab:example-2}
+\end{table}
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Field táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Coordinate  & (Int, Int)  & Hol helyezkedik el a térképen  \\
+		\hline
+		Text & String & A térképkockához tartozó történet.\\
+		\hline
+		MultipleChoice & MultipleChoice & térképkocka akciója\\
+		\hline
+		LuckTrial & LuckTrial & térképkocka akciója\\
+		\hline
+		Illustration & Picture& térképkockához tartozó illusztráció\\
+		\hline
+	\end{tabular}
+	\caption[Rövid cím a táblázatjegyzékbe]{Vivamus ac arcu fringilla, fermentum neque sed, interdum erat. Mauris bibendum mauris vitae enim mollis, et eleifend turpis aliquet.}
+	\label{tab:example-2}
+\end{table}
+
+Mező események
+\begin{itemize}
+	\item Feleletválasztás $\rightarrow$ semmi / vége a játéknak / teleportál
+	\item Szerencsepróba $\rightarrow$ semmi / vége a játéknak / teleportál
+	\item Teleportálás
+	\item Semmi
+\end{itemize}

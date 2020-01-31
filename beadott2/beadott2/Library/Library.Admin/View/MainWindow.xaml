@@ -1,0 +1,21 @@
+﻿<Window x:Class="Library.Admin.View.MainWindow"
+        x:Name="loginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library.Admin.View"
+        mc:Ignorable="d"
+        Title="Login" Height="300" Width="250">
+    <Grid>
+        <Label Content="User Name: " HorizontalAlignment="Center" Margin="25,23,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="LoginUserName" Text="{Binding LoginUserName}" HorizontalAlignment="Center" Height="23" Margin="25,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+        <Label Content="Password: " HorizontalAlignment="Center" Margin="25,90,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="LoginUserPassword" Text="{Binding LoginUserPassword}" HorizontalAlignment="Center" Height="23" Margin="25,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+        <Button Content="Login" HorizontalAlignment="Center" Margin="25, 165, 0, 0" VerticalAlignment="Top" Width="85"  Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=loginWindow}" ></Button>
+
+        <Label Name="ErrorTextMessage" HorizontalAlignment="Center" Content="{Binding LoginErrorMessage}"  Margin="36,195,21,0" VerticalAlignment="Top" Height="64" Width="185"/>
+    </Grid>
+</Window>

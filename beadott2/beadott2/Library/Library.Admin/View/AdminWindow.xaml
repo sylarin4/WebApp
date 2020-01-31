@@ -1,0 +1,79 @@
+﻿<Window x:Class="Library.Admin.View.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library.Admin.View"
+        mc:Ignorable="d"
+        Title="Library" Height="490.5" Width="1118.342">
+    <Grid Margin="0,0,2,0">
+        <Menu Grid.Row="0" Margin="0,0,0,171">
+            <MenuItem Header="Library">
+                <MenuItem Header="List books" Command="{Binding ListBooksCommand}" />
+                <Separator/>
+                <MenuItem Header="List lendings" Command="{Binding ListLendingsCommand}" />
+                <Separator/>
+                <MenuItem Header="Logout" Command="{Binding LogoutCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Books}" SelectedIndex="{Binding SelectedBookIndex}" CanUserSortColumns="False" Margin="470,34,0,171">
+            <!-- adatrács, amelynek megadjuk az oszlopait -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Author" Binding="{Binding Author}" />
+                <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}"  />
+                <DataGridTextColumn Header="Release Year" Binding="{Binding ReleaseYear}" />
+                <DataGridTextColumn Header="Vol IDs" Binding="{Binding VolIDsToString}"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Lendings}" SelectedIndex="{Binding SelectedLendingIndex}" CanUserSortColumns="False" Margin="0,34,643,171">
+            <!-- adatrács, amelynek megadjuk az oszlopait -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" />
+                <DataGridTextColumn Header="Volume ID" Binding="{Binding VolID}"  />
+                <DataGridTextColumn Header="Guest ID" Binding="{Binding GuestID}" />
+                <DataGridTextColumn Header="Start day" Binding="{Binding StartDay}" />
+                <DataGridTextColumn Header="End day" Binding="{Binding EndDay}"/>
+                <DataGridCheckBoxColumn Header="Active" Binding="{Binding IsActive}"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Margin="10,296,643,102">
+            <Button Content="Activate lending" Width="225" Command="{Binding ActivateLendingCommand}" />
+            <Button Content="Inactivate lending" Width="225" Command ="{Binding InactivateLendingCommand}"/>
+        </StackPanel>
+
+        <TextBlock Name="LendingErrorMessage" Margin="0,378,661,10" Text="{Binding LendingErrorMessage}"/>
+
+        <StackPanel Orientation="Horizontal" Margin="470,296,0,123">
+            <TextBlock Text="Title:" Margin="5" />
+            <TextBox Width="388" Text="{Binding SelectedBook.Title}" Margin="5" />
+            <TextBlock Text="Author:" Margin="5" Width="36" />
+            <TextBox Width="150" Text="{Binding SelectedBook.Author}" Margin="5"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="470,341,0,81">
+            <TextBlock Text="ISBN:" Margin="5" />
+            <TextBox Width="109" Text="{Binding SelectedBook.ISBN}" Margin="5"/>
+            <TextBlock Text="ID:" Margin="5" Width="21" />
+            <TextBox Width="75" Text="{Binding SelectedBook.ID}" Margin="5"/>
+            <TextBlock Text="Release year:" Margin="5" Width="72" />
+            <TextBox Width="93" Text="{Binding SelectedBook.ReleaseYear}" Margin="5"/>
+            <TextBlock Text="Volume ID:" Margin="5" Width="61" />
+            <ComboBox Width="92" ItemsSource="{Binding SelectedBook.VolIDs}" SelectedItem="{Binding CurrentVolID}" Margin="5"  />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="470,411,0,10">
+            <TextBlock Name="BookErrorMessage" Text="{Binding BookErrorMessage}"  Margin="5,0" Width="627" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="470,378,0,53">
+            <Button Content="Add new book" Width="212" Command="{Binding AddBookCommand}" />
+            <Button Content="Add new volume" Width="212" Command="{Binding AddVolCommand}"/>
+            <Button Content="Delete volume" Width="212" Command ="{Binding DeleteVolCommand}"/>
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>
