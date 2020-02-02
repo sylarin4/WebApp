@@ -35,11 +35,26 @@
 		\hline
 		Messages & <(String, Date)> & játékon belüli értesítések\\
 		\hline
-		FriendList & <User> & barát lista\\
+		FriendList & <Friend> & barát lista\\
 		\hline
-		FriendRequstSent & <User> & elküldött barát meghívók\\
+	\end{tabular}
+	\caption[Rövid cím a táblázatjegyzékbe]{Vivamus ac arcu fringilla, fermentum neque sed, interdum erat. Mauris bibendum mauris vitae enim mollis, et eleifend turpis aliquet.}
+	\label{tab:example-2}
+\end{table}
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
 		\hline
-		FriendRequestGet & <User> & kapott barát meghívások \\
+		\multicolumn{3}{|c|}{Friend táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		RequestFrom  & User  & Az a felhasználó aki a meghívást küldte.  \\
+		\hline
+		RequestTo & User & Az a felhasználó, aki kapta a barátmeghívást.\\
+		\hline
+		IsAccepted & Bool & Igaz ha a meghívott fél elfogadta a meghívást.\\
 		\hline
 	\end{tabular}
 	\caption[Rövid cím a táblázatjegyzékbe]{Vivamus ac arcu fringilla, fermentum neque sed, interdum erat. Mauris bibendum mauris vitae enim mollis, et eleifend turpis aliquet.}
