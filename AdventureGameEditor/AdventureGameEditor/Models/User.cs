@@ -10,7 +10,6 @@ namespace AdventureGameEditor.Models
     {
         public String Name { get; set; }
         public String NickName { get; set; }
-
         public virtual ICollection<Message> Messages { get; set; }
 
         //public virtual ICollection<User> FriendList { get; set; }
