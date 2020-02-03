@@ -6,16 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AdventureGameEditor.Data;
+using Microsoft.AspNetCore.Identity;
 
-namespace AdventureGameEditor.Models
+using AdventureGameEditor.Models;
+
+namespace AdventureGameEditor.Controllers
 {
     public class UsersController : Controller
     {
         private readonly AdventureGameEditorContext _context;
 
-        public UsersController(AdventureGameEditorContext context)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+
+        public UsersController(AdventureGameEditorContext context, UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: Users
@@ -53,15 +62,35 @@ namespace AdventureGameEditor.Models
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Name,NickName,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Register([Bind("Name, NickName, Email, ValidateEmail, Password, ValidatePassword")] RegisterViewModel registerData)
         {
-            if (ModelState.IsValid)
+            bool registerIsSucceeded = await DoRegister(registerData.Name, registerData.NickName, registerData.Email, registerData.Password);
+            if (registerIsSucceeded)
             {
-                _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(registerData);
+        }
+
+        private async Task<bool> DoRegister(String userName, String userNickName, String userEmailAddress, String userPassword)
+        {
+            //TODO: check repeats in database (nickname and name hace to be uniq)
+            if (!ModelState.IsValid)
+                return false;
+
+            User user = new User
+            {
+                Name = userName,
+                NickName = userNickName,
+                Email = userEmailAddress
+            };
+            var result = await _userManager.CreateAsync(user, userPassword);
+            if (!result.Succeeded)
+            {
+                return false;
+            }
+            return true;
         }
 
         // GET: Users/Edit/5
