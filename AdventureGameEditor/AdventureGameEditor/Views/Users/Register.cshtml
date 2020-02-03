@@ -1,0 +1,60 @@
+﻿@model AdventureGameEditor.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Regisztráció";
+}
+
+<body class="register">
+    <h2>Regisztráció</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NickName" class="control-label"></label>
+                    <input asp-for="NickName" class="form-control" />
+                    <span asp-validation-for="NickName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ValidateEmail" class="control-label"></label>
+                    <input asp-for="ValidateEmail" class="form-control" />
+                    <span asp-validation-for="ValidateEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ValidatePassword" class="control-label"></label>
+                    <input asp-for="ValidatePassword" class="form-control" />
+                    <span asp-validation-for="ValidatePassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Regisztráció" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="Home" asp-action="Index">Vissza a kezdőlapra</a>
+    </div>
+</body>
+
+
+@section Scripts
+    {
+    @await Html.PartialAsync("_ValidationScriptsPartial"); }
+}
