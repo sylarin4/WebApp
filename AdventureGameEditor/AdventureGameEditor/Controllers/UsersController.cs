@@ -67,7 +67,6 @@ namespace AdventureGameEditor.Controllers
             bool registerIsSucceeded = await DoRegister(registerData.Name, registerData.NickName, registerData.Email, registerData.Password);
             if (registerIsSucceeded)
             {
-                Console.WriteLine("\n\n here \n\n");
                 await _context.SaveChangesAsync();
                 return View("Home");
             }
@@ -79,12 +78,6 @@ namespace AdventureGameEditor.Controllers
             //TODO: check repeats in database (nickname and name hace to be uniq)
             if (!ModelState.IsValid)
                 return false;
-            Console.Write("\n\n\n");
-            Console.WriteLine(userName);
-            Console.WriteLine(userNickName);
-            Console.WriteLine(userEmailAddress);
-            Console.WriteLine(userPassword);
-            Console.Write("\n\n\n");
             User user = new User
             {
                 UserName = userName,
