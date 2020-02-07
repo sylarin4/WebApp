@@ -87,7 +87,6 @@ namespace AdventureGameEditor.Controllers
             Console.Write("\n\n\n");
             User user = new User
             {
-                Name = userName,
                 UserName = userName,
                 NickName = userNickName,
                 Email = userEmailAddress

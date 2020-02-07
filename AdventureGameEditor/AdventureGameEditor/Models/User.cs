@@ -8,7 +8,6 @@ namespace AdventureGameEditor.Models
 {
     public class User : IdentityUser<int>
     {
-        public String Name { get; set; }
         public String NickName { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
 
