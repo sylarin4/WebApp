@@ -57,7 +57,18 @@ namespace AdventureGameEditor
                 // Configuration for user management.
                 options.User.RequireUniqueEmail = true;
             });
+
+            // Use session.
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                // Session's max length is 15 minutes.
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                // Scripts from client aren't able to run.
+                options.Cookie.HttpOnly = true;
+            });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

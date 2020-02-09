@@ -12,13 +12,12 @@ using AdventureGameEditor.Models;
 
 namespace AdventureGameEditor.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly AdventureGameEditorContext _context;
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-
         public UsersController(AdventureGameEditorContext context, UserManager<User> userManager,
             SignInManager<User> signInManager)
         {
@@ -26,6 +25,8 @@ namespace AdventureGameEditor.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
+        #region Index
 
         // GET: Users
         public async Task<IActionResult> Index()
@@ -51,10 +52,48 @@ namespace AdventureGameEditor.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
+        #endregion
+
+
+        #region Login and logout
+        public IActionResult Login()
+        {
+            return View("Login");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("UserName, Password")] LoginViewModel loginData)
+        {
+            if (!ModelState.IsValid)
+                return View("Login", loginData);
+
+            // bejelentkeztetjük a felhasználót
+            var result = await _signInManager.PasswordSignInAsync(loginData.UserName, loginData.Password, false, false);
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Helytelen felhasználónév vagy jelszó.");
+                return View("Login", loginData);
+            }
+            //TODO: make other page to redirect to            
+            return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            //TODO: make other page to redirect to
+            return RedirectToAction(nameof(Index));
+        }
+
+        #endregion
+
+        #region Register
+
+        // GET: Users/Register
         public IActionResult Register()
         {
-            return View();
+            return View("Register");
         }
 
         // POST: Users/Create
@@ -62,13 +101,13 @@ namespace AdventureGameEditor.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Name, NickName, Email, ValidateEmail, Password, ValidatePassword")] RegisterViewModel registerData)
+        public async Task<IActionResult> Register([Bind("UserName, NickName, EmailAddress, ValidateEmailAddress, Password, ValidatePassword")] RegisterViewModel registerData)
         {
-            bool registerIsSucceeded = await DoRegister(registerData.Name, registerData.NickName, registerData.Email, registerData.Password);
+            bool registerIsSucceeded = await DoRegister(registerData.UserName, registerData.NickName, registerData.EmailAddress, registerData.Password);
             if (registerIsSucceeded)
             {
                 await _context.SaveChangesAsync();
-                return View("Home");
+                return View("Register");
             }
             return View("Register", registerData);
         }
@@ -91,9 +130,12 @@ namespace AdventureGameEditor.Controllers
                     ModelState.AddModelError("", error.Description);
                 return false;
             }
+            //TODO: ennél azért valami profibbat de kezdetben ez is ok lesz.
+            ModelState.AddModelError("", "A regsiztráció sikeres volt. :)");
             return true;
         }
 
+        #endregion
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

@@ -12,9 +12,9 @@
             <form asp-action="Register">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="NickName" class="control-label"></label>
@@ -22,14 +22,14 @@
                     <span asp-validation-for="NickName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <label asp-for="EmailAddress" class="control-label"></label>
+                    <input asp-for="EmailAddress" class="form-control" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ValidateEmail" class="control-label"></label>
-                    <input asp-for="ValidateEmail" class="form-control" />
-                    <span asp-validation-for="ValidateEmail" class="text-danger"></span>
+                    <label asp-for="ValidateEmailAddress" class="control-label"></label>
+                    <input asp-for="ValidateEmailAddress" class="form-control" />
+                    <span asp-validation-for="ValidateEmailAddress" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Password" class="control-label"></label>
@@ -55,6 +55,6 @@
 
 
 @section Scripts
-    {
-    @await Html.PartialAsync("_ValidationScriptsPartial"); }
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial"); 
 }
