@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 
 using AdventureGameEditor.Data;
@@ -67,6 +68,13 @@ namespace AdventureGameEditor
                 // Scripts from client aren't able to run.
                 options.Cookie.HttpOnly = true;
             });
+
+            // Dependency injection beállítása az alkalmazás állapotra
+            services.AddSingleton<ApplicationState>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.Configure<GoogleConfig>(Configuration.GetSection("Google"));
         }
 
 

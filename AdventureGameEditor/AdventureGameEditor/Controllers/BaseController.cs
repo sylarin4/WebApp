@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+
+using AdventureGameEditor.Models;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -16,7 +19,7 @@ namespace AdventureGameEditor.Controllers
 
             ViewBag.CurrentGuestName = String.IsNullOrEmpty(User.Identity.Name) ?
                 null : User.Identity.Name;
-            Trace.WriteLine("\n\n\n\n" + String.IsNullOrEmpty(User.Identity.Name) + "\n\n\n\n");
+            //Trace.WriteLine("\n\n\n\n" + String.IsNullOrEmpty(User.Identity.Name) + "\n\n\n\n");
         }
     }
 }

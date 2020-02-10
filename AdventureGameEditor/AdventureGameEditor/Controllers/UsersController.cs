@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AdventureGameEditor.Data;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 using AdventureGameEditor.Models;
 
@@ -75,6 +76,8 @@ namespace AdventureGameEditor.Controllers
                 ModelState.AddModelError("", "Helytelen felhasználónév vagy jelszó.");
                 return View("Login", loginData);
             }
+            Trace.WriteLine("\n\n\n" + String.IsNullOrEmpty(HttpContext.User.Identity.Name) + "\n\n\n");
+
             //TODO: make other page to redirect to            
             return View();
         }
