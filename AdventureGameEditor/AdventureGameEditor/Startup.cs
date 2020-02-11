@@ -57,6 +57,8 @@ namespace AdventureGameEditor
 
                 // Configuration for user management.
                 options.User.RequireUniqueEmail = true;
+
+                options.SignIn.RequireConfirmedEmail = false;
             });
 
             // Use session.
@@ -68,7 +70,6 @@ namespace AdventureGameEditor
                 // Scripts from client aren't able to run.
                 options.Cookie.HttpOnly = true;
             });
-
             // Dependency injection beállítása az alkalmazás állapotra
             services.AddSingleton<ApplicationState>();
 
@@ -94,7 +95,11 @@ namespace AdventureGameEditor
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

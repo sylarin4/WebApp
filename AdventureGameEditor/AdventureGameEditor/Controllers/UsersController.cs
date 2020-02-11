@@ -68,7 +68,6 @@ namespace AdventureGameEditor.Controllers
         {
             if (!ModelState.IsValid)
                 return View("Login", loginData);
-
             // bejelentkeztetjük a felhasználót
             var result = await _signInManager.PasswordSignInAsync(loginData.UserName, loginData.Password, false, false);
             if (!result.Succeeded)
@@ -76,10 +75,19 @@ namespace AdventureGameEditor.Controllers
                 ModelState.AddModelError("", "Helytelen felhasználónév vagy jelszó.");
                 return View("Login", loginData);
             }
-            Trace.WriteLine("\n\n\n" + String.IsNullOrEmpty(HttpContext.User.Identity.Name) + "\n\n\n");
+            var user = _context.User.FirstOrDefault(user => user.UserName == loginData.UserName);
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            
+            Trace.WriteLine("\n\n\n" + String.IsNullOrEmpty(User.Identity.Name) + "\n\n\n");
+            Trace.WriteLine(loginData.UserName + " " + loginData.Password + "\n\n\n");
+            Trace.WriteLine("User.Identity.Name " + User.Identity.Name);
+            Trace.WriteLine("User.Identity.IsAuthenticated " + User.Identity.IsAuthenticated);
+            Trace.WriteLine("User.Identity.AuthenticationType " + User.Identity.AuthenticationType);
+            Trace.WriteLine("User.Identity.ToString " + User.Identity.ToString());
+
 
             //TODO: make other page to redirect to            
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Logout()
@@ -109,7 +117,6 @@ namespace AdventureGameEditor.Controllers
             bool registerIsSucceeded = await DoRegister(registerData.UserName, registerData.NickName, registerData.EmailAddress, registerData.Password);
             if (registerIsSucceeded)
             {
-                await _context.SaveChangesAsync();
                 return View("Register");
             }
             return View("Register", registerData);
@@ -133,6 +140,8 @@ namespace AdventureGameEditor.Controllers
                     ModelState.AddModelError("", error.Description);
                 return false;
             }
+            await _context.SaveChangesAsync();
+            await _signInManager.SignInAsync(user, isPersistent: false);
             //TODO: ennél azért valami profibbat de kezdetben ez is ok lesz.
             ModelState.AddModelError("", "A regsiztráció sikeres volt. :)");
             return true;

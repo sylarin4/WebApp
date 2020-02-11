@@ -16,6 +16,12 @@ namespace AdventureGameEditor.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<User>().ToTable("User");
+        }
+
         public DbSet<AdventureGameEditor.Models.User> User { get; set; }
     }
 }
