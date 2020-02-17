@@ -8,11 +8,17 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 
 using AdventureGameEditor.Models;
+using AdventureGameEditor.Data;
 
 namespace AdventureGameEditor.Controllers
 {
     public class BaseController : Controller
     {
+        protected readonly AdventureGameEditorContext _context;
+        public BaseController(AdventureGameEditorContext context)
+        {
+            _context = context;
+        }
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             base.OnActionExecuted(context);
@@ -21,5 +27,7 @@ namespace AdventureGameEditor.Controllers
                 null : User.Identity.Name;
             //Trace.WriteLine("\n\n\n\n" + String.IsNullOrEmpty(User.Identity.Name) + "\n\n\n\n");
         }
+
+        
     }
 }

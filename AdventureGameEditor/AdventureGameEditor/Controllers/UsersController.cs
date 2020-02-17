@@ -15,14 +15,12 @@ namespace AdventureGameEditor.Controllers
 {
     public class UsersController : BaseController
     {
-        private readonly AdventureGameEditorContext _context;
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         public UsersController(AdventureGameEditorContext context, UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager):base(context)
         {
-            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -30,9 +28,9 @@ namespace AdventureGameEditor.Controllers
         #region Index
 
         // GET: Users
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.User.ToListAsync());
+        public IActionResult Index()
+        { 
+            return View();
         }
 
         // GET: Users/Details/5
@@ -77,24 +75,13 @@ namespace AdventureGameEditor.Controllers
             }
             var user = _context.User.FirstOrDefault(user => user.UserName == loginData.UserName);
             await _signInManager.SignInAsync(user, isPersistent: false);
-            
-            Trace.WriteLine("\n\n\n" + String.IsNullOrEmpty(User.Identity.Name) + "\n\n\n");
-            Trace.WriteLine(loginData.UserName + " " + loginData.Password + "\n\n\n");
-            Trace.WriteLine("User.Identity.Name " + User.Identity.Name);
-            Trace.WriteLine("User.Identity.IsAuthenticated " + User.Identity.IsAuthenticated);
-            Trace.WriteLine("User.Identity.AuthenticationType " + User.Identity.AuthenticationType);
-            Trace.WriteLine("User.Identity.ToString " + User.Identity.ToString());
-
-
-            //TODO: make other page to redirect to            
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            //TODO: make other page to redirect to
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion
@@ -115,11 +102,11 @@ namespace AdventureGameEditor.Controllers
         public async Task<IActionResult> Register([Bind("UserName, NickName, EmailAddress, ValidateEmailAddress, Password, ValidatePassword")] RegisterViewModel registerData)
         {
             bool registerIsSucceeded = await DoRegister(registerData.UserName, registerData.NickName, registerData.EmailAddress, registerData.Password);
-            if (registerIsSucceeded)
+            if (!registerIsSucceeded)
             {
                 return View("Register");
             }
-            return View("Register", registerData);
+            return RedirectToAction("Index", "Home");
         }
 
         private async Task<bool> DoRegister(String userName, String userNickName, String userEmailAddress, String userPassword)
@@ -143,11 +130,12 @@ namespace AdventureGameEditor.Controllers
             await _context.SaveChangesAsync();
             await _signInManager.SignInAsync(user, isPersistent: false);
             //TODO: ennél azért valami profibbat de kezdetben ez is ok lesz.
-            ModelState.AddModelError("", "A regsiztráció sikeres volt. :)");
             return true;
         }
 
         #endregion
+
+        #region Edit
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -199,6 +187,10 @@ namespace AdventureGameEditor.Controllers
             return View(user);
         }
 
+        #endregion
+
+        #region Delte
+
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -228,9 +220,15 @@ namespace AdventureGameEditor.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        #endregion
+
+        #region Private helper functions
+
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
         }
+
+        #endregion
     }
 }

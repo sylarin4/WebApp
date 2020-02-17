@@ -5,7 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
+
 using AdventureGameEditor.Models;
+using AdventureGameEditor.Data;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -13,13 +16,22 @@ namespace AdventureGameEditor.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AdventureGameEditorContext context):base(context)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        /*public IActionResult Index()
         {
+            return View("Index", 
+                new FeedbackViewModel
+                {
+                    Feedback = ""
+                });
+        }*/
+
+        public IActionResult Index()
+        {            
             return View();
         }
 
