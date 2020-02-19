@@ -24,6 +24,8 @@ namespace AdventureGameEditor.Data
 
         public DbSet<AdventureGameEditor.Models.User> User { get; set; }
 
+        public DbSet<AdventureGameEditor.Models.Game> Game { get; set; }
+
         //public DbSet<AdventureGameEditor.Models.Feedback> Feedback { get; set; }
     }
 }

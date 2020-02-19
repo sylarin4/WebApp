@@ -77,6 +77,8 @@ Ebben a fejezetben szerepelnek egy kalandjáték adatainak letárolásához szü
 		\hline
 		TargetField & Field & célmező, ahova a játékosnak el kell jutnia a nyeréshez\\
 		\hline
+		StartField & Field & kezdőmező\\
+		\hline
 		PlayCounter & Int & hányszor játszottak vele\\
 		\hline
 		Visibility & Visibility & kik láthatják \newline (csak én/barátok/bejelentkezettek/midnenki)\\
@@ -109,11 +111,11 @@ Visibility felsorolási típus
 		\hline
 		Text & String & A térképkockához tartozó történet.\\
 		\hline
-		FieldEvent & FieldEvent & térképkocka akciója\\
+		TrialID & Int? & Ha van próbatétel, annak ID-ja, ha nincs null.\\
 		\hline
 		Illustration & Picture & térképkockához tartozó illusztráció hivatkozása\\
 		\hline
-		MapPieceType & MapPieceType & Milyen irányokba lehet továbbhaladni a mezőről.\\
+		ExitRoads & ExitRoads & Milyen irányokba lehet továbbhaladni a mezőről.\\
 		\hline
 	\end{tabular}
 	\caption[Field adatbázistábla]{A Field c. adatbázistábla felépítése.}
@@ -124,7 +126,7 @@ Visibility felsorolási típus
 	\centering
 	\begin{tabular}{ |c|c|c| }
 		\hline
-		\multicolumn{3}{|c|}{A MapPieceType típus}\\
+		\multicolumn{3}{|c|}{A ExitRoads típus}\\
 		\hline
 		Név & Típus & Cél \\
 		\hline
@@ -168,6 +170,7 @@ Visibility felsorolási típus
 
 \subsection{Mezőesemények}
 
+(Ez idő közben ki lett szedve, de még nem törlöm, hátha kell majd még.)
 \begin{table}[H]
 	\centering
 	\begin{tabular}{ |c|c|c| }
@@ -205,10 +208,10 @@ Visibility felsorolási típus
 	\label{tab:trial}
 \end{table}
 
-A \textbf{TryalType felsorolási típus}
+A \textbf{TrialType felsorolási típus}
 \begin{compactitem}
 	\item LuckTrial, MultipleChoice
-	\item Megjegyzés: gyakorlatilag azt adja meg, hogy mi alapján választunk a bekövetkezhető alterntívák közül. Szerencsepróba esetén minden alternatíva azonos eséllyel következhet be, ezt kisorsoljuk. A választás esetén a játékos választhatja ki egy listából az opciók szövege alapján, hogy mi történjen (persze ekkor még nem tudja annak következményét).
+	\item Megjegyzés: gyakorlatilag azt adja meg, hogy mi alapján választunk a bekövetkezhető alternatívák közül. Szerencsepróba esetén minden alternatíva azonos eséllyel következhet be, ezt kisorsoljuk. A választás esetén a játékos választhatja ki egy listából az opciók szövege alapján, hogy mi történjen (persze ekkor még nem tudja annak következményét).
 \end{compactitem}
 
 
@@ -239,9 +242,9 @@ Megjegyzés: későbbiekben esetleg út lezárása, de ez esetben biztosítani k
 		\hline
 		Név & Típus & Cél \\
 		\hline
-		IsTeleport  & Boolean  & Ha igaz, tepeortálunk, ha nem, nincs semmi.  \\
+		ResultType  & ResultType  & Követkemény lehet teleportálás, játék vége vagy semmi. \\
 		\hline
-		FieldCoordinate & FieldCoordinate & Ha teleportálunk, akkor hová.\\
+		TeleportTarget & FieldCoordinate & Ha teleportálunk, akkor hová.\\
 		\hline
 		Text & String & A történés leírása. \\
 		\hline
@@ -249,4 +252,11 @@ Megjegyzés: későbbiekben esetleg út lezárása, de ez esetben biztosítani k
 	\caption[Alternative típus]{Az Alternative típus felépítése.}
 	\label{tab:alternative}
 \end{table}
+
+ResultType
+\begin{compactitem}
+	\item GameOver
+	\item Nothing
+	\item Teleport
+\end{compactitem}
 

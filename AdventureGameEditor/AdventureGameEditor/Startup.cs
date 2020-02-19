@@ -76,6 +76,9 @@ namespace AdventureGameEditor
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.Configure<GoogleConfig>(Configuration.GetSection("Google"));
+
+            // Set dependency injections for GameEditorService service.
+            services.AddTransient<IGameEditorService, GameEditorService>();
         }
 
 
