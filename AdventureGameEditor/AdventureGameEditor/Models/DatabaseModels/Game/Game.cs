@@ -9,6 +9,9 @@ namespace AdventureGameEditor.Models
     public class Game
     {
         public int ID { get; set; }
+
+        // The game's creator.
+        public User Owner { get; set; }
         public String Title { get; set; }
 
         // Stores who can see and play this game.

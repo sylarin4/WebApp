@@ -7,6 +7,6 @@ namespace AdventureGameEditor.Models
 {
     public interface IGameEditorService
     {
-        public Boolean InicializeGame(String title, int mapSize, Visibility visibility);
+        public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner);
     }
 }

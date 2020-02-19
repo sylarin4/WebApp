@@ -15,9 +15,24 @@ namespace AdventureGameEditor.Models
         {
             _context = context;
         }
-        public Boolean InicializeGame(String title, int mapSize, Visibility visibility)
+        public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner)
         {
-            _context.Game.Any(game => game.Title == title);
+            if (_context.Game.Any(game => game.Title == title && game.Owner == owner)) return false;
+            Trace.WriteLine(title);
+            Trace.WriteLine(mapSize);
+            Trace.WriteLine(visibility);
+            Trace.WriteLine(owner.UserName);
+            _context.Game.Add(
+                new Game
+                {
+                    Title = title,
+                    Visibility = visibility,
+                    TableSize = mapSize,
+                    PlayCounter = 0,
+                    Owner = owner
+                }
+                );
+            _context.SaveChanges();
             return true;
         }
     }

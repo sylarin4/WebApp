@@ -12,14 +12,13 @@ using AdventureGameEditor.Models;
 
 namespace AdventureGameEditor.Controllers
 {
-    public class GameEditorController : Controller
+    public class GameEditorController : BaseController
     {
-        private readonly AdventureGameEditorContext _context;
         protected readonly IGameEditorService _gameEditorService;
 
         public GameEditorController(AdventureGameEditorContext context, IGameEditorService gameEditorService)
+            :base(context)
         {
-            _context = context;
             _gameEditorService = gameEditorService;
         }
 
@@ -33,12 +32,33 @@ namespace AdventureGameEditor.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateGame([Bind("Title, Visibility, TableSize")] BasicGameDataViewModel gameData)
         {
-            Boolean initialGameSucceeded = _gameEditorService.InicializeGame(gameData.Title, gameData.TableSize, gameData.Visibility);
+            User owner = await _context.User.FirstOrDefaultAsync(user => user.UserName == User.Identity.Name);
+            Boolean initialGameSucceeded = _gameEditorService.InicializeGame(gameData.Title, gameData.TableSize, gameData.Visibility, owner);
             if (!initialGameSucceeded)
             {
+                ModelState.AddModelError("","Már van egy ilyen nevű kalandjátékod.");
                 return View("CreateGame");
             }
-            return View("CreateGame");
+            return View("CreateMap");
+        }
+
+        #endregion
+
+        #region CreateMap
+
+        public IActionResult CreateMap()
+        {
+            return View("CreateMap");
+        }
+
+        public PartialViewResult GetMap()
+        {
+            return PartialView("Map");
+        }
+        public IActionResult Test(int testNumber)
+        {
+            Trace.WriteLine(testNumber);
+            return View("CreateMap");
         }
 
         #endregion
