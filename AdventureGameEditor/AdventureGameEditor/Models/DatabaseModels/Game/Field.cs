@@ -9,7 +9,9 @@ namespace AdventureGameEditor.Models
     public class Field
     {
         public int ID { get; set; }
-        public FieldCoordinate FieldCoordinate { get; set; }
+        //public FieldCoordinate FieldCoordinate { get; set; }
+        public int HorizontalCord { get; set; }
+        public int VerticalCord { get; set; }
 
         //Describes what happens on this field in the game.
         public String Text { get; set; }

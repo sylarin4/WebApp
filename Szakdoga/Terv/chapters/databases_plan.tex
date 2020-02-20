@@ -73,7 +73,7 @@ Ebben a fejezetben szerepelnek egy kalandjáték adatainak letárolásához szü
 		\hline
 		Név & Típus & Cél \\
 		\hline
-		Map  & <Field>  & a játékhoz tartozó térkép  \\
+		Map  & <MapRows>  & a játékhoz tartozó térkép sorai  \\
 		\hline
 		TargetField & Field & célmező, ahova a játékosnak el kell jutnia a nyeréshez\\
 		\hline
@@ -99,6 +99,26 @@ Visibility felsorolási típus
 	\item Owner, Friends, LoggedIn, Everyone
 \end{compactitem}
 
+\subsection{Egy térkép sorainak letárolása}
+
+Erre azért van szükség, mivel egy mátrix túl bonyolult adatfelépítés ahhoz, hogy egy táblázatban tárolhassuk mindet, így ahelyett, hogy mátrixokat tárolnánk egy táblázatban, az össze mátrix sorait tároljuk le egy táblázatban és ID-val hivatkozunk rá, hogy melyik mátrixhoz (térképhez) tartozik.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{A MapRows típus}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Row  & <Field>  & A sorban lévő mezők.  \\
+		\hline
+		ID & Int & A sor azonosítója.\\
+		\hline
+	\end{tabular}
+	\caption[MapRows táblázat]{A MapRows c. adatbázistábla felépítése.}
+	\label{tab:row}
+\end{table}
+
 \subsection{Egy mező adatainak letárolása}
 
 \begin{table}[H]
@@ -109,7 +129,9 @@ Visibility felsorolási típus
 		\hline
 		Név & Típus & Cél \\
 		\hline
-		Coordinate  & FieldCoordinate  & Hol helyezkedik el a térképen  \\
+		VerticalCord  & Int & Hol helyezkedik el a térképen függőlegesen.  \\
+		\hline
+		HorizontalCord & Int & Hol helyezkedik el a térképen vízszintesen.\\
 		\hline
 		Text & String & A térképkockához tartozó történet.\\
 		\hline
@@ -145,6 +167,7 @@ Visibility felsorolási típus
 	\label{tab:field}
 \end{table}
 
+Ez itt felesleges:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{ |c|c|c| }
@@ -246,7 +269,7 @@ Megjegyzés: későbbiekben esetleg út lezárása, de ez esetben biztosítani k
 		\hline
 		ResultType  & ResultType  & Követkemény lehet teleportálás, játék vége vagy semmi. \\
 		\hline
-		TeleportTarget & FieldCoordinate & Ha teleportálunk, akkor hová.\\
+		TeleportTarget & Field & Ha teleportálunk, akkor hová.\\
 		\hline
 		Text & String & A történés leírása. \\
 		\hline

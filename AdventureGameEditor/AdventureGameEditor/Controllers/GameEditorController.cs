@@ -20,6 +20,7 @@ namespace AdventureGameEditor.Controllers
             :base(context)
         {
             _gameEditorService = gameEditorService;
+
         }
 
         #region CreateGame
@@ -39,6 +40,7 @@ namespace AdventureGameEditor.Controllers
                 ModelState.AddModelError("","Már van egy ilyen nevű kalandjátékod.");
                 return View("CreateGame");
             }
+            CreateMap(gameData.Title);
             return View("CreateMap");
         }
 
@@ -46,19 +48,30 @@ namespace AdventureGameEditor.Controllers
 
         #region CreateMap
 
-        public IActionResult CreateMap()
+        public IActionResult CreateMap(String title)
         {
-            return View("CreateMap");
+            // Creating an example map and add it to the view as model.
+            return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, title));
         }
 
         public PartialViewResult GetMap()
         {
             return PartialView("Map");
         }
-        public IActionResult Test(int testNumber)
+        public IActionResult Test(string gameTitle, int rowNumber, int colNumber, int targetPicID)
         {
-            Trace.WriteLine(testNumber);
-            return View("CreateMap");
+            if(targetPicID != 0)
+            {
+                _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, "valami");
+            }
+            return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
+        }
+
+        public IActionResult SetRoadID(int newID, String gameTitle)
+        {
+            MapViewModel model = _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle);
+            model.TargetPicID = newID;
+            return View("CreateMap", model);
         }
 
         #endregion

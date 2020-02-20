@@ -11,7 +11,7 @@ namespace AdventureGameEditor.Models
         public ResultType ResultType { get; set; }
 
         // If the result is teleporttation, stores the coordinates of the field where to teleport.
-        public FieldCoordinate TeleportTarget { get; set; } 
+        public Field TeleportTarget { get; set; } 
 
         //Story of the result. (Describes what happens in the game when this result happens.
         public String Text { get; set; }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 using AdventureGameEditor.Data;
 
@@ -29,11 +31,60 @@ namespace AdventureGameEditor.Models
                     Visibility = visibility,
                     TableSize = mapSize,
                     PlayCounter = 0,
-                    Owner = owner
+                    Owner = owner,
+                    Map = new List<Field>()
                 }
                 );
             _context.SaveChanges();
             return true;
         }
+
+        public MapViewModel GetMapViewModel(String userName, String gameTitle)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            return new MapViewModel
+            {
+                MapSize = game.TableSize,
+                Map = game.Map.ToList(),
+                GameTitle = game.Title
+            };
+        }
+
+        public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            Boolean fieldIsAlreadyExists = false;
+            foreach(Field field in game.Map)
+            {
+                if(field.HorizontalCord == rowNumber && field.VerticalCord == colNumber)
+                {
+                    field.Text = text;
+                    fieldIsAlreadyExists = true;
+                }
+            }
+            if (!fieldIsAlreadyExists)
+            {
+                game.Map.Add(
+                    new Field
+                    {
+                        HorizontalCord = rowNumber,
+                        VerticalCord = colNumber,
+                        Text = text
+                    });
+            }
+            _context.SaveChanges();
+        }
+
+
+        #region Helper functions
+
+        private Game GetGameAtTitle(String userName, String gameTitle)
+        {
+            return _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
+                .Include(g => g.Map)
+                .FirstOrDefault();
+        }
+
+        #endregion
     }
 }

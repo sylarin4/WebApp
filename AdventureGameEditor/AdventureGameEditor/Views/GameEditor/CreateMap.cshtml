@@ -1,27 +1,20 @@
-﻿
+﻿@model AdventureGameEditor.Models.MapViewModel
 @{
     ViewData["Title"] = "CreateMap";
 }
 
-<h1>Játék térképének létrehozása</h1>
+<h1> @Model.GameTitle c. játék térképének létrehozása</h1>
+
+<h2>@Model.TargetPicID</h2>
 
 <table style="width:100%">
     <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Age</th>
-    </tr>
-    <tr>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="Test" asp-route-testNumber=1>Order by popularity</a> </td>
-        <td>Smith</td>
-        <td>50</td>
-    </tr>
-    <tr>
-        <td>Eve</td>
-        <td>Jackson</td>
-        <td>94</td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1 asp-route-gameTitle=@Model.GameTitle>Right</a> </td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=2 asp-route-gameTitle=@Model.GameTitle>Left</a> </td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=3 asp-route-gameTitle=@Model.GameTitle>Up</a> </td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=4 asp-route-gameTitle=@Model.GameTitle>Down</a> </td>
     </tr>
 </table>
 <div>
-    @{await Html.RenderPartialAsync("Map");}
+    @{await Html.RenderPartialAsync("Map", Model);}
 </div>
