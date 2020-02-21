@@ -4,14 +4,16 @@ using AdventureGameEditor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdventureGameEditor.Migrations
 {
     [DbContext(typeof(AdventureGameEditorContext))]
-    partial class AdventureGameEditorContextModelSnapshot : ModelSnapshot
+    [Migration("20200221115910_MapRowsAddedToDatabaseToStoreEasyerMaps")]
+    partial class MapRowsAddedToDatabaseToStoreEasyerMaps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace AdventureGameEditor.Migrations
                     b.Property<int>("HorizontalCord")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MapRowID")
+                    b.Property<int?>("MapRowsID")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -72,7 +74,7 @@ namespace AdventureGameEditor.Migrations
 
                     b.HasIndex("ExitRoadsID");
 
-                    b.HasIndex("MapRowID");
+                    b.HasIndex("MapRowsID");
 
                     b.ToTable("Field");
                 });
@@ -116,7 +118,7 @@ namespace AdventureGameEditor.Migrations
                     b.ToTable("Game");
                 });
 
-            modelBuilder.Entity("AdventureGameEditor.Models.MapRow", b =>
+            modelBuilder.Entity("AdventureGameEditor.Models.MapRows", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -130,7 +132,7 @@ namespace AdventureGameEditor.Migrations
 
                     b.HasIndex("GameID");
 
-                    b.ToTable("MapRow");
+                    b.ToTable("MapRows");
                 });
 
             modelBuilder.Entity("AdventureGameEditor.Models.Message", b =>
@@ -362,9 +364,9 @@ namespace AdventureGameEditor.Migrations
                         .WithMany()
                         .HasForeignKey("ExitRoadsID");
 
-                    b.HasOne("AdventureGameEditor.Models.MapRow", null)
+                    b.HasOne("AdventureGameEditor.Models.MapRows", null)
                         .WithMany("Row")
-                        .HasForeignKey("MapRowID");
+                        .HasForeignKey("MapRowsID");
                 });
 
             modelBuilder.Entity("AdventureGameEditor.Models.Game", b =>
@@ -382,7 +384,7 @@ namespace AdventureGameEditor.Migrations
                         .HasForeignKey("TargetFieldID");
                 });
 
-            modelBuilder.Entity("AdventureGameEditor.Models.MapRow", b =>
+            modelBuilder.Entity("AdventureGameEditor.Models.MapRows", b =>
                 {
                     b.HasOne("AdventureGameEditor.Models.Game", null)
                         .WithMany("Map")

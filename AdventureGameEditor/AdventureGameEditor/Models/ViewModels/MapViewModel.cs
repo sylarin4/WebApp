@@ -13,7 +13,7 @@ namespace AdventureGameEditor.Models
         public int TargetRowID { get; set; }
         public int MapSize { get; set; }
         public String GameTitle { get; set; }
-        public List<Field> Map { get; set; }       
+        public List<MapRow> Map { get; set; }       
             
     }
 }

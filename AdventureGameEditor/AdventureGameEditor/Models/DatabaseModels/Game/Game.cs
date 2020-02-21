@@ -24,7 +24,7 @@ namespace AdventureGameEditor.Models
         public int TableSize { get; set; }
 
         // Stores the map of the game.
-        public virtual ICollection<Field> Map { get; set; }
+        public virtual ICollection<MapRow> Map { get; set; }
 
         // Stores on which field the game starts.
         public Field StartField { get; set; }

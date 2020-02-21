@@ -20,10 +20,53 @@ namespace AdventureGameEditor.Models
         public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner)
         {
             if (_context.Game.Any(game => game.Title == title && game.Owner == owner)) return false;
+            
+            // Test writing on console.
             Trace.WriteLine(title);
             Trace.WriteLine(mapSize);
             Trace.WriteLine(visibility);
             Trace.WriteLine(owner.UserName);
+
+            // Initialize a map.            
+            List <MapRow> map = new List<MapRow>();
+            for(int i = 0; i < mapSize; ++i)
+            {
+                MapRow row = new MapRow
+                {
+                    Row = new List<Field>()
+                };
+                for (int j = 0; j < mapSize; ++j)
+                {
+                    
+                    row.Row.Add(
+                        new Field
+                        {
+                            HorizontalCord = i,
+                            VerticalCord = j,
+                            Text = "Semmi.",
+                            ExitRoads = new ExitRoads
+                            {
+                                IsRightWay = false,
+                                IsLeftWay = false,
+                                IsUpWay = false,
+                                IsDownWay = false
+                            }
+                        });                    
+                }
+                map.Add(row);
+            }
+
+            // Test writeing on console.
+            foreach(MapRow item in map)
+            {
+                foreach(Field field in item.Row)
+                {
+                    Trace.Write(field.Text + " ");
+                }
+                Trace.Write("\n");
+            }
+
+            // Save the initialized game to the database.
             _context.Game.Add(
                 new Game
                 {
@@ -32,7 +75,7 @@ namespace AdventureGameEditor.Models
                     TableSize = mapSize,
                     PlayCounter = 0,
                     Owner = owner,
-                    Map = new List<Field>()
+                    Map = map
                 }
                 );
             _context.SaveChanges();
@@ -42,18 +85,19 @@ namespace AdventureGameEditor.Models
         public MapViewModel GetMapViewModel(String userName, String gameTitle)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
+
             return new MapViewModel
             {
                 MapSize = game.TableSize,
-                Map = game.Map.ToList(),
-                GameTitle = game.Title
+                GameTitle = game.Title,
+                Map = game.Map.ToList()
             };
         }
 
         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
-            Boolean fieldIsAlreadyExists = false;
+            /*Boolean fieldIsAlreadyExists = false;
             foreach(Field field in game.Map)
             {
                 if(field.HorizontalCord == rowNumber && field.VerticalCord == colNumber)
@@ -72,7 +116,7 @@ namespace AdventureGameEditor.Models
                         Text = text
                     });
             }
-            _context.SaveChanges();
+            _context.SaveChanges();*/
         }
 
 

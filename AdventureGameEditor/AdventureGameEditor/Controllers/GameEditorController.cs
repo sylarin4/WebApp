@@ -62,7 +62,7 @@ namespace AdventureGameEditor.Controllers
         {
             if(targetPicID != 0)
             {
-                _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, "valami");
+                //_gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, "valami");
             }
             return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
         }
