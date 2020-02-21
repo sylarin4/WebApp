@@ -40,19 +40,13 @@ namespace AdventureGameEditor.Controllers
                 ModelState.AddModelError("","Már van egy ilyen nevű kalandjátékod.");
                 return View("CreateGame");
             }
-            CreateMap(gameData.Title);
-            return View("CreateMap");
+            return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameData.Title));
         }
 
         #endregion
 
         #region CreateMap
 
-        public IActionResult CreateMap(String title)
-        {
-            // Creating an example map and add it to the view as model.
-            return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, title));
-        }
 
         public PartialViewResult GetMap()
         {
@@ -62,7 +56,7 @@ namespace AdventureGameEditor.Controllers
         {
             if(targetPicID != 0)
             {
-                //_gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, "valami");
+                _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, "valami");
             }
             return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
         }

@@ -85,7 +85,6 @@ namespace AdventureGameEditor.Models
         public MapViewModel GetMapViewModel(String userName, String gameTitle)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
-
             return new MapViewModel
             {
                 MapSize = game.TableSize,
@@ -97,26 +96,18 @@ namespace AdventureGameEditor.Models
         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
-            /*Boolean fieldIsAlreadyExists = false;
-            foreach(Field field in game.Map)
+            // TODO: make it more effective.
+            foreach(MapRow row in game.Map)
             {
-                if(field.HorizontalCord == rowNumber && field.VerticalCord == colNumber)
+                foreach(Field field in row.Row)
                 {
-                    field.Text = text;
-                    fieldIsAlreadyExists = true;
+                    if(field.HorizontalCord == rowNumber && field.VerticalCord == colNumber)
+                    {
+                        field.Text = text;
+                    }
                 }
             }
-            if (!fieldIsAlreadyExists)
-            {
-                game.Map.Add(
-                    new Field
-                    {
-                        HorizontalCord = rowNumber,
-                        VerticalCord = colNumber,
-                        Text = text
-                    });
-            }
-            _context.SaveChanges();*/
+            _context.SaveChanges();
         }
 
 
@@ -126,6 +117,7 @@ namespace AdventureGameEditor.Models
         {
             return _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
                 .Include(g => g.Map)
+                .ThenInclude(map => map.Row)
                 .FirstOrDefault();
         }
 
