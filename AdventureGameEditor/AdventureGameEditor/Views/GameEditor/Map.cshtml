@@ -13,7 +13,25 @@
                 <a asp-area="" asp-controller="GameEditor" asp-action="Test"
                    asp-route-gameTitle=@Model.GameTitle asp-route-rowNumber=@field.HorizontalCord
                    asp-route-colNumber=@field.VerticalCord asp-route-targetPicID=@Model.TargetPicID>
-                    @field.Text
+                    @{ String way = "";
+                        if (field.ExitRoads.IsLeftWay)
+                            way += "1";
+                        else
+                            way += "0";
+                        if (field.ExitRoads.IsDownWay)
+                            way += "1";
+                        else
+                            way += "0";
+                        if (field.ExitRoads.IsRightWay)
+                            way += "1";
+                        else
+                            way += "0";
+                        if (field.ExitRoads.IsUpWay)
+                            way += "1";
+                        else
+                            way += "0";
+                    }
+                    @way
                 </a>
             </td>
             }

@@ -110,6 +110,39 @@ namespace AdventureGameEditor.Models
             _context.SaveChanges();
         }
 
+        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber, int exitRoadsCode)
+        {
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            if(field != null)
+            {
+                // Set direction "up".
+                if(exitRoadsCode % 10 == 0)
+                    field.ExitRoads.IsUpWay = false;
+                else
+                    field.ExitRoads.IsUpWay = true;
+
+                // Set direction "right".
+                if((exitRoadsCode/ 10)%10 == 0)
+                    field.ExitRoads.IsRightWay = false;
+                else
+                    field.ExitRoads.IsRightWay = true;
+
+                // Set direction "down".
+                if((exitRoadsCode/100)%10 == 0)
+                    field.ExitRoads.IsDownWay = false;
+                else
+                    field.ExitRoads.IsDownWay = true;
+
+                // Set direction "left".
+                if((exitRoadsCode/1000)%10 == 0)
+                    field.ExitRoads.IsLeftWay = false;
+                else
+                    field.ExitRoads.IsLeftWay = true;
+
+                _context.SaveChanges();
+            }
+        }
+
 
         #region Helper functions
 
@@ -119,6 +152,22 @@ namespace AdventureGameEditor.Models
                 .Include(g => g.Map)
                 .ThenInclude(map => map.Row)
                 .FirstOrDefault();
+        }
+
+        private Field GetFieldAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            foreach (MapRow row in game.Map)
+            {
+                foreach (Field field in row.Row)
+                {
+                    if (field.HorizontalCord == rowNumber && field.VerticalCord == colNumber)
+                    {
+                        return field;
+                    }
+                }
+            }
+            return null;
         }
 
         #endregion

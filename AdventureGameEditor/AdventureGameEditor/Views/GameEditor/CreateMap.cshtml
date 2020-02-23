@@ -7,12 +7,26 @@
 
 <h2>@Model.TargetPicID</h2>
 
-<table style="width:100%">
+<table border="1" frame="box" rules="all" style="width:100%">
     <tr>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1 asp-route-gameTitle=@Model.GameTitle>Right</a> </td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=2 asp-route-gameTitle=@Model.GameTitle>Left</a> </td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=3 asp-route-gameTitle=@Model.GameTitle>Up</a> </td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=4 asp-route-gameTitle=@Model.GameTitle>Down</a> </td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0000 asp-route-gameTitle=@Model.GameTitle>Empty</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1000 asp-route-gameTitle=@Model.GameTitle>Up</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0100 asp-route-gameTitle=@Model.GameTitle>Righ</a>t</td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0010 asp-route-gameTitle=@Model.GameTitle>Down</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0001 asp-route-gameTitle=@Model.GameTitle>Left</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1100 asp-route-gameTitle=@Model.GameTitle>UpRight</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1010 asp-route-gameTitle=@Model.GameTitle>UpDown</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1001 asp-route-gameTitle=@Model.GameTitle>UpLeft</a></td>
+    </tr>
+    <tr>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0110 asp-route-gameTitle=@Model.GameTitle>RightDown</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0101 asp-route-gameTitle=@Model.GameTitle>RightLeft</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0011 asp-route-gameTitle=@Model.GameTitle>DownLeft</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1101 asp-route-gameTitle=@Model.GameTitle>UpRightLeft</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1011 asp-route-gameTitle=@Model.GameTitle>UpDownLeft</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1110 asp-route-gameTitle=@Model.GameTitle>UpRightDown</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0111 asp-route-gameTitle=@Model.GameTitle>RightDownLeft</a></td>
+        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1111 asp-route-gameTitle=@Model.GameTitle>UpRightDownLeft</a></td>
     </tr>
 </table>
 <div>
