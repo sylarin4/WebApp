@@ -5,28 +5,92 @@
 
 <h1> @Model.GameTitle c. játék térképének létrehozása</h1>
 
-<h2>@Model.TargetPicID</h2>
+<h2>@Model.WayDirectionsCode</h2>
 
 <table border="1" frame="box" rules="all" style="width:100%">
     <tr>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0000 asp-route-gameTitle=@Model.GameTitle>Empty</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1000 asp-route-gameTitle=@Model.GameTitle>Up</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0100 asp-route-gameTitle=@Model.GameTitle>Righ</a>t</td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0010 asp-route-gameTitle=@Model.GameTitle>Down</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0001 asp-route-gameTitle=@Model.GameTitle>Left</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1100 asp-route-gameTitle=@Model.GameTitle>UpRight</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1010 asp-route-gameTitle=@Model.GameTitle>UpDown</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1001 asp-route-gameTitle=@Model.GameTitle>UpLeft</a></td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0000 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0000 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1000 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1000 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0100 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0100 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0010 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0010 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0001 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0001 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1100 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1100 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1010 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1010 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1001 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1001 })" class="contentImage" height="100" />
+            </a>
+        </td>
     </tr>
     <tr>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0110 asp-route-gameTitle=@Model.GameTitle>RightDown</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0101 asp-route-gameTitle=@Model.GameTitle>RightLeft</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0011 asp-route-gameTitle=@Model.GameTitle>DownLeft</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1101 asp-route-gameTitle=@Model.GameTitle>UpRightLeft</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1011 asp-route-gameTitle=@Model.GameTitle>UpDownLeft</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1110 asp-route-gameTitle=@Model.GameTitle>UpRightDown</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0111 asp-route-gameTitle=@Model.GameTitle>RightDownLeft</a></td>
-        <td><a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1111 asp-route-gameTitle=@Model.GameTitle>UpRightDownLeft</a></td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0110 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0110 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0101 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0101 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0011 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0011 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1101 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1101 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1011 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1011 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1110 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1110 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0111 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0111 })" class="contentImage" height="100" />
+            </a>
+        </td>
+        <td>
+            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1111 asp-route-gameTitle=@Model.GameTitle>
+                <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1111 })" class="contentImage" height="100" />
+            </a>
+        </td>
     </tr>
 </table>
 <div>

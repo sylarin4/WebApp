@@ -8,7 +8,7 @@ namespace AdventureGameEditor.Models
     public class MapViewModel
     {
 
-        public int TargetPicID { get; set; }
+        public int WayDirectionsCode { get; set; }
         public int TargetCellID { get; set; }
         public int TargetRowID { get; set; }
         public int MapSize { get; set; }

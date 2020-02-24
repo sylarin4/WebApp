@@ -52,20 +52,22 @@ namespace AdventureGameEditor.Controllers
         {
             return PartialView("Map");
         }
-        public IActionResult Test(string gameTitle, int rowNumber, int colNumber, int targetPicID)
+        public IActionResult Test(string gameTitle, int rowNumber, int colNumber, int wayDirectionsCode)
         {
-            if(targetPicID != 0)
-            {
-                _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, "valami");
-            }
+            _gameEditorService.SetExitRoads(User.Identity.Name, gameTitle, rowNumber, colNumber, wayDirectionsCode);
             return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
         }
 
         public IActionResult SetRoadID(int newID, String gameTitle)
         {
             MapViewModel model = _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle);
-            model.TargetPicID = newID;
+            model.WayDirectionsCode = newID;
             return View("CreateMap", model);
+        }
+
+        public FileResult GetMapImage(int? wayDirectionsCode)
+        {
+            return _gameEditorService.ImageForMap(wayDirectionsCode);
         }
 
         #endregion

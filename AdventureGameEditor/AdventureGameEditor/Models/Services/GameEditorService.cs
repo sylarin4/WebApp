@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 using AdventureGameEditor.Data;
 
@@ -44,13 +45,10 @@ namespace AdventureGameEditor.Models
                             HorizontalCord = i,
                             VerticalCord = j,
                             Text = "Semmi.",
-                            ExitRoads = new ExitRoads
-                            {
-                                IsRightWay = false,
-                                IsLeftWay = false,
-                                IsUpWay = false,
-                                IsDownWay = false
-                            }
+                            IsRightWay = false,
+                            IsLeftWay = false,
+                            IsUpWay = false,
+                            IsDownWay = false
                         });                    
                 }
                 map.Add(row);
@@ -110,39 +108,47 @@ namespace AdventureGameEditor.Models
             _context.SaveChanges();
         }
 
-        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber, int exitRoadsCode)
+        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber, int wayDirectionsCode)
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            Trace.WriteLine("Is field null?: " + field == null);
             if(field != null)
             {
                 // Set direction "up".
-                if(exitRoadsCode % 10 == 0)
-                    field.ExitRoads.IsUpWay = false;
+                if(wayDirectionsCode % 10 == 0)
+                    field.IsUpWay = false;
                 else
-                    field.ExitRoads.IsUpWay = true;
+                    field.IsUpWay = true;
 
                 // Set direction "right".
-                if((exitRoadsCode/ 10)%10 == 0)
-                    field.ExitRoads.IsRightWay = false;
+                if((wayDirectionsCode/ 10)%10 == 0)
+                    field.IsRightWay = false;
                 else
-                    field.ExitRoads.IsRightWay = true;
+                    field.IsRightWay = true;
 
                 // Set direction "down".
-                if((exitRoadsCode/100)%10 == 0)
-                    field.ExitRoads.IsDownWay = false;
+                if((wayDirectionsCode/100)%10 == 0)
+                    field.IsDownWay = false;
                 else
-                    field.ExitRoads.IsDownWay = true;
+                    field.IsDownWay = true;
 
                 // Set direction "left".
-                if((exitRoadsCode/1000)%10 == 0)
-                    field.ExitRoads.IsLeftWay = false;
+                if((wayDirectionsCode/1000)%10 == 0)
+                    field.IsLeftWay = false;
                 else
-                    field.ExitRoads.IsLeftWay = true;
+                    field.IsLeftWay = true;
 
                 _context.SaveChanges();
             }
         }
 
+        public FileResult ImageForMap(int? wayDirectionsCode)
+        {
+            // TODO: do it for not only the test theme
+            if (wayDirectionsCode == null) wayDirectionsCode = 0;
+            Byte[] imageContent = GetImage((int)wayDirectionsCode, MapTheme.Test);
+            return new FileContentResult(imageContent, "image/png");
+        }
 
         #region Helper functions
 
@@ -168,6 +174,14 @@ namespace AdventureGameEditor.Models
                 }
             }
             return null;
+        }
+
+        private Byte[] GetImage(int wayDirections, MapTheme theme)
+        {
+            return _context.MapImage
+                    .Where(image => image.WayDirectionsCode == wayDirections && image.Theme == theme)
+                    .Select(image => image.Image)
+                    .FirstOrDefault();
         }
 
         #endregion

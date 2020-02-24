@@ -21,7 +21,10 @@ namespace AdventureGameEditor.Models
         // if there's not, it's null.
         public int? TrialID { get; set; }
 
-        // Stores in which directions can we leave from this field.
-        public ExitRoads ExitRoads { get; set; }
+        // Stores in which directions we can leave from this field.
+        public Boolean IsRightWay { get; set; }
+        public Boolean IsLeftWay { get; set; }
+        public Boolean IsUpWay { get; set; }
+        public Boolean IsDownWay { get; set; }
     }
 }

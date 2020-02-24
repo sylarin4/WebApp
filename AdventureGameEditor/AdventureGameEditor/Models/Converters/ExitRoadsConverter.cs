@@ -7,7 +7,7 @@ namespace AdventureGameEditor.Models.Converters
 {
     public class ExitRoadsConverter
     {
-        public WayDirectionsViewModel ExitRoadsToWayDirectionsViewModel(ExitRoads exitRoads)
+        /*public WayDirectionsViewModel ExitRoadsToWayDirectionsViewModel(ExitRoads exitRoads)
         {
             if (exitRoads.IsUpWay && exitRoads.IsRightWay && exitRoads.IsDownWay && exitRoads.IsLeftWay)
             {
@@ -216,6 +216,6 @@ namespace AdventureGameEditor.Models.Converters
                         IsLeftWay = false
                     };
             }
-        }
+        }*/
     }
 }

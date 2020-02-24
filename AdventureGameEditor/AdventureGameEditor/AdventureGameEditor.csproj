@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200224160745_AddMapImageTable.cs" />
+    <Compile Remove="Migrations\20200224160745_AddMapImageTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Pictures\empty_pic.jpg" />
   </ItemGroup>
 

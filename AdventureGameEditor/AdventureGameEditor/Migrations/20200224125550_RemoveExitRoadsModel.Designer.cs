@@ -4,14 +4,16 @@ using AdventureGameEditor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdventureGameEditor.Migrations
 {
     [DbContext(typeof(AdventureGameEditorContext))]
-    partial class AdventureGameEditorContextModelSnapshot : ModelSnapshot
+    [Migration("20200224125550_RemoveExitRoadsModel")]
+    partial class RemoveExitRoadsModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,27 +99,6 @@ namespace AdventureGameEditor.Migrations
                     b.HasIndex("TargetFieldID");
 
                     b.ToTable("Game");
-                });
-
-            modelBuilder.Entity("AdventureGameEditor.Models.MapImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<int>("Theme")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WayDirectionsCode")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MapImage");
                 });
 
             modelBuilder.Entity("AdventureGameEditor.Models.MapRow", b =>
