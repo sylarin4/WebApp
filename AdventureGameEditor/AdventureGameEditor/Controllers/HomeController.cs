@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 
 using AdventureGameEditor.Models;
@@ -29,6 +30,24 @@ namespace AdventureGameEditor.Controllers
                     Feedback = ""
                 });
         }*/
+
+        #region Just for testing.
+
+        public ActionResult TestAction()
+        {            
+            return PartialView("Index");
+        }
+        public ActionResult GetMapImage()
+        {
+            int wayDirectionsCode = 0101;
+            var image = _context.MapImage
+                    .Where(image => image.WayDirectionsCode == wayDirectionsCode && image.Theme == MapTheme.Test)
+                    .Select(image => image.Image)
+                    .FirstOrDefault();
+            return File(image, "image/png");
+        }
+
+        #endregion
 
         public IActionResult Index()
         {            

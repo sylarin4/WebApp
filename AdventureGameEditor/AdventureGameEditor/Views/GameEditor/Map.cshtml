@@ -3,32 +3,33 @@
     ViewData["Title"] = "Map";
 }
 
-<table border="1" frame="box" rules="all" >
-    @foreach(MapRow row in Model.Map)
+
+<table border="1" frame="box" rules="all">
+    @foreach (MapRow row in Model.Map)
     {
-    <tr>
-        @foreach (Field field in row.Row)
-        {
-            <td style="height:100px;width:100px">
-                <a asp-area="" asp-controller="GameEditor" asp-action="Test"
-                   asp-route-gameTitle=@Model.GameTitle asp-route-rowNumber=@field.HorizontalCord
-                   asp-route-colNumber=@field.VerticalCord asp-route-wayDirectionsCode=@Model.WayDirectionsCode>
-                    @{ int way = 0;
-                        if (field.IsLeftWay)
-                            way += 1000;
-                        if (field.IsDownWay)
-                            way += 100;
-                        if (field.IsRightWay)
-                            way += 10;
-                        if (field.IsUpWay)
-                            way += 1;
-                    }
-                    <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = way })" class="contentImage" height="100" />
-                </a>
-            </td>
+        <tr>
+            @foreach (Field field in row.Row)
+            {
+                <td style="height:100px;width:100px" id="@field.VerticalCord@field.HorizontalCord">
+                    <button id="@field.VerticalCord@field.HorizontalCord">
+                        @{
+                            await Html.RenderPartialAsync("MapPiecePartialView",
+                            new MapPieceViewModel
+                            {
+                                GameTitle = Model.GameTitle,
+                                Field = field
+                            });
+                        }
+                    </button>
+                </td>
             }
         </tr>
     }
-    <tr>
-    </tr>
 </table>
+
+<script type="text/javascript" src="CDN or local jquery file"></script>
+
+
+
+
+

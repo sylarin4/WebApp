@@ -20,7 +20,6 @@ namespace AdventureGameEditor.Controllers
             :base(context)
         {
             _gameEditorService = gameEditorService;
-
         }
 
         #region CreateGame
@@ -54,7 +53,7 @@ namespace AdventureGameEditor.Controllers
         }
         public IActionResult Test(string gameTitle, int rowNumber, int colNumber, int wayDirectionsCode)
         {
-            _gameEditorService.SetExitRoads(User.Identity.Name, gameTitle, rowNumber, colNumber, wayDirectionsCode);
+            _gameEditorService.SetExitRoads(User.Identity.Name, gameTitle, rowNumber, colNumber, Globals.wayDirectionsCode);
             return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
         }
 
@@ -62,9 +61,15 @@ namespace AdventureGameEditor.Controllers
         {
             MapViewModel model = _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle);
             model.WayDirectionsCode = newID;
+            Globals.wayDirectionsCode = newID;
             return View("CreateMap", model);
         }
 
+        [HttpGet]
+        public ActionResult GetMapPiece(String gameTitle, int rowNumber, int colNumber)
+        {           
+            return PartialView("MapPiecePartialView", _gameEditorService.GetMapPieceViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
+        }
         public FileResult GetMapImage(int? wayDirectionsCode)
         {
             return _gameEditorService.ImageForMap(wayDirectionsCode);

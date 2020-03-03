@@ -23,10 +23,10 @@ namespace AdventureGameEditor.Models
             if (_context.Game.Any(game => game.Title == title && game.Owner == owner)) return false;
             
             // Test writing on console.
-            Trace.WriteLine(title);
-            Trace.WriteLine(mapSize);
-            Trace.WriteLine(visibility);
-            Trace.WriteLine(owner.UserName);
+            //Trace.WriteLine(title);
+            //Trace.WriteLine(mapSize);
+            //Trace.WriteLine(visibility);
+            //Trace.WriteLine(owner.UserName);
 
             // Initialize a map.            
             List <MapRow> map = new List<MapRow>();
@@ -91,6 +91,15 @@ namespace AdventureGameEditor.Models
             };
         }
 
+        public MapPieceViewModel GetMapPieceViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            return new MapPieceViewModel()
+            {
+                GameTitle = gameTitle,
+                Field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber)
+            };
+        }
+
         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
@@ -111,7 +120,7 @@ namespace AdventureGameEditor.Models
         public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber, int wayDirectionsCode)
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            Trace.WriteLine("Is field null?: " + field == null);
+            //Trace.WriteLine("Is field null?: " + field == null);
             if(field != null)
             {
                 // Set direction "up".
@@ -139,6 +148,7 @@ namespace AdventureGameEditor.Models
                     field.IsLeftWay = true;
 
                 _context.SaveChanges();
+                Globals.wayDirectionsCode = 0;
             }
         }
 
@@ -185,5 +195,11 @@ namespace AdventureGameEditor.Models
         }
 
         #endregion
+    }
+
+    // Helper static class for global variables.
+    public static class Globals
+    {
+        public static int wayDirectionsCode { get; set; }
     }
 }
