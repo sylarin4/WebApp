@@ -67,7 +67,8 @@ namespace AdventureGameEditor.Controllers
 
         [HttpGet]
         public ActionResult GetMapPiece(String gameTitle, int rowNumber, int colNumber)
-        {           
+        {
+            _gameEditorService.SetExitRoads(User.Identity.Name, gameTitle, rowNumber, colNumber, Globals.wayDirectionsCode);
             return PartialView("MapPiecePartialView", _gameEditorService.GetMapPieceViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
         }
         public FileResult GetMapImage(int? wayDirectionsCode)
@@ -76,6 +77,8 @@ namespace AdventureGameEditor.Controllers
         }
 
         #endregion
+
+
 
         #region Default functions
         // GET: GameEditor

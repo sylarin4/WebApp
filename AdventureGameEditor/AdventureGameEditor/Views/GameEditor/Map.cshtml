@@ -11,15 +11,17 @@
             @foreach (Field field in row.Row)
             {
                 <td style="height:100px;width:100px" id="@field.VerticalCord@field.HorizontalCord">
-                    <button id="@field.VerticalCord@field.HorizontalCord">
-                        @{
-                            await Html.RenderPartialAsync("MapPiecePartialView",
-                            new MapPieceViewModel
-                            {
-                                GameTitle = Model.GameTitle,
-                                Field = field
-                            });
-                        }
+                    <button type="button"  onclick="Test('@Model.GameTitle', '@field.VerticalCord', '@field.HorizontalCord');">
+                        <div id="@field.VerticalCord@field.HorizontalCord">
+                            @{
+                                await Html.RenderPartialAsync("MapPiecePartialView",
+                                new MapPieceViewModel
+                                {
+                                    GameTitle = Model.GameTitle,
+                                    Field = field
+                                });
+                            }
+                         </div>
                     </button>
                 </td>
             }
