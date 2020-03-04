@@ -10,9 +10,9 @@
         <tr>
             @foreach (Field field in row.Row)
             {
-                <td style="height:100px;width:100px" id="@field.VerticalCord@field.HorizontalCord">
-                    <button type="button"  onclick="Test('@Model.GameTitle', '@field.VerticalCord', '@field.HorizontalCord');">
-                        <div id="@field.VerticalCord@field.HorizontalCord">
+                <td style="height:100px;width:100px" >
+                    <button type="button"  onclick="Test('@Model.GameTitle', '@field.HorizontalCord', '@field.VerticalCord');">
+                        <div id="@field.HorizontalCord@field.VerticalCord">
                             @{
                                 await Html.RenderPartialAsync("MapPiecePartialView",
                                 new MapPieceViewModel
