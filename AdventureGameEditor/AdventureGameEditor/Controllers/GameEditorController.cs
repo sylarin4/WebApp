@@ -46,6 +46,10 @@ namespace AdventureGameEditor.Controllers
 
         #region CreateMap
 
+        public IActionResult CreateMap(MapViewModel model)
+        {
+            return View("CreateMap", model);
+        }
 
         public PartialViewResult GetMap()
         {
@@ -57,12 +61,13 @@ namespace AdventureGameEditor.Controllers
             return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
         }
 
-        public IActionResult SetRoadID(int newID, String gameTitle)
+        // Maybe we should save which code belongs to which game.
+        public void SetRoadID(String gameTitle, int wayDirectionsID)
         {
-            MapViewModel model = _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle);
-            model.WayDirectionsCode = newID;
-            Globals.wayDirectionsCode = newID;
-            return View("CreateMap", model);
+            //MapViewModel model = _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle);
+            //model.WayDirectionsCode = newID;
+            Globals.wayDirectionsCode = wayDirectionsID;
+            //return View("CreateMap", model);
         }
 
         [HttpGet]

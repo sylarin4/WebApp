@@ -10,14 +10,14 @@
 <table border="1" frame="box" rules="all" style="width:100%">
     <tr>
         <td>
-            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0000 asp-route-gameTitle=@Model.GameTitle>
+            <button type="button" onclick="SetWayDirections(0000, '@Model.GameTitle')">
                 <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 0000 })" class="contentImage" height="100" />
-            </a>
+            </button>
         </td>
         <td>
-            <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=1000 asp-route-gameTitle=@Model.GameTitle>
+            <button type="button" onclick="SetWayDirections(1000, '@Model.GameTitle')">
                 <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = 1000 })" class="contentImage" height="100" />
-            </a>
+            </button>
         </td>
         <td>
             <a asp-area="" asp-controller="GameEditor" asp-action="SetRoadID" asp-route-newID=0100 asp-route-gameTitle=@Model.GameTitle>

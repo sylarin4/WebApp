@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 
-function LoadData(target, url, gameTitle, rowNumber, colNumber) {
+function LoadMapPieceData(target, url, gameTitle, rowNumber, colNumber) {
     $.ajax({
         url: url,
         data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
@@ -11,6 +11,7 @@ function LoadData(target, url, gameTitle, rowNumber, colNumber) {
     });
 }
 
+// This is not needed now. If stay useless, delete.
 $(document).ready(function () {
     $("button").click(function () {
         //console.log(this.id);
@@ -21,9 +22,22 @@ $(document).ready(function () {
     })
 })
 
-function Test(gameTitle, rowNumber, colNumber) {
-    console.log(gameTitle + rowNumber + colNumber);
+function RefreshMapPiece(gameTitle, rowNumber, colNumber) {
+    //console.log(gameTitle + rowNumber + colNumber);
     var target = '#' + rowNumber + colNumber
-    console.log("tareget in test:" + target);
-    LoadData(target, 'GetMapPiece', gameTitle, rowNumber, colNumber);
+    //console.log("tareget in test:" + target);
+    LoadMapPieceData(target, 'GetMapPiece', gameTitle, rowNumber, colNumber);
 }
+
+function SendWayDirectionsData(url, gameTitle, wayDirectionsID) {
+    $.ajax({
+        url: url,
+        data: { gameTitle: gameTitle, wayDirectionsID: wayDirectionsID }
+    });
+}
+
+function SetWayDirections(wayDirectionsID, gameTitle) {
+    SendWayDirectionsData('SetRoadID', gameTitle, wayDirectionsID);
+    console.log(gameTitle + " " + wayDirectionsID);
+}
+

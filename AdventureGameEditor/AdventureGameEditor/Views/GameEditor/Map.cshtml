@@ -11,7 +11,7 @@
             @foreach (Field field in row.Row)
             {
                 <td style="height:100px;width:100px" >
-                    <button type="button"  onclick="Test('@Model.GameTitle', '@field.HorizontalCord', '@field.VerticalCord');">
+                    <button type="button"  onclick="RefreshMapPiece('@Model.GameTitle', '@field.HorizontalCord', '@field.VerticalCord');">
                         <div id="@field.HorizontalCord@field.VerticalCord">
                             @{
                                 await Html.RenderPartialAsync("MapPiecePartialView",
