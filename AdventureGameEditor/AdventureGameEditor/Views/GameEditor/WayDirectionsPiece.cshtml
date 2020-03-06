@@ -1,0 +1,11 @@
+﻿@model AdventureGameEditor.Models.WayDirectionsPieceViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<td>
+    <button type="button" onclick="SetWayDirections('@Model.WayDirectionsCode', '@Model.GameTitle')">
+        <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = @Model.WayDirectionsCode })" class="contentImage" height="100" />
+    </button>
+</td>

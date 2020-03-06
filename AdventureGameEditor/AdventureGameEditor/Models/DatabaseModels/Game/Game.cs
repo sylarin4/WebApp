@@ -31,5 +31,8 @@ namespace AdventureGameEditor.Models
 
         // Stores the player should reach which field to win the game.
         public Field TargetField { get; set; }
+
+        // Stores that which type of map picece is being put on the map.
+        public int CurrentWayDirectionsCode { get; set; }
     }
 }

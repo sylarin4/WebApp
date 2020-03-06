@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace AdventureGameEditor.Models
 {
-    public class MapViewModel
+    public class WayDirectionsPieceViewModel
     {
-        public int MapSize { get; set; }
         public String GameTitle { get; set; }
-        public List<MapRow> Map { get; set; }       
-            
+        public int WayDirectionsCode {get;set;}
     }
 }

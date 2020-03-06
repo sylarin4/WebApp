@@ -55,25 +55,16 @@ namespace AdventureGameEditor.Controllers
         {
             return PartialView("Map");
         }
-        public IActionResult Test(string gameTitle, int rowNumber, int colNumber, int wayDirectionsCode)
-        {
-            _gameEditorService.SetExitRoads(User.Identity.Name, gameTitle, rowNumber, colNumber, Globals.wayDirectionsCode);
-            return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
-        }
 
-        // Maybe we should save which code belongs to which game.
         public void SetRoadID(String gameTitle, int wayDirectionsID)
         {
-            //MapViewModel model = _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle);
-            //model.WayDirectionsCode = newID;
-            Globals.wayDirectionsCode = wayDirectionsID;
-            //return View("CreateMap", model);
+            _gameEditorService.SetCurrentWayDirectionsCode(User.Identity.Name, gameTitle, wayDirectionsID);
         }
 
         [HttpGet]
         public ActionResult GetMapPiece(String gameTitle, int rowNumber, int colNumber)
         {
-            _gameEditorService.SetExitRoads(User.Identity.Name, gameTitle, rowNumber, colNumber, Globals.wayDirectionsCode);
+            _gameEditorService.SetExitRoads(User.Identity.Name, gameTitle, rowNumber, colNumber);
             return PartialView("MapPiecePartialView", _gameEditorService.GetMapPieceViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
         }
         public FileResult GetMapImage(int? wayDirectionsCode)

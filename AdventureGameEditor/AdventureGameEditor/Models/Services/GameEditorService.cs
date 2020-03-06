@@ -13,11 +13,21 @@ namespace AdventureGameEditor.Models
 {
     public class GameEditorService : IGameEditorService
     {
+        #region Attributes
+
         protected readonly AdventureGameEditorContext _context;
+
+        #endregion
+
+        #region Constructor
         public GameEditorService(AdventureGameEditorContext context)
         {
             _context = context;
         }
+
+        #endregion
+
+        #region Create game
         public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner)
         {
             if (_context.Game.Any(game => game.Title == title && game.Owner == owner)) return false;
@@ -73,12 +83,17 @@ namespace AdventureGameEditor.Models
                     TableSize = mapSize,
                     PlayCounter = 0,
                     Owner = owner,
-                    Map = map
+                    Map = map,
+                    CurrentWayDirectionsCode = 0
                 }
                 );
             _context.SaveChanges();
             return true;
         }
+
+        #endregion
+
+        #region Create map
 
         public MapViewModel GetMapViewModel(String userName, String gameTitle)
         {
@@ -117,8 +132,9 @@ namespace AdventureGameEditor.Models
             _context.SaveChanges();
         }
 
-        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber, int wayDirectionsCode)
+        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber)
         {
+            int wayDirectionsCode = GetCurrentWayDirectionsCode(userName, gameTitle);
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             //Trace.WriteLine("Is field null?: " + field == null);
             if(field != null)
@@ -148,10 +164,16 @@ namespace AdventureGameEditor.Models
                     field.IsLeftWay = true;
 
                 _context.SaveChanges();
-                Globals.wayDirectionsCode = 0;
             }
         }
 
+        public void SetCurrentWayDirectionsCode(String userName, String gameTitle, int newWayDirectionsCode)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            game.CurrentWayDirectionsCode = newWayDirectionsCode;
+            Trace.WriteLine("The new currentwayDirectionsCode: " + GetCurrentWayDirectionsCode(userName, gameTitle));
+            _context.SaveChanges();
+        }
         public FileResult ImageForMap(int? wayDirectionsCode)
         {
             // TODO: do it for not only the test theme
@@ -159,6 +181,8 @@ namespace AdventureGameEditor.Models
             Byte[] imageContent = GetImage((int)wayDirectionsCode, MapTheme.Test);
             return new FileContentResult(imageContent, "image/png");
         }
+
+        #endregion
 
         #region Helper functions
 
@@ -194,12 +218,15 @@ namespace AdventureGameEditor.Models
                     .FirstOrDefault();
         }
 
+        private int GetCurrentWayDirectionsCode(String userName, String gameTitle)
+        {
+            return _context.Game
+                .Where(game => game.Owner.UserName == userName & game.Title == gameTitle)
+                .Select(game => game.CurrentWayDirectionsCode)
+                .FirstOrDefault();
+        }
+
         #endregion
     }
 
-    // Helper static class for global variables.
-    public static class Globals
-    {
-        public static int wayDirectionsCode { get; set; }
-    }
 }

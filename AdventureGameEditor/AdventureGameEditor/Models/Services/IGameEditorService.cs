@@ -12,7 +12,8 @@ namespace AdventureGameEditor.Models
         public MapViewModel GetMapViewModel(String userName, String gameTitle);
         public MapPieceViewModel GetMapPieceViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String Text);
-        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber, int wayDirectionsCode);
+        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber);
         public FileResult ImageForMap(int? wayDirectionsCode);
+        public void SetCurrentWayDirectionsCode(String userName, String gameTitle, int newWayDirectionsCode);
     }
 }
