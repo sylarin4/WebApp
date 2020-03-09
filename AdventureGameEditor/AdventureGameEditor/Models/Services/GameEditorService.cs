@@ -95,6 +95,7 @@ namespace AdventureGameEditor.Models
 
         #region Create map
 
+        // ---------- Getters ---------- //
         public MapViewModel GetMapViewModel(String userName, String gameTitle)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
@@ -115,20 +116,25 @@ namespace AdventureGameEditor.Models
             };
         }
 
+        public FileResult ImageForMap(int? wayDirectionsCode)
+        {
+            // TODO: do it for not only the test theme
+            if (wayDirectionsCode == null) wayDirectionsCode = 0;
+            Byte[] imageContent = GetImage((int)wayDirectionsCode, MapTheme.Test);
+            return new FileContentResult(imageContent, "image/png");
+        }
+
+        public String GetTextAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            return field.Text;
+        }
+
+        // ---------- Setters --------- //
         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
-            // TODO: make it more effective.
-            foreach(MapRow row in game.Map)
-            {
-                foreach(Field field in row.Row)
-                {
-                    if(field.HorizontalCord == rowNumber && field.VerticalCord == colNumber)
-                    {
-                        field.Text = text;
-                    }
-                }
-            }
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            field.Text = text;
             _context.SaveChanges();
         }
 
@@ -174,12 +180,32 @@ namespace AdventureGameEditor.Models
             Trace.WriteLine("The new currentwayDirectionsCode: " + GetCurrentWayDirectionsCode(userName, gameTitle));
             _context.SaveChanges();
         }
-        public FileResult ImageForMap(int? wayDirectionsCode)
+        
+
+        #endregion
+
+        #region Other Getters
+
+        public List<MapRow> GetMap(String userName, String gameTitle)
         {
-            // TODO: do it for not only the test theme
-            if (wayDirectionsCode == null) wayDirectionsCode = 0;
-            Byte[] imageContent = GetImage((int)wayDirectionsCode, MapTheme.Test);
-            return new FileContentResult(imageContent, "image/png");
+            return _context.Game
+                .Where(game => game.Owner.UserName == userName & game.Title == gameTitle)
+                .Include(game => game.Map)
+                .ThenInclude(map => map.Row)
+                .Select(game => game.Map)
+                .FirstOrDefault()
+                .ToList();
+        }
+
+        public CreateMapContentViewModel GetMapContentViewModel(String userName, String gameTitle)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            return new CreateMapContentViewModel()
+            {
+                GameTitle = game.Title,
+                Map = game.Map.ToList(),
+                MapSize = game.TableSize
+            };
         }
 
         #endregion

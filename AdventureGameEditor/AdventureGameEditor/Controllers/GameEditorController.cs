@@ -74,7 +74,36 @@ namespace AdventureGameEditor.Controllers
 
         #endregion
 
+        #region Create map content
 
+        public IActionResult GetInputAreaForMapPiece(String gameTitle, int rowNumber, int colNumber)
+        {
+            return PartialView("TextBoxForMapContentPartialView", new FillTextContentViewModel()
+            {
+                GameTitle = gameTitle,
+                RowNumber = rowNumber,
+                ColNumber = colNumber,
+                TextContent = ""
+            });
+        }
+        public IActionResult CreateMapContent(String gameTitle)
+        {            
+            return View("CreateMapContent", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
+        }
+
+        public IActionResult SaveTextContent(String gameTitle, int colNumber, int rowNumber, String textContent)
+        {
+            _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, textContent);
+            return PartialView("TextBoxForMapContentPartialView", new FillTextContentViewModel()
+            {
+                GameTitle = gameTitle,
+                RowNumber = rowNumber,
+                ColNumber = colNumber,
+                TextContent = _gameEditorService.GetTextAtCoordinate(User.Identity.Name, gameTitle, rowNumber, colNumber)
+            });
+        }
+
+        #endregion
 
         #region Default functions
         // GET: GameEditor

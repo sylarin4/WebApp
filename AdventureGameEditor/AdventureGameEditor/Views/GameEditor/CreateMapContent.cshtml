@@ -1,15 +1,28 @@
-﻿
-@{
-    Layout = null;
+﻿@model AdventureGameEditor.Models.MapViewModel
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
     <meta name="viewport" content="width=device-width" />
     <title>CreateMapContent</title>
 </head>
 <body>
+    @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
+        {
+            MapSize = Model.MapSize,
+            GameTitle = Model.GameTitle,
+            Map = Model.Map,
+            FunctionName = "LoadTextInputFieldForMapPiece"
+        });}
+
+    <div class="row">
+        <div id="InputArea">
+            
+        </div>
+    </div>
 </body>
+
 </html>

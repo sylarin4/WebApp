@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 
-function LoadMapPieceData(target, url, gameTitle, rowNumber, colNumber) {
+function LoadData(target, url, gameTitle, rowNumber, colNumber) {
     $.ajax({
         url: url,
         data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
@@ -12,22 +12,42 @@ function LoadMapPieceData(target, url, gameTitle, rowNumber, colNumber) {
 }
 
 // This is not needed now. If stay useless, delete.
-$(document).ready(function () {
-    $("button").click(function () {
+//$(document).ready(function () {
+  //  $("button").click(function () {
         //console.log(this.id);
-        var target = '#' + this.id.toString()
+        // var target = '#' + this.id.toString()
         //console.log("target in function calling:" + target);
         //LoadData(target, 'GetMapImage');
         //console.log("here");
-    })
-})
+    //})
+//})
+
+function LoadMapPiexeText(target, url, gameTitle, rowNumber, colNumber, text) {
+    $.ajax({
+        url: url,
+        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, text: text },
+        success: function(result){ $(target).html(result);}
+    });
+};
+
+function SaveTextContent(gameTitle, rowNumber, colNumber, textContent) {
+    console.log(textContent);
+    LoadMapPiexeText('#InputArea', 'SaveTextContent', gameTitle, rowNumber, colNumber, textContent);
+}
+
+function LoadTextInputFieldForMapPiece(gameTitle, rowNumber, colNumber) {
+    var target = '#InputArea';
+    LoadData(target, 'GetInputAreaForMapPiece', gameTitle, rowNumber, colNumber);
+}
 
 function RefreshMapPiece(gameTitle, rowNumber, colNumber) {
     //console.log(gameTitle + rowNumber + colNumber);
     var target = '#' + rowNumber + colNumber
     //console.log("tareget in test:" + target);
-    LoadMapPieceData(target, 'GetMapPiece', gameTitle, rowNumber, colNumber);
+    LoadData(target, 'GetMapPiece', gameTitle, rowNumber, colNumber);
 }
+
+
 
 function SendWayDirectionsData(url, gameTitle, wayDirectionsID) {
     $.ajax({

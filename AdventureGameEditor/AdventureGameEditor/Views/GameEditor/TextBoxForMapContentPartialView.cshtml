@@ -1,0 +1,10 @@
+﻿@model AdventureGameEditor.Models.FillTextContentViewModel
+
+<p>Write the text of the field.</p>
+<p> Sor: @Model.RowNumber</p>
+<p> Oazlopt: @Model.ColNumber</p>
+
+
+<textarea asp-for="@Model.TextContent"></textarea>
+
+<button type="button" onclick=" SaveTextContent ( '@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', '@Model.TextContent' ) ">Mentés</button>

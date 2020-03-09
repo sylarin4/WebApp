@@ -1,4 +1,4 @@
-﻿@model AdventureGameEditor.Models.MapViewModel
+﻿@model AdventureGameEditor.Models.LoadMapViewModel
 @{
     ViewData["Title"] = "Map";
 }
@@ -11,7 +11,7 @@
             @foreach (Field field in row.Row)
             {
                 <td style="height:100px;width:100px" >
-                    <button type="button"  onclick="RefreshMapPiece('@Model.GameTitle', '@field.HorizontalCord', '@field.VerticalCord');">
+                    <button type="button"  onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.HorizontalCord', '@field.VerticalCord');">
                         <div id="@field.HorizontalCord@field.VerticalCord">
                             @{
                                 await Html.RenderPartialAsync("MapPiecePartialView",
@@ -29,7 +29,7 @@
     }
 </table>
 
-<script type="text/javascript" src="CDN or local jquery file"></script>
+<script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
 
 
 

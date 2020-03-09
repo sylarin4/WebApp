@@ -28,5 +28,14 @@
     </tr>
 </table>
 <div>
-    @{await Html.RenderPartialAsync("Map", Model);}
+    @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
+        {
+            MapSize = Model.MapSize,
+            GameTitle = Model.GameTitle,
+            Map = Model.Map,
+            FunctionName = "RefreshMapPiece"
+        });}
+</div>
+<div>
+    <a asp-controller="GameEditor" asp-action="CreateMapContent" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
 </div>

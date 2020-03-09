@@ -15,5 +15,7 @@ namespace AdventureGameEditor.Models
         public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber);
         public FileResult ImageForMap(int? wayDirectionsCode);
         public void SetCurrentWayDirectionsCode(String userName, String gameTitle, int newWayDirectionsCode);
+        public CreateMapContentViewModel GetMapContentViewModel(String userName, String gameTitle);
+        public String GetTextAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber);
     }
 }
