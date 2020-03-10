@@ -31,12 +31,6 @@ namespace AdventureGameEditor.Models
         public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner)
         {
             if (_context.Game.Any(game => game.Title == title && game.Owner == owner)) return false;
-            
-            // Test writing on console.
-            //Trace.WriteLine(title);
-            //Trace.WriteLine(mapSize);
-            //Trace.WriteLine(visibility);
-            //Trace.WriteLine(owner.UserName);
 
             // Initialize a map.            
             List <MapRow> map = new List<MapRow>();
@@ -54,7 +48,7 @@ namespace AdventureGameEditor.Models
                         {
                             HorizontalCord = i,
                             VerticalCord = j,
-                            Text = "Semmi.",
+                            Text = "",
                             IsRightWay = false,
                             IsLeftWay = false,
                             IsUpWay = false,

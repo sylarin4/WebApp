@@ -2,9 +2,22 @@
 
 <p>Write the text of the field.</p>
 <p> Sor: @Model.RowNumber</p>
-<p> Oazlopt: @Model.ColNumber</p>
+<p> Oszlop: @Model.ColNumber</p>
 
 
-<textarea asp-for="@Model.TextContent"></textarea>
+<form id="textContentForm" style="width:100%">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<button type="button" onclick=" SaveTextContent ( '@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', '@Model.TextContent' ) ">Mentés</button>
+    <div class="form-group">
+        <label asp-for="TextContent" class="control-label"></label>
+        <textarea asp-for="TextContent" class="form-control">@Model.TextContent</textarea>
+        <span asp-validation-for="TextContent" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="button" onclick=" SaveTextContent ( '@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber') " class="btn btn-default">Mentés</button>
+    </div>
+</form>
+
+<div id="result"></div>
+

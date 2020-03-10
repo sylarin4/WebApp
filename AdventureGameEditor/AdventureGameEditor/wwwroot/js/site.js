@@ -22,17 +22,14 @@ function LoadData(target, url, gameTitle, rowNumber, colNumber) {
     //})
 //})
 
-function LoadMapPiexeText(target, url, gameTitle, rowNumber, colNumber, text) {
-    $.ajax({
-        url: url,
-        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, text: text },
-        success: function(result){ $(target).html(result);}
-    });
-};
-
-function SaveTextContent(gameTitle, rowNumber, colNumber, textContent) {
+function SaveTextContent(gameTitle, rowNumber, colNumber) {
+    var textContent = $('#textContentForm').serialize().toString();
+    textContent = textContent.substring(12, textContent.lenght);
     console.log(textContent);
-    LoadMapPiexeText('#InputArea', 'SaveTextContent', gameTitle, rowNumber, colNumber, textContent);
+    $.ajax({
+        url: 'SaveTextContent',
+        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, textContent: textContent }
+    });
 }
 
 function LoadTextInputFieldForMapPiece(gameTitle, rowNumber, colNumber) {

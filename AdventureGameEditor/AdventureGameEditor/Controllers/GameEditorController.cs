@@ -76,6 +76,7 @@ namespace AdventureGameEditor.Controllers
 
         #region Create map content
 
+
         public IActionResult GetInputAreaForMapPiece(String gameTitle, int rowNumber, int colNumber)
         {
             return PartialView("TextBoxForMapContentPartialView", new FillTextContentViewModel()
@@ -83,7 +84,7 @@ namespace AdventureGameEditor.Controllers
                 GameTitle = gameTitle,
                 RowNumber = rowNumber,
                 ColNumber = colNumber,
-                TextContent = ""
+                TextContent = _gameEditorService.GetTextAtCoordinate(User.Identity.Name, gameTitle, rowNumber, colNumber)
             });
         }
         public IActionResult CreateMapContent(String gameTitle)
@@ -91,16 +92,11 @@ namespace AdventureGameEditor.Controllers
             return View("CreateMapContent", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
         }
 
-        public IActionResult SaveTextContent(String gameTitle, int colNumber, int rowNumber, String textContent)
+
+        public void SaveTextContent(String gameTitle, int rowNumber, int colNumber, String textContent)
         {
+            Trace.WriteLine(gameTitle + " " + colNumber + " " + rowNumber + " " + textContent);
             _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, textContent);
-            return PartialView("TextBoxForMapContentPartialView", new FillTextContentViewModel()
-            {
-                GameTitle = gameTitle,
-                RowNumber = rowNumber,
-                ColNumber = colNumber,
-                TextContent = _gameEditorService.GetTextAtCoordinate(User.Identity.Name, gameTitle, rowNumber, colNumber)
-            });
         }
 
         #endregion
