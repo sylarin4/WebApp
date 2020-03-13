@@ -1,8 +1,48 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
 
+// ---------- Functions for "CreateMapContent" view ---------- //
+
+
+// Used at: "CreateMapContent" view.
+// Load a form ("FormForAddFieldContent" partial view) to the "CreateMapContent" view after the user selected the field
+// he / she wants to add text or trial.
+function LoadFormForAddFieldContent(gameTitle, rowNumber, colNumber) {
+    var target = '#InputArea';
+    LoadData(target, 'GetFormForField', gameTitle, rowNumber, colNumber);
+}
+
+function AddNewAlternativeForForm(gameTitle, rowNumber, colNumber) {
+    var target = '#alternatives';
+}
+
+// ---------- Functions for "CreateMap" view ---------- //
+
+// Used at: "CreateMap" view.
+// Refreshes the field ("FieldPartialView" partial view) which is changed by the user.
+function RefreshField(gameTitle, rowNumber, colNumber) {
+    //console.log(gameTitle + rowNumber + colNumber);
+    var target = '#' + rowNumber + colNumber
+    //console.log("tareget in test:" + target);
+    LoadData(target, 'RefreshField', gameTitle, rowNumber, colNumber);
+}
+
+// Used at: "CreateMap" view.
+// Send the selected field's code tot the controller, so it will set which type of field the user will fill to the map.
+function SetWayDirections(wayDirectionsID, gameTitle) {
+    $.ajax({
+        url: 'SetRoadID',
+        data: { gameTitle: gameTitle, wayDirectionsID: wayDirectionsID }
+    });
+    //console.log(gameTitle + " " + wayDirectionsID);
+}
+
+
+// ---------- Helper functions ---------- //
+
+
+// A helper function for ajax sending. Used in several js functions.
 function LoadData(target, url, gameTitle, rowNumber, colNumber) {
     $.ajax({
         url: url,
@@ -10,6 +50,11 @@ function LoadData(target, url, gameTitle, rowNumber, colNumber) {
         success: function (result) { $(target).html(result); }
     });
 }
+
+
+// ---------- Currently not used functions ---------- //
+// (Maybe some of them will be needed or can be useful for something.)
+
 
 // This is not needed now. If stay useless, delete.
 //$(document).ready(function () {
@@ -22,6 +67,10 @@ function LoadData(target, url, gameTitle, rowNumber, colNumber) {
     //})
 //})
 
+
+// Now it's not used, because .serialize() method messes up special hungarien characters like "ő", so it doesn't work well now.
+// If possible, we should fix this problem and use this method for posting field content, so we don't have to reload 
+// the whole page for it.
 function SaveTextContent(gameTitle, rowNumber, colNumber) {
     var textContent = $('#textContentForm').serialize().toString();
     textContent = textContent.substring(12, textContent.lenght);
@@ -31,30 +80,3 @@ function SaveTextContent(gameTitle, rowNumber, colNumber) {
         data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, textContent: textContent }
     });
 }
-
-function LoadTextInputFieldForMapPiece(gameTitle, rowNumber, colNumber) {
-    var target = '#InputArea';
-    LoadData(target, 'GetInputAreaForMapPiece', gameTitle, rowNumber, colNumber);
-}
-
-function RefreshMapPiece(gameTitle, rowNumber, colNumber) {
-    //console.log(gameTitle + rowNumber + colNumber);
-    var target = '#' + rowNumber + colNumber
-    //console.log("tareget in test:" + target);
-    LoadData(target, 'GetMapPiece', gameTitle, rowNumber, colNumber);
-}
-
-
-
-function SendWayDirectionsData(url, gameTitle, wayDirectionsID) {
-    $.ajax({
-        url: url,
-        data: { gameTitle: gameTitle, wayDirectionsID: wayDirectionsID }
-    });
-}
-
-function SetWayDirections(wayDirectionsID, gameTitle) {
-    SendWayDirectionsData('SetRoadID', gameTitle, wayDirectionsID);
-    console.log(gameTitle + " " + wayDirectionsID);
-}
-

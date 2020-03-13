@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MySql.Data.EntityFrameworkCore.DataAnnotations;
 
 namespace AdventureGameEditor.Models
 {
@@ -14,12 +15,13 @@ namespace AdventureGameEditor.Models
         public int VerticalCord { get; set; }
 
         //Describes what happens on this field in the game.
+        [MySqlCharset("utf8")]
         public String Text { get; set; }
 
 
         // If there's trial on this field, stores the ID of it, 
         // if there's not, it's null.
-        public int? TrialID { get; set; }
+        public Trial? Trial { get; set; }
 
         // Stores in which directions we can leave from this field.
         public Boolean IsRightWay { get; set; }

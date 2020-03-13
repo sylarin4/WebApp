@@ -1,0 +1,58 @@
+﻿@model AdventureGameEditor.Models.FieldContentViewModel
+
+<p>Write the text of the field.</p>
+<p> Sor: @Model.RowNumber</p>
+<p> Oszlop: @Model.ColNumber</p>
+
+
+
+<form asp-action="SetTextForField">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <input type="hidden" asp-for="GameTitle" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" asp-for="RowNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" asp-for="ColNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TextContent" class="control-label"></label>
+        <textarea asp-for="TextContent" class="form-control">@Model.TextContent</textarea>
+        <span asp-validation-for="TextContent" class="text-danger"></span>
+    </div>
+
+    Próba hozzáadása (opcionális)
+
+    <div class="form-group">
+        <label asp-for="Trial.TrialType" class="control-label"></label>
+        <p>
+            <select asp-for="Trial.TrialType" asp-items="Html.GetEnumSelectList<TrialType>()"></select>
+        </p>
+        <span asp-validation-for="Trial.TrialType" class="text-danger"></span>
+    </div>
+
+    A próba kimenetelének alternatívái:
+
+    <div id="alternatives">
+        @await Html.PartialAsync("AlternativeForFormPartialView", Model);
+    </div>
+
+    <div id="allAlternativeButton">
+        <button id="addAlternative" onclick="AddNewAlternativeForForm ( '@Model.GameTitle' , '@Model.RowNumber', '@Model.ColNumber' )">Alternatíva hozzáadása</button>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        <input type="submit" value="Mentés" class="btn btn-default" />
+    </div>
+</form>
+

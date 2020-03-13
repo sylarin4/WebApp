@@ -28,6 +28,8 @@ namespace AdventureGameEditor.Data
 
         public DbSet<AdventureGameEditor.Models.MapImage> MapImage { get; set; }
 
+        public DbSet<AdventureGameEditor.Models.Field> Field { get; set; }
+
         //public DbSet<AdventureGameEditor.Models.Feedback> Feedback { get; set; }
     }
 }

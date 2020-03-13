@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdventureGameEditor.Models
 {
     // Stores the result of a trial. (Used in Alternative class.)
     public class TrialResult
     {
+        public int ID { get; set; }
+        [Display(Name = "Alternatíva eredményéne")]
         public ResultType ResultType { get; set; }
 
         // If the result is teleporttation, stores the coordinates of the field where to teleport.
-        public Field TeleportTarget { get; set; } 
+
+        [Display(Name = "Teleportáció célpontja")]
+        public Field TeleportTarget { get; set; }
 
         //Story of the result. (Describes what happens in the game when this result happens.
+        [Display(Name = "Alternatíva eredményének szövege")]
         public String Text { get; set; }
 
 

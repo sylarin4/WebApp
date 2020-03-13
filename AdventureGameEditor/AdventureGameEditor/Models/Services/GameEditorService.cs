@@ -97,11 +97,11 @@ namespace AdventureGameEditor.Models
             {
                 MapSize = game.TableSize,
                 GameTitle = game.Title,
-                Map = game.Map.ToList()
+                Map = SortMap(game.Map.ToList())
             };
         }
 
-        public MapPieceViewModel GetMapPieceViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
+        public MapPieceViewModel GetFieldViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             return new MapPieceViewModel()
             {
@@ -174,21 +174,70 @@ namespace AdventureGameEditor.Models
             Trace.WriteLine("The new currentwayDirectionsCode: " + GetCurrentWayDirectionsCode(userName, gameTitle));
             _context.SaveChanges();
         }
-        
+
 
         #endregion
 
-        #region Other Getters
+        #region Create map content
+
+        // ---------- Getters ---------- //
+
+
+        // ---------- Setters ---------- //
+
+        public Trial InitializeTrial(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            // Initialize trial.
+            List<Alternative> alternatives = new List<Alternative>();
+            
+            alternatives.Add(new Alternative()
+            {
+                Text = "",
+                TrialResult = new TrialResult()
+                {
+                    Text = "",
+                    ResultType = ResultType.Nothing
+                }
+            });
+            
+            Trial trial = new Trial()
+            {
+                TrialType = TrialType.MultipleChoice,
+                Alternatives = alternatives
+            };
+            // Save initialization.
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            field.Trial = trial;
+            return trial;
+        }
+
+        public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            field.Trial.Alternatives.Add(new Alternative()
+            {
+                Text = "",
+                TrialResult = new TrialResult()
+                {
+                    ResultType = ResultType.Nothing,
+                    Text = ""
+                }
+            });
+        }
+
+        #endregion
+
+        #region Getters 
 
         public List<MapRow> GetMap(String userName, String gameTitle)
         {
-            return _context.Game
+            return SortMap(_context.Game
                 .Where(game => game.Owner.UserName == userName & game.Title == gameTitle)
                 .Include(game => game.Map)
                 .ThenInclude(map => map.Row)
                 .Select(game => game.Map)
                 .FirstOrDefault()
-                .ToList();
+                .ToList());
         }
 
         public CreateMapContentViewModel GetMapContentViewModel(String userName, String gameTitle)
@@ -197,14 +246,24 @@ namespace AdventureGameEditor.Models
             return new CreateMapContentViewModel()
             {
                 GameTitle = game.Title,
-                Map = game.Map.ToList(),
+                Map = SortMap(game.Map.ToList()),
                 MapSize = game.TableSize
             };
         }
 
+
         #endregion
 
-        #region Helper functions
+        #region Private helper functions
+
+        private List<MapRow> SortMap(List<MapRow> map)
+        {
+            foreach(MapRow row in map)
+            {
+                row.Row = row.Row.OrderBy(row => row.VerticalCord).ToList();
+            }
+            return map;
+        }
 
         private Game GetGameAtTitle(String userName, String gameTitle)
         {

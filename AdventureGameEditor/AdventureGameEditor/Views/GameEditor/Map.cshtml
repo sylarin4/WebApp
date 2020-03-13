@@ -14,7 +14,7 @@
                     <button type="button"  onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.HorizontalCord', '@field.VerticalCord');">
                         <div id="@field.HorizontalCord@field.VerticalCord">
                             @{
-                                await Html.RenderPartialAsync("MapPiecePartialView",
+                                await Html.RenderPartialAsync("FieldPartialView",
                                 new MapPieceViewModel
                                 {
                                     GameTitle = Model.GameTitle,

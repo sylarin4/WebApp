@@ -4,45 +4,22 @@ using AdventureGameEditor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdventureGameEditor.Migrations
 {
     [DbContext(typeof(AdventureGameEditorContext))]
-    partial class AdventureGameEditorContextModelSnapshot : ModelSnapshot
+    [Migration("20200311120621_ChangeFieldTextCharacterEncodingToUtf8")]
+    partial class ChangeFieldTextCharacterEncodingToUtf8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AdventureGameEditor.Models.Alternative", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TrialID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TrialResultID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("TrialID");
-
-                    b.HasIndex("TrialResultID");
-
-                    b.ToTable("Alternative");
-                });
 
             modelBuilder.Entity("AdventureGameEditor.Models.Field", b =>
                 {
@@ -81,8 +58,6 @@ namespace AdventureGameEditor.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("MapRowID");
-
-                    b.HasIndex("TrialID");
 
                     b.ToTable("Field");
                 });
@@ -188,44 +163,6 @@ namespace AdventureGameEditor.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Message");
-                });
-
-            modelBuilder.Entity("AdventureGameEditor.Models.Trial", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("TrialType")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Trial");
-                });
-
-            modelBuilder.Entity("AdventureGameEditor.Models.TrialResult", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ResultType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TeleportTargetID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("TeleportTargetID");
-
-                    b.ToTable("TrialResult");
                 });
 
             modelBuilder.Entity("AdventureGameEditor.Models.User", b =>
@@ -428,26 +365,11 @@ namespace AdventureGameEditor.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AdventureGameEditor.Models.Alternative", b =>
-                {
-                    b.HasOne("AdventureGameEditor.Models.Trial", null)
-                        .WithMany("Alternatives")
-                        .HasForeignKey("TrialID");
-
-                    b.HasOne("AdventureGameEditor.Models.TrialResult", "TrialResult")
-                        .WithMany()
-                        .HasForeignKey("TrialResultID");
-                });
-
             modelBuilder.Entity("AdventureGameEditor.Models.Field", b =>
                 {
                     b.HasOne("AdventureGameEditor.Models.MapRow", null)
                         .WithMany("Row")
                         .HasForeignKey("MapRowID");
-
-                    b.HasOne("AdventureGameEditor.Models.Trial", "Trial")
-                        .WithMany()
-                        .HasForeignKey("TrialID");
                 });
 
             modelBuilder.Entity("AdventureGameEditor.Models.Game", b =>
@@ -477,13 +399,6 @@ namespace AdventureGameEditor.Migrations
                     b.HasOne("AdventureGameEditor.Models.User", null)
                         .WithMany("Messages")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("AdventureGameEditor.Models.TrialResult", b =>
-                {
-                    b.HasOne("AdventureGameEditor.Models.Field", "TeleportTarget")
-                        .WithMany()
-                        .HasForeignKey("TeleportTargetID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
