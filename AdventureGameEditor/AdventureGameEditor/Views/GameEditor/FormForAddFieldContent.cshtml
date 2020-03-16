@@ -27,7 +27,7 @@
         <span asp-validation-for="TextContent" class="text-danger"></span>
     </div>
 
-    Próba hozzáadása (opcionális)
+    <h1>Próba hozzáadása (opcionális)</h1>
 
     <div class="form-group">
         <label asp-for="Trial.TrialType" class="control-label"></label>
@@ -37,22 +37,29 @@
         <span asp-validation-for="Trial.TrialType" class="text-danger"></span>
     </div>
 
-    A próba kimenetelének alternatívái:
+    <h2>A próba kimenetelének alternatívái:</h2>
 
-    <div id="alternatives">
-        @await Html.PartialAsync("AlternativeForFormPartialView", Model);
+    <div id="alternative0">
+        @await Html.PartialAsync("AlternativeForFormPartialView", new AlternativeViewModel() { Trial = Model.Trial, Index = 0 });
     </div>
 
-    <div id="allAlternativeButton">
-        <button id="addAlternative" onclick="AddNewAlternativeForForm ( '@Model.GameTitle' , '@Model.RowNumber', '@Model.ColNumber' )">Alternatíva hozzáadása</button>
-    </div>
-
-
-
-
+    @for (int i = 1; i < 10; ++i)
+    {
+        String id = "alternative" + @i;
+        <div id="@id"></div>
+    }
 
     <div class="form-group">
         <input type="submit" value="Mentés" class="btn btn-default" />
     </div>
 </form>
 
+<div id="addAlternativeButton">
+    @await Html.PartialAsync("AddAlternativeButtonPartialView", 
+    new AddAlternativeButtonViewModel() { 
+    GameTitle = Model.GameTitle,
+    ColNumber = Model.ColNumber,
+    RowNumber = Model.RowNumber,
+    Index = 1
+});
+</div>

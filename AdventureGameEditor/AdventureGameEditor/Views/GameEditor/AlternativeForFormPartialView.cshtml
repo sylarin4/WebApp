@@ -1,25 +1,24 @@
-﻿@model AdventureGameEditor.Models.FieldContentViewModel
+﻿@model AdventureGameEditor.Models.AlternativeViewModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@for (int i = 0; i < Model.Trial.Alternatives.Count; ++i)
-{
+<h4> @Model.Index+1 . alternatíva</h4>
+
     <div class="form-group">
-        <label asp-for="Trial.Alternatives.ElementAt(i).Text" class="control-label"></label>
-        <textarea asp-for="Trial.Alternatives.ElementAt(i).Text" class="form-control">@Model.Trial.Alternatives.ElementAt(i).Text</textarea>
-        <span asp-validation-for="Trial.Alternatives.ElementAt(i).Text" class="text-danger"></span>
+        <label asp-for="Trial.Alternatives.ElementAt(Model.Index).Text" class="control-label"></label>
+        <textarea asp-for="Trial.Alternatives.ElementAt(Model.Index).Text" class="form-control">@Model.Trial.Alternatives.ElementAt(Model.Index).Text</textarea>
+        <span asp-validation-for="Trial.Alternatives.ElementAt(Model.Index).Text" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Trial.Alternatives.ElementAt(i).TrialResult.ResultType" class="control-label"></label>
+        <label asp-for="Trial.Alternatives.ElementAt(Model.Index).TrialResult.ResultType" class="control-label"></label>
         <p>
-            <select asp-for="Trial.Alternatives.ElementAt(i).TrialResult.ResultType" asp-items="Html.GetEnumSelectList<ResultType>()"></select>
+            <select asp-for="Trial.Alternatives.ElementAt(Model.Index).TrialResult.ResultType" asp-items="Html.GetEnumSelectList<ResultType>()"></select>
         </p>
-        <span asp-validation-for="Trial.Alternatives.ElementAt(i).TrialResult.ResultType" class="text-danger"></span>
+        <span asp-validation-for="Trial.Alternatives.ElementAt(Model.Index).TrialResult.ResultType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Trial.Alternatives.ElementAt(i).TrialResult.Text" class="control-label"></label>
-        <textarea asp-for="Trial.Alternatives.ElementAt(i).TrialResult.Text" class="form-control">@Model.Trial.Alternatives.ElementAt(i).TrialResult.Text</textarea>
-        <span asp-validation-for="Trial.Alternatives.ElementAt(i).TrialResult.Text" class="text-danger"></span>
+        <label asp-for="Trial.Alternatives.ElementAt(Model.Index).TrialResult.Text" class="control-label"></label>
+        <textarea asp-for="Trial.Alternatives.ElementAt(Model.Index).TrialResult.Text" class="form-control">@Model.Trial.Alternatives.ElementAt(Model.Index).TrialResult.Text</textarea>
+        <span asp-validation-for="Trial.Alternatives.ElementAt(Model.Index).TrialResult.Text" class="text-danger"></span>
     </div>
-}

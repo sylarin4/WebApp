@@ -46,8 +46,10 @@ namespace AdventureGameEditor.Models
                     row.Row.Add(
                         new Field
                         {
-                            HorizontalCord = i,
-                            VerticalCord = j,
+                            Owner = _context.User.Where(user => user.Id == owner.Id).FirstOrDefault(),
+                            GameTitle = title,
+                            RowNumber = i,
+                            ColNumber = j,
                             Text = "",
                             IsRightWay = false,
                             IsLeftWay = false,
@@ -182,6 +184,13 @@ namespace AdventureGameEditor.Models
 
         // ---------- Getters ---------- //
 
+        public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber)
+        {
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            // TODO: we have to include alternatives to the trial. we may store gametitle and owner's name for it. 
+            // Look at in the hoework, maybe there's a special way for automatice it
+            return field.Trial;
+        }
 
         // ---------- Setters ---------- //
 
@@ -190,15 +199,19 @@ namespace AdventureGameEditor.Models
             // Initialize trial.
             List<Alternative> alternatives = new List<Alternative>();
             
-            alternatives.Add(new Alternative()
+            for(int i = 0; i < 10; ++i)
             {
-                Text = "",
-                TrialResult = new TrialResult()
+                alternatives.Add(new Alternative()
                 {
                     Text = "",
-                    ResultType = ResultType.Nothing
-                }
-            });
+                    TrialResult = new TrialResult()
+                    {
+                        Text = "",
+                        ResultType = ResultType.Nothing
+                    }
+                });
+            }
+            
             
             Trial trial = new Trial()
             {
@@ -208,21 +221,26 @@ namespace AdventureGameEditor.Models
             // Save initialization.
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             field.Trial = trial;
+            _context.SaveChanges();
             return trial;
         }
 
         public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            field.Trial.Alternatives.Add(new Alternative()
+            for(int i = 0; i < 10; ++i)
             {
-                Text = "",
-                TrialResult = new TrialResult()
+                field.Trial.Alternatives.Add(new Alternative()
                 {
-                    ResultType = ResultType.Nothing,
-                    Text = ""
-                }
-            });
+                    Text = "",
+                    TrialResult = new TrialResult()
+                    {
+                        ResultType = ResultType.Nothing,
+                        Text = ""
+                    }
+                });
+            }
+            
         }
 
         #endregion
@@ -260,7 +278,7 @@ namespace AdventureGameEditor.Models
         {
             foreach(MapRow row in map)
             {
-                row.Row = row.Row.OrderBy(row => row.VerticalCord).ToList();
+                row.Row = row.Row.OrderBy(row => row.ColNumber).ToList();
             }
             return map;
         }
@@ -275,18 +293,12 @@ namespace AdventureGameEditor.Models
 
         private Field GetFieldAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
-            foreach (MapRow row in game.Map)
-            {
-                foreach (Field field in row.Row)
-                {
-                    if (field.HorizontalCord == rowNumber && field.VerticalCord == colNumber)
-                    {
-                        return field;
-                    }
-                }
-            }
-            return null;
+            return _context.Field
+                .Where(field => field.Owner.UserName == userName && field.GameTitle == gameTitle)
+                .Where(field => field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Include(field => field.Trial)
+                .ThenInclude(trial => trial.Alternatives)
+                .FirstOrDefault();
         }
 
         private Byte[] GetImage(int wayDirections, MapTheme theme)

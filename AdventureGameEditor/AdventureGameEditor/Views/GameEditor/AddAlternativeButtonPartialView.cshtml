@@ -1,0 +1,11 @@
+﻿@model AdventureGameEditor.Models.AddAlternativeButtonViewModel
+
+@if(@Model.Index < 10)
+{
+    <button id="addAlternative" onclick=" AddNewAlternativeForForm('@Model.Index', '@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber')">Alternatíva hozzáadása</button>
+}
+else
+{
+    <p> Az alternatívák száma elérte a maximumot (10). Ezért nem adható hozzá több.</p>
+}
+    

@@ -11,8 +11,10 @@ namespace AdventureGameEditor.Models
     {
         public int ID { get; set; }
         //public FieldCoordinate FieldCoordinate { get; set; }
-        public int HorizontalCord { get; set; }
-        public int VerticalCord { get; set; }
+        public User Owner { get; set; }
+        public String GameTitle { get; set; }
+        public int RowNumber { get; set; }
+        public int ColNumber { get; set; }
 
         //Describes what happens on this field in the game.
         [MySqlCharset("utf8")]

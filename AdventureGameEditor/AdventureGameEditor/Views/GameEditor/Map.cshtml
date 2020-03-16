@@ -11,8 +11,8 @@
             @foreach (Field field in row.Row)
             {
                 <td style="height:100px;width:100px" >
-                    <button type="button"  onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.HorizontalCord', '@field.VerticalCord');">
-                        <div id="@field.HorizontalCord@field.VerticalCord">
+                    <button type="button"  onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.RowNumber', '@field.ColNumber');">
+                        <div id="@field.RowNumber@field.ColNumber">
                             @{
                                 await Html.RenderPartialAsync("FieldPartialView",
                                 new MapPieceViewModel

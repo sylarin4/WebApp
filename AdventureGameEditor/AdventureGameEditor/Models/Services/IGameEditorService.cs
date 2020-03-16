@@ -19,5 +19,6 @@ namespace AdventureGameEditor.Models
         public String GetTextAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber);
         public Trial InitializeTrial(String userName, String gameTitle, int rowNumber, int colNumber);
         public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber);
+        public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber);
     }
 }

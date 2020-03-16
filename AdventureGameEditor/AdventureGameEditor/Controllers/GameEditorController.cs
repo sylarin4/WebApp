@@ -116,6 +116,27 @@ namespace AdventureGameEditor.Controllers
             });
         }
 
+        public IActionResult GetNewAlternative(int index, String gameTitle, int rowNumber, int colNumber)
+        {
+            return PartialView("AlternativeForFormPartialView", 
+                new AlternativeViewModel() { 
+                    Trial = _gameEditorService.GetTrial(User.Identity.Name, gameTitle, rowNumber, colNumber),
+                    Index = index 
+                });
+        }
+
+        public IActionResult RefreshAddAlternativeButton(int index, String gameTitle, int rowNumber, int colNumber)
+        {
+            return PartialView("AddAlternativeButtonPartialView",
+                new AddAlternativeButtonViewModel()
+                {
+                    GameTitle = gameTitle,
+                    Index = index + 1,
+                    RowNumber = rowNumber,
+                    ColNumber = colNumber
+                });
+        }
+
 
         // ---------- Setters ---------- //
 

@@ -4,14 +4,16 @@ using AdventureGameEditor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdventureGameEditor.Migrations
 {
     [DbContext(typeof(AdventureGameEditorContext))]
-    partial class AdventureGameEditorContextModelSnapshot : ModelSnapshot
+    [Migration("20200316165825_AddOwnerAndGameTitleAtributesToFieldModel")]
+    partial class AddOwnerAndGameTitleAtributesToFieldModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,11 +53,11 @@ namespace AdventureGameEditor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ColNumber")
-                        .HasColumnType("int");
-
                     b.Property<string>("GameTitle")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HorizontalCord")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDownWay")
                         .HasColumnType("bit");
@@ -75,13 +77,13 @@ namespace AdventureGameEditor.Migrations
                     b.Property<int?>("OwnerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RowNumber")
-                        .HasColumnType("int");
-
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TrialID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VerticalCord")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
