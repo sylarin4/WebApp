@@ -1,5 +1,7 @@
 ﻿@model AdventureGameEditor.Models.AddAlternativeButtonViewModel
 
+@* Now it isn't used but may needed other time. *@
+
 @if(@Model.Index < 10)
 {
     <button id="addAlternative" onclick=" AddNewAlternativeForForm('@Model.Index', '@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber')">Alternatíva hozzáadása</button>

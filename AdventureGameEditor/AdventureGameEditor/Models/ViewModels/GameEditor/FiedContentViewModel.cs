@@ -14,7 +14,9 @@ namespace AdventureGameEditor.Models
 
         [Display(Name = "A mező szövege")]
         public String TextContent { get; set; }
+        public List<String> AlternativeTexts { get; set; }
+        public List<TrialResult> TrialResults { get; set; }
+        public TrialType TrialType { get; set; }
 
-        public Trial Trial { get; set; }
     }
 }

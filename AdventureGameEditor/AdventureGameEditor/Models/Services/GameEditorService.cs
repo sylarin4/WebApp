@@ -127,13 +127,6 @@ namespace AdventureGameEditor.Models
         }
 
         // ---------- Setters --------- //
-        public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
-        {
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            field.Text = text;
-            _context.SaveChanges();
-        }
-
         public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             int wayDirectionsCode = GetCurrentWayDirectionsCode(userName, gameTitle);
@@ -182,7 +175,7 @@ namespace AdventureGameEditor.Models
 
         #region Create map content
 
-        // ---------- Getters ---------- //
+        #region Getters
 
         public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber)
         {
@@ -192,18 +185,22 @@ namespace AdventureGameEditor.Models
             return field.Trial;
         }
 
-        // ---------- Setters ---------- //
+        #endregion
 
+        #region Setters
+
+        #region Initializing
+        //Currently not used.
         public Trial InitializeTrial(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             // Initialize trial.
             List<Alternative> alternatives = new List<Alternative>();
             
-            for(int i = 0; i < 10; ++i)
+            for(int i = 0; i < 4; ++i)
             {
                 alternatives.Add(new Alternative()
                 {
-                    Text = "",
+                    Text = "default",
                     TrialResult = new TrialResult()
                     {
                         Text = "",
@@ -211,8 +208,7 @@ namespace AdventureGameEditor.Models
                     }
                 });
             }
-            
-            
+                        
             Trial trial = new Trial()
             {
                 TrialType = TrialType.MultipleChoice,
@@ -221,10 +217,68 @@ namespace AdventureGameEditor.Models
             // Save initialization.
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             field.Trial = trial;
+            for(int i = 0; i < 4; ++i)
+            {
+                Trace.WriteLine(GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber).Trial.Alternatives.ElementAt(i).Text);
+            }
             _context.SaveChanges();
             return trial;
         }
 
+        //Currently not used.
+        public List<Alternative> InitializeAlternatives(int count)
+        {
+            List<Alternative> alternatives = new List<Alternative>();
+            for(int i = 0; i < count; ++i)
+            {
+                alternatives.Add(new Alternative()
+                {
+                    Text = "test text",
+                    TrialResult = new TrialResult()
+                    {
+                        ResultType = ResultType.Nothing,
+                        Text = "test text"
+                    }
+                });
+            }
+            return alternatives;
+        }
+
+        public List<String> InitializeAlternativeTexts(int count)
+        {
+            List<String> alternativeTexts = new List<String>();
+            for(int i = 0; i < count; ++i)
+            {
+                alternativeTexts.Add("test text");
+            }
+            return alternativeTexts;
+        }
+
+        public List<TrialResult> InitializeTrialResults(int count)
+        {
+            List<TrialResult> trialResults = new List<TrialResult>();
+            for(int i = 0; i < count; ++i)
+            {
+                trialResults.Add(new TrialResult()
+                {
+                    ResultType = ResultType.Nothing,
+                    Text = "test text"
+                });
+            }
+            return trialResults;
+        }
+        #endregion
+
+        #region Save 
+
+         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
+        {
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            field.Text = text;
+            _context.SaveChanges();
+        }
+
+        #endregion
         public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
@@ -242,6 +296,7 @@ namespace AdventureGameEditor.Models
             }
             
         }
+        #endregion
 
         #endregion
 

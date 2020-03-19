@@ -20,5 +20,8 @@ namespace AdventureGameEditor.Models
         public Trial InitializeTrial(String userName, String gameTitle, int rowNumber, int colNumber);
         public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber);
         public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber);
+        public List<Alternative> InitializeAlternatives(int count);
+        public List<String> InitializeAlternativeTexts(int count);
+        public List<TrialResult> InitializeTrialResults(int count);
     }
 }

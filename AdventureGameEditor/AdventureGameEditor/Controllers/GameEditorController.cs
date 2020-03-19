@@ -90,7 +90,7 @@ namespace AdventureGameEditor.Controllers
 
         #region Create map content (Used at "CreateMapContent" view and at it's partial views)
 
-        // ---------- Getters ---------- //
+        #region Getters
 
 
         // Get the view with the map. So the user can select which field he/she wants to add text or trial.
@@ -103,19 +103,20 @@ namespace AdventureGameEditor.Controllers
         // Loads a form to add content to the selected field.
         public IActionResult GetFormForField(String gameTitle, int rowNumber, int colNumber)
         {
-            // Initialize trial.
-            Trial trial = _gameEditorService.InitializeTrial(User.Identity.Name, gameTitle, rowNumber, colNumber);
-
+            Trace.WriteLine("rowNumber: " + rowNumber +"colNumber: " + colNumber);
             return PartialView("FormForAddFieldContent", new FieldContentViewModel()
             {
                 GameTitle = gameTitle,
                 RowNumber = rowNumber,
                 ColNumber = colNumber,
                 TextContent = _gameEditorService.GetTextAtCoordinate(User.Identity.Name, gameTitle, rowNumber, colNumber),
-                Trial = trial
+                AlternativeTexts = _gameEditorService.InitializeAlternativeTexts(4),
+                TrialResults = _gameEditorService.InitializeTrialResults(4),
+                TrialType = TrialType.LuckTrial
             });
         }
 
+        // Currently not used.
         public IActionResult GetNewAlternative(int index, String gameTitle, int rowNumber, int colNumber)
         {
             return PartialView("AlternativeForFormPartialView", 
@@ -125,6 +126,7 @@ namespace AdventureGameEditor.Controllers
                 });
         }
 
+        // Currently not used.
         public IActionResult RefreshAddAlternativeButton(int index, String gameTitle, int rowNumber, int colNumber)
         {
             return PartialView("AddAlternativeButtonPartialView",
@@ -137,24 +139,32 @@ namespace AdventureGameEditor.Controllers
                 });
         }
 
+        #endregion
 
-        // ---------- Setters ---------- //
-
+        #region Setters
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SetTextForField([Bind("GameTitle, RowNumbe, ColNumber, TextContent, Trial")] FieldContentViewModel textData)
+        public IActionResult SetTextForField([Bind("GameTitle, ColNumber, RowNumbe, TextContent, Trial, AlternativeTexts, TrialResults, TrialType")] FieldContentViewModel fieldData)
         {
-            Trace.WriteLine(textData.GameTitle + " " + textData.ColNumber + " " + textData.RowNumber + " " + textData.TextContent);
-            _gameEditorService.AddTextToAFieldAt(User.Identity.Name, textData.GameTitle, textData.RowNumber, textData.ColNumber, textData.TextContent);
-            Trace.WriteLine(_gameEditorService.GetTextAtCoordinate(User.Identity.Name, textData.GameTitle, textData.RowNumber, textData.ColNumber));
-            return View("CreateMapContent", _gameEditorService.GetMapViewModel(User.Identity.Name, textData.GameTitle));
+            // Test writeing on console.
+            Trace.WriteLine(fieldData.GameTitle + " " + fieldData.ColNumber + " " + fieldData.RowNumber + " " + fieldData.TextContent);
+            
+            /*for(int i = 0; i < fieldData.AlternativeTexts.Count; ++i)
+            {
+                Trace.WriteLine(fieldData.AlternativeTexts.ElementAt(i));
+                Trace.WriteLine(fieldData.TrialResults.ElementAt(i));
+            }*/
+
+            _gameEditorService.AddTextToAFieldAt(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber, fieldData.TextContent);
+            Trace.WriteLine(_gameEditorService.GetTextAtCoordinate(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber));
+            return View("CreateMapContent", _gameEditorService.GetMapViewModel(User.Identity.Name, fieldData.GameTitle));
         }
 
         // It's not used now.
         public void SaveTextContent(String gameTitle, int rowNumber, int colNumber, String textContent)
         {
-            Trace.WriteLine(gameTitle + " " + colNumber + " " + rowNumber + " " + textContent);
+            //Trace.WriteLine(gameTitle + " " + colNumber + " " + rowNumber + " " + textContent);
             _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, textContent);
         }
 
@@ -162,6 +172,7 @@ namespace AdventureGameEditor.Controllers
         {
             _gameEditorService.AddNewAlternativeToForm(User.Identity.Name, gameTitle, rowNumber, colNumber);
         }*/
+        #endregion
 
         #endregion
 

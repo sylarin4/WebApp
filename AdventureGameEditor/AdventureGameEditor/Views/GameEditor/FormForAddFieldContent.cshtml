@@ -10,15 +10,15 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-group">
-        <input type="hidden" asp-for="GameTitle" class="form-control" />
+        <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
     </div>
 
     <div class="form-group">
-        <input type="hidden" asp-for="RowNumber" class="form-control" />
+        <input type="hidden" asp-for="ColNumber" class="form-control" value="@Model.ColNumber" />
     </div>
 
     <div class="form-group">
-        <input type="hidden" asp-for="ColNumber" class="form-control" />
+        <input type="hidden" asp-for="RowNumber" class="form-control" value="@Model.RowNumber" />
     </div>
 
     <div class="form-group">
@@ -30,23 +30,42 @@
     <h1>Próba hozzáadása (opcionális)</h1>
 
     <div class="form-group">
-        <label asp-for="Trial.TrialType" class="control-label"></label>
+        <label asp-for="TrialType" class="control-label"></label>
         <p>
-            <select asp-for="Trial.TrialType" asp-items="Html.GetEnumSelectList<TrialType>()"></select>
+            <select asp-for="TrialType" asp-items="Html.GetEnumSelectList<TrialType>()"></select>
         </p>
-        <span asp-validation-for="Trial.TrialType" class="text-danger"></span>
+        <span asp-validation-for="TrialType" class="text-danger"></span>
     </div>
 
     <h2>A próba kimenetelének alternatívái:</h2>
-
-    <div id="alternative0">
-        @await Html.PartialAsync("AlternativeForFormPartialView", new AlternativeViewModel() { Trial = Model.Trial, Index = 0 });
-    </div>
-
-    @for (int i = 1; i < 10; ++i)
+    @*
+        <div id="alternative0">
+            @await Html.PartialAsync("AlternativeForFormPartialView", new AlternativeViewModel() { Trial = Model.Trial, Index = 0 });
+        </div>
+    *@
+    @for (int i = 0; i < Model.AlternativeTexts.Count; ++i)
     {
         String id = "alternative" + @i;
-        <div id="@id"></div>
+        <div id="@id">
+            <h4> @i . alternatíva</h4>
+            <div class="form-group">
+                <label asp-for="AlternativeTexts[i]" class="control-label"></label>
+                <textarea asp-for="AlternativeTexts[i]" class="form-control">@Model.AlternativeTexts[i]</textarea>
+                <span asp-validation-for="AlternativeTexts[i]" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrialResults[i].ResultType" class="control-label"></label>
+                <p>
+                    <select asp-for="TrialResults[i].ResultType" asp-items="Html.GetEnumSelectList<ResultType>()"></select>
+                </p>
+                <span asp-validation-for="TrialResults[i].ResultType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrialResults[i].Text" class="control-label"></label>
+                <textarea asp-for="TrialResults[i].Text" class="form-control">@Model.TrialResults[i].Text</textarea>
+                <span asp-validation-for="TrialResults[i].Text" class="text-danger"></span>
+            </div>
+        </div>
     }
 
     <div class="form-group">
@@ -54,12 +73,14 @@
     </div>
 </form>
 
-<div id="addAlternativeButton">
-    @await Html.PartialAsync("AddAlternativeButtonPartialView", 
-    new AddAlternativeButtonViewModel() { 
-    GameTitle = Model.GameTitle,
-    ColNumber = Model.ColNumber,
-    RowNumber = Model.RowNumber,
-    Index = 1
-});
-</div>
+@*
+    <div id="addAlternativeButton">
+        @await Html.PartialAsync("AddAlternativeButtonPartialView",
+        new AddAlternativeButtonViewModel() {
+        GameTitle = Model.GameTitle,
+        ColNumber = Model.ColNumber,
+        RowNumber = Model.RowNumber,
+        Index = 1
+    });
+    </div>
+*@

@@ -13,22 +13,6 @@ function LoadFormForAddFieldContent(gameTitle, rowNumber, colNumber) {
     LoadData(target, 'GetFormForField', gameTitle, rowNumber, colNumber);
 }
 
-function AddNewAlternativeForForm(index, gameTitle, rowNumber, colNumber) {
-    var target = '#alternative' + index;
-    console.log(target);
-    console.log(index);
-    $.ajax({
-        url: "GetNewAlternative",
-        data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
-        success: function (result) { $(target).html(result); }
-    });
-    $.ajax({
-        url: "RefreshAddAlternativeButton",
-        data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
-        success: function (result) { $("#addAlternativeButton").html(result); }
-    });
-}
-
 // ---------- Functions for "CreateMap" view ---------- //
 
 // Used at: "CreateMap" view.
@@ -90,5 +74,21 @@ function SaveTextContent(gameTitle, rowNumber, colNumber) {
     $.ajax({
         url: 'SaveTextContent',
         data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, textContent: textContent }
+    });
+}
+
+function AddNewAlternativeForForm(index, gameTitle, rowNumber, colNumber) {
+    var target = '#alternative' + index;
+    console.log(target);
+    console.log(index);
+    $.ajax({
+        url: "GetNewAlternative",
+        data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
+        success: function (result) { $(target).html(result); }
+    });
+    $.ajax({
+        url: "RefreshAddAlternativeButton",
+        data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
+        success: function (result) { $("#addAlternativeButton").html(result); }
     });
 }
