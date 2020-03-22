@@ -16,11 +16,13 @@ namespace AdventureGameEditor.Controllers
     {
         protected readonly IGameEditorService _gameEditorService;
 
+        #region Constructor
         public GameEditorController(AdventureGameEditorContext context, IGameEditorService gameEditorService)
             :base(context)
         {
             _gameEditorService = gameEditorService;
         }
+        #endregion
 
         #region CreateGame (Used at "CreateGame" view)
         public IActionResult CreateGame()
@@ -46,7 +48,7 @@ namespace AdventureGameEditor.Controllers
 
         #region CreateMap (Used at "CreateMap" view)
 
-        // ---------- Getters ---------- //
+        #region // ---------- Getters ---------- //
         public IActionResult CreateMap(MapViewModel model)
         {
             return View("CreateMap", model);
@@ -64,7 +66,10 @@ namespace AdventureGameEditor.Controllers
             return _gameEditorService.ImageForMap(wayDirectionsCode);
         }
 
-        // ---------- Setters ---------- //
+        #endregion
+
+
+        #region // ---------- Setters ---------- //
 
         // When the user select which type of field he/she wants to fill to the map,
         // save it to the database, so we will know which type of field to fill to the map
@@ -86,17 +91,24 @@ namespace AdventureGameEditor.Controllers
             // Refresh the field.
             return PartialView("FieldPartialView", _gameEditorService.GetFieldViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
         }
+
+        #endregion
+
         #endregion
 
         #region Create map content (Used at "CreateMapContent" view and at it's partial views)
 
-        #region Getters
+        #region // ---------- Getters ---------- //
 
 
         // Get the view with the map. So the user can select which field he/she wants to add text or trial.
         public IActionResult CreateMapContent(String gameTitle)
         {
-            return View("CreateMapContent", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
+            MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, gameTitle);
+            model.FunctionName = "LoadFormForAddFieldContent";
+            model.Action = "térkép mezőinek kitöltése";
+            model.NextControllerAction = "CreateMapStartField";
+            return View("CreateMapContent", model);
         }
 
 
@@ -104,16 +116,8 @@ namespace AdventureGameEditor.Controllers
         public IActionResult GetFormForField(String gameTitle, int rowNumber, int colNumber)
         {
             Trace.WriteLine("rowNumber: " + rowNumber +"colNumber: " + colNumber);
-            return PartialView("FormForAddFieldContent", new FieldContentViewModel()
-            {
-                GameTitle = gameTitle,
-                RowNumber = rowNumber,
-                ColNumber = colNumber,
-                TextContent = _gameEditorService.GetTextAtCoordinate(User.Identity.Name, gameTitle, rowNumber, colNumber),
-                AlternativeTexts = _gameEditorService.InitializeAlternativeTexts(4),
-                TrialResults = _gameEditorService.InitializeTrialResults(4),
-                TrialType = TrialType.LuckTrial
-            });
+            return PartialView("FormForAddFieldContent",
+                _gameEditorService.GetFieldContentViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
         }
 
         // Currently not used.
@@ -141,24 +145,41 @@ namespace AdventureGameEditor.Controllers
 
         #endregion
 
-        #region Setters
+        #region // ---------- Setters ---------- //
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SetTextForField([Bind("GameTitle, ColNumber, RowNumbe, TextContent, Trial, AlternativeTexts, TrialResults, TrialType")] FieldContentViewModel fieldData)
+        public IActionResult SetTextForField(/*[Bind("GameTitle, ColNumber, RowNumbe, TextContent, Trial, AlternativeTexts, TrialResults, TrialType")]*/ FieldContentViewModel fieldData)
         {
             // Test writeing on console.
-            Trace.WriteLine(fieldData.GameTitle + " " + fieldData.ColNumber + " " + fieldData.RowNumber + " " + fieldData.TextContent);
-            
+            // Trace.WriteLine(fieldData.GameTitle + " " + fieldData.ColNumber + " " + fieldData.RowNumber + " " + fieldData.TextContent);
+
             /*for(int i = 0; i < fieldData.AlternativeTexts.Count; ++i)
             {
                 Trace.WriteLine(fieldData.AlternativeTexts.ElementAt(i));
                 Trace.WriteLine(fieldData.TrialResults.ElementAt(i));
             }*/
 
+            // Convert lists to arrays to pass them to the service's functions for save.
+            String[] attributeTextsArray = new String[fieldData.AlternativeTexts.Count];
+            TrialResult[] trialResultsArray = new TrialResult[fieldData.TrialResults.Count];
+            for(int i = 0; i < fieldData.AlternativeTexts.Count; ++i)
+            {
+                attributeTextsArray[i] = fieldData.AlternativeTexts[i];
+                trialResultsArray[i] = fieldData.TrialResults[i];
+            }
+
+            // Saveing data.
             _gameEditorService.AddTextToAFieldAt(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber, fieldData.TextContent);
-            Trace.WriteLine(_gameEditorService.GetTextAtCoordinate(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber));
-            return View("CreateMapContent", _gameEditorService.GetMapViewModel(User.Identity.Name, fieldData.GameTitle));
+            _gameEditorService.SaveTrial(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber,
+                 fieldData.AlternativeTexts, fieldData.TrialResults, fieldData.TrialType);
+
+            // Return the user to the map content filling page to add texts and trials to the other fields too.
+            MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, fieldData.GameTitle);
+            model.FunctionName = "LoadFormForAddFieldContent";
+            model.Action = "térkép mezőinek kitöltése";
+            model.NextControllerAction = "CreateMapStartField";
+            return View("CreateMapContent", model);
         }
 
         // It's not used now.
@@ -172,6 +193,46 @@ namespace AdventureGameEditor.Controllers
         {
             _gameEditorService.AddNewAlternativeToForm(User.Identity.Name, gameTitle, rowNumber, colNumber);
         }*/
+        #endregion
+
+        #endregion
+
+        #region Create start and target field
+
+        #region //---------- Getters ----------//
+
+        public IActionResult CreateMapStartField(String gameTitle)
+        {
+            MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, gameTitle);
+            model.FunctionName = "SaveStartField";
+            model.Action = "kezdő mezőjének kiválasztása";
+            model.NextControllerAction = "CreateMapTargetField";
+            return View("CreateMapContent", model);
+        }
+
+        public IActionResult CreateMapTargetField(String gameTitle)
+        {
+            MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, gameTitle);
+            model.FunctionName = "SaveTargetField";
+            model.Action = "célmezőjének kiválasztása";
+            return View("CreateMapContent", model);
+        }
+
+        #endregion
+
+        #region //---------- Setters ---------//
+
+        public String SetStartField(String gameTitle, int rowNumber, int colNumber)
+        {
+            _gameEditorService.SaveStartField(User.Identity.Name, gameTitle, rowNumber, colNumber);
+            return "Start mező sorszáma " + rowNumber + ", oszlopszáma " + colNumber + " lett beállítva.";
+        }
+
+        public String SetTargetField(String gameTitle, int rowNumber, int colNumber)
+        {
+            _gameEditorService.SaveTargetField(User.Identity.Name, gameTitle, rowNumber, colNumber);
+            return "Célmező sorszáma " + rowNumber + ", oszopszáma " + colNumber + "lett beállítva.";
+        }
         #endregion
 
         #endregion

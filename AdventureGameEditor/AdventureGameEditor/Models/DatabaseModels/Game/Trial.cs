@@ -18,5 +18,7 @@ namespace AdventureGameEditor.Models
 
         [Display(Name = "Próba típusa")]
         public TrialType TrialType { get; set; }
+
+        
     }
 }

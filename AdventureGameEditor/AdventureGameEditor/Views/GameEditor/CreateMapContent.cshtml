@@ -1,4 +1,4 @@
-﻿@model AdventureGameEditor.Models.MapViewModel
+﻿@model AdventureGameEditor.Models.MapContentViewModel
 
 <!DOCTYPE html>
 
@@ -9,17 +9,23 @@
     <title>CreateMapContent</title>
 </head>
 <body>
+
+    <h1> @Model.GameTitle c. játék </h1>
+    <h2>@Model.Action</h2>
     @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
         {
             MapSize = Model.MapSize,
             GameTitle = Model.GameTitle,
             Map = Model.Map,
-            FunctionName = "LoadFormForAddFieldContent"
+            FunctionName = Model.FunctionName
         });}
 
-        <div id="InputArea">
-            
-        </div>
+    <div id="InputArea">
+
+    </div>
+
+    <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
 </body>
+
 
 </html>

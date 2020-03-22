@@ -91,7 +91,7 @@ namespace AdventureGameEditor.Models
 
         #region Create map
 
-        // ---------- Getters ---------- //
+        #region // ---------- Getters ---------- //
         public MapViewModel GetMapViewModel(String userName, String gameTitle)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
@@ -125,8 +125,9 @@ namespace AdventureGameEditor.Models
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             return field.Text;
         }
+        #endregion
 
-        // ---------- Setters --------- //
+        #region // ---------- Setters --------- //
         public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             int wayDirectionsCode = GetCurrentWayDirectionsCode(userName, gameTitle);
@@ -170,24 +171,13 @@ namespace AdventureGameEditor.Models
             _context.SaveChanges();
         }
 
+        #endregion
 
         #endregion
 
         #region Create map content
 
-        #region Getters
-
-        public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber)
-        {
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            // TODO: we have to include alternatives to the trial. we may store gametitle and owner's name for it. 
-            // Look at in the hoework, maybe there's a special way for automatice it
-            return field.Trial;
-        }
-
-        #endregion
-
-        #region Setters
+        #region //---------- Setters ----------//
 
         #region Initializing
         //Currently not used.
@@ -278,7 +268,41 @@ namespace AdventureGameEditor.Models
             _context.SaveChanges();
         }
 
+        public void SaveTrial(String userName, String gameTitle, int rowNumber, int colNumber, List<String> alternativeTexts, 
+            List<TrialResult> alternativeTrialResults, TrialType trialType )
+        {
+            Trial trial = new Trial();
+            trial.Alternatives = new List<Alternative>();
+            trial.TrialType = trialType;
+            // Test writing.
+            foreach(String text in alternativeTexts)
+            {
+                Trace.WriteLine(text);
+            }
+            foreach(TrialResult result in alternativeTrialResults)
+            {
+                Trace.WriteLine(result.Text);
+                Trace.WriteLine(result.ResultType);
+            }
+
+            for(int i = 0; i < alternativeTexts.Count; ++i)
+            {
+                trial.Alternatives.Add(new Alternative()
+                {
+                    Text = alternativeTexts[i],
+                    TrialResult = alternativeTrialResults[i]
+                });
+            }
+            // Somehow, the trial results are saved incorrectly. Check if they are filled to trial corretly, and how 
+            // they were saved.
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            field.Trial = trial;
+            _context.SaveChanges();
+        }
+
         #endregion
+
+        // Currently not used.
         public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
@@ -296,12 +320,17 @@ namespace AdventureGameEditor.Models
             }
             
         }
-        #endregion
+    #endregion
 
-        #endregion
 
-        #region Getters 
-
+        #region //---------- Getters ----------// 
+        public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber)
+        {
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            // TODO: we have to include alternatives to the trial. we may store gametitle and owner's name for it. 
+            // Look at in the hoework, maybe there's a special way for automatice it
+            return field.Trial;
+        }
         public List<MapRow> GetMap(String userName, String gameTitle)
         {
             return SortMap(_context.Game
@@ -313,10 +342,10 @@ namespace AdventureGameEditor.Models
                 .ToList());
         }
 
-        public CreateMapContentViewModel GetMapContentViewModel(String userName, String gameTitle)
+        public MapContentViewModel GetMapContentViewModel(String userName, String gameTitle)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
-            return new CreateMapContentViewModel()
+            return new MapContentViewModel()
             {
                 GameTitle = game.Title,
                 Map = SortMap(game.Map.ToList()),
@@ -324,6 +353,76 @@ namespace AdventureGameEditor.Models
             };
         }
 
+        // Get the data from the database we need and convert it to a FieldContentViewModel, then return it.
+        public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            // Load the field.
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+
+            // Initializeing.
+            List<String> alternativeTexts = new List<String>();
+            List<TrialResult> alternativeTrialResults = new List<TrialResult>();
+            TrialType trialType = TrialType.LuckTrial;
+
+            // If trial wasn't created previously, initialize it.
+            if(field.Trial == null)
+            {
+                alternativeTexts = InitializeAlternativeTexts(4);
+                alternativeTrialResults = InitializeTrialResults(4);
+            }
+
+            // If trial was created previously, load that data.
+            else
+            {
+                trialType = field.Trial.TrialType;
+                foreach(Alternative alternative in field.Trial.Alternatives)
+                {
+                    alternativeTexts.Add(alternative.Text);
+                    alternativeTrialResults.Add(alternative.TrialResult);
+                }                
+            }
+
+            // Convert data to FieldContentViewModel type.
+            FieldContentViewModel model = new FieldContentViewModel()
+                {
+                    GameTitle = gameTitle,
+                    ColNumber = colNumber,
+                    RowNumber = rowNumber,
+                    TextContent = field.Text,
+                    TrialType = trialType,
+                    AlternativeTexts = alternativeTexts,
+                    TrialResults = alternativeTrialResults
+                };
+
+            return model;
+        }
+
+
+
+        #endregion
+
+        #endregion
+
+        #region Set start and target fields
+
+        #region //---------- Setters ----------//
+
+        // Save the start field which's coordinates are given in the function's attributes (rowNumber and colNumber).
+        public void SaveStartField(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            game.StartField = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            _context.SaveChanges();
+        }
+
+        public void SaveTargetField(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            game.TargetField = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            _context.SaveChanges();
+        }
+
+        #endregion
 
         #endregion
 
@@ -353,6 +452,7 @@ namespace AdventureGameEditor.Models
                 .Where(field => field.ColNumber == colNumber && field.RowNumber == rowNumber)
                 .Include(field => field.Trial)
                 .ThenInclude(trial => trial.Alternatives)
+                .ThenInclude(alternatives => alternatives.TrialResult)
                 .FirstOrDefault();
         }
 

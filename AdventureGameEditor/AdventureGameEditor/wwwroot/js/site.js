@@ -1,7 +1,6 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-
 // ---------- Functions for "CreateMapContent" view ---------- //
 
 
@@ -11,6 +10,18 @@
 function LoadFormForAddFieldContent(gameTitle, rowNumber, colNumber) {
     var target = '#InputArea';
     LoadData(target, 'GetFormForField', gameTitle, rowNumber, colNumber);
+}
+
+// Save the chosen start field.
+function SaveStartField(gameTitle, rowNumber, colNumber) {
+    var target = '#InputArea';
+    LoadData(target, "SetStartField", gameTitle, rowNumber, colNumber);
+}
+
+// Save the chosen trget field.
+function SaveTargetField(gameTitle, rowNumber, colNumber) {
+    var target = '#InputArea';
+    LoadData(target, "SetTargetField", gameTitle, rowNumber, colNumber);
 }
 
 // ---------- Functions for "CreateMap" view ---------- //

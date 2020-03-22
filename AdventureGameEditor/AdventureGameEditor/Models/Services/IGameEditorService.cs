@@ -8,20 +8,43 @@ namespace AdventureGameEditor.Models
 {
     public interface IGameEditorService
     {
+        #region Create game
         public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner);
+        #endregion
+        #region Create map
+        #region Getters
         public MapViewModel GetMapViewModel(String userName, String gameTitle);
         public MapPieceViewModel GetFieldViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
-        public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String Text);
-        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber);
         public FileResult ImageForMap(int? wayDirectionsCode);
-        public void SetCurrentWayDirectionsCode(String userName, String gameTitle, int newWayDirectionsCode);
-        public CreateMapContentViewModel GetMapContentViewModel(String userName, String gameTitle);
         public String GetTextAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber);
+        #endregion
+        #region Setters
+        public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber);
+        public void SetCurrentWayDirectionsCode(String userName, String gameTitle, int newWayDirectionsCode);
+        #endregion
+        #endregion
+        #region Create map content
+        #region Initializers
         public Trial InitializeTrial(String userName, String gameTitle, int rowNumber, int colNumber);
-        public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber);
-        public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber);
         public List<Alternative> InitializeAlternatives(int count);
         public List<String> InitializeAlternativeTexts(int count);
         public List<TrialResult> InitializeTrialResults(int count);
+        #endregion
+        #region Save
+        public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String Text);
+        public void SaveTrial(String userName, String gameTitle, int rowNumber, int colNumber, List<String> alternativeTexts,
+           List<TrialResult> alternativeTrialResults, TrialType trialType);
+        public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber);
+        #endregion
+        #region Getters
+        public MapContentViewModel GetMapContentViewModel(String userName, String gameTitle);
+        public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber);
+        public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
+        #endregion
+        #endregion
+        #region Set start and target fields
+        public void SaveStartField(String userName, String gameTitle, int rowNumber, int colNumber);
+        public void SaveTargetField(String userName, String gameTitle, int rowNumber, int colNumber);
+        #endregion
     }
 }
