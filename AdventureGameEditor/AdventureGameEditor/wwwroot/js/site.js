@@ -3,12 +3,22 @@
 
 // ---------- Functions for "CreateMapContent" view ---------- //
 
-// Used at: "CreateMapContent" view.
-// Load a form ("FormForAddFieldContent" partial view) to the "CreateMapContent" view after the user selected the field
-// he / she wants to add text or trial.
-function LoadFormForAddFieldContent(gameTitle, rowNumber, colNumber) {
+// Load buttons for a field, which make available to add text or trial or just show the already added content of it.
+function LoadButtonsForAddFieldContent(gameTitle, rowNumber, colNumber) {
+    var target = '#ButtonsPlace';
+    document.getElementById("InputArea").innerHTML = "";
+    LoadData(target, "GetButtonsForAddFieldContent", gameTitle, rowNumber, colNumber);
+}
+
+// Load form for a field to add text content (it contens a text input area).
+function LoadFormForAddFieldText(gameTitle, rowNumber, colNumber) {
     var target = '#InputArea';
-    LoadData(target, 'GetFormForField', gameTitle, rowNumber, colNumber);
+    LoadData(target, "GetFormForFieldText", gameTitle, rowNumber, colNumber);
+}
+
+function LoadFormForAddFieldTrial(gameTitle, rowNumber, colNumber) {
+    var target = '#InputArea';
+    LoadData(target, "GetFormForFieldTrial", gameTitle, rowNumber, colNumber);
 }
 
 // Save the chosen start field.
@@ -28,12 +38,6 @@ function SaveTargetField(gameTitle, rowNumber, colNumber) {
 function LoadFieldDetails(gameTitle, rowNumber, colNumber) {
     var target = '#fieldDetails';
     LoadData(target, "GetFieldDetailsPartialView", gameTitle, rowNumber, colNumber);
-}
-
-// Load buttons for a field, which make available to add text or trial or just show the already added content of it.
-function LoadButtonsForAddFieldContent(gameTitle, rowNumber, colNumber) {
-    var target = '#buttonsPlace';
-    LoadData(target, "GetButtonsForAddFieldContent", gameTitle, rowNumber, colNumber);
 }
 
 // ---------- Functions for "CreateMap" view ---------- //
@@ -114,4 +118,12 @@ function AddNewAlternativeForForm(index, gameTitle, rowNumber, colNumber) {
         data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
         success: function (result) { $("#addAlternativeButton").html(result); }
     });
+}
+
+// Used at: "CreateMapContent" view.
+// Load a form ("FormForAddFieldContent" partial view) to the "CreateMapContent" view after the user selected the field
+// he / she wants to add text or trial.
+function LoadFormForAddFieldContent(gameTitle, rowNumber, colNumber) {
+    var target = '#InputArea';
+    LoadData(target, 'GetFormForField', gameTitle, rowNumber, colNumber);
 }

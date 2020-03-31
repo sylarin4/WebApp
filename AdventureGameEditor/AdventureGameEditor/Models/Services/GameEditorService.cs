@@ -353,6 +353,7 @@ namespace AdventureGameEditor.Models
             };
         }
 
+        //Currently not used.
         // Get the data from the database we need and convert it to a FieldContentViewModel, then return it.
         public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
         {
@@ -397,7 +398,47 @@ namespace AdventureGameEditor.Models
             return model;
         }
 
-        
+        public FieldTrialContentViewModel GetFieldTrialContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            // Load the field.
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+
+            // Initializeing.
+            List<String> alternativeTexts = new List<String>();
+            List<TrialResult> alternativeTrialResults = new List<TrialResult>();
+            TrialType trialType = TrialType.LuckTrial;
+
+            // If trial wasn't created previously, initialize it.
+            if (field.Trial == null)
+            {
+                alternativeTexts = InitializeAlternativeTexts(4);
+                alternativeTrialResults = InitializeTrialResults(4);
+            }
+
+            // If trial was created previously, load that data.
+            else
+            {
+                trialType = field.Trial.TrialType;
+                foreach (Alternative alternative in field.Trial.Alternatives)
+                {
+                    alternativeTexts.Add(alternative.Text);
+                    alternativeTrialResults.Add(alternative.TrialResult);
+                }
+            }
+
+            // Convert data to FieldContentViewModel type.
+            FieldTrialContentViewModel model = new FieldTrialContentViewModel()
+            {
+                GameTitle = gameTitle,
+                ColNumber = colNumber,
+                RowNumber = rowNumber,
+                TrialType = trialType,
+                AlternativeTexts = alternativeTexts,
+                TrialResults = alternativeTrialResults
+            };
+
+            return model;
+        }
 
 
         #endregion
@@ -470,6 +511,27 @@ namespace AdventureGameEditor.Models
         }
 
         #endregion
+
+        #endregion
+
+        #region Usually used getter functions
+
+        public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            String textContent =_context.Field
+                .Where(field => field.Owner.UserName == userName && field.GameTitle == gameTitle
+                && field.RowNumber == rowNumber && field.ColNumber == colNumber)
+                .Select(field => field.Text)
+                .FirstOrDefault();
+            if(textContent == null)
+            {
+                return "";
+            }
+            else
+            {
+                return textContent;
+            }
+        }
 
         #endregion
 

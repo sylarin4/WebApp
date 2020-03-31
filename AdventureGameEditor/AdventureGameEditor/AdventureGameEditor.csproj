@@ -32,6 +32,10 @@
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.19" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\ViewModels\GameEditor\CurrentlyNotUsed\" />
+  </ItemGroup>
+
 
 
 </Project>

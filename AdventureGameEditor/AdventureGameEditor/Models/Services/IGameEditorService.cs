@@ -39,7 +39,10 @@ namespace AdventureGameEditor.Models
         #region Getters
         public MapContentViewModel GetMapContentViewModel(String userName, String gameTitle);
         public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber);
-        public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
+
+        // Currently unused.
+         public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
+        public FieldTrialContentViewModel GetFieldTrialContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
         #endregion
         #endregion
         #region Set start and target fields
@@ -51,6 +54,9 @@ namespace AdventureGameEditor.Models
         public GameDetailsViewModel GetGameDetailsViewModel(String userName, String gameTitle);
         public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber);
         #endregion
+        #endregion
+        #region Usually used getter functions
+        public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);
         #endregion
     }
 }
