@@ -46,5 +46,11 @@ namespace AdventureGameEditor.Models
         public void SaveStartField(String userName, String gameTitle, int rowNumber, int colNumber);
         public void SaveTargetField(String userName, String gameTitle, int rowNumber, int colNumber);
         #endregion
+        #region Show game details
+        #region Getters
+        public GameDetailsViewModel GetGameDetailsViewModel(String userName, String gameTitle);
+        public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber);
+        #endregion
+        #endregion
     }
 }

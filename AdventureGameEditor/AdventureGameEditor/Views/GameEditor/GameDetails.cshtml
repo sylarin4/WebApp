@@ -1,0 +1,71 @@
+﻿@model AdventureGameEditor.Models.GameDetailsViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>GameDetails</title>
+</head>
+<body>
+
+    <div>
+        <h4>A játék létrehozása sikeres volt!</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.OwnerName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.OwnerName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Visibility)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Visibility)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TableSize)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TableSize)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StartField)
+            </dt>
+            <dd class="col-sm-10">
+                Sorszám: @Model.StartField.RowNumber, Oszlopszám: @Model.StartField.ColNumber
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TargetField)
+            </dt>
+            <dd class="col-sm-10">
+                Sorszám: @Model.TargetField.RowNumber, Oszlopszám: @Model.TargetField.ColNumber
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Map)
+            </dt>
+            <dd class="col-sm-10">
+                @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
+                    {
+                        MapSize = Model.TableSize,
+                        GameTitle = Model.Title,
+                        Map = Model.Map.ToList(),
+                        FunctionName = "LoadFieldDetails"
+                    });}
+            </dd>
+        </dl>
+    </div>
+    <div id="fieldDetails"></div>
+
+</body>
+
+
+</html>

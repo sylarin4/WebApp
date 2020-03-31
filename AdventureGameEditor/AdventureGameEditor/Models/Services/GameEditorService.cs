@@ -320,7 +320,7 @@ namespace AdventureGameEditor.Models
             }
             
         }
-    #endregion
+        #endregion
 
 
         #region //---------- Getters ----------// 
@@ -397,6 +397,7 @@ namespace AdventureGameEditor.Models
             return model;
         }
 
+        
 
 
         #endregion
@@ -420,6 +421,52 @@ namespace AdventureGameEditor.Models
             Game game = GetGameAtTitle(userName, gameTitle);
             game.TargetField = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             _context.SaveChanges();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Show game details
+
+        #region //---------- Getters ----------//
+
+        public GameDetailsViewModel GetGameDetailsViewModel(String userName, String gameTitle)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            return new GameDetailsViewModel()
+            {
+                OwnerName = userName,
+                Title= gameTitle,
+                Visibility = game.Visibility,
+                TableSize = game.TableSize,
+                Map = SortMap(game.Map.ToList()),
+                StartField = game.StartField,
+                TargetField = game.TargetField
+            };
+        }
+
+        public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber)
+        {
+            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            FieldDetailsViewModel fieldDetails = new FieldDetailsViewModel()
+            {
+                ColNumber = colNumber,
+                RowNumber = rowNumber,
+                TextContent = field.Text,
+                IsTrial = field.Trial == null ? false : true
+            };
+            if(field.Trial != null)
+            {
+                fieldDetails.AlternativeTexts = new List<string>();
+                fieldDetails.TrialResults = new List<TrialResult>();
+                for(int i = 0; i < field.Trial.Alternatives.Count; ++i)
+                {
+                    fieldDetails.AlternativeTexts.Add(field.Trial.Alternatives.ElementAt(i).Text);
+                    fieldDetails.TrialResults.Add(field.Trial.Alternatives.ElementAt(i).TrialResult);
+                }
+            }
+            return fieldDetails;
         }
 
         #endregion

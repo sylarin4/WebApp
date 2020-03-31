@@ -3,7 +3,6 @@
 
 // ---------- Functions for "CreateMapContent" view ---------- //
 
-
 // Used at: "CreateMapContent" view.
 // Load a form ("FormForAddFieldContent" partial view) to the "CreateMapContent" view after the user selected the field
 // he / she wants to add text or trial.
@@ -24,13 +23,26 @@ function SaveTargetField(gameTitle, rowNumber, colNumber) {
     LoadData(target, "SetTargetField", gameTitle, rowNumber, colNumber);
 }
 
+// If the user clicks on a map field, 
+// returns a partial view with the chosen field's data.
+function LoadFieldDetails(gameTitle, rowNumber, colNumber) {
+    var target = '#fieldDetails';
+    LoadData(target, "GetFieldDetailsPartialView", gameTitle, rowNumber, colNumber);
+}
+
+// Load buttons for a field, which make available to add text or trial or just show the already added content of it.
+function LoadButtonsForAddFieldContent(gameTitle, rowNumber, colNumber) {
+    var target = '#buttonsPlace';
+    LoadData(target, "GetButtonsForAddFieldContent", gameTitle, rowNumber, colNumber);
+}
+
 // ---------- Functions for "CreateMap" view ---------- //
 
 // Used at: "CreateMap" view.
 // Refreshes the field ("FieldPartialView" partial view) which is changed by the user.
 function RefreshField(gameTitle, rowNumber, colNumber) {
-    //console.log(gameTitle + rowNumber + colNumber);
-    var target = '#' + rowNumber + colNumber
+    console.log(gameTitle + rowNumber + colNumber);
+    var target = '#' + rowNumber + colNumber;
     //console.log("tareget in test:" + target);
     LoadData(target, 'RefreshField', gameTitle, rowNumber, colNumber);
 }
@@ -42,7 +54,7 @@ function SetWayDirections(wayDirectionsID, gameTitle) {
         url: 'SetRoadID',
         data: { gameTitle: gameTitle, wayDirectionsID: wayDirectionsID }
     });
-    //console.log(gameTitle + " " + wayDirectionsID);
+    console.log(gameTitle + " " + wayDirectionsID);
 }
 
 

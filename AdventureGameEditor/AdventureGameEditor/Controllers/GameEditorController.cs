@@ -111,6 +111,10 @@ namespace AdventureGameEditor.Controllers
             return View("CreateMapContent", model);
         }
 
+        public IActionResult GetButtonsForAddFieldContent(String gameTitle, int rowNumber, int colNumber)
+        {
+            return PartialView("ButtonsForAddFieldContentPartialView", _gameEditorService.GetFieldViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
+        }
 
         // Loads a form to add content to the selected field.
         public IActionResult GetFormForField(String gameTitle, int rowNumber, int colNumber)
@@ -215,6 +219,7 @@ namespace AdventureGameEditor.Controllers
             MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, gameTitle);
             model.FunctionName = "SaveTargetField";
             model.Action = "célmezőjének kiválasztása";
+            model.NextControllerAction = "GetGameDetailsPartialView";
             return View("CreateMapContent", model);
         }
 
@@ -233,6 +238,24 @@ namespace AdventureGameEditor.Controllers
             _gameEditorService.SaveTargetField(User.Identity.Name, gameTitle, rowNumber, colNumber);
             return "Célmező sorszáma " + rowNumber + ", oszopszáma " + colNumber + "lett beállítva.";
         }
+        #endregion
+
+        #endregion
+
+        #region Show details for a game
+
+        #region //---------- Getters ----------//
+
+        public IActionResult GetGameDetailsPartialView(String gameTitle)
+        {
+            return View("GameDetails", _gameEditorService.GetGameDetailsViewModel(User.Identity.Name, gameTitle));
+        }
+
+        public IActionResult GetFieldDetailsPartialView(String gameTitle, int colNumber, int rowNumber)
+        {
+            return PartialView("FieldDetails", _gameEditorService.GetFieldDetailsViewModel(User.Identity.Name, gameTitle, colNumber, rowNumber));
+        }
+
         #endregion
 
         #endregion

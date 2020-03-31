@@ -26,7 +26,7 @@ namespace AdventureGameEditor.Models
             {
                 // Only used for debugging.
                 // DropDatabase(context);
-                // return;
+                 // return;
 
                 context.Database.Migrate();
 

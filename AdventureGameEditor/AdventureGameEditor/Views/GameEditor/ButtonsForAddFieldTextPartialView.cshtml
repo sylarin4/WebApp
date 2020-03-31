@@ -1,0 +1,8 @@
+﻿@model AdventureGameEditor.Models.MapPieceViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<button type="button" onclick=" LoadFormForAddFieldText ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Szöveg hozzáadása </button>
+<button type="button" onclick=" LoadFormForAddFieldTrial ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Próba hozzáadása </button>
+<button type="button" onclick=" LoadFieldDetails ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Tartalom megjelenítése </button>
