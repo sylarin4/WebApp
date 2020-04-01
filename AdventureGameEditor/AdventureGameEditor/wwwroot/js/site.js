@@ -6,17 +6,24 @@
 // Load buttons for a field, which make available to add text or trial or just show the already added content of it.
 function LoadButtonsForAddFieldContent(gameTitle, rowNumber, colNumber) {
     var target = '#ButtonsPlace';
+
+    // Clear the content of the last editing.
     document.getElementById("InputArea").innerHTML = "";
+    document.getElementById("fieldDetails").innerHTML = "";
+    document.getElementById("ButtonsPlace").innerHTML = "";
+
     LoadData(target, "GetButtonsForAddFieldContent", gameTitle, rowNumber, colNumber);
 }
 
 // Load form for a field to add text content (it contens a text input area).
 function LoadFormForAddFieldText(gameTitle, rowNumber, colNumber) {
+    document.getElementById("fieldDetails").innerHTML = "";
     var target = '#InputArea';
     LoadData(target, "GetFormForFieldText", gameTitle, rowNumber, colNumber);
 }
 
 function LoadFormForAddFieldTrial(gameTitle, rowNumber, colNumber) {
+    document.getElementById("fieldDetails").innerHTML = "";
     var target = '#InputArea';
     LoadData(target, "GetFormForFieldTrial", gameTitle, rowNumber, colNumber);
 }
@@ -37,8 +44,11 @@ function SaveTargetField(gameTitle, rowNumber, colNumber) {
 // returns a partial view with the chosen field's data.
 function LoadFieldDetails(gameTitle, rowNumber, colNumber) {
     var target = '#fieldDetails';
+    document.getElementById("InputArea").innerHTML = "";
     LoadData(target, "GetFieldDetailsPartialView", gameTitle, rowNumber, colNumber);
 }
+
+
 
 // ---------- Functions for "CreateMap" view ---------- //
 

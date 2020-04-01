@@ -22,5 +22,10 @@ namespace AdventureGameEditor.Models
         // (The function's name which will be called from the GameEditorController after user 
         // clicked on the "Tovább" (next) link.)
         public String NextControllerAction { get; set; }
+
+        // If we reload the page after adding text or trial to the field, we reload the buttons for the selected field (thanks to 
+        // tehese informations), so the user don't need to select again the edited field to add more content or show it or edit it.
+        public Boolean IsFieldSelected { get; set; }
+        public Field SelectedField { get; set; }
     }
 }

@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\DatabaseModels\Gameplay\" />
     <Folder Include="Models\ViewModels\GameEditor\CurrentlyNotUsed\" />
   </ItemGroup>
 

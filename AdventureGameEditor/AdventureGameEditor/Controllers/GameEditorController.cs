@@ -108,6 +108,7 @@ namespace AdventureGameEditor.Controllers
             model.FunctionName = "LoadButtonsForAddFieldContent";
             model.Action = "térkép mezőinek kitöltése";
             model.NextControllerAction = "CreateMapStartField";
+            model.IsFieldSelected = false;
             return View("CreateMapContent", model);
         }
 
@@ -219,6 +220,8 @@ namespace AdventureGameEditor.Controllers
             model.FunctionName = "LoadButtonsForAddFieldContent";
             model.Action = "térkép mezőinek kitöltése";
             model.NextControllerAction = "CreateMapStartField";
+            model.IsFieldSelected = true;
+            model.SelectedField = _gameEditorService.GetField(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber);
             return View("CreateMapContent", model);
         }
 
@@ -246,6 +249,8 @@ namespace AdventureGameEditor.Controllers
             model.FunctionName = "LoadButtonsForAddFieldContent";
             model.Action = "térkép mezőinek kitöltése";
             model.NextControllerAction = "CreateMapStartField";
+            model.IsFieldSelected = true;
+            model.SelectedField = _gameEditorService.GetField(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber);
             return View("CreateMapContent", model);
         }
 

@@ -25,8 +25,8 @@ namespace AdventureGameEditor.Models
                 serviceProvider.GetRequiredService<DbContextOptions<AdventureGameEditorContext>>()))
             {
                 // Only used for debugging.
-                // DropDatabase(context);
-                 // return;
+                 //DropDatabase(context);
+                 //return;
 
                 context.Database.Migrate();
 

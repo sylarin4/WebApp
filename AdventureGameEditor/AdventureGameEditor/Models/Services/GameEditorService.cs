@@ -532,6 +532,10 @@ namespace AdventureGameEditor.Models
                 return textContent;
             }
         }
+        public Field GetField(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            return GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+        }
 
         #endregion
 

@@ -24,12 +24,25 @@
                 @Html.DisplayNameFor(model => model.TextContent)
             </dt>
             <dd class="col-sm-10">
+                @if (Model.TextContent.Length <= 0 || Model.TextContent == null)
+                {
+                    <p>A mező nem rendelkezik szöveggel.</p>
+                }
                 @Html.DisplayFor(model => model.TextContent)
             </dd>
 
             @*Trial informations.*@
 
-            @if (Model.IsTrial)
+            @if (!Model.IsTrial)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.TrialType)
+                </dt>
+                <dd class="col-sm-10">
+                    Nincs próba.
+                </dd>
+            }
+            else
             {
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.TrialType)
@@ -46,7 +59,8 @@
                     </dt>
                     <dd class="col-sm-10">
                         @Html.DisplayFor(model => model.AlternativeTexts[i])
-                    </dd>             
+                    </dd>
+
                     <dt class="col-sm-2">
                         @i. alternatíva szövege
                     </dt>
@@ -62,5 +76,4 @@
                 }
 
             }
-
         </dl>

@@ -19,11 +19,21 @@
             Map = Model.Map,
             FunctionName = Model.FunctionName
         });}
-    <div id="ButtonsPlace"></div>
+    <div id="ButtonsPlace">
 
-    <div id="InputArea">
-
+        @if (Model.IsFieldSelected == true)
+        {
+            await Html.RenderPartialAsync("ButtonsForAddFieldContentPartialView", new MapPieceViewModel()
+            {
+                GameTitle = Model.GameTitle,
+                Field = Model.SelectedField
+            }
+            );
+        }
     </div>
+    <div id="InputArea"> </div>
+
+    <div id="fieldDetails"></div>
 
     <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
 </body>

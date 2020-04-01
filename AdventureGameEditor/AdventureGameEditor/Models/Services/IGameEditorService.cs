@@ -57,6 +57,7 @@ namespace AdventureGameEditor.Models
         #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);
+        public Field GetField(String userName, String gameTitle, int rowNumber, int colNumber);
         #endregion
     }
 }
