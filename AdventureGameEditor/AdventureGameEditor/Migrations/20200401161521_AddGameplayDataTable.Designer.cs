@@ -4,14 +4,16 @@ using AdventureGameEditor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdventureGameEditor.Migrations
 {
     [DbContext(typeof(AdventureGameEditorContext))]
-    partial class AdventureGameEditorContextModelSnapshot : ModelSnapshot
+    [Migration("20200401161521_AddGameplayDataTable")]
+    partial class AddGameplayDataTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,9 +148,6 @@ namespace AdventureGameEditor.Migrations
 
                     b.Property<int?>("CurrentPlayerPositionID")
                         .HasColumnType("int");
-
-                    b.Property<string>("GameTitle")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsGameOver")
                         .HasColumnType("bit");

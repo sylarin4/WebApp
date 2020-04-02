@@ -44,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.TableSize)
             </td>
             <td>
-                Játék indítása
+                <a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@item.Title">Játék</a>
                 Játék részleteinek megjelenítése
                 Játék szerkesztése
             </td>

@@ -1,0 +1,12 @@
+﻿@model AdventureGameEditor.Models.GameplayViewModel
+@{
+    ViewData["Title"] = "GameplayView";
+}
+
+<h1>GameplayView</h1>
+
+@{ await Html.RenderPartialAsync("GameplayMapPartialView", new GameplayMapViewModel()
+    {
+       GameTitle = Model.GameTitle,
+       GameplayMap = Model.GameplayMap
+    });}

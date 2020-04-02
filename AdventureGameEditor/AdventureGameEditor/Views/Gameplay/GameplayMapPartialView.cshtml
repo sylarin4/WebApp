@@ -1,0 +1,29 @@
+﻿@model AdventureGameEditor.Models.GameplayMapViewModel
+@{
+    ViewData["Title"] = "GameplayMapPartialView";
+}
+
+<h1>GameplayMapPartialView</h1>
+
+
+<table border="1" frame="box" rules="all">
+    @foreach (List<GameplayField> row in Model.GameplayMap)
+    {
+        <tr>
+            @foreach (GameplayField field in row)
+            {
+                <td style="height:100px;width:100px">
+                    @*<button type="button" onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.RowNumber', '@field.ColNumber');">*@
+                        @*<div id="@field.RowNumber@field.ColNumber">*@
+                            @{
+                                await Html.RenderPartialAsync("GameplayFieldPartialView", field);
+                            }
+                        @*</div>
+                    </button>*@
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<script type="text/javascript" src="@Url.Content("/js/site.js")"></script>

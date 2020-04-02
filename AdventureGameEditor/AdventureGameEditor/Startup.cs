@@ -79,6 +79,7 @@ namespace AdventureGameEditor
 
             // Set dependency injections for GameEditorService service.
             services.AddTransient<IGameEditorService, GameEditorService>();
+            services.AddTransient<IGameplayService, GameplayService>();
         }
 
 
