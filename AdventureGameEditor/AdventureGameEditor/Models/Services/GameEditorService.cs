@@ -135,30 +135,32 @@ namespace AdventureGameEditor.Models
             //Trace.WriteLine("Is field null?: " + field == null);
             if(field != null)
             {
-                // Set direction "up".
-                if(wayDirectionsCode % 10 == 0)
-                    field.IsUpWay = false;
-                else
-                    field.IsUpWay = true;
-
-                // Set direction "right".
-                if((wayDirectionsCode/ 10)%10 == 0)
-                    field.IsRightWay = false;
-                else
-                    field.IsRightWay = true;
-
-                // Set direction "down".
-                if((wayDirectionsCode/100)%10 == 0)
-                    field.IsDownWay = false;
-                else
-                    field.IsDownWay = true;
-
                 // Set direction "left".
-                if((wayDirectionsCode/1000)%10 == 0)
+                if(wayDirectionsCode % 10 == 0)
                     field.IsLeftWay = false;
                 else
                     field.IsLeftWay = true;
 
+                // Set direction "down".
+                if((wayDirectionsCode/ 10)%10 == 0)
+                    field.IsDownWay = false;
+                else
+                    field.IsDownWay = true;
+
+                // Set direction "right".
+                if((wayDirectionsCode/100)%10 == 0)
+                    field.IsRightWay = false;
+                else
+                    field.IsRightWay = true;
+
+                // Set direction "up".
+                if((wayDirectionsCode/1000)%10 == 0)
+                    field.IsUpWay = false;
+                else
+                    field.IsUpWay = true;
+                Trace.WriteLine("\n\n\nWayDirectionsCode: " + wayDirectionsCode);
+                Trace.WriteLine("IsUpWay: " + field.IsUpWay + " IsDownWay: " + field.IsDownWay +
+                    " IsLeftWay: " + field.IsLeftWay + " IsRightWay: " + field.IsRightWay);
                 _context.SaveChanges();
             }
         }
