@@ -34,7 +34,7 @@ function SaveStartField(gameTitle, rowNumber, colNumber) {
     LoadData(target, "SetStartField", gameTitle, rowNumber, colNumber);
 }
 
-// Save the chosen trget field.
+// Save the chosen target field.
 function SaveTargetField(gameTitle, rowNumber, colNumber) {
     var target = '#InputArea';
     LoadData(target, "SetTargetField", gameTitle, rowNumber, colNumber);
@@ -69,6 +69,13 @@ function SetWayDirections(wayDirectionsID, gameTitle) {
         data: { gameTitle: gameTitle, wayDirectionsID: wayDirectionsID }
     });
     console.log(gameTitle + " " + wayDirectionsID);
+}
+
+// ---------- Functions for "GameplayView" view ----------//
+
+function Step(gameTitle, rowNumber, colNumber, direction) {
+    var target = "fieldDetails";
+    console.log(direction + " " + gameTitle + " " + rowNumber + " " + colNumber);
 }
 
 

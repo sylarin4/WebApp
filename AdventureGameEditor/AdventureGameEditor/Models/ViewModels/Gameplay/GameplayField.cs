@@ -7,6 +7,7 @@ namespace AdventureGameEditor.Models
 {
     public class GameplayField
     {
+        public String GameTitle { get; set; }
         public int RowNumber { get; set; }
         public int ColNumber { get; set; }
         public String Text { get; set; }

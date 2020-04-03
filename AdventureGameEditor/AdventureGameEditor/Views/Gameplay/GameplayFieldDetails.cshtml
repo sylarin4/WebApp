@@ -1,0 +1,59 @@
+﻿@model AdventureGameEditor.Models.GameplayField
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<p> Sorszám: @Model.RowNumber</p>
+<p>Oszlopszám: @Model.ColNumber</p>
+
+<div>
+    <p> @Model.Text </p>
+</div>
+<div>
+    @if(Model.Trial != null)
+    {
+        foreach(Alternative alternative in Model.Trial.Alternatives)
+        {
+            <p>@alternative.Text</p>
+        }
+    }
+</div>
+
+<div>
+    <table>
+        <tr>
+            <td></td>
+            <td>
+            @if (Model.IsUpWay)
+            {
+                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Up' )">Fel</button>
+            }
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                @if (Model.IsLeftWay)
+                {
+                    <p>Balra</p>
+                }
+             </td>
+            <td></td>
+            <td>
+                @if (Model.IsRightWay)
+                {
+                    <p>Jobbra</p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                @if (Model.IsDownWay)
+                {
+                    <p>Le</p>
+                }
+            </td>
+            <td></td>
+        </tr>
+    </table>
+</div>

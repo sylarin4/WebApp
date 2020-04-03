@@ -3,10 +3,31 @@
     ViewData["Title"] = "GameplayView";
 }
 
+    <head>
+        <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+        <title>Gameplay</title>
+    </head>
 <h1>GameplayView</h1>
+<div id="map">
+    @{ await Html.RenderPartialAsync("GameplayMapPartialView", new GameplayMapViewModel()
+        {
+            GameTitle = Model.GameTitle,
+            GameplayMap = Model.GameplayMap
+        });}
+</div>
 
-@{ await Html.RenderPartialAsync("GameplayMapPartialView", new GameplayMapViewModel()
-    {
-       GameTitle = Model.GameTitle,
-       GameplayMap = Model.GameplayMap
-    });}
+<div id="fieldDetails">
+    @{ await Html.RenderPartialAsync("GameplayFieldDetails", new GameplayField()
+        {
+            GameTitle = Model.GameTitle,
+            RowNumber = Model.CurrentPlayerPosition.RowNumber,
+            ColNumber = Model.CurrentPlayerPosition.ColNumber,
+            Text = Model.CurrentPlayerPosition.Text,
+            Trial = Model.CurrentPlayerPosition.Trial,
+            IsRightWay = Model.CurrentPlayerPosition.IsRightWay,
+            IsLeftWay = Model.CurrentPlayerPosition.IsLeftWay,
+            IsDownWay = Model.CurrentPlayerPosition.IsDownWay,
+            IsUpWay = Model.CurrentPlayerPosition.IsUpWay,
+            IsVisited = Model.GameplayMap[Model.CurrentPlayerPosition.RowNumber][Model.CurrentPlayerPosition.ColNumber].IsVisited
+        });}
+</div>
