@@ -19,6 +19,7 @@ namespace AdventureGameEditor.Models
         {
             _context = context;
         }
+        #region Initialize Gameplay
 
         public GameplayViewModel GetGameplayViewModel(String userName, String gameTitle)
         {
@@ -30,6 +31,7 @@ namespace AdventureGameEditor.Models
             // Check if we have to initialize.
             if(gameplayData == null)
             {
+                Trace.WriteLine("here we initialize GameplayData.");
                 gameplayData = new GameplayData()
                 {
                     Player = _context.User.Where(user => user.UserName == userName).FirstOrDefault(),
@@ -41,6 +43,7 @@ namespace AdventureGameEditor.Models
                     StartDate = DateTime.Now,
                     LastPlayDate = DateTime.Now
                 };
+                _context.GameplayData.Add(gameplayData);
             }
             _context.SaveChanges();
 
@@ -106,6 +109,69 @@ namespace AdventureGameEditor.Models
             return visitedFields;
         }
 
+        #endregion
+
+        #region Step and load game
+
+        public Field StepGame(String userName, String gameTitle, String direction)
+        {
+            GameplayData  gameplayData = GetGameplayData(userName, gameTitle);
+            
+            Field playerPosition = gameplayData.CurrentPlayerPosition;
+            int newColNumber = playerPosition.ColNumber;
+            int newRowNumber = playerPosition.RowNumber;
+            int tableSize = GetGame(userName, gameTitle).TableSize;
+            switch (direction)
+            {
+                case "Up":
+                    if(playerPosition.IsUpWay && playerPosition.RowNumber > 0)
+                        newRowNumber = playerPosition.RowNumber - 1;
+                    break;
+                case "Right":
+                    if (playerPosition.IsRightWay && playerPosition.ColNumber + 1 < tableSize)
+                        newColNumber = playerPosition.ColNumber + 1;
+                    break;
+                case "Down":
+                    if (playerPosition.IsDownWay && playerPosition.RowNumber + 1 < tableSize)
+                        newRowNumber = playerPosition.RowNumber + 1;
+                    break;
+                case "Left":
+                    if (playerPosition.IsLeftWay && playerPosition.ColNumber > 0)
+                        newColNumber = playerPosition.ColNumber - 1;
+                    break;
+            }
+            gameplayData.CurrentPlayerPosition = GetField(userName, gameTitle, newColNumber, newRowNumber);
+            gameplayData.StepCount++;
+            gameplayData.LastPlayDate = DateTime.Now;
+            Trace.WriteLine(gameplayData.ID + " " + 
+                gameplayData.Player.UserName + " " + 
+                gameplayData.GameTitle + " " + 
+                gameplayData.CurrentPlayerPosition.ColNumber + " " + 
+                gameplayData.CurrentPlayerPosition.RowNumber + " " + 
+                gameplayData.StepCount + " " +
+                gameplayData.IsGameOver + " " +
+                gameplayData.VisitedFields.Count + " " +
+                gameplayData.StartDate + " " + 
+                gameplayData.LastPlayDate);
+            _context.SaveChanges();
+            return gameplayData.CurrentPlayerPosition;
+        }
+
+
+        #endregion
+
+        #region Usually used getters
+
+        public Boolean GetIsVisitedField(String userName, String gameTitle, int colNumber, int rowNumber)
+        {
+            return GetGameplayData(userName, gameTitle).VisitedFields
+                .Where(field => field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Select(field => field.IsVisited)
+                .FirstOrDefault();
+        }
+
+        #endregion
+
         #region Helper functions
 
         private Game GetGame(String userName, String gameTitle)
@@ -114,6 +180,25 @@ namespace AdventureGameEditor.Models
                 .Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
                 .Include(game => game.Map)
                 .ThenInclude(map => map.Row)
+                .FirstOrDefault();
+        }
+
+        private GameplayData GetGameplayData(String userName, String gameTitle)
+        {
+            return _context.GameplayData
+                .Include(data => data.Player)
+                .Include(data => data.CurrentPlayerPosition)
+                .Where(data => data.Player.UserName == userName && data.GameTitle == gameTitle)
+                .Include(data => data.VisitedFields)
+                .FirstOrDefault();
+        }
+
+        private Field GetField(String userName, String gameTitle, int colNumber, int rowNumber)
+        {
+            return _context.Field.Where(field => field.Owner.UserName == userName && field.GameTitle == gameTitle
+            && field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Include(field => field.Trial)
+                .ThenInclude(trial => trial.Alternatives)
                 .FirstOrDefault();
         }
 

@@ -34,14 +34,14 @@
             <td>
                 @if (Model.IsLeftWay)
                 {
-                    <p>Balra</p>
+                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Left' )">Balra</button>
                 }
              </td>
             <td></td>
             <td>
                 @if (Model.IsRightWay)
                 {
-                    <p>Jobbra</p>
+                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Right' )">Jobbra</button>
                 }
             </td>
         </tr>
@@ -50,7 +50,7 @@
             <td>
                 @if (Model.IsDownWay)
                 {
-                    <p>Le</p>
+                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Down' )">Le</button>
                 }
             </td>
             <td></td>

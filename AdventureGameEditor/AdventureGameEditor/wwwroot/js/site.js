@@ -74,8 +74,13 @@ function SetWayDirections(wayDirectionsID, gameTitle) {
 // ---------- Functions for "GameplayView" view ----------//
 
 function Step(gameTitle, rowNumber, colNumber, direction) {
-    var target = "fieldDetails";
-    console.log(direction + " " + gameTitle + " " + rowNumber + " " + colNumber);
+    var target = "#fieldDetails";
+    $.ajax({
+        url: 'StepGame',
+        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, direction: direction },
+        success: function (result) { $(target).html(result); }
+    });
+    console.log(direction + " " + gameTitle + " " + rowNumber + " " + colNumber );
 }
 
 

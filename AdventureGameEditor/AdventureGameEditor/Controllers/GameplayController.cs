@@ -50,6 +50,27 @@ namespace AdventureGameEditor.Controllers
 
         #endregion
 
+        public IActionResult StepGame(String gameTitle, int rowNumber, int colnumber, string direction)
+        {
+            Field newPlayerPosition = _gameplayService.StepGame(User.Identity.Name, gameTitle, direction);
+            return PartialView("GameplayFieldDetails", new GameplayField()
+            {
+                GameTitle = gameTitle,
+                RowNumber = newPlayerPosition.RowNumber,
+                ColNumber = newPlayerPosition.ColNumber,
+                Text = newPlayerPosition.Text,
+                Trial = newPlayerPosition.Trial,
+                IsRightWay = newPlayerPosition.IsRightWay,
+                IsLeftWay = newPlayerPosition.IsLeftWay,
+                IsUpWay = newPlayerPosition.IsUpWay,
+                IsDownWay = newPlayerPosition.IsDownWay,
+                IsVisited = _gameplayService.GetIsVisitedField(User.Identity.Name, gameTitle, newPlayerPosition.ColNumber, newPlayerPosition.RowNumber)
+            });
+            
+        }
+
+        
+
         #region Default functions
 
         // GET: Gameplay
