@@ -12,7 +12,7 @@ namespace AdventureGameEditor.Models
 
         // What can be happens during this trial. (The options.)
         [Display(Name = "Alternatívák")]
-        public virtual ICollection<Alternative> Alternatives { get; set; }
+        public virtual IList<Alternative> Alternatives { get; set; }
 
         // Stores if it's a luck trial or multiple choice.
 

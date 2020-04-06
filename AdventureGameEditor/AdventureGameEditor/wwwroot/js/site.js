@@ -83,6 +83,14 @@ function Step(gameTitle, rowNumber, colNumber, direction) {
     console.log(direction + " " + gameTitle + " " + rowNumber + " " + colNumber );
 }
 
+function ChoseTrialAlternative(gameTitle, rowNumber, colNumber) {
+    var textContent = $('#choseTrialForm').serialize().toString();
+    console.log(textContent);
+    //$.ajax({
+     //   url: 'SaveTextContent',
+      //  data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, textContent: textContent }
+    //});
+}
 
 // ---------- Helper functions ---------- //
 
