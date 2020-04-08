@@ -15,16 +15,22 @@ namespace AdventureGameEditor.Models
     {
         protected readonly AdventureGameEditorContext _context;
 
+        #region Constructor
         public GameplayService(AdventureGameEditorContext context)
         {
             _context = context;
         }
-        #region Initialize Gameplay
 
+        #endregion
+
+        #region Initialize Gameplay
         public GameplayViewModel GetGameplayViewModel(String userName, String gameTitle)
         {
             GameplayData gameplayData = _context.GameplayData
                 .Where(gameplay => gameplay.Player.UserName == userName && gameplay.GameTitle == gameTitle)
+                .Include(data => data.CurrentPlayerPosition)
+                .ThenInclude(field => field.Trial)
+                .ThenInclude(trial => trial.Alternatives)
                 .FirstOrDefault();
             
                 Game game = GetGame(userName, gameTitle);
@@ -88,6 +94,7 @@ namespace AdventureGameEditor.Models
                 }
                 gameplayMap.Add(gameplayRow);
             }
+            gameplayMap = OrderGameplayMap(gameplayMap);
             return gameplayMap;
         }
 
@@ -116,7 +123,14 @@ namespace AdventureGameEditor.Models
         public Field StepGame(String userName, String gameTitle, String direction)
         {
             GameplayData  gameplayData = GetGameplayData(userName, gameTitle);
-            
+
+            // Set the last field to visited.
+            gameplayData.VisitedFields
+                .Where(field => field.ColNumber == gameplayData.CurrentPlayerPosition.ColNumber
+                    && field.RowNumber == gameplayData.CurrentPlayerPosition.RowNumber)
+                .FirstOrDefault()
+                .IsVisited = true;
+
             Field playerPosition = gameplayData.CurrentPlayerPosition;
             int newColNumber = playerPosition.ColNumber;
             int newRowNumber = playerPosition.RowNumber;
@@ -169,6 +183,16 @@ namespace AdventureGameEditor.Models
                 .Select(field => field.IsVisited)
                 .FirstOrDefault();
         }
+        public Trial GetTrial(String gameTitle, int colNumber, int rowNumber)
+        {
+            return _context.Field
+                .Where(field => field.GameTitle == gameTitle && field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Include(field => field.Trial)
+                .ThenInclude(trial => trial.Alternatives)
+                .ThenInclude(alt => alt.TrialResult)
+                .Select(field => field.Trial)
+                .FirstOrDefault();
+        }
 
         #endregion
 
@@ -201,6 +225,17 @@ namespace AdventureGameEditor.Models
                 .ThenInclude(trial => trial.Alternatives)
                 .FirstOrDefault();
         }
+
+        private List<List<GameplayField>> OrderGameplayMap(List<List<GameplayField>> map)
+        {
+            for(int i = 0; i < map.Count; ++i)
+            {
+                map[i] = map[i].OrderBy(row => row.ColNumber).ToList();
+            }
+            return map;
+        }
+
+
 
         #endregion
     }

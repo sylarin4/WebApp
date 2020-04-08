@@ -8,36 +8,25 @@
 <div>
     <p> @Model.Text </p>
 </div>
-<div>
-    @if (Model.Trial != null)
+<div id="choseTrialForm">
+    @if (Model.Trial != null && Model.IsVisited == false)
     {
-    <form method="post" id="choseTrialForm">
+    <form method="post" >
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-group">
-            <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
+            <label><input value="0" type="radio" checked="checked" asp-for="Trial.Alternatives[0].Text" id="trial" name="trial">@Model.Trial.Alternatives[0].Text</label>
         </div>
-
-        <div class="form-group">
-            <input type="hidden" asp-for="ColNumber" class="form-control" value="@Model.ColNumber" />
-        </div>
-
-        <div class="form-group">
-            <input type="hidden" asp-for="RowNumber" class="form-control" value="@Model.RowNumber" />
-        </div>
-
-        @for(int i = 0; i < Model.Trial.Alternatives.Count; ++i)
+        @for (int i = 1; i < Model.Trial.Alternatives.Count; ++i)
         {
-        <div class="form-group">
-            <input type="radio" asp-for="Trial.Alternatives[i].Text" value="@Model.Trial.Alternatives[i].Text" />@Model.Trial.Alternatives[i].Text <br />
-        </div>
+            <div class="form-group">
+                <label><input value="@i" type="radio" asp-for="Trial.Alternatives[i].Text" id="trial" name="trial">@Model.Trial.Alternatives[i].Text</label>
+            </div>
         }
+    </form>
         <div class="form-group">
-
             <button class="btn btn-primary" onclick="ChoseTrialAlternative('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber')">Választ</button>
         </div>
-    </form>
-        
     }
 </div>
 

@@ -85,11 +85,12 @@ function Step(gameTitle, rowNumber, colNumber, direction) {
 
 function ChoseTrialAlternative(gameTitle, rowNumber, colNumber) {
     var textContent = $('#choseTrialForm').serialize().toString();
-    console.log(textContent);
-    //$.ajax({
-     //   url: 'SaveTextContent',
-      //  data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, textContent: textContent }
-    //});
+    console.log("\n" + textContent[6] + "\n");
+    $.ajax({
+        url: 'ChoseAlternativeForTrial',
+        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, trialNumber: textContent[6] },
+        success: function (result) { document.getElementById("choseTrialForm").innerHTML = result; }
+    });
 }
 
 // ---------- Helper functions ---------- //

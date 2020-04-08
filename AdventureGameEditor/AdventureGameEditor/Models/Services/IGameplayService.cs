@@ -10,5 +10,6 @@ namespace AdventureGameEditor.Models
         public GameplayViewModel GetGameplayViewModel(String userName, String gameTitle);
         public Field StepGame(String userName, String gameTitle, String direction);
         public Boolean GetIsVisitedField(String userName, String gameTitle, int colNumber, int rowNumber);
+        public Trial GetTrial(String gameTitle, int colNumber, int rowNumber);
     }
 }
