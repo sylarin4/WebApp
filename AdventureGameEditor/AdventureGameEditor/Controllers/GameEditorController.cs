@@ -38,7 +38,7 @@ namespace AdventureGameEditor.Controllers
             Boolean initialGameSucceeded = _gameEditorService.InicializeGame(gameData.Title, gameData.TableSize, gameData.Visibility, owner);
             if (!initialGameSucceeded)
             {
-                ModelState.AddModelError("","Már van egy ilyen nevű kalandjátékod.");
+                ModelState.AddModelError("","Már van ilyen nevű kalandjáték.");
                 return View("CreateGame");
             }
             return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameData.Title));

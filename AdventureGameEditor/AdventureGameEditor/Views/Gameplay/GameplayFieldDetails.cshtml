@@ -1,9 +1,27 @@
-﻿@model AdventureGameEditor.Models.GameplayField
+﻿@model AdventureGameEditor.Models.GameplayFieldViewModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <p> Sorszám: @Model.RowNumber</p>
 <p>Oszlopszám: @Model.ColNumber</p>
+
+<div id="directionButtons">
+    @if(Model.Trial == null || Model.IsVisited)
+    {
+        await Html.RenderPartialAsync("DirectionButtonsPartialView", new DirectionButtonsViewModel()
+        {
+            GameTitle = Model.GameTitle,
+            RowNumber = Model.RowNumber,
+            ColNumber = Model.ColNumber,
+            GameLost = false,
+            GameWon = Model.IsGameOver,
+            IsDownWay = Model.IsDownWay,
+            IsLeftWay = Model.IsLeftWay,
+            IsRightWay = Model.IsRightWay,
+            IsUpWay = Model.IsUpWay
+        });
+    }
+</div>
 
 <div>
     <p> @Model.Text </p>
@@ -30,58 +48,3 @@
     }
 </div>
 
-<div>
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                @if (!Model.IsUpWay)
-                    {
-                        <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Up' )" disabled="disabled">Fel</button>
-                    }
-                    else
-                    {
-                        <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Up' )">Fel</button>
-                    }
-            </td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>
-                @if (!Model.IsLeftWay)
-                {
-                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Left' )" disabled="disabled">Balra</button>
-                }
-                else
-                {
-                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Left' )" >Balra</button>
-                }
-            </td>
-            <td></td>
-            <td>
-                @if (!Model.IsRightWay)
-                {
-                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Right' )" disabled="disabled">Jobbra</button>
-                }
-                else
-                {
-                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Right' )" >Jobbra</button>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                @if (!Model.IsDownWay)
-                {
-                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Down' )" disabled="disabled">Le</button>
-                }
-                else
-                {
-                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Down' )" >Le</button>
-                }
-            </td>
-            <td></td>
-        </tr>
-    </table>
-</div>

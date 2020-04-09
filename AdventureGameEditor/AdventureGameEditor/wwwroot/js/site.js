@@ -84,14 +84,20 @@ function Step(gameTitle, rowNumber, colNumber, direction) {
 }
 
 function ChoseTrialAlternative(gameTitle, rowNumber, colNumber) {
-    var textContent = $('#choseTrialForm').serialize().toString();
-    console.log("\n" + textContent[6] + "\n");
+    var trialNumber = $('#choseTrialForm').serialize().toString()[6];
+    LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'ChoseAlternativeForTrial', "choseTrialForm");
+    LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'LoadDirectionButtonsAfterTrial', "directionButtons");
+}
+
+// Helper function: loads  the trial result by ajax call.
+function LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, url, target) {
     $.ajax({
-        url: 'ChoseAlternativeForTrial',
-        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, trialNumber: textContent[6] },
-        success: function (result) { document.getElementById("choseTrialForm").innerHTML = result; }
+        url: url,
+        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, trialNumber: trialNumber },
+        success: function (result) { document.getElementById(target).innerHTML = result; }
     });
 }
+
 
 // ---------- Helper functions ---------- //
 

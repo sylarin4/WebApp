@@ -7,10 +7,10 @@
 
 
 <table border="1" frame="box" rules="all">
-    @foreach (List<GameplayField> row in Model.GameplayMap)
+    @foreach (List<GameplayFieldViewModel> row in Model.GameplayMap)
     {
         <tr>
-            @foreach (GameplayField field in row)
+            @foreach (GameplayFieldViewModel field in row)
             {
                 <td style="height:100px;width:100px">
                     @*<button type="button" onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.RowNumber', '@field.ColNumber');">*@

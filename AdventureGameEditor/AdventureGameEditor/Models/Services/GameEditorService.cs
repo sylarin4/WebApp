@@ -30,7 +30,7 @@ namespace AdventureGameEditor.Models
         #region Create game
         public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner)
         {
-            if (_context.Game.Any(game => game.Title == title && game.Owner == owner)) return false;
+            if (_context.Game.Any(game => game.Title == title)) return false;
 
             // Initialize a map.            
             List <MapRow> map = new List<MapRow>();

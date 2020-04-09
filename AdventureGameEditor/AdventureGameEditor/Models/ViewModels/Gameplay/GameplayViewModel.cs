@@ -13,7 +13,7 @@ namespace AdventureGameEditor.Models
         public Field TargetField { get; set; }
         public int StepCount { get; set; }
         public Boolean IsGameOver { get; set; }
-        public List<List<GameplayField>> GameplayMap { get; set; }
+        public List<List<GameplayFieldViewModel>> GameplayMap { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime LastPlayDate { get; set; }
     }

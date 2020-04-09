@@ -71,15 +71,15 @@ namespace AdventureGameEditor.Models
             return gameplayViewModel;
         }
 
-        public List<List<GameplayField>> InitializeGameplayMap(List<MapRow> map)
+        public List<List<GameplayFieldViewModel>> InitializeGameplayMap(List<MapRow> map)
         {
-            List<List<GameplayField>> gameplayMap = new List<List<GameplayField>>();
+            List<List<GameplayFieldViewModel>> gameplayMap = new List<List<GameplayFieldViewModel>>();
             foreach(MapRow row in map)
             {
-                List<GameplayField> gameplayRow = new List<GameplayField>();
+                List<GameplayFieldViewModel> gameplayRow = new List<GameplayFieldViewModel>();
                 foreach(Field field in row.Row)
                 {
-                    gameplayRow.Add(new GameplayField()
+                    gameplayRow.Add(new GameplayFieldViewModel()
                     {
                         RowNumber = field.RowNumber,
                         ColNumber = field.ColNumber,
@@ -157,6 +157,7 @@ namespace AdventureGameEditor.Models
             gameplayData.CurrentPlayerPosition = GetField(userName, gameTitle, newColNumber, newRowNumber);
             gameplayData.StepCount++;
             gameplayData.LastPlayDate = DateTime.Now;
+            gameplayData.IsGameOver = IsGameOver(gameTitle, newRowNumber, newColNumber);
             Trace.WriteLine(gameplayData.ID + " " + 
                 gameplayData.Player.UserName + " " + 
                 gameplayData.GameTitle + " " + 
@@ -193,10 +194,27 @@ namespace AdventureGameEditor.Models
                 .Select(field => field.Trial)
                 .FirstOrDefault();
         }
+        public Boolean IsGameOver(String gameTitle, int rowNumber, int colNumber)
+        {
+            return _context.Game
+                .Where(game => game.TargetField.ColNumber == colNumber && game.TargetField.RowNumber == rowNumber)
+                .ToList().Count > 0;
+        }
 
+        public Field GetField(String gameTitle, int rowNumber, int colNumber)
+        {
+            return _context.Field
+                .Where(field => field.GameTitle == gameTitle && field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Include(field => field.Trial)
+                .ThenInclude(trial => trial.Alternatives)
+                .ThenInclude(alternative => alternative.TrialResult)
+                .FirstOrDefault();
+        }
         #endregion
 
         #region Helper functions
+
+        
 
         private Game GetGame(String userName, String gameTitle)
         {
@@ -226,7 +244,7 @@ namespace AdventureGameEditor.Models
                 .FirstOrDefault();
         }
 
-        private List<List<GameplayField>> OrderGameplayMap(List<List<GameplayField>> map)
+        private List<List<GameplayFieldViewModel>> OrderGameplayMap(List<List<GameplayFieldViewModel>> map)
         {
             for(int i = 0; i < map.Count; ++i)
             {

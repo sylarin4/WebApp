@@ -8,6 +8,6 @@ namespace AdventureGameEditor.Models
     public class GameplayMapViewModel
     {
         public String GameTitle { get; set; }
-        public List<List<GameplayField>> GameplayMap { get; set; }
+        public List<List<GameplayFieldViewModel>> GameplayMap { get; set; }
     }
 }

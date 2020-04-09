@@ -17,7 +17,7 @@
 </div>
 
 <div id="fieldDetails">
-    @{ await Html.RenderPartialAsync("GameplayFieldDetails", new GameplayField()
+    @{ await Html.RenderPartialAsync("GameplayFieldDetails", new GameplayFieldViewModel()
         {
             GameTitle = Model.GameTitle,
             RowNumber = Model.CurrentPlayerPosition.RowNumber,

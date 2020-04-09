@@ -36,7 +36,7 @@ namespace AdventureGameEditor.Controllers
             return View("GameplayView", _gameplayService.GetGameplayViewModel(User.Identity.Name, gameTitle));
         }
 
-        public IActionResult GameplayFieldPartialView(GameplayField field)
+        public IActionResult GameplayFieldPartialView(GameplayFieldViewModel field)
         {
             return PartialView("GameplayFieldPartialView", field);
         }
@@ -55,7 +55,7 @@ namespace AdventureGameEditor.Controllers
         public IActionResult StepGame(String gameTitle, int rowNumber, int colnumber, string direction)
         {
             Field newPlayerPosition = _gameplayService.StepGame(User.Identity.Name, gameTitle, direction);
-            return PartialView("GameplayFieldDetails", new GameplayField()
+            return PartialView("GameplayFieldDetails", new GameplayFieldViewModel()
             {
                 GameTitle = gameTitle,
                 RowNumber = newPlayerPosition.RowNumber,
@@ -66,7 +66,9 @@ namespace AdventureGameEditor.Controllers
                 IsLeftWay = newPlayerPosition.IsLeftWay,
                 IsUpWay = newPlayerPosition.IsUpWay,
                 IsDownWay = newPlayerPosition.IsDownWay,
-                IsVisited = _gameplayService.GetIsVisitedField(User.Identity.Name, gameTitle, newPlayerPosition.ColNumber, newPlayerPosition.RowNumber)
+                IsVisited = _gameplayService.GetIsVisitedField(User.Identity.Name, gameTitle, 
+                    newPlayerPosition.ColNumber, newPlayerPosition.RowNumber),
+                IsGameOver = _gameplayService.IsGameOver(gameTitle, newPlayerPosition.RowNumber, newPlayerPosition.ColNumber)
             });
             
         }
@@ -78,7 +80,39 @@ namespace AdventureGameEditor.Controllers
             return _gameplayService.GetTrial(gameTitle,colNumber, rowNumber).Alternatives[trialNumber].TrialResult.Text;
         }
 
-
+        public IActionResult LoadDirectionButtonsAfterTrial(String gameTitle, int colNumber, int rowNumber, int trialNumber)
+        {
+            Field field = _gameplayService.GetField(gameTitle, rowNumber, colNumber);
+            switch(_gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType)
+            {
+                case ResultType.GameOver:
+                    return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
+                    {
+                        GameTitle = gameTitle,
+                        RowNumber = rowNumber,
+                        ColNumber = colNumber, 
+                        GameLost = true,
+                        GameWon = false,
+                        IsDownWay = field.IsDownWay,
+                        IsLeftWay = field.IsLeftWay,
+                        IsRightWay = field.IsRightWay,
+                        IsUpWay = field.IsUpWay
+                    });
+                default:
+                    return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
+                    {
+                        GameTitle = gameTitle,
+                        RowNumber = rowNumber,
+                        ColNumber = colNumber,
+                        GameLost = false,
+                        GameWon = false,
+                        IsDownWay = field.IsDownWay,
+                        IsLeftWay = field.IsLeftWay,
+                        IsRightWay = field.IsRightWay,
+                        IsUpWay = field.IsUpWay
+                    });
+            }
+        }
 
         #region Default functions
 
