@@ -516,6 +516,37 @@ namespace AdventureGameEditor.Models
 
         #endregion
 
+        #region Create game result
+
+        public Boolean SaveGameResults(String userName, String gameTitle, 
+            String gameWonResult, String gameLostResult)
+        {
+            // If the results empty or not set, don't save them.
+            if(gameLostResult == null || gameWonResult == null || gameLostResult == "" || gameWonResult == "") return false;
+            
+            Game game = GetGameAtTitle(userName, gameTitle);
+            if (game == null) return false;
+
+            game.GameLostResult = new GameResult()
+            {
+                Owner = game.Owner,
+                GameTitle = gameTitle, 
+                IsGameWonResult = false,
+                Text = gameLostResult
+            };
+            game.GameWonResult = new GameResult()
+            {
+                Owner = game.Owner,
+                GameTitle = gameTitle,
+                IsGameWonResult = true,
+                Text = gameWonResult
+            };
+            _context.SaveChanges();
+            return true;
+        }
+
+        #endregion
+
         #region Usually used getter functions
 
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber)

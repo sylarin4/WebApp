@@ -28,6 +28,7 @@ namespace AdventureGameEditor.Models
         {
             GameplayData gameplayData = _context.GameplayData
                 .Where(gameplay => gameplay.Player.UserName == userName && gameplay.GameTitle == gameTitle)
+                .Include(gameplay => gameplay.VisitedFields)
                 .Include(data => data.CurrentPlayerPosition)
                 .ThenInclude(field => field.Trial)
                 .ThenInclude(trial => trial.Alternatives)
@@ -37,7 +38,6 @@ namespace AdventureGameEditor.Models
             // Check if we have to initialize.
             if(gameplayData == null)
             {
-                Trace.WriteLine("here we initialize GameplayData.");
                 gameplayData = new GameplayData()
                 {
                     Player = _context.User.Where(user => user.UserName == userName).FirstOrDefault(),
@@ -65,7 +65,10 @@ namespace AdventureGameEditor.Models
                 IsGameOver = gameplayData.IsGameOver,
                 GameplayMap = InitializeGameplayMap(game.Map.ToList()),
                 StartDate = gameplayData.StartDate,
-                LastPlayDate = DateTime.Now
+                LastPlayDate = DateTime.Now,
+                IsVisitiedCurrentlayerPosition = gameplayData.VisitedFields
+                    .Where(field => field.RowNumber == gameplayData.CurrentPlayerPosition.RowNumber
+                    && field.ColNumber == gameplayData.CurrentPlayerPosition.ColNumber).FirstOrDefault().IsVisited
             };
 
             return gameplayViewModel;

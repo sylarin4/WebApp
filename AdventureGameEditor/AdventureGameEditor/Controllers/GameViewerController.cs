@@ -10,13 +10,11 @@ using AdventureGameEditor.Models;
 
 namespace AdventureGameEditor.Controllers
 {
-    public class GameViewerController : Controller
+    public class GameViewerController : BaseController
     {
-        private readonly AdventureGameEditorContext _context;
 
-        public GameViewerController(AdventureGameEditorContext context)
+        public GameViewerController(AdventureGameEditorContext context) : base(context)
         {
-            _context = context;
         }
 
         // GET: GameViewer

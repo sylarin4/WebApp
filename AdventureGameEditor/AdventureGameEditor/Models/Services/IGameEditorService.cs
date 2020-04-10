@@ -55,6 +55,9 @@ namespace AdventureGameEditor.Models
         public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber);
         #endregion
         #endregion
+        #region Create game result
+        public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult);
+        #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);
         public Field GetField(String userName, String gameTitle, int rowNumber, int colNumber);

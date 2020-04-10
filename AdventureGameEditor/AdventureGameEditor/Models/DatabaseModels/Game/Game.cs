@@ -32,6 +32,12 @@ namespace AdventureGameEditor.Models
         // Stores the player should reach which field to win the game.
         public Field TargetField { get; set; }
 
+        // Stores the information which show after a winning the game.
+        public GameResult GameWonResult { get; set; }
+
+        //Stores the informations which show after loseing the game.
+        public GameResult GameLostResult { get; set; }
+
         // Stores that which type of map picece is being put on the map.
         public int CurrentWayDirectionsCode { get; set; }
     }

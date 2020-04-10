@@ -288,7 +288,7 @@ namespace AdventureGameEditor.Controllers
             MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, gameTitle);
             model.FunctionName = "SaveTargetField";
             model.Action = "célmezőjének kiválasztása";
-            model.NextControllerAction = "GetGameDetailsPartialView";
+            model.NextControllerAction = "CreateGameResult";
             return View("CreateMapContent", model);
         }
 
@@ -310,6 +310,37 @@ namespace AdventureGameEditor.Controllers
         #endregion
 
         #endregion
+
+        #region Create game result
+
+        #region //---------- Getters ----------//
+
+        public IActionResult CreateGameResult(String gameTitle)
+        {
+            return View("CreateGameResultView", new GameResultViewModel() { GameTitle = gameTitle });
+        }
+
+        #endregion
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateGameResult(GameResultViewModel gameResult)
+        {
+            if(_gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
+                gameResult.GameLostResult))
+            {
+                return GetGameDetailsPartialView(gameResult.GameTitle);
+            }
+            else
+            {
+                return View("CreateGameResultView", new GameResultViewModel()
+                {
+                    GameTitle = gameResult.GameTitle
+                });
+            }
+        }
+
+        #endregion 
 
         #region Show details for a game
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MySql.Data.EntityFrameworkCore.DataAnnotations;
 
 namespace AdventureGameEditor.Models
 {
@@ -17,7 +16,6 @@ namespace AdventureGameEditor.Models
         public int ColNumber { get; set; }
 
         //Describes what happens on this field in the game.
-        [MySqlCharset("utf8")]
         public String Text { get; set; }
 
 

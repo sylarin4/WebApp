@@ -1,0 +1,40 @@
+﻿@model AdventureGameEditor.Models.GameResultViewModel
+@{
+    ViewData["Title"] = "CreateGameResultView";
+}
+
+<body>
+    <h2> Játék eredményének hozzáadása</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateGameResult">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="GameWonResult" class="control-label"></label>
+                    <input asp-for="GameWonResult" class="form-control" />
+                    <span asp-validation-for="GameWonResult" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GameLostResult" class="control-label"></label>
+                    <input asp-for="GameLostResult" class="form-control" />
+                    <span asp-validation-for="GameLostResult" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Mentés" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+
+}
+

@@ -24,9 +24,9 @@ namespace AdventureGameEditor.Models
             using (var context = new AdventureGameEditorContext(
                 serviceProvider.GetRequiredService<DbContextOptions<AdventureGameEditorContext>>()))
             {
-                // Only used for debugging.
-                 //DropDatabase(context);
-                 //return;
+                 // Only used for debugging.
+                 // DropDatabase(context);
+                 // return;
 
                 context.Database.Migrate();
 
