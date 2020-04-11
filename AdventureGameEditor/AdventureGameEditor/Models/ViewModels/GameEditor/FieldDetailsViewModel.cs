@@ -28,5 +28,7 @@ namespace AdventureGameEditor.Models
 
         [Display(Name = "alternatíva eredménye")]
         public List<TrialResult> TrialResults { get; set; }
+
+        public String TrialText { get; set; }
     }
 }

@@ -13,6 +13,11 @@ namespace AdventureGameEditor.Models
         public int RowNumber { get; set; }
         public List<String> AlternativeTexts { get; set; }
         public List<TrialResult> TrialResults { get; set; }
+
+        [Display(Name ="Próba típusa")]
         public TrialType TrialType { get; set; }
+
+        [Display(Name ="Próba szövege")]
+        public String Text { get; set; }
     }
 }

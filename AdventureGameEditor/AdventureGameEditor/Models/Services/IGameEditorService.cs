@@ -33,7 +33,7 @@ namespace AdventureGameEditor.Models
         #region Save
         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String Text);
         public void SaveTrial(String userName, String gameTitle, int rowNumber, int colNumber, List<String> alternativeTexts,
-           List<TrialResult> alternativeTrialResults, TrialType trialType);
+           List<TrialResult> alternativeTrialResults, TrialType trialType, String trialText);
         public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber);
         #endregion
         #region Getters

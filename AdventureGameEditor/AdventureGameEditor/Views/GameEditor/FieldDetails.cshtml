@@ -34,7 +34,7 @@
             @if (!Model.IsTrial)
             {
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.TrialType)
+                    @*@Html.DisplayNameFor(model => model.TrialType) *@
                 </dt>
                 <dd class="col-sm-10">
                     Nincs próba.
@@ -42,11 +42,21 @@
             }
             else
             {
+                @* Now only one type of trial available.*@
+                @*
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.TrialType)
+                @Html.DisplayNameFor(model => model.TrialType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TrialType)
+            </dd>
+                *@
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.TrialText)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.TrialType)
+                    @Html.DisplayFor(model => model.TrialText)
                 </dd>
 
                 @for (int i = 0; i < Model.AlternativeTexts.Count; ++i)

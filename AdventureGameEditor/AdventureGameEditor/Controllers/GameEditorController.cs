@@ -171,42 +171,6 @@ namespace AdventureGameEditor.Controllers
 
         #region // ---------- Setters ---------- //
 
-        // It isn't used now.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult SetTextForField(/*[Bind("GameTitle, ColNumber, RowNumbe, TextContent, Trial, AlternativeTexts, TrialResults, TrialType")]*/ FieldContentViewModel fieldData)
-        {
-            // Test writeing on console.
-            // Trace.WriteLine(fieldData.GameTitle + " " + fieldData.ColNumber + " " + fieldData.RowNumber + " " + fieldData.TextContent);
-
-            /*for(int i = 0; i < fieldData.AlternativeTexts.Count; ++i)
-            {
-                Trace.WriteLine(fieldData.AlternativeTexts.ElementAt(i));
-                Trace.WriteLine(fieldData.TrialResults.ElementAt(i));
-            }*/
-
-            // Convert lists to arrays to pass them to the service's functions for save.
-            String[] attributeTextsArray = new String[fieldData.AlternativeTexts.Count];
-            TrialResult[] trialResultsArray = new TrialResult[fieldData.TrialResults.Count];
-            for(int i = 0; i < fieldData.AlternativeTexts.Count; ++i)
-            {
-                attributeTextsArray[i] = fieldData.AlternativeTexts[i];
-                trialResultsArray[i] = fieldData.TrialResults[i];
-            }
-
-            // Saveing data.
-            _gameEditorService.AddTextToAFieldAt(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber, fieldData.TextContent);
-            _gameEditorService.SaveTrial(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber,
-                 fieldData.AlternativeTexts, fieldData.TrialResults, fieldData.TrialType);
-
-            // Return the user to the map content filling page to add texts and trials to the other fields too.
-            MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, fieldData.GameTitle);
-            model.FunctionName = "LoadFormForAddFieldContent";
-            model.Action = "térkép mezőinek kitöltése";
-            model.NextControllerAction = "CreateMapStartField";
-            return View("CreateMapContent", model);
-        }
-
         // Save the text of a field (
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -225,32 +189,32 @@ namespace AdventureGameEditor.Controllers
             return View("CreateMapContent", model);
         }
 
-        // Sace a trial of a field.
+        // Save a trial of a field.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SetTrialForField(FieldTrialContentViewModel fieldData)
+        public IActionResult SetTrialForField(FieldTrialContentViewModel trialData)
         {
 
             // Convert lists to arrays to pass them to the service's functions for save.
-            String[] attributeTextsArray = new String[fieldData.AlternativeTexts.Count];
-            TrialResult[] trialResultsArray = new TrialResult[fieldData.TrialResults.Count];
-            for (int i = 0; i < fieldData.AlternativeTexts.Count; ++i)
+            String[] attributeTextsArray = new String[trialData.AlternativeTexts.Count];
+            TrialResult[] trialResultsArray = new TrialResult[trialData.TrialResults.Count];
+            for (int i = 0; i < trialData.AlternativeTexts.Count; ++i)
             {
-                attributeTextsArray[i] = fieldData.AlternativeTexts[i];
-                trialResultsArray[i] = fieldData.TrialResults[i];
+                attributeTextsArray[i] = trialData.AlternativeTexts[i];
+                trialResultsArray[i] = trialData.TrialResults[i];
             }
 
             // Saveing data.
-            _gameEditorService.SaveTrial(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber,
-                 fieldData.AlternativeTexts, fieldData.TrialResults, fieldData.TrialType);
+            _gameEditorService.SaveTrial(User.Identity.Name, trialData.GameTitle, trialData.RowNumber, trialData.ColNumber,
+                 trialData.AlternativeTexts, trialData.TrialResults, trialData.TrialType, trialData.Text);
 
             // Return the user to the map content filling page to add texts and trials to the other fields too.
-            MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, fieldData.GameTitle);
+            MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, trialData.GameTitle);
             model.FunctionName = "LoadButtonsForAddFieldContent";
             model.Action = "térkép mezőinek kitöltése";
             model.NextControllerAction = "CreateMapStartField";
             model.IsFieldSelected = true;
-            model.SelectedField = _gameEditorService.GetField(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber);
+            model.SelectedField = _gameEditorService.GetField(User.Identity.Name, trialData.GameTitle, trialData.RowNumber, trialData.ColNumber);
             return View("CreateMapContent", model);
         }
 

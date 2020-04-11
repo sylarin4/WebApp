@@ -271,12 +271,14 @@ namespace AdventureGameEditor.Models
         }
 
         public void SaveTrial(String userName, String gameTitle, int rowNumber, int colNumber, List<String> alternativeTexts, 
-            List<TrialResult> alternativeTrialResults, TrialType trialType )
+            List<TrialResult> alternativeTrialResults, TrialType trialType, String trialText )
         {
             Trial trial = new Trial();
             trial.Alternatives = new List<Alternative>();
             trial.TrialType = trialType;
+
             // Test writing.
+            Trace.WriteLine("\n\n\n" + trialText + "\n\n\n");
             foreach(String text in alternativeTexts)
             {
                 Trace.WriteLine(text);
@@ -295,8 +297,9 @@ namespace AdventureGameEditor.Models
                     TrialResult = alternativeTrialResults[i]
                 });
             }
-            // Somehow, the trial results are saved incorrectly. Check if they are filled to trial corretly, and how 
-            // they were saved.
+
+            trial.Text = trialText;
+
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             field.Trial = trial;
             _context.SaveChanges();
@@ -512,6 +515,7 @@ namespace AdventureGameEditor.Models
                     fieldDetails.TrialResults.Add(field.Trial.Alternatives.ElementAt(i).TrialResult);
                 }
             }
+            fieldDetails.TrialText = field.Trial.Text;
             return fieldDetails;
         }
 

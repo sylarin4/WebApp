@@ -269,8 +269,12 @@ namespace AdventureGameEditor.Models
 
         private void DeleteGameplayData(String playerName, String gameTitle)
         {
-            _context.GameplayData.Remove(_context.GameplayData.Where(data => data.Player.UserName == playerName && data.GameTitle == gameTitle
-           && data.GameCondition != GameCondition.OnGoing).FirstOrDefault());
+            GameplayData dataToDelete = _context.GameplayData.Where(data => data.Player.UserName == playerName && data.GameTitle == gameTitle
+            ).FirstOrDefault();
+            if(dataToDelete != null)
+            {
+            _context.GameplayData.Remove(dataToDelete);
+            }
             _context.SaveChanges();
         }
 
