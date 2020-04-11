@@ -485,7 +485,10 @@ namespace AdventureGameEditor.Models
                 TableSize = game.TableSize,
                 Map = SortMap(game.Map.ToList()),
                 StartField = game.StartField,
-                TargetField = game.TargetField
+                TargetField = game.TargetField,
+                GameLostResult = game.GameLostResult.Text,
+                GameWonResult = game.GameWonResult.Text,
+                Prelude = game.Prelude.Text
             };
         }
 
