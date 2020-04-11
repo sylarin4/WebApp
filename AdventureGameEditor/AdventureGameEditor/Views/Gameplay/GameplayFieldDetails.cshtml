@@ -6,7 +6,7 @@
 <p>Oszlopszám: @Model.ColNumber</p>
 
 <div id="directionButtons">
-    @if(Model.Trial == null || Model.IsVisited)
+    @if ((Model.Trial == null || Model.IsVisited) && !Model.IsAtTargetField)
     {
         await Html.RenderPartialAsync("DirectionButtonsPartialView", new DirectionButtonsViewModel()
         {
@@ -14,16 +14,20 @@
             RowNumber = Model.RowNumber,
             ColNumber = Model.ColNumber,
             GameLost = false,
-            GameWon = Model.IsGameOver,
+            GameWon = Model.IsAtTargetField,
             IsDownWay = Model.IsDownWay,
             IsLeftWay = Model.IsLeftWay,
             IsRightWay = Model.IsRightWay,
             IsUpWay = Model.IsUpWay
         });
     }
+    else if (Model.IsAtTargetField)
+    {
+        <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+    }
 </div>
 
-<div>
+<div id="FieldText">
     <p> @Model.Text </p>
 </div>
 <div id="choseTrialForm">

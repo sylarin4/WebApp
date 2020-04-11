@@ -327,7 +327,7 @@ namespace AdventureGameEditor.Controllers
         public IActionResult CreateGameResult(GameResultViewModel gameResult)
         {
             if(_gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
-                gameResult.GameLostResult))
+                gameResult.GameLostResult, gameResult.Prelude))
             {
                 return GetGameDetailsPartialView(gameResult.GameTitle);
             }

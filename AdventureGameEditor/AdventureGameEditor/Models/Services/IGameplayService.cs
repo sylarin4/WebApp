@@ -11,7 +11,8 @@ namespace AdventureGameEditor.Models
         public Field StepGame(String userName, String gameTitle, String direction);
         public Boolean GetIsVisitedField(String userName, String gameTitle, int colNumber, int rowNumber);
         public Trial GetTrial(String gameTitle, int colNumber, int rowNumber);
-        public Boolean IsGameOver(String gameTitle, int rowNumber, int colNumber);
+        public Boolean IsAtTargetField(String gameTitle, int rowNumber, int colNumber);
         public Field GetField(String gameTitle, int rowNumber, int colNumber);
+        public GameResult GetGameResult(String gameTitle, String userName);
     }
 }

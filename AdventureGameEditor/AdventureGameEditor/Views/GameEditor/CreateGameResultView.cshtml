@@ -14,13 +14,18 @@
                     <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
                 </div>
                 <div class="form-group">
+                    <label asp-for="Prelude" class="control-label"></label>
+                    <textarea asp-for="Prelude" class="form-control"></textarea>
+                    <span asp-validation-for="Prelude" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="GameWonResult" class="control-label"></label>
-                    <input asp-for="GameWonResult" class="form-control" />
+                    <textarea asp-for="GameWonResult" class="form-control" ></textarea>
                     <span asp-validation-for="GameWonResult" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="GameLostResult" class="control-label"></label>
-                    <input asp-for="GameLostResult" class="form-control" />
+                    <textarea asp-for="GameLostResult" class="form-control"></textarea>
                     <span asp-validation-for="GameLostResult" class="text-danger"></span>
                 </div>
                 <div class="form-group">

@@ -68,7 +68,7 @@ namespace AdventureGameEditor.Controllers
                 IsDownWay = newPlayerPosition.IsDownWay,
                 IsVisited = _gameplayService.GetIsVisitedField(User.Identity.Name, gameTitle, 
                     newPlayerPosition.ColNumber, newPlayerPosition.RowNumber),
-                IsGameOver = _gameplayService.IsGameOver(gameTitle, newPlayerPosition.RowNumber, newPlayerPosition.ColNumber)
+                IsAtTargetField = _gameplayService.IsAtTargetField(gameTitle, newPlayerPosition.RowNumber, newPlayerPosition.ColNumber)
             });
             
         }
@@ -112,6 +112,11 @@ namespace AdventureGameEditor.Controllers
                         IsUpWay = field.IsUpWay
                     });
             }
+        }
+
+        public IActionResult GetGameResult(String gameTitle)
+        {
+            return View("GameResultView", _gameplayService.GetGameResult(gameTitle, User.Identity.Name));
         }
 
         #region Default functions

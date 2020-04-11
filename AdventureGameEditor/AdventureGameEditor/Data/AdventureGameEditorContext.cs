@@ -32,6 +32,8 @@ namespace AdventureGameEditor.Data
 
         public DbSet<AdventureGameEditor.Models.GameplayData> GameplayData { get; set; }
 
+        public DbSet<AdventureGameEditor.Models.GameResult> GameResult { get; set; }
+
         //public DbSet<AdventureGameEditor.Models.Feedback> Feedback { get; set; }
     }
 }

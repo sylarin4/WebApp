@@ -519,7 +519,7 @@ namespace AdventureGameEditor.Models
         #region Create game result
 
         public Boolean SaveGameResults(String userName, String gameTitle, 
-            String gameWonResult, String gameLostResult)
+            String gameWonResult, String gameLostResult, String prelude)
         {
             // If the results empty or not set, don't save them.
             if(gameLostResult == null || gameWonResult == null || gameLostResult == "" || gameWonResult == "") return false;
@@ -540,6 +540,12 @@ namespace AdventureGameEditor.Models
                 GameTitle = gameTitle,
                 IsGameWonResult = true,
                 Text = gameWonResult
+            };
+            game.Prelude = new Prelude()
+            {
+                Text = prelude,
+                Owner = game.Owner,
+                GameTitle = gameTitle
             };
             _context.SaveChanges();
             return true;

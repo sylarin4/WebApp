@@ -17,6 +17,6 @@ namespace AdventureGameEditor.Models
         public Boolean IsUpWay { get; set; }
         public Boolean IsDownWay { get; set; }
         public Boolean IsVisited { get; set; }
-        public Boolean IsGameOver { get; set; }
+        public Boolean IsAtTargetField { get; set; }
     }
 }

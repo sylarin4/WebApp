@@ -56,7 +56,8 @@ namespace AdventureGameEditor.Models
         #endregion
         #endregion
         #region Create game result
-        public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult);
+        public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, 
+            String gameLostResult, String prelude);
         #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);

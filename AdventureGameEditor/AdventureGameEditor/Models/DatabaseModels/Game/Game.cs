@@ -38,6 +38,9 @@ namespace AdventureGameEditor.Models
         //Stores the informations which show after loseing the game.
         public GameResult GameLostResult { get; set; }
 
+        // Stires the prelude of the game.
+        public Prelude Prelude { get; set; }
+
         // Stores that which type of map picece is being put on the map.
         public int CurrentWayDirectionsCode { get; set; }
     }

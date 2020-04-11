@@ -33,10 +33,10 @@ namespace AdventureGameEditor.Models
                 .ThenInclude(field => field.Trial)
                 .ThenInclude(trial => trial.Alternatives)
                 .FirstOrDefault();
-            
-                Game game = GetGame(userName, gameTitle);
+
+            Game game = GetGame(userName, gameTitle);
             // Check if we have to initialize.
-            if(gameplayData == null)
+            if (gameplayData == null)
             {
                 gameplayData = new GameplayData()
                 {
@@ -44,7 +44,7 @@ namespace AdventureGameEditor.Models
                     GameTitle = gameTitle,
                     CurrentPlayerPosition = game.StartField,
                     StepCount = 0,
-                    IsGameOver = false,
+                    GameCondition = GameCondition.OnGoing,
                     VisitedFields = InitializeVisitedFields(game.TableSize),
                     StartDate = DateTime.Now,
                     LastPlayDate = DateTime.Now
@@ -62,7 +62,7 @@ namespace AdventureGameEditor.Models
                 CurrentPlayerPosition = gameplayData.CurrentPlayerPosition,
                 TargetField = game.TargetField,
                 StepCount = gameplayData.StepCount,
-                IsGameOver = gameplayData.IsGameOver,
+                IsGameOver = gameplayData.GameCondition != GameCondition.OnGoing,
                 GameplayMap = InitializeGameplayMap(game.Map.ToList()),
                 StartDate = gameplayData.StartDate,
                 LastPlayDate = DateTime.Now,
@@ -77,10 +77,10 @@ namespace AdventureGameEditor.Models
         public List<List<GameplayFieldViewModel>> InitializeGameplayMap(List<MapRow> map)
         {
             List<List<GameplayFieldViewModel>> gameplayMap = new List<List<GameplayFieldViewModel>>();
-            foreach(MapRow row in map)
+            foreach (MapRow row in map)
             {
                 List<GameplayFieldViewModel> gameplayRow = new List<GameplayFieldViewModel>();
-                foreach(Field field in row.Row)
+                foreach (Field field in row.Row)
                 {
                     gameplayRow.Add(new GameplayFieldViewModel()
                     {
@@ -104,9 +104,9 @@ namespace AdventureGameEditor.Models
         public List<IsVisitedField> InitializeVisitedFields(int mapSize)
         {
             List<IsVisitedField> visitedFields = new List<IsVisitedField>();
-            for(int i = 0; i < mapSize; ++i)
+            for (int i = 0; i < mapSize; ++i)
             {
-                for(int j = 0; j < mapSize; ++j)
+                for (int j = 0; j < mapSize; ++j)
                 {
                     visitedFields.Add(new IsVisitedField()
                     {
@@ -125,7 +125,7 @@ namespace AdventureGameEditor.Models
 
         public Field StepGame(String userName, String gameTitle, String direction)
         {
-            GameplayData  gameplayData = GetGameplayData(userName, gameTitle);
+            GameplayData gameplayData = GetGameplayData(userName, gameTitle);
 
             // Set the last field to visited.
             gameplayData.VisitedFields
@@ -141,7 +141,7 @@ namespace AdventureGameEditor.Models
             switch (direction)
             {
                 case "Up":
-                    if(playerPosition.IsUpWay && playerPosition.RowNumber > 0)
+                    if (playerPosition.IsUpWay && playerPosition.RowNumber > 0)
                         newRowNumber = playerPosition.RowNumber - 1;
                     break;
                 case "Right":
@@ -160,21 +160,30 @@ namespace AdventureGameEditor.Models
             gameplayData.CurrentPlayerPosition = GetField(userName, gameTitle, newColNumber, newRowNumber);
             gameplayData.StepCount++;
             gameplayData.LastPlayDate = DateTime.Now;
-            gameplayData.IsGameOver = IsGameOver(gameTitle, newRowNumber, newColNumber);
-            Trace.WriteLine(gameplayData.ID + " " + 
-                gameplayData.Player.UserName + " " + 
-                gameplayData.GameTitle + " " + 
-                gameplayData.CurrentPlayerPosition.ColNumber + " " + 
-                gameplayData.CurrentPlayerPosition.RowNumber + " " + 
+            gameplayData.GameCondition =
+                (IsAtTargetField(gameTitle, newRowNumber, newColNumber) && GetTrial(gameTitle, newColNumber, newRowNumber) == null)
+                ? GameCondition.Won : GameCondition.OnGoing;
+            Trace.WriteLine(gameplayData.ID + " " +
+                gameplayData.Player.UserName + " " +
+                gameplayData.GameTitle + " " +
+                gameplayData.CurrentPlayerPosition.ColNumber + " " +
+                gameplayData.CurrentPlayerPosition.RowNumber + " " +
                 gameplayData.StepCount + " " +
-                gameplayData.IsGameOver + " " +
+                gameplayData.GameCondition + " " +
                 gameplayData.VisitedFields.Count + " " +
-                gameplayData.StartDate + " " + 
+                gameplayData.StartDate + " " +
                 gameplayData.LastPlayDate);
             _context.SaveChanges();
             return gameplayData.CurrentPlayerPosition;
         }
 
+        public GameResult GetGameResult(String gameTitle, String userName)
+        {
+            Boolean isgameWon = GetGameplayData(userName, gameTitle).GameCondition == GameCondition.Won;
+            DeleteGameplayData(userName, gameTitle);
+            return _context.GameResult.Where(result => result.GameTitle == gameTitle && result.IsGameWonResult == isgameWon)
+                .FirstOrDefault();
+        }
 
         #endregion
 
@@ -197,7 +206,7 @@ namespace AdventureGameEditor.Models
                 .Select(field => field.Trial)
                 .FirstOrDefault();
         }
-        public Boolean IsGameOver(String gameTitle, int rowNumber, int colNumber)
+        public Boolean IsAtTargetField(String gameTitle, int rowNumber, int colNumber)
         {
             return _context.Game
                 .Where(game => game.TargetField.ColNumber == colNumber && game.TargetField.RowNumber == rowNumber)
@@ -217,7 +226,7 @@ namespace AdventureGameEditor.Models
 
         #region Helper functions
 
-        
+
 
         private Game GetGame(String userName, String gameTitle)
         {
@@ -225,6 +234,8 @@ namespace AdventureGameEditor.Models
                 .Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
                 .Include(game => game.Map)
                 .ThenInclude(map => map.Row)
+                .ThenInclude(field => field.Trial)
+                .ThenInclude(trial => trial.Alternatives)
                 .FirstOrDefault();
         }
 
@@ -249,11 +260,18 @@ namespace AdventureGameEditor.Models
 
         private List<List<GameplayFieldViewModel>> OrderGameplayMap(List<List<GameplayFieldViewModel>> map)
         {
-            for(int i = 0; i < map.Count; ++i)
+            for (int i = 0; i < map.Count; ++i)
             {
                 map[i] = map[i].OrderBy(row => row.ColNumber).ToList();
             }
             return map;
+        }
+
+        private void DeleteGameplayData(String playerName, String gameTitle)
+        {
+            _context.GameplayData.Remove(_context.GameplayData.Where(data => data.Player.UserName == playerName && data.GameTitle == gameTitle
+           && data.GameCondition != GameCondition.OnGoing).FirstOrDefault());
+            _context.SaveChanges();
         }
 
 
