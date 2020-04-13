@@ -33,7 +33,12 @@ namespace AdventureGameEditor.Controllers
 
         public IActionResult GameplayView(String gameTitle)
         {
-            return View("GameplayView", _gameplayService.GetGameplayViewModel(User.Identity.Name, gameTitle));
+            GameplayViewModel model = _gameplayService.GetGameplayViewModel(User.Identity.Name, gameTitle);
+            if(model == null)
+            {
+                return RedirectToAction("Index", "GameViewer");
+            }
+            return View("GameplayView",model);
         }
 
         public IActionResult GameplayFieldPartialView(GameplayFieldViewModel field)

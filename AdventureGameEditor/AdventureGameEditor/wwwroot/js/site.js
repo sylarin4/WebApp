@@ -99,7 +99,6 @@ function LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, url, targ
     });
 }
 
-
 // ---------- Helper functions ---------- //
 
 

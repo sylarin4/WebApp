@@ -8,7 +8,7 @@ namespace AdventureGameEditor.Models
     public class GameplayData
     {
         public int ID { get; set; }
-        public User Player { get; set; }
+        public String PlayerName { get; set; }
         public String GameTitle { get; set; }
         public Field CurrentPlayerPosition { get; set; }
         public int StepCount { get; set; }

@@ -4,11 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Játékok</h1>
+<head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+</head>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="ErorrMessages"> @if (ViewBag.CurrentGuestName == null) 
+    {
+        <p>Be kell jelentkezned ahhoz, hogy játszhass, vagy játékot szerkeszthess!</p>
+    }
+    </div>
 <table class="table">
     <thead>
         <tr>
@@ -44,9 +49,12 @@
                 @Html.DisplayFor(modelItem => item.TableSize)
             </td>
             <td>
-                <a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@item.Title">Játék</a>
+                @if (ViewBag.CurrentGuestName != null)
+                {
+                    <a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@item.Title">Játék</a>
+                    <p>Játék szerkesztése</p>
+                }
                 Játék részleteinek megjelenítése
-                Játék szerkesztése
             </td>
         </tr>
 }

@@ -26,21 +26,37 @@ namespace AdventureGameEditor.Models
         #region Initialize Gameplay
         public GameplayViewModel GetGameplayViewModel(String userName, String gameTitle)
         {
+            // Currently not available to play while u aren't registered. 
+            // (A new table should be created to temprorary store the informations about a visitor.)
+            /*if(userName == null)
+            {
+                int i = 0;
+                while(_context.User.Any(user => user.UserName == ("Visitor" + i)) ||
+                    _context.GameplayData.Any(data => userName == ("Visitor" + i)))
+                {
+                    ++i;
+                }
+                userName = "Visitor" + i;
+            }*/
+            if(userName == null)
+            {
+                return null;
+            }
             GameplayData gameplayData = _context.GameplayData
-                .Where(gameplay => gameplay.Player.UserName == userName && gameplay.GameTitle == gameTitle)
+                .Where(gameplay => gameplay.PlayerName == userName && gameplay.GameTitle == gameTitle)
                 .Include(gameplay => gameplay.VisitedFields)
                 .Include(data => data.CurrentPlayerPosition)
                 .ThenInclude(field => field.Trial)
                 .ThenInclude(trial => trial.Alternatives)
                 .FirstOrDefault();
 
-            Game game = GetGame(userName, gameTitle);
+            Game game = GetGame(gameTitle);
             // Check if we have to initialize.
             if (gameplayData == null)
             {
                 gameplayData = new GameplayData()
                 {
-                    Player = _context.User.Where(user => user.UserName == userName).FirstOrDefault(),
+                    PlayerName = userName,
                     GameTitle = gameTitle,
                     CurrentPlayerPosition = game.StartField,
                     StepCount = 0,
@@ -137,7 +153,7 @@ namespace AdventureGameEditor.Models
             Field playerPosition = gameplayData.CurrentPlayerPosition;
             int newColNumber = playerPosition.ColNumber;
             int newRowNumber = playerPosition.RowNumber;
-            int tableSize = GetGame(userName, gameTitle).TableSize;
+            int tableSize = GetGame(gameTitle).TableSize;
             switch (direction)
             {
                 case "Up":
@@ -164,7 +180,7 @@ namespace AdventureGameEditor.Models
                 (IsAtTargetField(gameTitle, newRowNumber, newColNumber) && GetTrial(gameTitle, newColNumber, newRowNumber) == null)
                 ? GameCondition.Won : GameCondition.OnGoing;
             Trace.WriteLine(gameplayData.ID + " " +
-                gameplayData.Player.UserName + " " +
+                gameplayData.PlayerName + " " +
                 gameplayData.GameTitle + " " +
                 gameplayData.CurrentPlayerPosition.ColNumber + " " +
                 gameplayData.CurrentPlayerPosition.RowNumber + " " +
@@ -242,10 +258,10 @@ namespace AdventureGameEditor.Models
 
 
 
-        private Game GetGame(String userName, String gameTitle)
+        private Game GetGame(String gameTitle)
         {
             return _context.Game
-                .Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
+                .Where(game => game.Title == gameTitle)
                 .Include(game => game.Map)
                 .ThenInclude(map => map.Row)
                 .ThenInclude(field => field.Trial)
@@ -256,9 +272,8 @@ namespace AdventureGameEditor.Models
         private GameplayData GetGameplayData(String userName, String gameTitle)
         {
             return _context.GameplayData
-                .Include(data => data.Player)
                 .Include(data => data.CurrentPlayerPosition)
-                .Where(data => data.Player.UserName == userName && data.GameTitle == gameTitle)
+                .Where(data => data.PlayerName == userName && data.GameTitle == gameTitle)
                 .Include(data => data.VisitedFields)
                 .FirstOrDefault();
         }
@@ -283,7 +298,7 @@ namespace AdventureGameEditor.Models
 
         private void DeleteGameplayData(String playerName, String gameTitle)
         {
-            GameplayData dataToDelete = _context.GameplayData.Where(data => data.Player.UserName == playerName && data.GameTitle == gameTitle
+            GameplayData dataToDelete = _context.GameplayData.Where(data => data.PlayerName == playerName && data.GameTitle == gameTitle
             ).FirstOrDefault();
             if(dataToDelete != null)
             {
