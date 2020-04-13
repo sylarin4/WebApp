@@ -507,6 +507,7 @@ namespace AdventureGameEditor.Models
             };
             if(field.Trial != null)
             {
+                fieldDetails.TrialText = field.Trial.Text;
                 fieldDetails.AlternativeTexts = new List<string>();
                 fieldDetails.TrialResults = new List<TrialResult>();
                 for(int i = 0; i < field.Trial.Alternatives.Count; ++i)
@@ -515,7 +516,6 @@ namespace AdventureGameEditor.Models
                     fieldDetails.TrialResults.Add(field.Trial.Alternatives.ElementAt(i).TrialResult);
                 }
             }
-            fieldDetails.TrialText = field.Trial.Text;
             return fieldDetails;
         }
 

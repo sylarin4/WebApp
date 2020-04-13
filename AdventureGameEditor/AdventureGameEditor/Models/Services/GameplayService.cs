@@ -185,6 +185,20 @@ namespace AdventureGameEditor.Models
                 .FirstOrDefault();
         }
 
+        public void SetGameOver(String playerName, String gameTitle, Boolean isGameWon)
+        {
+            GameplayData gameplayData = GetGameplayData(playerName, gameTitle);
+            if (isGameWon)
+            {
+                gameplayData.GameCondition = GameCondition.Won;
+            }
+            else
+            {
+                gameplayData.GameCondition = GameCondition.Lost;
+            }
+            _context.SaveChanges();
+        }
+
         #endregion
 
         #region Usually used getters

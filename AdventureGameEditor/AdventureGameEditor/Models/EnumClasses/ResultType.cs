@@ -13,7 +13,9 @@ namespace AdventureGameEditor.Models
         Teleport,
         [Display(Name = "Semmi")]
         Nothing,
-        [Display(Name = "Játék vége")]
-        GameOver
+        [Display(Name = "Játék elvesztése")]
+        GameLost,
+        [Display(Name ="Játék megnyerése")]
+        GameWon
     }
 }

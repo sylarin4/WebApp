@@ -85,7 +85,8 @@ namespace AdventureGameEditor.Controllers
             Field field = _gameplayService.GetField(gameTitle, rowNumber, colNumber);
             switch(_gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType)
             {
-                case ResultType.GameOver:
+                case ResultType.GameLost:
+                    _gameplayService.SetGameOver(User.Identity.Name, gameTitle, false);
                     return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
                     {
                         GameTitle = gameTitle,
@@ -93,6 +94,20 @@ namespace AdventureGameEditor.Controllers
                         ColNumber = colNumber, 
                         GameLost = true,
                         GameWon = false,
+                        IsDownWay = field.IsDownWay,
+                        IsLeftWay = field.IsLeftWay,
+                        IsRightWay = field.IsRightWay,
+                        IsUpWay = field.IsUpWay
+                    });
+                case ResultType.GameWon:
+                    _gameplayService.SetGameOver(User.Identity.Name, gameTitle, true);
+                    return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
+                    {
+                        GameTitle = gameTitle,
+                        RowNumber = rowNumber,
+                        ColNumber = colNumber,
+                        GameLost = false,
+                        GameWon = true,
                         IsDownWay = field.IsDownWay,
                         IsLeftWay = field.IsLeftWay,
                         IsRightWay = field.IsRightWay,

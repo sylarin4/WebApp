@@ -14,5 +14,6 @@ namespace AdventureGameEditor.Models
         public Boolean IsAtTargetField(String gameTitle, int rowNumber, int colNumber);
         public Field GetField(String gameTitle, int rowNumber, int colNumber);
         public GameResult GetGameResult(String gameTitle, String userName);
+        public void SetGameOver(String playerName, String gameTitle, Boolean isGameWon);
     }
 }
