@@ -51,7 +51,7 @@
             <td>
                 @if (ViewBag.CurrentGuestName != null)
                 {
-                    <a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@item.Title">Játék</a>
+                    <a asp-controller="Gameplay" asp-action="GetPrelude" asp-route-gameTitle="@item.Title">Játék</a>
                     <p>Játék szerkesztése</p>
                 }
                 Játék részleteinek megjelenítése

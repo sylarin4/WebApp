@@ -1,0 +1,12 @@
+﻿@model AdventureGameEditor.Models.PreludeViewModel
+@{
+    ViewData["Title"] = "PreludeView";
+}
+
+<h1>Bevezető</h1>
+
+<div>
+    <p>@Model.Text</p>
+</div>
+
+<a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@Model.GameTitle">Tovább</a>

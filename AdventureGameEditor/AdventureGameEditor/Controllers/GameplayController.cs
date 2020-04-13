@@ -48,6 +48,20 @@ namespace AdventureGameEditor.Controllers
 
         #region Getters
 
+        public IActionResult GetPrelude(String gameTitle)
+        {
+            Prelude prelude = _context.Game
+                .Where(game => game.Title == gameTitle)
+                .Select(game => game.Prelude)
+                .FirstOrDefault();
+            PreludeViewModel model = new PreludeViewModel()
+            {
+                Text = prelude.Text,
+                GameTitle = prelude.GameTitle
+            };
+            return View("PreludeView", model);
+        }
+
         // Get the image of the field which is specified by the code. 
         // TODO: we will need the style of the map when will have more then one style. (The currently is the 'test" style.)
         public FileResult GetMapImage(int? wayDirectionsCode)
