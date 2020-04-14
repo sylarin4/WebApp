@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IO;
 
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
@@ -13,6 +17,7 @@ using AdventureGameEditor.Models;
 namespace AdventureGameEditor.Controllers
 {
     public class GameEditorController : BaseController
+
     {
         protected readonly IGameEditorService _gameEditorService;
 
@@ -290,6 +295,8 @@ namespace AdventureGameEditor.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateGameResult(GameResultViewModel gameResult)
         {
+            
+                Trace.WriteLine("\nPreludeImage:" + gameResult.PreludeImage.FileName);
             if(_gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
                 gameResult.GameLostResult, gameResult.Prelude))
             {

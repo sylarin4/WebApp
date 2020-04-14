@@ -12,7 +12,7 @@ using AdventureGameEditor.Data;
 
 namespace AdventureGameEditor.Controllers
 {
-    public class BaseController : Controller
+    public class BaseController : Controller 
     {
         protected readonly AdventureGameEditorContext _context;
         public BaseController(AdventureGameEditorContext context)

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace AdventureGameEditor.Models
 {
@@ -10,14 +10,22 @@ namespace AdventureGameEditor.Models
     {
         public String GameTitle { get; set; }
 
-        [Display(Name ="Előtörténet")]
+        [Display(Name = "Előtörténet")]
+        [Required(ErrorMessage = "Az előtörténet mezője nem lehet üres.")]
         public String Prelude { get; set; }
 
-        [Display(Name ="A győzelmet követően megjelenő szöveg")]
+        [Display(Name ="Az előtörténethez tartozó kép")]
+        [BindProperty]
+        public IFormFile PreludeImage { get; set; }
+
+        [Display(Name = "A győzelmet követően megjelenő szöveg")]
+        [Required(ErrorMessage = "A győzelmet követően megjelenő szöveg mezője nem lehet üres.")]
         public String GameWonResult { get; set; }
 
         [Display(Name = "A vereséget követően megjelenő szöveg")]
+        [Required(ErrorMessage = "A vereséget követően megjelenő szöveg mezője nem lehet üres.")]
         public String GameLostResult { get; set; }
+
 
     }
 }
