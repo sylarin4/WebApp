@@ -52,14 +52,22 @@ namespace AdventureGameEditor.Controllers
         {
             Prelude prelude = _context.Game
                 .Where(game => game.Title == gameTitle)
+                .Include(g => g.Prelude)
+                .ThenInclude(p => p.Image)
                 .Select(game => game.Prelude)
                 .FirstOrDefault();
             PreludeViewModel model = new PreludeViewModel()
             {
                 Text = prelude.Text,
-                GameTitle = prelude.GameTitle
+                GameTitle = prelude.GameTitle,
+                PictureID = prelude.Image.ID
             };
             return View("PreludeView", model);
+        }
+
+        public FileContentResult RenderImage(int imageID)
+        {
+            return _gameEditorService.GetImage(imageID);
         }
 
         // Get the image of the field which is specified by the code. 
