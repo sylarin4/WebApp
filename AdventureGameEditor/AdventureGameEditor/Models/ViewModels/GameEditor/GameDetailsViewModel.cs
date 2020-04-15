@@ -35,14 +35,17 @@ namespace AdventureGameEditor.Models
         [Display(Name = "Célmező")]
         public Field TargetField { get; set; }
 
-        [Display(Name ="Játék megnyerése esetén megjelenítendő szöveg")]
+        [Display(Name = "Játék megnyerése esetén megjelenítendő szöveg")]
         public String GameWonResult { get; set; }
 
-        [Display(Name ="áték elvesztése esetén megjelenítendő szöveg")]
+        [Display(Name = "áték elvesztése esetén megjelenítendő szöveg")]
         public String GameLostResult { get; set; }
 
-        [Display(Name ="Játék előtörténete, bevezetése")]
+        [Display(Name = "Játék előtörténete, bevezetése")]
         public String Prelude { get; set; }
+
+        [Display(Name ="Előtörténet illusztrációja")]
+        public int PreludeImageID { get; set; }
 
     }
 }

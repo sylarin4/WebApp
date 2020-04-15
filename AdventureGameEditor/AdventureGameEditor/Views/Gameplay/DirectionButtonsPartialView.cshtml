@@ -1,6 +1,6 @@
 ﻿@model AdventureGameEditor.Models.DirectionButtonsViewModel
 
-@if (Model.GameWon)
+@if (Model.GameWon || Model.GameLost)
 {
     <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
 }

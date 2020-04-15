@@ -99,7 +99,8 @@ namespace AdventureGameEditor.Controllers
             return _gameplayService.GetTrial(gameTitle,colNumber, rowNumber).Alternatives[trialNumber].TrialResult.Text;
         }
 
-        public IActionResult LoadDirectionButtonsAfterTrial(String gameTitle, int colNumber, int rowNumber, int trialNumber)
+        public IActionResult LoadDirectionButtonsAfterTrial(String gameTitle, int colNumber, int rowNumber, int trialNumber,
+            Boolean isAtTargetField)
         {
             Field field = _gameplayService.GetField(gameTitle, rowNumber, colNumber);
             switch(_gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType)
@@ -133,13 +134,17 @@ namespace AdventureGameEditor.Controllers
                         IsUpWay = field.IsUpWay
                     });
                 default:
+                    if (isAtTargetField)
+                    {
+                        _gameplayService.SetGameOver(User.Identity.Name, gameTitle, true);
+                    }
                     return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
                     {
                         GameTitle = gameTitle,
                         RowNumber = rowNumber,
                         ColNumber = colNumber,
                         GameLost = false,
-                        GameWon = false,
+                        GameWon = isAtTargetField,
                         IsDownWay = field.IsDownWay,
                         IsLeftWay = field.IsLeftWay,
                         IsRightWay = field.IsRightWay,

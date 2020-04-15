@@ -13,6 +13,7 @@ using System.IO;
 
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
+using AdventureGameEditor.Utilities;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -295,20 +296,34 @@ namespace AdventureGameEditor.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateGameResult(GameResultViewModel gameResult)
         {
-            
-                Trace.WriteLine("\nPreludeImage:" + gameResult.PreludeImage.FileName);
-            if(_gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
-                gameResult.GameLostResult, gameResult.Prelude))
+            List<String> errorMessages = new List<String>();
+            // Check if any problem occured.
+            if (!ModelState.IsValid)
+            {
+                errorMessages.Add("Hiba történt. Kérem próbálja újra!");
+            }
+            // If there's uploaded file, check if it's a valid image.
+            else if (gameResult.PreludeImage != null && !FormFileExtensions.IsImage(gameResult.PreludeImage))
+            {
+                errorMessages.Add("A kiválasztott fájl formátuma nem támogatott.");
+            }
+            // Save form attributes if all fields filled.
+            else if(_gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
+                gameResult.GameLostResult, gameResult.Prelude, gameResult.PreludeImage))
             {
                 return GetGameDetailsPartialView(gameResult.GameTitle);
             }
             else
             {
-                return View("CreateGameResultView", new GameResultViewModel()
-                {
-                    GameTitle = gameResult.GameTitle
-                });
+                errorMessages.Add("A mentés sikertelen volt. Lehet, hogy nem töltött ki minden mezőt. Kérem, próbálja újra!");
+                
             }
+            // If there was any problem, return to the CreateGameResultView and list the error messages.
+            return View("CreateGameResultView", new GameResultViewModel()
+            {
+                GameTitle = gameResult.GameTitle,
+                ErrorMessages = errorMessages
+            });
         }
 
         #endregion 
@@ -320,6 +335,11 @@ namespace AdventureGameEditor.Controllers
         public IActionResult GetGameDetailsPartialView(String gameTitle)
         {
             return View("GameDetails", _gameEditorService.GetGameDetailsViewModel(User.Identity.Name, gameTitle));
+        }
+
+        public FileContentResult RenderImage(int imageID)
+        {
+            return _gameEditorService.GetImage(imageID);
         }
 
         public IActionResult GetFieldDetailsPartialView(String gameTitle, int colNumber, int rowNumber)

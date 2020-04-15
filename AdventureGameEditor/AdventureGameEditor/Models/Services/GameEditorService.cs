@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 using AdventureGameEditor.Data;
 
@@ -491,7 +492,8 @@ namespace AdventureGameEditor.Models
                 TargetField = game.TargetField,
                 GameLostResult = game.GameLostResult.Text,
                 GameWonResult = game.GameWonResult.Text,
-                Prelude = game.Prelude.Text
+                Prelude = game.Prelude.Text,
+                PreludeImageID = game.Prelude.Image.ID
             };
         }
 
@@ -519,6 +521,15 @@ namespace AdventureGameEditor.Models
             return fieldDetails;
         }
 
+        public FileContentResult GetImage(int imageID)
+        {
+            return new FileContentResult(_context.Game.Where(g => g.Prelude.Image.ID == imageID)
+                .Include(g => g.Prelude)
+                .ThenInclude(p => p.Image)
+                .Select(g => g.Prelude.Image.Picture)
+                .FirstOrDefault(), "image/png");
+        }
+
         #endregion
 
         #endregion
@@ -526,10 +537,11 @@ namespace AdventureGameEditor.Models
         #region Create game result
 
         public Boolean SaveGameResults(String userName, String gameTitle, 
-            String gameWonResult, String gameLostResult, String prelude)
+            String gameWonResult, String gameLostResult, String prelude, IFormFile preludeImage)
         {
             // If the results empty or not set, don't save them.
-            if(gameLostResult == null || gameWonResult == null || gameLostResult == "" || gameWonResult == "") return false;
+            if(gameLostResult == null || gameWonResult == null || gameLostResult == "" || gameWonResult == "") 
+                return false;
             
             Game game = GetGameAtTitle(userName, gameTitle);
             if (game == null) return false;
@@ -553,6 +565,19 @@ namespace AdventureGameEditor.Models
                 Text = prelude,
                 Owner = game.Owner,
                 GameTitle = gameTitle
+            };
+
+            byte[] picture = null;
+            using (var fs = preludeImage.OpenReadStream())
+            using (var ms = new MemoryStream())
+            {
+                fs.CopyTo(ms);
+                picture = ms.ToArray();
+            }
+            game.Prelude.Image = new Image()
+            {
+                Name = preludeImage.FileName,
+                Picture = picture
             };
             _context.SaveChanges();
             return true;
@@ -599,6 +624,9 @@ namespace AdventureGameEditor.Models
         private Game GetGameAtTitle(String userName, String gameTitle)
         {
             return _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
+                .Include(g => g.Owner)
+                .Include(g => g.Prelude)
+                .ThenInclude(p => p.Image)
                 .Include(g => g.Map)
                 .ThenInclude(map => map.Row)
                 .FirstOrDefault();

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Web;
+using System.Collections.Generic;
 
 namespace AdventureGameEditor.Models
 {
@@ -25,7 +25,8 @@ namespace AdventureGameEditor.Models
         [Display(Name = "A vereséget követően megjelenő szöveg")]
         [Required(ErrorMessage = "A vereséget követően megjelenő szöveg mezője nem lehet üres.")]
         public String GameLostResult { get; set; }
-
+        public List<String> ErrorMessages { get; set; }
+ 
 
     }
 }

@@ -64,6 +64,15 @@
             </dd>
 
             <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PreludeImageID)
+            </dt>
+            <dd class="col-sm-10">
+                <img src="@Url.Action("RenderImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
+               
+            </dd>
+            
+
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.GameWonResult)
             </dt>
             <dd class="col-sm-10">

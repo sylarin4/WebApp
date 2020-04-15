@@ -83,19 +83,33 @@ function Step(gameTitle, rowNumber, colNumber, direction) {
     console.log(direction + " " + gameTitle + " " + rowNumber + " " + colNumber );
 }
 
-function ChoseTrialAlternative(gameTitle, rowNumber, colNumber) {
+function ChoseTrialAlternative(gameTitle, rowNumber, colNumber, isAtTargetField) {
     var trialNumber = $('#choseTrialForm').serialize().toString()[6];
     document.getElementById("FieldText").innerHTML = "";
     LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'ChoseAlternativeForTrial', "choseTrialForm");
-    LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'LoadDirectionButtonsAfterTrial', "directionButtons");
+    LoadDirectionButtonsAfterTrial(gameTitle, rowNumber, colNumber, trialNumber, isAtTargetField,
+        'LoadDirectionButtonsAfterTrial', "#directionButtons");
 }
 
 // Helper function: loads  the trial result by ajax call.
 function LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, url, target) {
     $.ajax({
         url: url,
-        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, trialNumber: trialNumber },
+        data: {
+            gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, trialNumber: trialNumber
+        },
         success: function (result) { document.getElementById(target).innerHTML = result; }
+    });
+}
+
+function LoadDirectionButtonsAfterTrial(gameTitle, rowNumber, colNumber, trialNumber, isAtTargetField, url, target) {
+    $.ajax({
+        url: url,
+        data: {
+            gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber,
+            trialNumber: trialNumber, isAtTargetField: isAtTargetField
+        },
+        success: function (result) { $(target).html(result); }
     });
 }
 

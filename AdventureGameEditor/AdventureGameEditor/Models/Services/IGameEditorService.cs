@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace AdventureGameEditor.Models
 {
@@ -53,11 +54,12 @@ namespace AdventureGameEditor.Models
         #region Getters
         public GameDetailsViewModel GetGameDetailsViewModel(String userName, String gameTitle);
         public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber);
+        public FileContentResult GetImage(int imageID);
         #endregion
         #endregion
         #region Create game result
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, 
-            String gameLostResult, String prelude);
+            String gameLostResult, String prelude, IFormFile preludeImage);
         #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);

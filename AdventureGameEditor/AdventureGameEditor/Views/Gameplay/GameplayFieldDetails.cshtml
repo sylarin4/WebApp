@@ -21,7 +21,7 @@
             IsUpWay = Model.IsUpWay
         });
     }
-    else if (Model.IsAtTargetField)
+    @if (Model.IsAtTargetField && (Model.Trial == null || Model.IsVisited))
     {
         <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
     }
@@ -49,7 +49,7 @@
         }
     </form>
         <div class="form-group">
-            <button class="btn btn-primary" onclick="ChoseTrialAlternative('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber')">Választ</button>
+            <button class="btn btn-primary" onclick="ChoseTrialAlternative('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', '@Model.IsAtTargetField')">Választ</button>
         </div>
     }
 </div>

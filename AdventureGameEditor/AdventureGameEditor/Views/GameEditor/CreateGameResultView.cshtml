@@ -6,6 +6,17 @@
 <body>
     <h2> Játék eredményének hozzáadása</h2>
     <hr />
+    <div>
+        @if(Model.ErrorMessages != null && Model.ErrorMessages.Count > 0)
+        {
+        <ul>
+            @foreach(String errorMessage in Model.ErrorMessages)
+            {
+            <li>@errorMessage</li>
+            }
+        </ul>
+        }
+    </div>
     <div class="row">
         <div class="col-md-4">
             <form enctype="multipart/form-data" asp-action="CreateGameResult"  >
@@ -20,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="PreludeImage" class="control-label"></label>
-                    <input asp-for="PreludeImage" type="file" class="form-control" >
+                    <input asp-for="PreludeImage" type="file" class="form-control"  accept="*.bmp, *.jpg, *.jpeg" >
                     <span asp-validation-for="PreludeImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
