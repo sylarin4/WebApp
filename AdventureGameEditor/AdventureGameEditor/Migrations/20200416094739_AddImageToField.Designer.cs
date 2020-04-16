@@ -4,14 +4,16 @@ using AdventureGameEditor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdventureGameEditor.Migrations
 {
     [DbContext(typeof(AdventureGameEditorContext))]
-    partial class AdventureGameEditorContextModelSnapshot : ModelSnapshot
+    [Migration("20200416094739_AddImageToField")]
+    partial class AddImageToField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

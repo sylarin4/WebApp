@@ -32,7 +32,7 @@ namespace AdventureGameEditor.Models
         public List<TrialResult> InitializeTrialResults(int count);
         #endregion
         #region Save
-        public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String Text);
+        public void AddTextAndImageForField(String userName, String gameTitle, int rowNumber, int colNumber, String Text, IFormFile image);
         public void SaveTrial(String userName, String gameTitle, int rowNumber, int colNumber, List<String> alternativeTexts,
            List<TrialResult> alternativeTrialResults, TrialType trialType, String trialText);
         public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber);
@@ -44,6 +44,7 @@ namespace AdventureGameEditor.Models
         // Currently unused.
          public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
         public FieldTrialContentViewModel GetFieldTrialContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
+        public FileContentResult GetFieldImage(int imageID);
         #endregion
         #endregion
         #region Set start and target fields
@@ -54,7 +55,7 @@ namespace AdventureGameEditor.Models
         #region Getters
         public GameDetailsViewModel GetGameDetailsViewModel(String userName, String gameTitle);
         public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber);
-        public FileContentResult GetImage(int imageID);
+        public FileContentResult GetPreludeImage(int imageID);
         #endregion
         #endregion
         #region Create game result

@@ -15,7 +15,11 @@ namespace AdventureGameEditor.Models
         public int RowNumber { get; set; }
         public int ColNumber { get; set; }
 
-        //Describes what happens on this field in the game.
+        // Stores the illustration of the field (can be null).
+        // (The user musn't upload image for every field.)
+        public Image? Image { get; set; }
+
+        // Describes what happens on this field in the game.
         public String Text { get; set; }
 
 

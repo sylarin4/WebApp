@@ -124,14 +124,16 @@ namespace AdventureGameEditor.Controllers
                 _gameEditorService.GetFieldViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
         }
 
-        public IActionResult GetFormForFieldText(String gameTitle, int colNumber, int rowNumber)
+        public IActionResult GetFormForFieldContent(String gameTitle, int colNumber, int rowNumber)
         {
-            return PartialView("FormForAddFieldTextPartialView", new FieldTextContentViewModel()
+            Field field = _gameEditorService.GetField(User.Identity.Name, gameTitle, rowNumber, colNumber);
+            return PartialView("FormForAddFieldContentPartialView", new FieldTextAndImageContentViewModel()
             {
                 GameTitle = gameTitle,
                 ColNumber = colNumber,
                 RowNumber = rowNumber,
-                TextContent = _gameEditorService.GetFieldTextContent(User.Identity.Name, gameTitle, rowNumber, colNumber)
+                TextContent = field.Text,
+                CurrentImageID = field.Image != null ? field.Image.ID : -1
             });
         }
 
@@ -141,14 +143,6 @@ namespace AdventureGameEditor.Controllers
                 _gameEditorService.GetFieldTrialContentViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
         }
 
-        // Currently not used.
-        // Loads a form to add content to the selected field.
-        public IActionResult GetFormForField(String gameTitle, int rowNumber, int colNumber)
-        {
-            Trace.WriteLine("rowNumber: " + rowNumber +"colNumber: " + colNumber);
-            return PartialView("FormForAddFieldContent",
-                _gameEditorService.GetFieldContentViewModel(User.Identity.Name, gameTitle, rowNumber, colNumber));
-        }
 
         // Currently not used.
         public IActionResult GetNewAlternative(int index, String gameTitle, int rowNumber, int colNumber)
@@ -177,13 +171,27 @@ namespace AdventureGameEditor.Controllers
 
         #region // ---------- Setters ---------- //
 
-        // Save the text of a field (
+        // Save the text and image of a field.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SetTextContentForField( FieldTextContentViewModel fieldData)
+        public IActionResult SetTextContentForField( FieldTextAndImageContentViewModel fieldData)
         {
-            // Saveing data.
-            _gameEditorService.AddTextToAFieldAt(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber, fieldData.TextContent);
+            String errorMessage = "";
+            // Check if model state is valid.
+            if (!ModelState.IsValid)
+            {
+                errorMessage = "Hiba történt. Kérem próbálja újra!";
+            }
+            else if( fieldData.NewImage != null && !FormFileExtensions.IsImage(fieldData.NewImage))
+            {
+                errorMessage = "A kép formátuma nem megfelelő.";
+            }
+            else
+            {
+                // Saveing data.
+                _gameEditorService.AddTextAndImageForField(User.Identity.Name, fieldData.GameTitle, 
+                    fieldData.RowNumber, fieldData.ColNumber, fieldData.TextContent, fieldData.NewImage);
+            }            
             
             // Return the user to the map content filling page to add texts and trials to the other fields too.
             MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, fieldData.GameTitle);
@@ -192,6 +200,7 @@ namespace AdventureGameEditor.Controllers
             model.NextControllerAction = "CreateMapStartField";
             model.IsFieldSelected = true;
             model.SelectedField = _gameEditorService.GetField(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber);
+            model.ErrorMessage = errorMessage;
             return View("CreateMapContent", model);
         }
 
@@ -224,18 +233,6 @@ namespace AdventureGameEditor.Controllers
             return View("CreateMapContent", model);
         }
 
-
-        // It's not used now.
-        public void SaveTextContent(String gameTitle, int rowNumber, int colNumber, String textContent)
-        {
-            //Trace.WriteLine(gameTitle + " " + colNumber + " " + rowNumber + " " + textContent);
-            _gameEditorService.AddTextToAFieldAt(User.Identity.Name, gameTitle, rowNumber, colNumber, textContent);
-        }
-
-        /*public IActionResult AddNewAlternativeForForm(String gameTitle, int rowNumber, int colNumber)
-        {
-            _gameEditorService.AddNewAlternativeToForm(User.Identity.Name, gameTitle, rowNumber, colNumber);
-        }*/
         #endregion
 
         #endregion
@@ -289,6 +286,10 @@ namespace AdventureGameEditor.Controllers
         {
             return View("CreateGameResultView", new GameResultViewModel() { GameTitle = gameTitle });
         }
+        public FileContentResult RenderFieldImage(int imageID)
+        {
+            return _gameEditorService.GetFieldImage(imageID);
+        }
 
         #endregion
 
@@ -336,10 +337,11 @@ namespace AdventureGameEditor.Controllers
         {
             return View("GameDetails", _gameEditorService.GetGameDetailsViewModel(User.Identity.Name, gameTitle));
         }
+        
 
-        public FileContentResult RenderImage(int imageID)
+        public FileContentResult RenderPreludeImage(int imageID)
         {
-            return _gameEditorService.GetImage(imageID);
+            return _gameEditorService.GetPreludeImage(imageID);
         }
 
         public IActionResult GetFieldDetailsPartialView(String gameTitle, int colNumber, int rowNumber)

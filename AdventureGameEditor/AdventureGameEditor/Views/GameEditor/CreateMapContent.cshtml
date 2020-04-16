@@ -32,11 +32,17 @@
         }
     </div>
     <div id="InputArea"> </div>
+    <div id="ErrorMessage">
+        @if (Model.ErrorMessage != null && Model.ErrorMessage.Length > 0)
+        {
+            @Model.ErrorMessage
+        }
+    </div>
 
-    <div id="fieldDetails"></div>
+        <div id="fieldDetails"></div>
 
-    <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
-</body>
+        <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+    </body>
 
 
 </html>

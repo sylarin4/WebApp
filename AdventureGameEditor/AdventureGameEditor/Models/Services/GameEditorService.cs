@@ -264,10 +264,21 @@ namespace AdventureGameEditor.Models
 
         #region Save 
 
-         public void AddTextToAFieldAt(String userName, String gameTitle, int rowNumber, int colNumber, String text)
+         public void AddTextAndImageForField(String userName, String gameTitle, int rowNumber, int colNumber,
+             String text, IFormFile image)
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             field.Text = text;
+            Trace.WriteLine(image.FileName);
+
+            if(image != null)
+            {
+                field.Image = new Image()
+                {
+                    Picture = ConvertIFormFileToImage(image),
+                    Name = image.FileName
+                };
+            }
             _context.SaveChanges();
         }
 
@@ -357,6 +368,14 @@ namespace AdventureGameEditor.Models
                 Map = SortMap(game.Map.ToList()),
                 MapSize = game.TableSize
             };
+        }
+        public FileContentResult GetFieldImage(int imageID)
+        {
+            return new FileContentResult(_context.Field
+                .Include(field => field.Image)
+                .Where(field => field.Image.ID == imageID)
+                .Select(field => field.Image.Picture)
+                .FirstOrDefault(), "image/png");
         }
 
         //Currently not used.
@@ -521,7 +540,7 @@ namespace AdventureGameEditor.Models
             return fieldDetails;
         }
 
-        public FileContentResult GetImage(int imageID)
+        public FileContentResult GetPreludeImage(int imageID)
         {
             return new FileContentResult(_context.Game.Where(g => g.Prelude.Image.ID == imageID)
                 .Include(g => g.Prelude)
@@ -530,6 +549,7 @@ namespace AdventureGameEditor.Models
                 .FirstOrDefault(), "image/png");
         }
 
+        
         #endregion
 
         #endregion
@@ -566,24 +586,21 @@ namespace AdventureGameEditor.Models
                 Owner = game.Owner,
                 GameTitle = gameTitle
             };
-
-            byte[] picture = null;
-            using (var fs = preludeImage.OpenReadStream())
-            using (var ms = new MemoryStream())
+            if(preludeImage != null)
             {
-                fs.CopyTo(ms);
-                picture = ms.ToArray();
+                game.Prelude.Image = new Image()
+                {
+                    Name = preludeImage.FileName,
+                    Picture = ConvertIFormFileToImage(preludeImage)
+                };
             }
-            game.Prelude.Image = new Image()
-            {
-                Name = preludeImage.FileName,
-                Picture = picture
-            };
+            
             _context.SaveChanges();
             return true;
         }
 
         #endregion
+
 
         #region Usually used getter functions
 
@@ -612,6 +629,18 @@ namespace AdventureGameEditor.Models
 
         #region Private helper functions
 
+        private byte[] ConvertIFormFileToImage(IFormFile file)
+        {
+            byte[] image = null;
+            using (var fs = file.OpenReadStream())
+            using (var ms = new MemoryStream())
+            {
+                fs.CopyTo(ms);
+                image = ms.ToArray();
+            }
+            return image;
+        }
+
         private List<MapRow> SortMap(List<MapRow> map)
         {
             foreach(MapRow row in map)
@@ -637,6 +666,7 @@ namespace AdventureGameEditor.Models
             return _context.Field
                 .Where(field => field.Owner.UserName == userName && field.GameTitle == gameTitle)
                 .Where(field => field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Include(field => field.Image)
                 .Include(field => field.Trial)
                 .ThenInclude(trial => trial.Alternatives)
                 .ThenInclude(alternatives => alternatives.TrialResult)

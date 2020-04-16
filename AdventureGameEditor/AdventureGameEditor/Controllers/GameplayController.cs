@@ -56,18 +56,27 @@ namespace AdventureGameEditor.Controllers
                 .ThenInclude(p => p.Image)
                 .Select(game => game.Prelude)
                 .FirstOrDefault();
+            int? preludeImgID;
+            if(prelude.Image == null)
+            {
+                preludeImgID = null;
+            }
+            else
+            {
+                preludeImgID = prelude.Image.ID;
+            }
             PreludeViewModel model = new PreludeViewModel()
             {
                 Text = prelude.Text,
                 GameTitle = prelude.GameTitle,
-                PictureID = prelude.Image.ID
+                PictureID = preludeImgID
             };
             return View("PreludeView", model);
         }
 
         public FileContentResult RenderImage(int imageID)
         {
-            return _gameEditorService.GetImage(imageID);
+            return _gameEditorService.GetPreludeImage(imageID);
         }
 
         // Get the image of the field which is specified by the code. 

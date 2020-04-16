@@ -16,14 +16,16 @@ function LoadButtonsForAddFieldContent(gameTitle, rowNumber, colNumber) {
 }
 
 // Load form for a field to add text content (it contens a text input area).
-function LoadFormForAddFieldText(gameTitle, rowNumber, colNumber) {
+function LoadFormForAddFieldContent(gameTitle, rowNumber, colNumber) {
     document.getElementById("fieldDetails").innerHTML = "";
+    document.getElementById("ErrorMessage").innerHTML = "";
     var target = '#InputArea';
-    LoadData(target, "GetFormForFieldText", gameTitle, rowNumber, colNumber);
+    LoadData(target, "GetFormForFieldContent", gameTitle, rowNumber, colNumber);
 }
 
 function LoadFormForAddFieldTrial(gameTitle, rowNumber, colNumber) {
     document.getElementById("fieldDetails").innerHTML = "";
+    document.getElementById("ErrorMessage").innerHTML = "";
     var target = '#InputArea';
     LoadData(target, "GetFormForFieldTrial", gameTitle, rowNumber, colNumber);
 }
@@ -169,12 +171,4 @@ function AddNewAlternativeForForm(index, gameTitle, rowNumber, colNumber) {
         data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
         success: function (result) { $("#addAlternativeButton").html(result); }
     });
-}
-
-// Used at: "CreateMapContent" view.
-// Load a form ("FormForAddFieldContent" partial view) to the "CreateMapContent" view after the user selected the field
-// he / she wants to add text or trial.
-function LoadFormForAddFieldContent(gameTitle, rowNumber, colNumber) {
-    var target = '#InputArea';
-    LoadData(target, 'GetFormForField', gameTitle, rowNumber, colNumber);
 }

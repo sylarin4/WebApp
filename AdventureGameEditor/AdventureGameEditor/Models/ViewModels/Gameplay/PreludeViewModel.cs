@@ -9,6 +9,6 @@ namespace AdventureGameEditor.Models
     {
         public String Text { get; set; }
         public String GameTitle { get; set; }
-        public int PictureID { get; set; }
+        public int? PictureID { get; set; }
     }
 }

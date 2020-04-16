@@ -27,5 +27,6 @@ namespace AdventureGameEditor.Models
         // tehese informations), so the user don't need to select again the edited field to add more content or show it or edit it.
         public Boolean IsFieldSelected { get; set; }
         public Field SelectedField { get; set; }
+        public String ErrorMessage { get; set; }
     }
 }
