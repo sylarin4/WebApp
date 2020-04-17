@@ -22,8 +22,8 @@ namespace AdventureGameEditor.Controllers
 
         #region Constructor
 
-        public GameplayController(AdventureGameEditorContext context, IGameEditorService gameEditorService, IGameplayService gameplayService)
-            : base(context)
+        public GameplayController(AdventureGameEditorContext context, IGameEditorService gameEditorService, 
+            IGameplayService gameplayService) : base(context)
         {
             _gameEditorService = gameEditorService;
             _gameplayService = gameplayService;
@@ -74,7 +74,7 @@ namespace AdventureGameEditor.Controllers
             return View("PreludeView", model);
         }
 
-        public FileContentResult RenderImage(int imageID)
+        public FileContentResult RenderPreludeImage(int imageID)
         {
             return _gameEditorService.GetPreludeImage(imageID);
         }
@@ -173,6 +173,11 @@ namespace AdventureGameEditor.Controllers
         public IActionResult GetGameResult(String gameTitle)
         {
             return View("GameResultView", _gameplayService.GetGameResult(gameTitle, User.Identity.Name));
+        }
+
+        public FileContentResult RenderGameResultImage(int imageID)
+        {
+            return _gameEditorService.GetGameResultImage(imageID);
         }
 
         #region Default functions

@@ -8,7 +8,7 @@
 <div>
     @if(Model.PictureID != null)
     {
-        <img src="@Url.Action("RenderImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
+        <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
     }    
     <p>@Model.Text</p>
 </div>

@@ -7,7 +7,11 @@
 <h1>Játék vége!</h1>
 
 <div>
-    @Model.Text
+    @if (Model.Image != null)
+    {
+        <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.Image.ID })" class="contentImage" height=100 />
+    }
+    <p>@Model.Text</p>
     @if (Model.IsGameWonResult)
     {
         <h6>Gratulálunk, nyertél!</h6>

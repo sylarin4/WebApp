@@ -197,7 +197,9 @@ namespace AdventureGameEditor.Models
         {
             Boolean isgameWon = GetGameplayData(userName, gameTitle).GameCondition == GameCondition.Won;
             DeleteGameplayData(userName, gameTitle);
-            return _context.GameResult.Where(result => result.GameTitle == gameTitle && result.IsGameWonResult == isgameWon)
+            return _context.GameResult
+                .Where(result => result.GameTitle == gameTitle && result.IsGameWonResult == isgameWon)
+                .Include(result => result.Image)
                 .FirstOrDefault();
         }
 

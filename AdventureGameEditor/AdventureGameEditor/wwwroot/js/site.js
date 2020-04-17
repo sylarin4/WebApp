@@ -88,7 +88,7 @@ function Step(gameTitle, rowNumber, colNumber, direction) {
 function ChoseTrialAlternative(gameTitle, rowNumber, colNumber, isAtTargetField) {
     var trialNumber = $('#choseTrialForm').serialize().toString()[6];
     document.getElementById("FieldText").innerHTML = "";
-    LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'ChoseAlternativeForTrial', "choseTrialForm");
+    LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'ChoseAlternativeForTrial', "trialForm");
     LoadDirectionButtonsAfterTrial(gameTitle, rowNumber, colNumber, trialNumber, isAtTargetField,
         'LoadDirectionButtonsAfterTrial', "#directionButtons");
 }
