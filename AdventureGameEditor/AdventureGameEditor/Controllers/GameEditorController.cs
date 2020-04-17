@@ -302,21 +302,60 @@ namespace AdventureGameEditor.Controllers
             if (!ModelState.IsValid)
             {
                 errorMessages.Add("Hiba történt. Kérem próbálja újra!");
+                // Return to the CreateGameResultView to try it again.
+                return View("CreateGameResultView", new GameResultViewModel()
+                {
+                    GameTitle = gameResult.GameTitle,
+                    ErrorMessages = errorMessages
+                });
             }
-            // If there's uploaded file, check if it's a valid image.
-            else if (gameResult.PreludeImage != null && !FormFileExtensions.IsImage(gameResult.PreludeImage))
+
+            // If there's uploaded file for prelude, check if it's a valid image.
+            if (gameResult.PreludeImage != null && !FormFileExtensions.IsImage(gameResult.PreludeImage))
             {
-                errorMessages.Add("A kiválasztott fájl formátuma nem támogatott.");
+                errorMessages.Add("Az előtörténethez kiválasztott fájl formátuma nem támogatott. \n" +
+                    "A fájl mentése siekertelen volt.\n" +
+                    "Lehet, hogy nem képet adott meg?");
+                gameResult.PreludeImage = null;
             }
-            // Save form attributes if all fields filled.
-            else if(_gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
-                gameResult.GameLostResult, gameResult.Prelude, gameResult.PreludeImage))
+
+            if(gameResult.GameWonImage != null && !FormFileExtensions.IsImage(gameResult.GameWonImage))
             {
+                errorMessages.Add("A győzelem esetén megjelenítendő kép formátuma nem támogatott.\n" +
+                    "A fájl mentése siekertelen volt.\n" +
+                    "Lehet, hogy nem képet adott meg?");
+                gameResult.GameWonImage = null;
+            }
+
+            if(gameResult.GameLostImage != null && !FormFileExtensions.IsImage(gameResult.GameLostImage))
+            {
+                errorMessages.Add("A vereség esetén megejelenítendő kép formátuma nem támogatott.\n" +
+                    "A fájl mentése siekertelen volt.\n" +
+                    "Lehet, hogy nem képet adott meg?");
+                gameResult.GameLostImage = null;
+            }
+
+            // Save form attributes if all fields filled and no other problems occured.
+            if( _gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
+                gameResult.GameLostResult, gameResult.Prelude, gameResult.PreludeImage, gameResult.GameWonImage,
+                gameResult.GameLostImage))
+            {
+                if(errorMessages.Count > 0)
+                {
+                    return View("CreateGameResultView", new GameResultViewModel()
+                    {
+                        GameTitle = gameResult.GameTitle,
+                        ErrorMessages = errorMessages,
+                        Prelude = gameResult.Prelude,
+                        GameWonResult = gameResult.GameWonResult,
+                        GameLostResult = gameResult.GameLostResult
+                    });
+                }
                 return GetGameDetailsPartialView(gameResult.GameTitle);
             }
             else
             {
-                errorMessages.Add("A mentés sikertelen volt. Lehet, hogy nem töltött ki minden mezőt. Kérem, próbálja újra!");
+                errorMessages.Add("A mentés sikertelen volt. Lehet, hogy nem töltött ki minden szöveg mezőt. Kérem, próbálja újra!");
                 
             }
             // If there was any problem, return to the CreateGameResultView and list the error messages.
@@ -341,8 +380,12 @@ namespace AdventureGameEditor.Controllers
 
         public FileContentResult RenderPreludeImage(int imageID)
         {
-            if (imageID == -1) return null;
             return _gameEditorService.GetPreludeImage(imageID);
+        }
+
+        public FileContentResult RenderGameResultImage(int imageID)
+        {
+            return _gameEditorService.GetGameResultImage(imageID);
         }
 
         public IActionResult GetFieldDetailsPartialView(String gameTitle, int colNumber, int rowNumber)

@@ -32,11 +32,15 @@
                 @Html.DisplayNameFor(model => model.PictureID)
             </dt>
             <dd class="col-sm-10">
-                @if (Model.PictureID == -1 )
+                @if (Model.PictureID < 0 )
                 {
                     <p>A mező nem rendelkezik képpel.</p>
                 }
-                <img src="@Url.Action("RenderFieldImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
+                else
+                {
+                    <img src="@Url.Action("RenderFieldImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
+                }
+                
             </dd>
 
             @*Trial informations.*@

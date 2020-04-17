@@ -19,31 +19,45 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <form enctype="multipart/form-data" asp-action="CreateGameResult"  >
+            <form enctype="multipart/form-data" asp-action="CreateGameResult">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Prelude" class="control-label"></label>
-                    <textarea asp-for="Prelude" class="form-control"></textarea>
+                    <textarea asp-for="Prelude" class="form-control">@Model.Prelude</textarea>
                     <span asp-validation-for="Prelude" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="PreludeImage" class="control-label"></label>
-                    <input asp-for="PreludeImage" type="file" class="form-control"  accept="*.bmp, *.jpg, *.jpeg" >
+                    <input asp-for="PreludeImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
                     <span asp-validation-for="PreludeImage" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="GameWonResult" class="control-label"></label>
-                    <textarea asp-for="GameWonResult" class="form-control"></textarea>
+                    <textarea asp-for="GameWonResult" class="form-control">@Model.GameWonResult</textarea>
                     <span asp-validation-for="GameWonResult" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="GameWonImage" class="control-label"></label>
+                    <input asp-for="GameWonImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                    <span asp-validation-for="GameWonImage" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
                     <label asp-for="GameLostResult" class="control-label"></label>
-                    <textarea asp-for="GameLostResult" class="form-control"></textarea>
+                    <textarea asp-for="GameLostResult" class="form-control">@Model.GameLostResult</textarea>
                     <span asp-validation-for="GameLostResult" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label asp-for="GameLostImage" class="control-label"></label>
+                    <input asp-for="GameLostImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                    <span asp-validation-for="GameLostImage" class="text-danger"></span>
+                </div>
+
                 <div class="form-group">
                     <input type="submit" value="Mentés" class="btn btn-default" />
                 </div>

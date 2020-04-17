@@ -22,9 +22,18 @@ namespace AdventureGameEditor.Models
         [Required(ErrorMessage = "A győzelmet követően megjelenő szöveg mezője nem lehet üres.")]
         public String GameWonResult { get; set; }
 
+        [Display(Name = "A győzelmet követően megjelenő kép")]
+        [BindProperty]
+        public IFormFile GameWonImage { get; set; }
+
         [Display(Name = "A vereséget követően megjelenő szöveg")]
         [Required(ErrorMessage = "A vereséget követően megjelenő szöveg mezője nem lehet üres.")]
         public String GameLostResult { get; set; }
+
+        [Display(Name = "A vereséget követően megjelenő kép")]
+        [BindProperty]
+        public IFormFile GameLostImage { get; set; }
+
         public List<String> ErrorMessages { get; set; }
  
 

@@ -56,11 +56,12 @@ namespace AdventureGameEditor.Models
         public GameDetailsViewModel GetGameDetailsViewModel(String userName, String gameTitle);
         public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber);
         public FileContentResult GetPreludeImage(int imageID);
+        public FileContentResult GetGameResultImage(int imageID);
         #endregion
         #endregion
         #region Create game result
-        public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, 
-            String gameLostResult, String prelude, IFormFile preludeImage);
+        public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
+            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage);
         #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);

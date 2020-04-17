@@ -38,8 +38,14 @@ namespace AdventureGameEditor.Models
         [Display(Name = "Játék megnyerése esetén megjelenítendő szöveg")]
         public String GameWonResult { get; set; }
 
-        [Display(Name = "áték elvesztése esetén megjelenítendő szöveg")]
+        [Display(Name ="Győzelem esetén megjelenítendő kép")]
+        public int GameWonImageID { get; set; }
+
+        [Display(Name = "Játék elvesztése esetén megjelenítendő szöveg")]
         public String GameLostResult { get; set; }
+
+        [Display(Name ="Vereség esetén megjelenítendő kép")]
+        public int GameLostImageID { get; set; }
 
         [Display(Name = "Játék előtörténete, bevezetése")]
         public String Prelude { get; set; }

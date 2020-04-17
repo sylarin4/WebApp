@@ -67,16 +67,16 @@
                 @Html.DisplayNameFor(model => model.PreludeImageID)
             </dt>
             <dd class="col-sm-10">
-                @if(Model.PreludeImageID == -1)
+                @if (Model.PreludeImageID == -1)
                 {
                     <p>Nincs kép.</p>
                 }
                 else
                 {
                     <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
-                }   
+                }
             </dd>
-            
+
 
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.GameWonResult)
@@ -84,6 +84,20 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.GameWonResult)
             </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.GameWonImageID)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.GameWonImageID == -1)
+                {
+                    <p>Nincs kép.</p>
+                }
+                else
+                {
+                    <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameWonImageID })" class="contentImage" height=100 />
+                }
+            </dd>
+
 
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.GameLostResult)
@@ -91,6 +105,20 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.GameLostResult)
             </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.GameLostImageID)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.GameWonImageID == -1)
+                {
+                    <p>Nincs kép.</p>
+                }
+                else
+                {
+                    <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameLostImageID })" class="contentImage" height=100 />
+                }
+            </dd>
+
 
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Map)
