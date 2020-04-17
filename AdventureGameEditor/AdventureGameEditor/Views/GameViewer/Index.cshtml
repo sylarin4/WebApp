@@ -30,6 +30,9 @@
                 @Html.DisplayNameFor(model => model.TableSize)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.CoverImage)
+            </th>
+            <th>
             </th>
         </tr>
     </thead>
@@ -47,6 +50,16 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TableSize)
+            </td>
+            <td>
+                @if (item.CoverImage == null)
+                {
+                    <p>Nincs kép.</p>
+                }
+                else
+                {
+                    <img src="@Url.Action("RenderCoverImage", new { imageID = item.CoverImage.ID })" class="contentImage" height=100 />
+                }
             </td>
             <td>
                 @if (ViewBag.CurrentGuestName != null)

@@ -13,15 +13,24 @@ namespace AdventureGameEditor.Controllers
     public class GameViewerController : BaseController
     {
 
-        public GameViewerController(AdventureGameEditorContext context) : base(context)
+        protected readonly IGameEditorService _gameEditorService;
+        public GameViewerController(AdventureGameEditorContext context, IGameEditorService gameEditorService) : base(context)
         {
+            _gameEditorService = gameEditorService;
         }
 
         // GET: GameViewer
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Game.ToListAsync());
+            return View(await _context.Game
+                                .Include(game => game.CoverImage)
+                                .ToListAsync());
+        }
+
+        public FileContentResult RenderCoverImage(int imageID)
+        {
+            return _gameEditorService.GetCoverImage(imageID);
         }
 
         // GET: GameViewer/Details/5
