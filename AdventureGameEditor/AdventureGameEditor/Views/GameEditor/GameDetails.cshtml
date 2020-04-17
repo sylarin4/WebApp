@@ -67,8 +67,14 @@
                 @Html.DisplayNameFor(model => model.PreludeImageID)
             </dt>
             <dd class="col-sm-10">
-                <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
-               
+                @if(Model.PreludeImageID == -1)
+                {
+                    <p>Nincs kép.</p>
+                }
+                else
+                {
+                    <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
+                }   
             </dd>
             
 

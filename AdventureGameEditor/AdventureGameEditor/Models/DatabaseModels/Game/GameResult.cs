@@ -14,6 +14,7 @@ namespace AdventureGameEditor.Models
         // If the data concern to a won game it's true, if to a lost match, it's false.
         public Boolean IsGameWonResult { get; set; }
 
+        public Image? Image { get; set; }
         public String Text { get; set; }
     }
 }

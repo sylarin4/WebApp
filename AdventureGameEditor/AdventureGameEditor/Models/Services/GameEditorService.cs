@@ -524,7 +524,8 @@ namespace AdventureGameEditor.Models
                 ColNumber = colNumber,
                 RowNumber = rowNumber,
                 TextContent = field.Text,
-                IsTrial = field.Trial == null ? false : true
+                IsTrial = field.Trial == null ? false : true,
+                PictureID = field.Image != null ? field.Image.ID : -1
             };
             if(field.Trial != null)
             {

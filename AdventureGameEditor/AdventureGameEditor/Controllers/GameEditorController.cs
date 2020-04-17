@@ -341,6 +341,7 @@ namespace AdventureGameEditor.Controllers
 
         public FileContentResult RenderPreludeImage(int imageID)
         {
+            if (imageID == -1) return null;
             return _gameEditorService.GetPreludeImage(imageID);
         }
 

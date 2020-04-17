@@ -4,14 +4,16 @@ using AdventureGameEditor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AdventureGameEditor.Migrations
 {
     [DbContext(typeof(AdventureGameEditorContext))]
-    partial class AdventureGameEditorContextModelSnapshot : ModelSnapshot
+    [Migration("20200417132516_AddImageToGameResult")]
+    partial class AddImageToGameResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,9 +109,6 @@ namespace AdventureGameEditor.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CoverImageID")
-                        .HasColumnType("int");
-
                     b.Property<int>("CurrentWayDirectionsCode")
                         .HasColumnType("int");
 
@@ -144,8 +143,6 @@ namespace AdventureGameEditor.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CoverImageID");
 
                     b.HasIndex("GameLostResultID");
 
@@ -634,10 +631,6 @@ namespace AdventureGameEditor.Migrations
 
             modelBuilder.Entity("AdventureGameEditor.Models.Game", b =>
                 {
-                    b.HasOne("AdventureGameEditor.Models.Image", "CoverImage")
-                        .WithMany()
-                        .HasForeignKey("CoverImageID");
-
                     b.HasOne("AdventureGameEditor.Models.GameResult", "GameLostResult")
                         .WithMany()
                         .HasForeignKey("GameLostResultID");

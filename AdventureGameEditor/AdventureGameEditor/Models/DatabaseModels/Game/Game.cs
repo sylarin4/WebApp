@@ -43,5 +43,8 @@ namespace AdventureGameEditor.Models
 
         // Stores that which type of map picece is being put on the map.
         public int CurrentWayDirectionsCode { get; set; }
+
+        // Stores the cover image of the game.
+        public Image? CoverImage { get; set; }
     }
 }

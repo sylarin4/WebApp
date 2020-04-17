@@ -17,6 +17,9 @@ namespace AdventureGameEditor.Models
         [Display(Name = "A mező szövege")]
         public String TextContent { get; set; }
 
+        [Display(Name ="A mező illusztrációja")]
+        public int PictureID { get; set; }
+
         // Describes if this filed have a trial (true) or not (false).
         public Boolean IsTrial { get; set; }
 
