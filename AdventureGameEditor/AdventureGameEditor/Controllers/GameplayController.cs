@@ -34,6 +34,7 @@ namespace AdventureGameEditor.Controllers
         public IActionResult GameplayView(String gameTitle)
         {
             GameplayViewModel model = _gameplayService.GetGameplayViewModel(User.Identity.Name, gameTitle);
+            _gameplayService.SetPlayCounter(gameTitle);
             if(model == null)
             {
                 return RedirectToAction("Index", "GameViewer");
@@ -88,9 +89,11 @@ namespace AdventureGameEditor.Controllers
 
         #endregion
 
-        public IActionResult StepGame(String gameTitle, int rowNumber, int colnumber, string direction)
+        public IActionResult StepGame(String gameTitle, int rowNumber, int colNumber, string direction)
         {
+            Trace.WriteLine("Előtte: rowNumber: " + rowNumber + " colNumber: " + colNumber);
             Field newPlayerPosition = _gameplayService.StepGame(User.Identity.Name, gameTitle, direction);
+            Trace.WriteLine("rowNumber: " + newPlayerPosition.RowNumber + " colNumber: " + newPlayerPosition.ColNumber);
             return PartialView("GameplayFieldDetails", new GameplayFieldViewModel()
             {
                 GameTitle = gameTitle,

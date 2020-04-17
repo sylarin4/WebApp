@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+
+
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
+using System.IO;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -14,25 +17,63 @@ namespace AdventureGameEditor.Controllers
     {
 
         protected readonly IGameEditorService _gameEditorService;
-        public GameViewerController(AdventureGameEditorContext context, IGameEditorService gameEditorService) : base(context)
+        public GameViewerController(AdventureGameEditorContext context, IGameEditorService gameEditorService) 
+            : base(context)
         {
             _gameEditorService = gameEditorService;
         }
 
-        // GET: GameViewer
 
+        #region Index
         public async Task<IActionResult> Index()
         {
             return View(await _context.Game
                                 .Include(game => game.CoverImage)
+                                .Include(game => game.Owner)
                                 .ToListAsync());
         }
+
+        #endregion
+
+        #region Orders
+        public IActionResult OrderByTitle()
+        {
+            return View("Index", GetGames().OrderBy(game => game.Title));
+        }
+
+        public IActionResult OrderByOwner()
+        {
+            return View("Index", GetGames().OrderBy(game => game.Owner.NickName));
+        }
+
+        public IActionResult OrderByPopularity()
+        {
+            return View("Index", GetGames().OrderByDescending(game => game.PlayCounter));
+        }
+
+
+        public IActionResult GetOwnGames()
+        {
+            return View("Index", GetGames().Where(game => game.Owner.UserName == User.Identity.Name)
+                .OrderBy(game => game.Title));
+        }
+
+        public List<Game> GetGames()
+        {
+            return _context.Game.Include(game => game.CoverImage)
+                                .Include(game => game.Owner)
+                                .ToList();
+        }
+
+        #endregion
 
         public FileContentResult RenderCoverImage(int imageID)
         {
             return _gameEditorService.GetCoverImage(imageID);
         }
 
+
+        #region Currently not used default functions
         // GET: GameViewer/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -157,5 +198,6 @@ namespace AdventureGameEditor.Controllers
         {
             return _context.Game.Any(e => e.ID == id);
         }
+        #endregion
     }
 }

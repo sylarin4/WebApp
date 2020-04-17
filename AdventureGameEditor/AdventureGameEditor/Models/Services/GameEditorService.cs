@@ -273,7 +273,6 @@ namespace AdventureGameEditor.Models
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             field.Text = text;
-            Trace.WriteLine(image.FileName);
 
             if(image != null)
             {
@@ -515,14 +514,16 @@ namespace AdventureGameEditor.Models
                 Visibility = game.Visibility,
                 TableSize = game.TableSize,
                 Map = SortMap(game.Map.ToList()),
-                StartField = game.StartField,
-                TargetField = game.TargetField,
-                GameLostResult = game.GameLostResult.Text,
-                GameLostImageID = game.GameLostResult.Image != null ? game.GameLostResult.Image.ID : -1,
-                GameWonResult = game.GameWonResult.Text,
-                GameWonImageID = game.GameWonResult.Image != null ? game.GameWonResult.Image.ID : -1,
-                Prelude = game.Prelude.Text,
-                PreludeImageID = game.Prelude.Image != null ? game.Prelude.Image.ID : -1
+                StartField = game.StartField != null ? game.StartField : null,
+                TargetField = game.TargetField != null ? game.TargetField : null,
+                GameLostResult = game.GameLostResult != null ? game.GameLostResult.Text : null,
+                GameLostImageID = game.GameLostResult != null && game.GameLostResult.Image != null ?
+                                                            game.GameLostResult.Image.ID : -1,
+                GameWonResult = game.GameWonResult != null ? game.GameWonResult.Text : null,
+                GameWonImageID = game.GameWonResult != null && game.GameWonResult.Image != null ?
+                                                            game.GameWonResult.Image.ID : -1,
+                Prelude = game.Prelude != null ? game.Prelude.Text : null,
+                PreludeImageID = game.Prelude != null && game.Prelude.Image != null ? game.Prelude.Image.ID : -1
             };
         }
 
@@ -707,6 +708,8 @@ namespace AdventureGameEditor.Models
             return _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
                 .Include(g => g.Owner)
                 .Include(g => g.CoverImage)
+                .Include(g => g.GameLostResult)
+                .Include(g => g.GameWonResult)
                 .Include(g => g.Prelude)
                 .ThenInclude(p => p.Image)
                 .Include(g => g.Map)

@@ -10,7 +10,7 @@
 <body>
 
     <div>
-        <h4>A játék létrehozása sikeres volt!</h4>
+        <h4>A játék adatai</h4>
         <hr />
         <dl class="row">
 
@@ -60,21 +60,43 @@
                 @Html.DisplayNameFor(model => model.StartField)
             </dt>
             <dd class="col-sm-10">
-                Sorszám: @Model.StartField.RowNumber, Oszlopszám: @Model.StartField.ColNumber
+                @if(Model.StartField != null)
+                {
+                    <p>Sorszám: @Model.StartField.RowNumber, Oszlopszám: @Model.StartField.ColNumber</p>
+                }
+                else
+                {
+                    <p>Még nincs beállítva.</p>
+                }
+
             </dd>
 
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.TargetField)
             </dt>
             <dd class="col-sm-10">
-                Sorszám: @Model.TargetField.RowNumber, Oszlopszám: @Model.TargetField.ColNumber
+                @if(Model.TargetField != null)
+                {
+                    <p>Sorszám: @Model.TargetField.RowNumber, Oszlopszám: @Model.TargetField.ColNumber</p>
+                }
+                else
+                {
+                    <p>Még nincs beállítva</p>
+                }
             </dd>
 
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Prelude)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Prelude)
+                @if(Model.Prelude != null)
+                {
+                    <p>@Html.DisplayFor(model => model.Prelude)</p>
+                }
+                else
+                {
+                    <p>Még nincs kitöltve</p>
+                }
             </dd>
 
             <dt class="col-sm-2">
@@ -96,7 +118,14 @@
                 @Html.DisplayNameFor(model => model.GameWonResult)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.GameWonResult)
+                @if(Model.GameWonResult != null)
+                {
+                    <p>@Html.DisplayFor(model => model.GameWonResult)</p>
+                }
+                else
+                {
+                    <p>Még nincs kitöltve.</p>
+                }
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.GameWonImageID)
@@ -117,7 +146,14 @@
                 @Html.DisplayNameFor(model => model.GameLostResult)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.GameLostResult)
+                @if(Model.GameLostResult != null)
+                {
+                    <p>@Html.DisplayFor(model => model.GameLostResult)</p>
+                }
+                else
+                {
+                    <p>Még nincs kitöltve</p>
+                }
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.GameLostImageID)

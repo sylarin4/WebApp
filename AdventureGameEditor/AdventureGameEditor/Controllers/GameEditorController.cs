@@ -58,6 +58,15 @@ namespace AdventureGameEditor.Controllers
 
         #endregion
 
+        #region Edit game
+
+        public IActionResult EditGame(String gameTitle)
+        {
+            return GetGameDetailsPartialView(gameTitle);
+        }
+
+        #endregion
+
         #region CreateMap (Used at "CreateMap" view)
 
         #region // ---------- Getters ---------- //

@@ -9,67 +9,64 @@
     <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
 </head>
 
-<div class="ErorrMessages"> @if (ViewBag.CurrentGuestName == null) 
-    {
-        <p>Be kell jelentkezned ahhoz, hogy játszhass, vagy játékot szerkeszthess!</p>
-    }
-    </div>
+<div class="ErorrMessages"> 
+    @if (ViewBag.CurrentGuestName == null)
+        {
+             <p>Be kell jelentkezned ahhoz, hogy játszhass, vagy játékot szerkeszthess!</p>
+        }
+</div>
+
+<div class="Menu">
+    <h6>Rendezés</h6>
+    <ul>
+        <li><a asp-controller="GameViewer" asp-action="OrderByTitle" >Cím szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="OrderByOwner" >Készítő szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="OrderByPopularity" >Népszerűség szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="GetOwnGames" >Csak saját játékok megjelenítése</a></li>
+        <li><a asp-controller="GameViewer" asp-action="Index" >Nincs rendezés</a></li>
+
+    </ul>
+</div>
+
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Visibility)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlayCounter)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TableSize)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CoverImage)
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
     <tbody>
-@foreach (var item in Model) {
+       @{int rowCount = 5; /*number of elements in a row*/ }
+       @for(int i = 0; i < (Model.Count()/rowCount) + 1; ++i)
+       {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Visibility)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlayCounter)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TableSize)
-            </td>
-            <td>
-                @if (item.CoverImage == null)
+            @for (int j = 0; j < rowCount; ++j)
+            {
+                @if ((i * rowCount) + j < Model.Count())
                 {
-                    <p>Nincs kép.</p>
-                }
-                else
+                    var item = Model.ElementAt((i * rowCount) + j);
+            <td>
+                @if (item.CoverImage != null)
                 {
                     <img src="@Url.Action("RenderCoverImage", new { imageID = item.CoverImage.ID })" class="contentImage" height=100 />
                 }
-            </td>
-            <td>
-                @if (ViewBag.CurrentGuestName != null)
+                @if (item.CoverImage == null)
                 {
-                    <a asp-controller="Gameplay" asp-action="GetPrelude" asp-route-gameTitle="@item.Title">Játék</a>
-                    <p>Játék szerkesztése</p>
+                    <img src="~/empty_pic.jpg" height="100" />
                 }
-                Játék részleteinek megjelenítése
+
+                <p>Cím: @item.Title</p>
+                <p>Készítette: @item.Owner.NickName </p>
+                <p>Térkép mérete: @item.TableSize x @item.TableSize</p>
+                <p> @item.PlayCounter alkalommal játszottak vele.</p>
+                <p>
+                    @if (ViewBag.CurrentGuestName != null)
+                    {
+                        <a asp-controller="Gameplay" asp-action="GetPrelude" asp-route-gameTitle="@item.Title">Játék</a>
+                    }
+                </p>
+                @if (ViewBag.CurrentGuestName == item.Owner.UserName)
+                {
+                    <a asp-controller="GameEditor" asp-action="EditGame" asp-route-gameTitle="@item.Title">Játék szerkesztése</a>
+                }
             </td>
+                }
+            }
         </tr>
-}
+       }
     </tbody>
 </table>

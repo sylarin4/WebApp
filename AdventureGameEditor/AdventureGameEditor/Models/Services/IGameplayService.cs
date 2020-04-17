@@ -8,6 +8,7 @@ namespace AdventureGameEditor.Models
     public interface IGameplayService
     {
         public GameplayViewModel GetGameplayViewModel(String userName, String gameTitle);
+        public void SetPlayCounter(String gameTitle);
         public Field StepGame(String userName, String gameTitle, String direction);
         public Boolean GetIsVisitedField(String userName, String gameTitle, int colNumber, int rowNumber);
         public Trial GetTrial(String gameTitle, int colNumber, int rowNumber);

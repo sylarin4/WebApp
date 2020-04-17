@@ -26,18 +26,6 @@ namespace AdventureGameEditor.Models
         #region Initialize Gameplay
         public GameplayViewModel GetGameplayViewModel(String userName, String gameTitle)
         {
-            // Currently not available to play while u aren't registered. 
-            // (A new table should be created to temprorary store the informations about a visitor.)
-            /*if(userName == null)
-            {
-                int i = 0;
-                while(_context.User.Any(user => user.UserName == ("Visitor" + i)) ||
-                    _context.GameplayData.Any(data => userName == ("Visitor" + i)))
-                {
-                    ++i;
-                }
-                userName = "Visitor" + i;
-            }*/
             if(userName == null)
             {
                 return null;
@@ -54,6 +42,7 @@ namespace AdventureGameEditor.Models
             // Check if we have to initialize.
             if (gameplayData == null)
             {
+                Trace.WriteLine("\n\ninitialization happen\n\n");
                 gameplayData = new GameplayData()
                 {
                     PlayerName = userName,
@@ -135,6 +124,12 @@ namespace AdventureGameEditor.Models
             return visitedFields;
         }
 
+        public void SetPlayCounter(String gameTitle)
+        {
+            GetGame(gameTitle).PlayCounter++;
+            _context.SaveChanges();
+        }
+
         #endregion
 
         #region Step and load game
@@ -142,7 +137,6 @@ namespace AdventureGameEditor.Models
         public Field StepGame(String userName, String gameTitle, String direction)
         {
             GameplayData gameplayData = GetGameplayData(userName, gameTitle);
-
             // Set the last field to visited.
             gameplayData.VisitedFields
                 .Where(field => field.ColNumber == gameplayData.CurrentPlayerPosition.ColNumber
@@ -173,7 +167,7 @@ namespace AdventureGameEditor.Models
                         newColNumber = playerPosition.ColNumber - 1;
                     break;
             }
-            gameplayData.CurrentPlayerPosition = GetField(userName, gameTitle, newColNumber, newRowNumber);
+            gameplayData.CurrentPlayerPosition = GetField(gameTitle, newRowNumber, newColNumber);
             gameplayData.StepCount++;
             gameplayData.LastPlayDate = DateTime.Now;
             gameplayData.GameCondition =
@@ -241,8 +235,7 @@ namespace AdventureGameEditor.Models
         public Boolean IsAtTargetField(String gameTitle, int rowNumber, int colNumber)
         {
             return _context.Game
-                .Where(game => game.TargetField.ColNumber == colNumber && game.TargetField.RowNumber == rowNumber)
-                .ToList().Count > 0;
+                .Any(game => game.TargetField.ColNumber == colNumber && game.TargetField.RowNumber == rowNumber);
         }
 
         public Field GetField(String gameTitle, int rowNumber, int colNumber)
@@ -277,15 +270,6 @@ namespace AdventureGameEditor.Models
                 .Include(data => data.CurrentPlayerPosition)
                 .Where(data => data.PlayerName == userName && data.GameTitle == gameTitle)
                 .Include(data => data.VisitedFields)
-                .FirstOrDefault();
-        }
-
-        private Field GetField(String userName, String gameTitle, int colNumber, int rowNumber)
-        {
-            return _context.Field.Where(field => field.Owner.UserName == userName && field.GameTitle == gameTitle
-            && field.ColNumber == colNumber && field.RowNumber == rowNumber)
-                .Include(field => field.Trial)
-                .ThenInclude(trial => trial.Alternatives)
                 .FirstOrDefault();
         }
 
