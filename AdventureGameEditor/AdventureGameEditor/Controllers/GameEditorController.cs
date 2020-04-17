@@ -38,10 +38,16 @@ namespace AdventureGameEditor.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateGame([Bind("Title, Visibility, TableSize")] BasicGameDataViewModel gameData)
+        public async Task<IActionResult> CreateGame(BasicGameDataViewModel gameData)
         {
             User owner = await _context.User.FirstOrDefaultAsync(user => user.UserName == User.Identity.Name);
-            Boolean initialGameSucceeded = _gameEditorService.InicializeGame(gameData.Title, gameData.TableSize, gameData.Visibility, owner);
+            if(gameData.CoverImage != null && !FormFileExtensions.IsImage(gameData.CoverImage))
+            {
+                ModelState.AddModelError("", "A kép formátuma nem támogatott.");
+                return View("CreateGame");
+            }
+            Boolean initialGameSucceeded = _gameEditorService.InicializeGame(gameData.Title, gameData.TableSize, gameData.Visibility, owner, 
+                gameData.CoverImage);
             if (!initialGameSucceeded)
             {
                 ModelState.AddModelError("","Már van ilyen nevű kalandjáték.");
@@ -181,6 +187,7 @@ namespace AdventureGameEditor.Controllers
             if (!ModelState.IsValid)
             {
                 errorMessage = "Hiba történt. Kérem próbálja újra!";
+
             }
             else if( fieldData.NewImage != null && !FormFileExtensions.IsImage(fieldData.NewImage))
             {
@@ -386,6 +393,11 @@ namespace AdventureGameEditor.Controllers
         public FileContentResult RenderGameResultImage(int imageID)
         {
             return _gameEditorService.GetGameResultImage(imageID);
+        }
+
+        public FileContentResult RenderCoverImage(int imageID)
+        {
+            return _gameEditorService.GetCoverImage(imageID);
         }
 
         public IActionResult GetFieldDetailsPartialView(String gameTitle, int colNumber, int rowNumber)

@@ -29,7 +29,8 @@ namespace AdventureGameEditor.Models
         #endregion
 
         #region Create game
-        public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner)
+        public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner, 
+            IFormFile coverImage)
         {
             if (_context.Game.Any(game => game.Title == title)) return false;
 
@@ -61,14 +62,16 @@ namespace AdventureGameEditor.Models
                 map.Add(row);
             }
 
-            // Test writeing on console.
-            foreach(MapRow item in map)
+            // Initilaize Image
+            Image image = new Image();
+            if(coverImage != null)
             {
-                foreach(Field field in item.Row)
-                {
-                    Trace.Write(field.Text + " ");
-                }
-                Trace.Write("\n");
+                image.Name = coverImage.FileName;
+                image.Picture = ConvertIFormFileToImage(coverImage);
+            }
+            else
+            {
+                image = null;
             }
 
             // Save the initialized game to the database.
@@ -81,7 +84,8 @@ namespace AdventureGameEditor.Models
                     PlayCounter = 0,
                     Owner = owner,
                     Map = map,
-                    CurrentWayDirectionsCode = 0
+                    CurrentWayDirectionsCode = 0,
+                    CoverImage = image
                 }
                 );
             _context.SaveChanges();
@@ -507,6 +511,7 @@ namespace AdventureGameEditor.Models
             {
                 OwnerName = userName,
                 Title= gameTitle,
+                CoverImageID = game.CoverImage != null ? game.CoverImage.ID : -1,
                 Visibility = game.Visibility,
                 TableSize = game.TableSize,
                 Map = SortMap(game.Map.ToList()),
@@ -566,6 +571,17 @@ namespace AdventureGameEditor.Models
                                     .Where(result => result.Image.ID == imageID)
                                     .Select(result => result.Image.Picture)
                                     .FirstOrDefault();
+            if (picture == null) return null;
+            return new FileContentResult(picture, "image/png");
+        }
+
+        public FileContentResult GetCoverImage(int imageID)
+        {
+            if (imageID < 0) return null;
+            byte[] picture = _context.Game.Include(game => game.CoverImage)
+                                            .Where(game => game.CoverImage.ID == imageID)
+                                            .Select(game => game.CoverImage.Picture)
+                                            .FirstOrDefault();
             if (picture == null) return null;
             return new FileContentResult(picture, "image/png");
         }
@@ -690,6 +706,7 @@ namespace AdventureGameEditor.Models
         {
             return _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
                 .Include(g => g.Owner)
+                .Include(g => g.CoverImage)
                 .Include(g => g.Prelude)
                 .ThenInclude(p => p.Image)
                 .Include(g => g.Map)

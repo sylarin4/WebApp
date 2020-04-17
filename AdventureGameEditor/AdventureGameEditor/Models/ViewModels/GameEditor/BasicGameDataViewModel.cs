@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureGameEditor.Models
 {
@@ -18,5 +20,10 @@ namespace AdventureGameEditor.Models
         [Required(ErrorMessage = "A játék térkép méretének mezője nem lehet üres.")]
         [Range(3, 15, ErrorMessage = "3 és 15 között kell lennie a térkép méretének.")]
         public int TableSize { get; set; }
+
+        [Display(Name = "Borítókép")]
+        [BindProperty]
+        public IFormFile CoverImage { get; set; }
+
     }
 }

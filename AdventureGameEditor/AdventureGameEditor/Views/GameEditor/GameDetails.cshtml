@@ -29,6 +29,20 @@
             </dd>
 
             <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CoverImageID)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.CoverImageID == -1)
+                {
+                    <p>Nincs kép.</p>
+                }
+                else
+                {
+                    <img src="@Url.Action("RenderCoverImage", new { imageID = Model.CoverImageID })" class="contentImage" height=100 />
+                }
+            </dd>
+
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Visibility)
             </dt>
             <dd class="col-sm-10">

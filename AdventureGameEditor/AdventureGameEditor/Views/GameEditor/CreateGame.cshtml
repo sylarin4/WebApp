@@ -9,7 +9,7 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="CreateGame">
+            <form enctype="multipart/form-data" asp-action="CreateGame">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Title" class="control-label"></label>
@@ -24,10 +24,17 @@
                     </p>
                     <span asp-validation-for="Visibility" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="TableSize" class="control-label"></label>
                     <input asp-for="TableSize" class="form-control" />
                     <span asp-validation-for="TableSize" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CoverImage" class="control-label"></label>
+                    <input asp-for="CoverImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                    <span asp-validation-for="CoverImage" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">

@@ -14,6 +14,9 @@ namespace AdventureGameEditor.Models
         [Display(Name = "Cím")]
         public String Title { get; set; }
 
+        [Display(Name = "Borítókép")]
+        public int CoverImageID { get; set; }
+
         // Stores who can see and play this game.
 
         [Display(Name = "Láthatóság")]

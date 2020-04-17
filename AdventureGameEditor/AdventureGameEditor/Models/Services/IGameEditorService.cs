@@ -10,7 +10,8 @@ namespace AdventureGameEditor.Models
     public interface IGameEditorService
     {
         #region Create game
-        public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner);
+        public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner, 
+            IFormFile CoverImage);
         #endregion
         #region Create map
         #region Getters
@@ -57,6 +58,7 @@ namespace AdventureGameEditor.Models
         public FieldDetailsViewModel GetFieldDetailsViewModel(String userName, String gameTitle, int colNumber, int rowNumber);
         public FileContentResult GetPreludeImage(int imageID);
         public FileContentResult GetGameResultImage(int imageID);
+        public FileContentResult GetCoverImage(int imageID);
         #endregion
         #endregion
         #region Create game result
