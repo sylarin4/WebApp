@@ -5,4 +5,9 @@
 
     <ul>
         <li> <a asp-controller="GameEditor" asp-action="CreateMap" asp-route-gameTitle="@Model.GameTitle">Térkép szerkesztése</a></li>
+        <li> <a asp-controller="GameEditor" asp-action="CreateMapContent" asp-route-gameTitle="@Model.GameTitle">Térképmezők tartalmának szerkesztése</a></li>
+        <li> <a asp-controller="GameEditor" asp-action="CreateMapStartField" asp-route-gameTitle="@Model.GameTitle">Start mező beállítása</a></li>
+        <li> <a asp-controller="GameEditor" asp-action="CreateMapTargetField" asp-route-gameTitle="@Model.GameTitle">Célmező beállítása</a></li>
+        <li> <a asp-controller="GameEditor" asp-action="CreateGameResult" asp-route-gameTitle="@Model.GameTitle">Bevezetés és játékeredmények szerkesztése</a></li>
+        <li> <a asp-controller="GameEditor" asp-action="GetGameDetailsPartialView" asp-route-gameTitle="@Model.GameTitle">Játék adatainak megjelenítése</a></li>
     </ul>

@@ -76,10 +76,7 @@ namespace AdventureGameEditor.Controllers
         #region CreateMap (Used at "CreateMap" view)
 
         #region // ---------- Getters ---------- //
-        public IActionResult CreateMap(MapViewModel model)
-        {
-            return View("CreateMap", model);
-        }
+        
 
         public PartialViewResult GetMap()
         {
@@ -306,7 +303,7 @@ namespace AdventureGameEditor.Controllers
 
         public IActionResult CreateGameResult(String gameTitle)
         {
-            return View("CreateGameResultView", new GameResultViewModel() { GameTitle = gameTitle });
+            return View("CreateGameResultView", _gameEditorService.GetGameResult(User.Identity.Name, gameTitle));
         }
         public FileContentResult RenderFieldImage(int imageID)
         {

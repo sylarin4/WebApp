@@ -28,7 +28,6 @@
 </div>
 
 <div>
-    @Model.FieldImageID
     @if (Model.FieldImageID > 0)
     {
         <img src="@Url.Action("RenderFieldImage", new { imageID = Model.FieldImageID })" class="contentImage" height=100 />

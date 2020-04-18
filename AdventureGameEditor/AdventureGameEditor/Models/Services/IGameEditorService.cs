@@ -64,6 +64,7 @@ namespace AdventureGameEditor.Models
         #region Create game result
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
             String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage);
+        public GameResultViewModel GetGameResult(String userName, String gameTitle);
         #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);

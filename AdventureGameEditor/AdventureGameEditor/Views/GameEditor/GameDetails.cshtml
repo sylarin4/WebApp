@@ -8,6 +8,9 @@
     <title>GameDetails</title>
 </head>
 <body>
+    <div class="menu">
+        @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.Title });}
+    </div>
 
     <div>
         <h4>A játék adatai</h4>
@@ -60,7 +63,7 @@
                 @Html.DisplayNameFor(model => model.StartField)
             </dt>
             <dd class="col-sm-10">
-                @if(Model.StartField != null)
+                @if (Model.StartField != null)
                 {
                     <p>Sorszám: @Model.StartField.RowNumber, Oszlopszám: @Model.StartField.ColNumber</p>
                 }
@@ -75,7 +78,7 @@
                 @Html.DisplayNameFor(model => model.TargetField)
             </dt>
             <dd class="col-sm-10">
-                @if(Model.TargetField != null)
+                @if (Model.TargetField != null)
                 {
                     <p>Sorszám: @Model.TargetField.RowNumber, Oszlopszám: @Model.TargetField.ColNumber</p>
                 }
@@ -89,7 +92,7 @@
                 @Html.DisplayNameFor(model => model.Prelude)
             </dt>
             <dd class="col-sm-10">
-                @if(Model.Prelude != null)
+                @if (Model.Prelude != null)
                 {
                     <p>@Html.DisplayFor(model => model.Prelude)</p>
                 }
@@ -118,7 +121,7 @@
                 @Html.DisplayNameFor(model => model.GameWonResult)
             </dt>
             <dd class="col-sm-10">
-                @if(Model.GameWonResult != null)
+                @if (Model.GameWonResult != null)
                 {
                     <p>@Html.DisplayFor(model => model.GameWonResult)</p>
                 }
@@ -146,7 +149,7 @@
                 @Html.DisplayNameFor(model => model.GameLostResult)
             </dt>
             <dd class="col-sm-10">
-                @if(Model.GameLostResult != null)
+                @if (Model.GameLostResult != null)
                 {
                     <p>@Html.DisplayFor(model => model.GameLostResult)</p>
                 }

@@ -18,6 +18,10 @@ namespace AdventureGameEditor.Models
         [BindProperty]
         public IFormFile PreludeImage { get; set; }
 
+        // If we editing the game, maybe we've already upload and image. If we have, show it.
+        [Display(Name ="Korábban feltöltött kép:")]
+        public int PreludeImageID { get; set; }
+
         [Display(Name = "A győzelmet követően megjelenő szöveg")]
         [Required(ErrorMessage = "A győzelmet követően megjelenő szöveg mezője nem lehet üres.")]
         public String GameWonResult { get; set; }
@@ -25,6 +29,10 @@ namespace AdventureGameEditor.Models
         [Display(Name = "A győzelmet követően megjelenő kép")]
         [BindProperty]
         public IFormFile GameWonImage { get; set; }
+
+        // When we editing the game, show if we already uploaded an image.
+        [Display(Name ="Korábban feltöltött kép: ")]
+        public int GameWonImageID { get; set; }
 
         [Display(Name = "A vereséget követően megjelenő szöveg")]
         [Required(ErrorMessage = "A vereséget követően megjelenő szöveg mezője nem lehet üres.")]
@@ -34,8 +42,12 @@ namespace AdventureGameEditor.Models
         [BindProperty]
         public IFormFile GameLostImage { get; set; }
 
+        // When we editing the game and loaded image in the past, show the uploaded image.
+        [Display(Name ="Korábban feltöltött kép:")]
+        public int GameLostImageID { get; set; }
+
         public List<String> ErrorMessages { get; set; }
  
-
+        
     }
 }

@@ -9,6 +9,10 @@
 
 <h1> @Model.GameTitle c. játék térképének létrehozása</h1>
 
+<div class="menu">
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+</div>
+
 <table border="1" frame="box" rules="all" style="width:100%">
     <tr>
         @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0000 });}

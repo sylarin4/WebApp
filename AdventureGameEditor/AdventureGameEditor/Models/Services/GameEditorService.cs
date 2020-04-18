@@ -597,40 +597,59 @@ namespace AdventureGameEditor.Models
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
             String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage)
         {
+            Trace.WriteLine("gameWonResult: " + gameWonResult + " gameLostResult: " + gameLostResult );
             // If the results empty or not set, don't save them.
             if (gameLostResult == null || gameWonResult == null || gameLostResult == "" || gameWonResult == "")
+            {
+                Trace.WriteLine("gameLost or gameWon result is the problem");
                 return false;
+            }
 
             Game game = GetGameAtTitle(userName, gameTitle);
-            if (game == null) return false;
+            if (game == null)
+            {
+                Trace.WriteLine("We didn't find the game.");
+                return false;
+            }
 
-            game.GameLostResult = new GameResult()
+            // Saveing informations about game lost result.
+            if(game.GameLostResult == null)
             {
-                Owner = game.Owner,
-                GameTitle = gameTitle,
-                IsGameWonResult = false,
-                Text = gameLostResult
-            };
-            game.GameWonResult = new GameResult()
+                game.GameLostResult = new GameResult()
+                    {
+                        Owner = game.Owner,
+                        GameTitle = gameTitle,
+                        IsGameWonResult = false,
+                        Text = gameLostResult
+                    };
+            }
+            else
             {
-                Owner = game.Owner,
-                GameTitle = gameTitle,
-                IsGameWonResult = true,
-                Text = gameWonResult
-            };
-            game.Prelude = new Prelude()
+                game.GameLostResult.Text = gameLostResult;
+            }
+            if (gameLostImage != null)
             {
-                Text = prelude,
-                Owner = game.Owner,
-                GameTitle = gameTitle
-            };
-            if (preludeImage != null)
-            {
-                game.Prelude.Image = new Image()
+                game.GameLostResult.Image = new Image()
                 {
-                    Name = preludeImage.FileName,
-                    Picture = ConvertIFormFileToImage(preludeImage)
+                    Name = gameLostImage.FileName,
+                    Picture = ConvertIFormFileToImage(gameLostImage)
                 };
+            }
+
+            // Saveing information about game won result.
+            if(game.GameWonResult == null)
+            {
+                game.GameWonResult = new GameResult()
+                {
+                    Owner = game.Owner,
+                    GameTitle = gameTitle,
+                    IsGameWonResult = true,
+                    Text = gameWonResult
+                };
+            }
+            else
+            {
+                game.GameWonResult.Text = gameWonResult;
             }
             if (gameWonImage != null)
             {
@@ -640,16 +659,49 @@ namespace AdventureGameEditor.Models
                     Picture = ConvertIFormFileToImage(gameWonImage)
                 };
             }
-            if (gameLostImage != null)
+
+            // Saveing informations about prelude.
+            if(game.Prelude == null)
             {
-                game.GameLostResult.Image = new Image()
+                game.Prelude = new Prelude()
                 {
-                    Name = gameLostImage.FileName,
-                    Picture = ConvertIFormFileToImage(gameLostImage)
+                    Text = prelude,
+                    Owner = game.Owner,
+                    GameTitle = gameTitle
                 };
-            }            
+            }
+            else
+            {
+                game.Prelude.Text = prelude;
+            }
+            
+            if (preludeImage != null)
+            {
+                game.Prelude.Image = new Image()
+                {
+                    Name = preludeImage.FileName,
+                    Picture = ConvertIFormFileToImage(preludeImage)
+                };
+            }           
+                 
             _context.SaveChanges();
             return true;
+        }
+
+        public GameResultViewModel GetGameResult(String userName, String gameTitle)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            GameResultViewModel model = new GameResultViewModel()
+            {
+                GameTitle = gameTitle,
+                Prelude = game.Prelude != null ? game.Prelude.Text : "",
+                GameWonResult = game.GameWonResult != null ? game.GameWonResult.Text : "",
+                GameLostResult = game.GameLostResult != null ? game.GameLostResult.Text : "",
+                GameWonImageID = game.GameWonResult != null && game.GameWonResult.Image != null ? game.GameWonResult.Image.ID : -1,
+                GameLostImageID = game.GameLostResult != null && game.GameLostResult.Image != null ? game.GameLostResult.Image.ID : -1,
+                PreludeImageID = game.Prelude != null && game.Prelude.Image != null ? game.Prelude.Image.ID : -1
+            };
+            return model;
         }
 
         #endregion
@@ -709,7 +761,9 @@ namespace AdventureGameEditor.Models
                 .Include(g => g.Owner)
                 .Include(g => g.CoverImage)
                 .Include(g => g.GameLostResult)
+                .ThenInclude(result => result.Image)
                 .Include(g => g.GameWonResult)
+                .ThenInclude(result => result.Image)
                 .Include(g => g.Prelude)
                 .ThenInclude(p => p.Image)
                 .Include(g => g.Map)
