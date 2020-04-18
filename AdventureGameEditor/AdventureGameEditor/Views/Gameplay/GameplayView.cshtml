@@ -23,6 +23,7 @@
             RowNumber = Model.CurrentPlayerPosition.RowNumber,
             ColNumber = Model.CurrentPlayerPosition.ColNumber,
             Text = Model.CurrentPlayerPosition.Text,
+            FieldImageID = Model.CurrentPlayerPosition.Image != null ? Model.CurrentPlayerPosition.Image.ID : -1,
             Trial = Model.CurrentPlayerPosition.Trial,
             IsRightWay = Model.CurrentPlayerPosition.IsRightWay,
             IsLeftWay = Model.CurrentPlayerPosition.IsLeftWay,

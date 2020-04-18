@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureGameEditor.Models
 {
@@ -15,6 +16,7 @@ namespace AdventureGameEditor.Models
         public Boolean IsAtTargetField(String gameTitle, int rowNumber, int colNumber);
         public Field GetField(String gameTitle, int rowNumber, int colNumber);
         public GameResult GetGameResult(String gameTitle, String userName);
+        public FileContentResult GetFieldImage(int imageID);
         public void SetGameOver(String playerName, String gameTitle, Boolean isGameWon);
     }
 }

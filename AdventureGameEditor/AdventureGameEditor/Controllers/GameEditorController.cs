@@ -65,6 +65,12 @@ namespace AdventureGameEditor.Controllers
             return GetGameDetailsPartialView(gameTitle);
         }
 
+        // It's used for editing only, because in creatin, we load this page after posting CreateGame view's form.
+        public IActionResult CreateMap(String gameTitle)
+        {
+            return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
+        }
+
         #endregion
 
         #region CreateMap (Used at "CreateMap" view)

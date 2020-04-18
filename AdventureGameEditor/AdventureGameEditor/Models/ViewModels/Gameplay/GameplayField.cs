@@ -11,6 +11,7 @@ namespace AdventureGameEditor.Models
         public int RowNumber { get; set; }
         public int ColNumber { get; set; }
         public String Text { get; set; }
+        public int FieldImageID { get; set; }
         public Trial? Trial { get; set; }
         public Boolean IsRightWay { get; set; }
         public Boolean IsLeftWay { get; set; }

@@ -64,7 +64,7 @@ namespace AdventureGameEditor.Models
             {
                 Player = _context.User.Where(user => user.UserName == userName).FirstOrDefault(),
                 GameTitle = gameTitle,
-                CurrentPlayerPosition = gameplayData.CurrentPlayerPosition,
+                CurrentPlayerPosition = GetField(gameTitle, gameplayData.CurrentPlayerPosition.RowNumber, gameplayData.CurrentPlayerPosition.ColNumber),
                 TargetField = game.TargetField,
                 StepCount = gameplayData.StepCount,
                 IsGameOver = gameplayData.GameCondition != GameCondition.OnGoing,
@@ -242,10 +242,19 @@ namespace AdventureGameEditor.Models
         {
             return _context.Field
                 .Where(field => field.GameTitle == gameTitle && field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Include(field => field.Image)
                 .Include(field => field.Trial)
                 .ThenInclude(trial => trial.Alternatives)
                 .ThenInclude(alternative => alternative.TrialResult)
                 .FirstOrDefault();
+        }
+
+        public FileContentResult GetFieldImage(int imageID)
+        {
+            if (imageID < 0) return null;
+            byte[] picture = _context.Field.Where(field => field.Image.ID == imageID).Select(field => field.Image.Picture).FirstOrDefault();
+            if (picture == null) return null;
+            return new FileContentResult(picture, "image/png");
         }
         #endregion
 

@@ -12,37 +12,42 @@
 
     <h1> @Model.GameTitle c. játék </h1>
     <h2>@Model.Action</h2>
-    @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
-        {
-            MapSize = Model.MapSize,
-            GameTitle = Model.GameTitle,
-            Map = Model.Map,
-            FunctionName = Model.FunctionName
-        });}
-    <div id="ButtonsPlace">
 
-        @if (Model.IsFieldSelected == true)
-        {
-            await Html.RenderPartialAsync("ButtonsForAddFieldContentPartialView", new MapPieceViewModel()
+    <div class="menu">
+        @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+    </div>
+
+        @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
             {
+                MapSize = Model.MapSize,
                 GameTitle = Model.GameTitle,
-                Field = Model.SelectedField
+                Map = Model.Map,
+                FunctionName = Model.FunctionName
+            });}
+        <div id="ButtonsPlace">
+
+            @if (Model.IsFieldSelected == true)
+            {
+                await Html.RenderPartialAsync("ButtonsForAddFieldContentPartialView", new MapPieceViewModel()
+                {
+                    GameTitle = Model.GameTitle,
+                    Field = Model.SelectedField
+                }
+                );
             }
-            );
-        }
-    </div>
-    <div id="InputArea"> </div>
-    <div id="ErrorMessage">
-        @if (Model.ErrorMessage != null && Model.ErrorMessage.Length > 0)
-        {
-            @Model.ErrorMessage
-        }
-    </div>
+        </div>
+        <div id="InputArea"> </div>
+        <div id="ErrorMessage">
+            @if (Model.ErrorMessage != null && Model.ErrorMessage.Length > 0)
+            {
+                @Model.ErrorMessage
+            }
+        </div>
 
         <div id="fieldDetails"></div>
 
         <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
-    </body>
+</body>
 
 
 </html>

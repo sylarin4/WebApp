@@ -87,6 +87,11 @@ namespace AdventureGameEditor.Controllers
             return _gameEditorService.ImageForMap(wayDirectionsCode);
         }
 
+        public FileContentResult RenderFieldImage(int imageID)
+        {
+            return _gameplayService.GetFieldImage(imageID);
+        }
+
         #endregion
 
         public IActionResult StepGame(String gameTitle, int rowNumber, int colNumber, string direction)
@@ -100,6 +105,7 @@ namespace AdventureGameEditor.Controllers
                 RowNumber = newPlayerPosition.RowNumber,
                 ColNumber = newPlayerPosition.ColNumber,
                 Text = newPlayerPosition.Text,
+                FieldImageID = newPlayerPosition.Image != null ? newPlayerPosition.Image.ID : -1,
                 Trial = newPlayerPosition.Trial,
                 IsRightWay = newPlayerPosition.IsRightWay,
                 IsLeftWay = newPlayerPosition.IsLeftWay,
