@@ -180,6 +180,7 @@ namespace AdventureGameEditor.Models
 
         #endregion
 
+
         #endregion
 
         #region Create map content
@@ -197,10 +198,8 @@ namespace AdventureGameEditor.Models
             {
                 alternatives.Add(new Alternative()
                 {
-                    Text = "default",
                     TrialResult = new TrialResult()
                     {
-                        Text = "",
                         ResultType = ResultType.Nothing
                     }
                 });
@@ -230,11 +229,9 @@ namespace AdventureGameEditor.Models
             {
                 alternatives.Add(new Alternative()
                 {
-                    Text = "test text",
                     TrialResult = new TrialResult()
                     {
-                        ResultType = ResultType.Nothing,
-                        Text = "test text"
+                        ResultType = ResultType.Nothing
                     }
                 });
             }
@@ -246,7 +243,7 @@ namespace AdventureGameEditor.Models
             List<String> alternativeTexts = new List<String>();
             for(int i = 0; i < count; ++i)
             {
-                alternativeTexts.Add("test text");
+                alternativeTexts.Add("");
             }
             return alternativeTexts;
         }
@@ -706,6 +703,88 @@ namespace AdventureGameEditor.Models
 
         #endregion
 
+        #region Check game
+
+        public Boolean IsValidMap(String gameTitle, String userName)
+        {
+            List<MapRow> map = GetMap(userName, gameTitle);
+            foreach (MapRow row in map)
+            {
+                foreach (Field field in row.Row)
+                {
+                    // Check right direction
+                    if (field.IsRightWay)
+                    {
+                        // Check if there's a way but no more fields to go in this direction.
+                        if (field.ColNumber + 1 >= row.Row.Count) return false;
+                        // Check if there's field but that field has no way to the currently.
+                        if (!GetField(userName, gameTitle, field.RowNumber, field.ColNumber + 1).IsLeftWay) return false;
+                    }
+
+                    // Check left direction.
+                    if (field.IsLeftWay)
+                    {
+                        if (field.ColNumber - 1 < 0) return false;
+                        if (!GetField(userName, gameTitle, field.RowNumber, field.ColNumber - 1).IsRightWay) return false;
+                    }
+
+                    // Check up direction.
+                    if (field.IsUpWay)
+                    {
+                        if (field.RowNumber - 1 < 0) return false;
+                        if (!GetField(userName, gameTitle, field.RowNumber - 1, field.ColNumber).IsDownWay) return false;
+                    }
+
+                    // Check down direction.
+                    if (field.IsDownWay)
+                    {
+                        if (field.RowNumber + 1 >= row.Row.Count) return false;
+                        if (!GetField(userName, gameTitle, field.RowNumber + 1, field.ColNumber).IsUpWay) return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public Boolean IsStartFieldSet(String userName, String gameTitle)
+        {
+            return _context.Game.Any(game => game.Owner.UserName == userName &&
+                                             game.Title == gameTitle &&
+                                             game.StartField != null);
+        }
+
+        public Boolean IsTargetFieldSet(String userName, String gameTitle)
+        {
+            return _context.Game.Any(game => game.Owner.UserName == userName &&
+                                             game.Title == gameTitle &&
+                                             game.TargetField != null);
+        }
+
+        public Boolean IsPreludeFilled(String userName, String gameTitle)
+        {
+            return _context.Game.Any(game => game.Owner.UserName == userName &&
+                                             game.Title == gameTitle &&
+                                             game.Prelude != null &&
+                                             game.Prelude.Text != null);
+        }
+
+        public Boolean IsGameWonFilled(String userName, String gameTitle)
+        {
+            return _context.Game.Any(game => game.Owner.UserName == userName &&
+                                             game.Title == gameTitle &&
+                                             game.GameWonResult != null&&
+                                             game.GameWonResult.Text != null);
+        }
+
+        public Boolean IsGameLostFilled(String userName, String gameTitle)
+        {
+            return _context.Game.Any(game => game.Owner.UserName == userName &&
+                                             game.Title == gameTitle &&
+                                             game.GameLostResult != null &&
+                                             game.GameLostResult.Text != null);
+        }
+
+        #endregion
 
         #region Usually used getter functions
 

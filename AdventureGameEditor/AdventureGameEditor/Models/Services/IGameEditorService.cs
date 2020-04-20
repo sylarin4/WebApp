@@ -66,6 +66,14 @@ namespace AdventureGameEditor.Models
             String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage);
         public GameResultViewModel GetGameResult(String userName, String gameTitle);
         #endregion
+        #region Check game
+        public Boolean IsValidMap(String gameTitle, String userName);
+        public Boolean IsStartFieldSet(String userName, String gameTitle);
+        public Boolean IsTargetFieldSet(String userName, String gameTitle);
+        public Boolean IsPreludeFilled(String userName, String gameTitle);
+        public Boolean IsGameWonFilled(String userName, String gameTitle);
+        public Boolean IsGameLostFilled(String userName, String gameTitle);
+        #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);
         public Field GetField(String userName, String gameTitle, int rowNumber, int colNumber);

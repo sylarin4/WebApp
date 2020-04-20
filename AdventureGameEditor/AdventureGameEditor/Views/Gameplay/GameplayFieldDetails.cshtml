@@ -35,7 +35,15 @@
 </div>
 
 <div id="FieldText">
-    <p> @Model.Text </p>
+    @if(Model.Text != null && Model.Text.Length > 0)
+    {
+        <p> @Model.Text </p>
+    }
+    else
+    {
+        <p>Tovább jöttél.</p>
+    }
+
 </div>
 <div id="trialForm">
     @if (Model.Trial != null && Model.IsVisited == false)

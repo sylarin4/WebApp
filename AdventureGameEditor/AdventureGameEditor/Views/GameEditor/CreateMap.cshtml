@@ -35,6 +35,7 @@
         @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1111 });}
     </tr>
 </table>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <div>
     @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
         {

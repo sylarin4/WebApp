@@ -128,6 +128,13 @@ namespace AdventureGameEditor.Controllers
         // Get the view with the map. So the user can select which field he/she wants to add text or trial.
         public IActionResult CreateMapContent(String gameTitle)
         {
+            if(!_gameEditorService.IsValidMap(gameTitle, User.Identity.Name))
+            {
+                ModelState.AddModelError("","A térkép nem összefűggő: egyes helyeken előfordulhat, " +
+                    "hogy az egyik mezőn elinduló út nem folytatódik a szomszédos mezőn, azaz a térképrészek nem illeszkednek." +
+                    "Vagy valamely, a térkép szélén elhelyezkedő mezőről induló út kivisz a térképről.");
+                return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
+            }
             MapContentViewModel model = _gameEditorService.GetMapContentViewModel(User.Identity.Name, gameTitle);
             model.FunctionName = "LoadButtonsForAddFieldContent";
             model.Action = "térkép mezőinek kitöltése";
@@ -418,6 +425,25 @@ namespace AdventureGameEditor.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Check game
+
+        public IActionResult CheckGame(String gameTitle)
+        {
+            CheckGameViewModel model = new CheckGameViewModel()
+            {
+                GameTitle = gameTitle,
+                IsMapValid = _gameEditorService.IsValidMap(gameTitle, User.Identity.Name),
+                IsStartFieldSet = _gameEditorService.IsStartFieldSet(User.Identity.Name, gameTitle),
+                IsTargetFieldSet = _gameEditorService.IsTargetFieldSet(User.Identity.Name, gameTitle),
+                IsPreludeFilled = _gameEditorService.IsPreludeFilled(User.Identity.Name, gameTitle),
+                IsGameLostFilled = _gameEditorService.IsGameLostFilled(User.Identity.Name, gameTitle),
+                IsGameWonFilled = _gameEditorService.IsGameWonFilled(User.Identity.Name, gameTitle)
+            };
+            return View("CheckGameView", model);
+        }
 
         #endregion
 

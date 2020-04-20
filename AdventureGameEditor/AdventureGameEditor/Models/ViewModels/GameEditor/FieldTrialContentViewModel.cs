@@ -18,6 +18,7 @@ namespace AdventureGameEditor.Models
         public TrialType TrialType { get; set; }
 
         [Display(Name ="Próba szövege")]
+        [Required(ErrorMessage ="A szövegmező nem hagyható üresen.")]
         public String Text { get; set; }
     }
 }
