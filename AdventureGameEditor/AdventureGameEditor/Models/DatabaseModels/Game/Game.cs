@@ -46,5 +46,6 @@ namespace AdventureGameEditor.Models
 
         // Stores the cover image of the game.
         public Image? CoverImage { get; set; }
+        public Boolean IsReadyToPlay { get; set; }
     }
 }

@@ -28,6 +28,8 @@
     </ul>
 </div>
 
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 <table class="table">
     <tbody>
        @{int rowCount = 5; /*number of elements in a row*/ }
@@ -56,7 +58,7 @@
                 <p>
                     @if (ViewBag.CurrentGuestName != null)
                     {
-                        <a asp-controller="Gameplay" asp-action="GetPrelude" asp-route-gameTitle="@item.Title">Játék</a>
+                        <a asp-controller="GameViewer" asp-action="RedirectToPrelude" asp-route-gameTitle="@item.Title">Játék</a>
                     }
                 </p>
                 @if (ViewBag.CurrentGuestName == item.Owner.UserName)

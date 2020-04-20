@@ -51,6 +51,7 @@ namespace AdventureGameEditor.Controllers
 
         public IActionResult GetPrelude(String gameTitle)
         {
+           
             Prelude prelude = _context.Game
                 .Where(game => game.Title == gameTitle)
                 .Include(g => g.Prelude)

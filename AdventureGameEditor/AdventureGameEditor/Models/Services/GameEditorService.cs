@@ -85,7 +85,8 @@ namespace AdventureGameEditor.Models
                     Owner = owner,
                     Map = map,
                     CurrentWayDirectionsCode = 0,
-                    CoverImage = image
+                    CoverImage = image,
+                    IsReadyToPlay = false
                 }
                 );
             _context.SaveChanges();
@@ -782,6 +783,13 @@ namespace AdventureGameEditor.Models
                                              game.Title == gameTitle &&
                                              game.GameLostResult != null &&
                                              game.GameLostResult.Text != null);
+        }
+
+        public async void SetReadyToPlay(String userName, String gameTitle)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            game.IsReadyToPlay = true;
+            await _context.SaveChangesAsync();
         }
 
         #endregion

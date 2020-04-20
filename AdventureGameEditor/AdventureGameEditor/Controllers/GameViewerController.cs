@@ -17,7 +17,7 @@ namespace AdventureGameEditor.Controllers
     {
 
         protected readonly IGameEditorService _gameEditorService;
-        public GameViewerController(AdventureGameEditorContext context, IGameEditorService gameEditorService) 
+        public GameViewerController(AdventureGameEditorContext context, IGameEditorService gameEditorService)
             : base(context)
         {
             _gameEditorService = gameEditorService;
@@ -66,6 +66,22 @@ namespace AdventureGameEditor.Controllers
         }
 
         #endregion
+
+        public IActionResult RedirectToPrelude(String gameTitle)
+        {
+             if(! _context.Game.Where(game=> game.Title == gameTitle).FirstOrDefault().IsReadyToPlay)
+            {
+                ModelState.AddModelError("", "A " + gameTitle + " c. játék még nincsen befejezve, ezért sajnos még nem lehet vele játszani.");                
+                return View("~/Views/GameViewer/Index.cshtml", _context.Game
+                                .Include(game => game.CoverImage)
+                                .Include(game => game.Owner)
+                                .ToList());
+            }
+            else
+            {
+                return RedirectToAction("GetPrelude", "Gameplay", new { gameTitle = gameTitle });
+            }
+        }
 
         public FileContentResult RenderCoverImage(int imageID)
         {
