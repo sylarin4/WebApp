@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200224160745_AddMapImageTable.cs" />
     <Compile Remove="Migrations\20200224160745_AddMapImageTable.Designer.cs" />
+    <Compile Remove="Migrations\20200422221407_RemoveFriendsFromVisibilitiyEnumClass.cs" />
+    <Compile Remove="Migrations\20200422221407_RemoveFriendsFromVisibilitiyEnumClass.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

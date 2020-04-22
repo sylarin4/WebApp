@@ -28,7 +28,7 @@ namespace AdventureGameEditor.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Help()
         {
             return View();
         }
