@@ -22,32 +22,6 @@ namespace AdventureGameEditor.Controllers
             _logger = logger;
         }
 
-        /*public IActionResult Index()
-        {
-            return View("Index", 
-                new FeedbackViewModel
-                {
-                    Feedback = ""
-                });
-        }*/
-
-        #region Just for testing.
-
-        public ActionResult TestAction()
-        {            
-            return PartialView("Index");
-        }
-        public ActionResult GetMapImage()
-        {
-            int wayDirectionsCode = 0101;
-            var image = _context.MapImage
-                    .Where(image => image.WayDirectionsCode == wayDirectionsCode && image.Theme == MapTheme.Test)
-                    .Select(image => image.Image)
-                    .FirstOrDefault();
-            return File(image, "image/png");
-        }
-
-        #endregion
 
         public IActionResult Index()
         {            

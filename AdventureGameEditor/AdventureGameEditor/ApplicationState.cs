@@ -9,8 +9,6 @@ namespace AdventureGameEditor
     public class ApplicationState
     {
         private long _userCount;
-
-        // Szálbiztos kezelés
         public long UserCount
         {
             get => Interlocked.Read(ref _userCount);

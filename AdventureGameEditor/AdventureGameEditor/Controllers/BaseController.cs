@@ -25,7 +25,6 @@ namespace AdventureGameEditor.Controllers
 
             ViewBag.CurrentGuestName = String.IsNullOrEmpty(User.Identity.Name) ?
                 null : User.Identity.Name;
-            //Trace.WriteLine("\n\n\n\n" + String.IsNullOrEmpty(User.Identity.Name) + "\n\n\n\n");
         }
 
         

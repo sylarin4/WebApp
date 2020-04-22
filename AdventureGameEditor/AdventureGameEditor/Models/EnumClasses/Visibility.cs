@@ -11,8 +11,6 @@ namespace AdventureGameEditor.Models
     {
         [Display(Name = "Csak én")]
         Owner,
-        [Display(Name = "Csak a barátaim")]
-        Friends,
         [Display(Name = "Minden bejelentkezett felhasználó")]
         LoggedIn,
         [Display(Name = "Mindenki")]
