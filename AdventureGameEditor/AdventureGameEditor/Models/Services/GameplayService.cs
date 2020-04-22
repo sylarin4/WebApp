@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
 using AdventureGameEditor.Data;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace AdventureGameEditor.Models
 {
@@ -234,8 +235,11 @@ namespace AdventureGameEditor.Models
         }
         public Boolean IsAtTargetField(String gameTitle, int rowNumber, int colNumber)
         {
-            return _context.Game
-                .Any(game => game.TargetField.ColNumber == colNumber && game.TargetField.RowNumber == rowNumber);
+           Field targetField = _context.Game
+                                       .Where(game => game.Title == gameTitle)
+                                       .Select(game => game.TargetField)
+                                       .FirstOrDefault();
+            return (targetField.ColNumber == colNumber && targetField.RowNumber == rowNumber) ;
         }
 
         public Field GetField(String gameTitle, int rowNumber, int colNumber)
