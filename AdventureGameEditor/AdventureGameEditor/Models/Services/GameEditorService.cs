@@ -9,6 +9,10 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 
 using AdventureGameEditor.Data;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Security.Policy;
+using System.Drawing.Text;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace AdventureGameEditor.Models
 {
@@ -785,11 +789,196 @@ namespace AdventureGameEditor.Models
                                              game.GameLostResult.Text != null);
         }
 
-        public async void SetReadyToPlay(String userName, String gameTitle)
+        public void SetReadyToPlay(String userName, String gameTitle)
         {
             Game game = GetGameAtTitle(userName, gameTitle);
-            game.IsReadyToPlay = true;
-            await _context.SaveChangesAsync();
+            if (!game.IsReadyToPlay)
+            {
+                game.IsReadyToPlay = true;
+                _context.SaveChanges();
+            }
+        }
+
+        public void SetNotReadyToPlay(String userName, String gameTitle)
+        {
+            Game game = GetGameAtTitle(userName, gameTitle);
+            if (game.IsReadyToPlay)
+            {
+                game.IsReadyToPlay = false;
+                _context.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        #region Search for solution of a game
+
+        // Search for an optimal path from the start field to the target field in the game's map
+        // to find out if it has solution and if has, how long is that optimal path.
+        public int? SearchForSolution(String userName, String gameTitle)
+        {
+
+            //==----- Initialize the Graph from the map. -----==//
+
+            List<MapRow> map = GetMap(userName, gameTitle);
+            List<List<GraphNode>> graph = new List<List<GraphNode>>();
+
+            Field startField = _context.Game.Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
+                                            .Select(game => game.StartField)
+                                            .FirstOrDefault();
+            Field targetField = _context.Game.Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
+                                            .Select(game => game.TargetField)
+                                            .FirstOrDefault();
+
+            // Initialize graph.
+            for(int i = 0; i < map.Count; ++i)
+            {
+                graph.Add(new List<GraphNode>());
+                for(int j = 0; j < map[i].Row.Count; ++j)
+                {
+                    Field field = map[i].Row.Where(field => field.ColNumber == j && field.RowNumber == i).FirstOrDefault();
+                    graph[i].Add(new GraphNode());
+                    graph[i][j] = new GraphNode()
+                    {
+                        ColNumber = field.ColNumber,
+                        RowNumber = field.RowNumber,
+                        Parent = null,
+                        PathLength = 15 * 15 + 1,
+                        IsUpWay = field.IsUpWay,
+                        IsDownWay = field.IsDownWay,
+                        IsRightWay = field.IsRightWay,
+                        IsLeftWay = field.IsLeftWay
+                    };
+                }
+            }
+
+            //==----- Initialize variables for the algorithm. -----==//
+
+            graph[startField.RowNumber][startField.ColNumber].PathLength = 0;
+            List<GraphNode> path = new List<GraphNode>();
+            path.Add(graph[startField.RowNumber][startField.ColNumber]);
+            List<GraphNode> openedNodes = new List<GraphNode>();
+            openedNodes.Add(graph[startField.RowNumber][startField.ColNumber]);
+
+            Boolean isDetermined = false;
+            int? solutionPathLength = null;
+            GraphNode currentNode;
+
+            Trace.Write("Path: ");
+            foreach(GraphNode node in path)
+            {
+                Trace.Write(node.RowNumber + ", " + node.ColNumber);
+            }
+            Trace.WriteLine("");
+            Trace.Write("Opened node:");
+            foreach (GraphNode node in openedNodes)
+            {
+                Trace.Write(node.RowNumber + ", " + node.ColNumber);
+            }
+            Trace.WriteLine("");
+
+            //==----- The algorithm -----==//
+
+            int loopCount = 1;
+            while (!isDetermined)
+            {
+                Trace.WriteLine("\n" + loopCount + "-edik alkalommal futtatjuk a ciklust");
+                loopCount++;
+                if (!openedNodes.Any())
+                {
+                    Trace.WriteLine("A nyitott csúcsok listája üres: nincs megoldás.");
+                    isDetermined = true;
+                    solutionPathLength = null;
+                    return null;
+                }
+                currentNode = SearchNextNode(openedNodes, targetField);
+                Trace.WriteLine("Ez alkalommal vizsgált csúcs indexei: " + currentNode.RowNumber + "," + currentNode.ColNumber);
+                if(currentNode.ColNumber == targetField.ColNumber && currentNode.RowNumber == targetField.RowNumber)
+                {
+                    Trace.WriteLine("Ez a cél csúcs. Ide vezető legrövidebb talált út: " + currentNode.PathLength);
+                    isDetermined = true;
+                    return currentNode.PathLength;
+                }
+                openedNodes.Remove(currentNode);
+                foreach(GraphNode node in GetChildren(currentNode, graph))
+                {
+                    // The children of the currentNode are 1 the neighbors of it, so theirs distance from each other is 1.
+                    // So: ( c(node, currentNode) == 1 ).
+                    Trace.WriteLine("Megvizsgáljuk a feldolgozás alatt álló csúcs gyerekeit, amelyeket még nem dolgoztunk fel.");
+                    if(!path.Contains(node) || currentNode.PathLength + 1 < node.PathLength)
+                    {
+                        Trace.WriteLine(node.RowNumber + "," + node.ColNumber + "indexű gyereket vizsgáljuk.");
+                        node.Parent = currentNode;
+                        Trace.WriteLine("Parent beállítása " + currentNode.RowNumber + "," + currentNode.ColNumber + "indexű csúcsra.");
+                        node.PathLength = currentNode.PathLength + 1;
+                        Trace.WriteLine("Úthossz beállítása " + node.PathLength + "-re.");
+                        openedNodes.Add(node);
+                        path.Add(node);
+                    }
+                }
+            }
+            return null;
+        }
+
+        //===---------- Helper functions ----------===//
+
+        private int HeuristicFunction(GraphNode node, Field targetField)
+        {
+            // Count the numbers of ways we can go out of the field represented by this node.
+            int ways = 4;
+            if (node.IsUpWay) ways--;
+            if (node.IsDownWay) ways--;
+            if (node.IsRightWay) ways--;
+            if (node.IsLeftWay) ways--;
+
+            // Estimate the distance of the target field.
+            return Math.Abs(node.RowNumber - targetField.RowNumber) + Math.Abs(node.ColNumber - targetField.ColNumber) + ways;
+        }
+
+        // Gets the most optimal node from the opened nodes list.
+        private GraphNode SearchNextNode(List<GraphNode> openedNodes, Field targetField)
+        {
+            Trace.WriteLine("A következő csúcs kiválasztása a nyílt csúcsok halmazából.");
+            GraphNode minNode = openedNodes[0];
+            foreach(GraphNode node in openedNodes)
+            {
+                Trace.WriteLine(node.RowNumber + "," + node.ColNumber + " indexű csúcs vizsgálata.");
+                Trace.WriteLine("Heurisztikánk erre a csúcsra: " + HeuristicFunction(node, targetField));
+                Trace.WriteLine("Ide vezető út hossza:" + node.PathLength);
+                if(HeuristicFunction(node, targetField) + node.PathLength 
+                    < HeuristicFunction(minNode, targetField) + minNode.PathLength)
+                {
+                    Trace.WriteLine("Ez jobb, mint a korábbi min csúcs, amire: ");
+                    Trace.WriteLine("Heurisztika:" + HeuristicFunction(minNode, targetField));
+                    Trace.WriteLine("Úthossz: " + minNode.PathLength);
+                    minNode = node;
+                }
+                Trace.WriteLine("");
+            }
+            Trace.WriteLine(minNode.RowNumber + "," + minNode.ColNumber + "indexű csúcs lett kiválasztva.");
+            return minNode;
+        }
+
+        private List<GraphNode> GetChildren(GraphNode node, List<List<GraphNode>> graph)
+        {
+            List<GraphNode> neighbors = new List<GraphNode>();
+            if (node.IsUpWay && node.RowNumber - 1 >= 0)
+            {
+                neighbors.Add(graph[node.RowNumber - 1][node.ColNumber]);
+            }
+            if(node.IsDownWay && node.RowNumber+1 < graph.Count)
+            {
+                neighbors.Add(graph[node.RowNumber + 1][node.ColNumber]);
+            }
+            if(node.IsRightWay && node.ColNumber+1 < graph.Count)
+            {
+                neighbors.Add(graph[node.RowNumber][node.ColNumber + 1]);
+            }
+            if(node.IsLeftWay && node.ColNumber-1 >= 0)
+            {
+                neighbors.Add(graph[node.RowNumber][node.ColNumber - 1]);
+            }
+            return neighbors;
         }
 
         #endregion

@@ -26,5 +26,11 @@ namespace AdventureGameEditor.Models
 
         [Display(Name = "A vereséget követően megjelenő szöveg ki van töltve: ")]
         public Boolean IsGameLostFilled { get; set; }
+
+        [Display(Name ="A kezdőmezőből elérhető a célmező:")]
+        public Boolean IsSolutionExists { get; set; }
+
+        [Display(Name ="A legrövidebb út hossza a kezdőmezőtől a célmezőig:")]
+        public int PathLenght { get; set; }
     }
 }

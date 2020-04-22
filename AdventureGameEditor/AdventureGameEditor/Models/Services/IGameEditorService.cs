@@ -74,6 +74,10 @@ namespace AdventureGameEditor.Models
         public Boolean IsGameWonFilled(String userName, String gameTitle);
         public Boolean IsGameLostFilled(String userName, String gameTitle);
         public void SetReadyToPlay(String userName, String gameTitle);
+        public void SetNotReadyToPlay(String userName, String gameTitle);
+        #endregion
+        #region Sreach for solution of a game
+        public int? SearchForSolution(String userName, String gameTitle);
         #endregion
         #region Usually used getter functions
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber);

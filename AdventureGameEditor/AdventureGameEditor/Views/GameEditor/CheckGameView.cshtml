@@ -17,7 +17,7 @@
             <h4>A játék validációjának eredménye</h4>
 
             @if(Model.IsMapValid && Model.IsStartFieldSet && Model.IsTargetFieldSet && Model.IsPreludeFilled
-             && Model.IsGameLostFilled && Model.IsGameLostFilled)
+             && Model.IsGameLostFilled && Model.IsGameLostFilled && Model.IsSolutionExists)
             {
                 <h5>Gratulálunk, az általad szerkesztett játék már játszható!</h5>
             }
@@ -59,7 +59,7 @@
                     else
                     { <img src="~/pictures/cross.png" height="100" />}
                 </dd>
-                
+
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.IsPreludeFilled)
                 </dt>
@@ -69,7 +69,7 @@
                     else
                     { <img src="~/pictures/cross.png" height="100" />}
                 </dd>
-                
+
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.IsGameWonFilled)
                 </dt>
@@ -79,7 +79,7 @@
                     else
                     { <img src="~/pictures/cross.png" height="100" />}
                 </dd>
-                
+
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.IsGameLostFilled)
                 </dt>
@@ -89,6 +89,26 @@
                     else
                     { <img src="~/pictures/cross.png" height="100" />}
                 </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.IsSolutionExists)
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.IsSolutionExists)
+                    {<img src="~/pictures/pipe.png" height="100" />}
+                    else
+                    { <img src="~/pictures/cross.png" height="100" />}
+                </dd>
+
+                @if (Model.IsSolutionExists)
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.PathLenght)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.PathLenght)
+                    </dd>
+                }
 
             </dl>
         </div>

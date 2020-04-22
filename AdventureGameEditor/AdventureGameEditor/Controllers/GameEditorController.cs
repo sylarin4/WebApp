@@ -433,12 +433,24 @@ namespace AdventureGameEditor.Controllers
                 IsTargetFieldSet = _gameEditorService.IsTargetFieldSet(User.Identity.Name, gameTitle),
                 IsPreludeFilled = _gameEditorService.IsPreludeFilled(User.Identity.Name, gameTitle),
                 IsGameLostFilled = _gameEditorService.IsGameLostFilled(User.Identity.Name, gameTitle),
-                IsGameWonFilled = _gameEditorService.IsGameWonFilled(User.Identity.Name, gameTitle)
+                IsGameWonFilled = _gameEditorService.IsGameWonFilled(User.Identity.Name, gameTitle),
+                IsSolutionExists = false
             };
-            if(model.IsMapValid && model.IsStartFieldSet && model.IsTargetFieldSet && model.IsPreludeFilled
-                && model.IsGameLostFilled && model.IsGameWonFilled)
+            int? solution = null;
+            if (model.IsMapValid)
             {
+                solution = _gameEditorService.SearchForSolution(User.Identity.Name, gameTitle);
+                model.IsSolutionExists = solution != null;
+            }
+            if(model.IsMapValid && model.IsStartFieldSet && model.IsTargetFieldSet && model.IsPreludeFilled
+                && model.IsGameLostFilled && model.IsGameWonFilled && model.IsSolutionExists)
+            {
+                model.PathLenght = (int)solution;
                 _gameEditorService.SetReadyToPlay(User.Identity.Name, gameTitle);
+            }
+            else
+            {
+                _gameEditorService.SetNotReadyToPlay(User.Identity.Name, gameTitle);
             }
             return View("CheckGameView", model);
         }
