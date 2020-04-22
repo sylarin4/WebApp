@@ -25,12 +25,9 @@ namespace AdventureGameEditor.Controllers
 
 
         #region Index
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Game
-                                .Include(game => game.CoverImage)
-                                .Include(game => game.Owner)
-                                .ToListAsync());
+            return View(GetGames());
         }
 
         #endregion
@@ -62,6 +59,9 @@ namespace AdventureGameEditor.Controllers
         {
             return _context.Game.Include(game => game.CoverImage)
                                 .Include(game => game.Owner)
+                                .Where(game=> game.Visibility == Visibility.Everyone ||
+                                              (game.Visibility == Visibility.LoggedIn && User.Identity.Name != null) ||
+                                              (game.Visibility == Visibility.Owner && game.Owner.UserName == User.Identity.Name))
                                 .ToList();
         }
 
