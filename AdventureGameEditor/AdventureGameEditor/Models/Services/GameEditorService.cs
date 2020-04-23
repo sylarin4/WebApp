@@ -900,11 +900,11 @@ namespace AdventureGameEditor.Models
                     return currentNode.PathLength;
                 }
                 openedNodes.Remove(currentNode);
+                Trace.WriteLine("Megvizsgáljuk a feldolgozás alatt álló csúcs gyerekeit, amelyeket még nem dolgoztunk fel.");
                 foreach(GraphNode node in GetChildren(currentNode, graph))
                 {
                     // The children of the currentNode are 1 the neighbors of it, so theirs distance from each other is 1.
                     // So: ( c(node, currentNode) == 1 ).
-                    Trace.WriteLine("Megvizsgáljuk a feldolgozás alatt álló csúcs gyerekeit, amelyeket még nem dolgoztunk fel.");
                     if(!path.Contains(node) || currentNode.PathLength + 1 < node.PathLength)
                     {
                         Trace.WriteLine(node.RowNumber + "," + node.ColNumber + "indexű gyereket vizsgáljuk.");
@@ -945,8 +945,8 @@ namespace AdventureGameEditor.Models
                 Trace.WriteLine(node.RowNumber + "," + node.ColNumber + " indexű csúcs vizsgálata.");
                 Trace.WriteLine("Heurisztikánk erre a csúcsra: " + HeuristicFunction(node, targetField));
                 Trace.WriteLine("Ide vezető út hossza:" + node.PathLength);
-                if(HeuristicFunction(node, targetField) + node.PathLength 
-                    < HeuristicFunction(minNode, targetField) + minNode.PathLength)
+                if(HeuristicFunction(node, targetField) 
+                    < HeuristicFunction(minNode, targetField) )
                 {
                     Trace.WriteLine("Ez jobb, mint a korábbi min csúcs, amire: ");
                     Trace.WriteLine("Heurisztika:" + HeuristicFunction(minNode, targetField));
