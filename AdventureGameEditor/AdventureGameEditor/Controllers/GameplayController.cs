@@ -22,7 +22,7 @@ namespace AdventureGameEditor.Controllers
 
         #region Constructor
 
-        public GameplayController(AdventureGameEditorContext context, IGameEditorService gameEditorService, 
+        public GameplayController(AdventureGameEditorContext context, IGameEditorService gameEditorService,
             IGameplayService gameplayService) : base(context)
         {
             _gameEditorService = gameEditorService;
@@ -31,15 +31,16 @@ namespace AdventureGameEditor.Controllers
 
         #endregion
 
+        // Intialization of GameplayData.
         public IActionResult GameplayView(String gameTitle)
         {
             GameplayViewModel model = _gameplayService.GetGameplayViewModel(User.Identity.Name, gameTitle);
-            _gameplayService.SetPlayCounter(gameTitle);
-            if(model == null)
+            _gameplayService.StepPlayCounter(gameTitle);
+            if (model == null)
             {
                 return RedirectToAction("Index", "GameViewer");
             }
-            return View("GameplayView",model);
+            return View("GameplayView", model);
         }
 
         public IActionResult GameplayFieldPartialView(GameplayFieldViewModel field)
@@ -51,7 +52,7 @@ namespace AdventureGameEditor.Controllers
 
         public IActionResult GetPrelude(String gameTitle)
         {
-           
+
             Prelude prelude = _context.Game
                 .Where(game => game.Title == gameTitle)
                 .Include(g => g.Prelude)
@@ -59,7 +60,7 @@ namespace AdventureGameEditor.Controllers
                 .Select(game => game.Prelude)
                 .FirstOrDefault();
             int? preludeImgID;
-            if(prelude.Image == null)
+            if (prelude.Image == null)
             {
                 preludeImgID = null;
             }
@@ -93,8 +94,24 @@ namespace AdventureGameEditor.Controllers
             return _gameplayService.GetFieldImage(imageID);
         }
 
+        public IActionResult GetGameResult(String gameTitle)
+        {
+            return View("GameResultView", _gameplayService.GetGameResult(gameTitle, User.Identity.Name));
+        }
+
+        public FileContentResult RenderGameResultImage(int imageID)
+        {
+            return _gameEditorService.GetGameResultImage(imageID);
+        }
+
+        public String GetLifeCount(String gameTitle)
+        {
+            return "Életek száma: " + _gameplayService.GetLifeCount(User.Identity.Name, gameTitle);
+        }
+
         #endregion
 
+        #region Step game
         public IActionResult StepGame(String gameTitle, int rowNumber, int colNumber, string direction)
         {
             Trace.WriteLine("Előtte: rowNumber: " + rowNumber + " colNumber: " + colNumber);
@@ -114,80 +131,34 @@ namespace AdventureGameEditor.Controllers
                 IsDownWay = newPlayerPosition.IsDownWay,
                 IsVisited = _gameplayService.GetIsVisitedField(User.Identity.Name, gameTitle, 
                     newPlayerPosition.ColNumber, newPlayerPosition.RowNumber),
-                IsAtTargetField = _gameplayService.IsAtTargetField(gameTitle, newPlayerPosition.RowNumber, newPlayerPosition.ColNumber)
+                IsAtTargetField = _gameplayService.IsAtTargetField(gameTitle, newPlayerPosition.RowNumber, newPlayerPosition.ColNumber),
+                LifeCount = _gameplayService.GetLifeCount(User.Identity.Name, gameTitle)
             });
             
         }
 
         public String ChoseAlternativeForTrial(String gameTitle, int colNumber, int rowNumber, int trialNumber)
         {
-            Trace.WriteLine("gameTitle: " + gameTitle + " colNumber: " + colNumber + " rowNumber: " + rowNumber + " trialNumber: " + trialNumber);  
-            
-            return _gameplayService.GetTrial(gameTitle,colNumber, rowNumber).Alternatives[trialNumber].TrialResult.Text;
+            Trace.WriteLine("gameTitle: " + gameTitle + " colNumber: " + colNumber + " rowNumber: " + rowNumber + " trialNumber: " + trialNumber);
+
+            String result = _gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.Text;
+            if(_gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType
+                == ResultType.GameLost)
+            {
+                result += "\n Sajnos rossz döntésed következtében elveszítettél egy életpontot!";
+            }               
+
+            return result;
         }
+        
 
         public IActionResult LoadDirectionButtonsAfterTrial(String gameTitle, int colNumber, int rowNumber, int trialNumber,
             Boolean isAtTargetField)
         {
-            Field field = _gameplayService.GetField(gameTitle, rowNumber, colNumber);
-            switch(_gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType)
-            {
-                case ResultType.GameLost:
-                    _gameplayService.SetGameOver(User.Identity.Name, gameTitle, false);
-                    return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
-                    {
-                        GameTitle = gameTitle,
-                        RowNumber = rowNumber,
-                        ColNumber = colNumber, 
-                        GameLost = true,
-                        GameWon = false,
-                        IsDownWay = field.IsDownWay,
-                        IsLeftWay = field.IsLeftWay,
-                        IsRightWay = field.IsRightWay,
-                        IsUpWay = field.IsUpWay
-                    });
-                case ResultType.GameWon:
-                    _gameplayService.SetGameOver(User.Identity.Name, gameTitle, true);
-                    return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
-                    {
-                        GameTitle = gameTitle,
-                        RowNumber = rowNumber,
-                        ColNumber = colNumber,
-                        GameLost = false,
-                        GameWon = true,
-                        IsDownWay = field.IsDownWay,
-                        IsLeftWay = field.IsLeftWay,
-                        IsRightWay = field.IsRightWay,
-                        IsUpWay = field.IsUpWay
-                    });
-                default:
-                    if (isAtTargetField)
-                    {
-                        _gameplayService.SetGameOver(User.Identity.Name, gameTitle, true);
-                    }
-                    return PartialView("DirectionButtonsPartialView", new DirectionButtonsViewModel()
-                    {
-                        GameTitle = gameTitle,
-                        RowNumber = rowNumber,
-                        ColNumber = colNumber,
-                        GameLost = false,
-                        GameWon = isAtTargetField,
-                        IsDownWay = field.IsDownWay,
-                        IsLeftWay = field.IsLeftWay,
-                        IsRightWay = field.IsRightWay,
-                        IsUpWay = field.IsUpWay
-                    });
-            }
+           return PartialView("DirectionButtonsPartialView", _gameplayService.GetDirectionButtonsAfterTrial(
+               User.Identity.Name, gameTitle, colNumber, rowNumber, trialNumber, isAtTargetField));
         }
 
-        public IActionResult GetGameResult(String gameTitle)
-        {
-            return View("GameResultView", _gameplayService.GetGameResult(gameTitle, User.Identity.Name));
-        }
-
-        public FileContentResult RenderGameResultImage(int imageID)
-        {
-            return _gameEditorService.GetGameResultImage(imageID);
-        }
+        #endregion
     }
 }

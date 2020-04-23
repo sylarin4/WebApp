@@ -19,5 +19,6 @@ namespace AdventureGameEditor.Models
         public Boolean IsDownWay { get; set; }
         public Boolean IsVisited { get; set; }
         public Boolean IsAtTargetField { get; set; }
+        public int LifeCount { get; set; }
     }
 }

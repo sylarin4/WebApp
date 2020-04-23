@@ -16,6 +16,7 @@ namespace AdventureGameEditor.Models
         public ICollection<IsVisitedField> VisitedFields { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime LastPlayDate { get; set; }
+        public int LifeCount { get; set; }
     }
     
 }

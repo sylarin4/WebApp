@@ -9,6 +9,8 @@ using System.IO;
 
 using AdventureGameEditor.Data;
 using Org.BouncyCastle.Asn1.X509;
+using AdventureGameEditor.Migrations;
+using Org.BouncyCastle.Asn1.Mozilla;
 
 namespace AdventureGameEditor.Models
 {
@@ -40,10 +42,13 @@ namespace AdventureGameEditor.Models
                 .FirstOrDefault();
 
             Game game = GetGame(gameTitle);
+
             // Check if we have to initialize.
             if (gameplayData == null)
             {
-                Trace.WriteLine("\n\ninitialization happen\n\n");
+                int lifeCount = 3;
+                if (game.TableSize > 5) lifeCount = 5;
+                if (game.TableSize > 10) lifeCount = 7;
                 gameplayData = new GameplayData()
                 {
                     PlayerName = userName,
@@ -53,7 +58,8 @@ namespace AdventureGameEditor.Models
                     GameCondition = GameCondition.OnGoing,
                     VisitedFields = InitializeVisitedFields(game.TableSize),
                     StartDate = DateTime.Now,
-                    LastPlayDate = DateTime.Now
+                    LastPlayDate = DateTime.Now,
+                    LifeCount = lifeCount
                 };
                 _context.GameplayData.Add(gameplayData);
             }
@@ -72,7 +78,8 @@ namespace AdventureGameEditor.Models
                 GameplayMap = InitializeGameplayMap(game.Map.ToList()),
                 StartDate = gameplayData.StartDate,
                 LastPlayDate = DateTime.Now,
-                IsVisitiedCurrentlayerPosition = gameplayData.VisitedFields
+                LifeCount = gameplayData.LifeCount,
+                IsVisitiedCurrentPlayerPosition = gameplayData.VisitedFields
                     .Where(field => field.RowNumber == gameplayData.CurrentPlayerPosition.RowNumber
                     && field.ColNumber == gameplayData.CurrentPlayerPosition.ColNumber).FirstOrDefault().IsVisited
             };
@@ -125,15 +132,15 @@ namespace AdventureGameEditor.Models
             return visitedFields;
         }
 
-        public void SetPlayCounter(String gameTitle)
+        #endregion
+
+        #region Step and load game
+
+        public void StepPlayCounter(String gameTitle)
         {
             GetGame(gameTitle).PlayCounter++;
             _context.SaveChanges();
         }
-
-        #endregion
-
-        #region Step and load game
 
         public Field StepGame(String userName, String gameTitle, String direction)
         {
@@ -145,6 +152,7 @@ namespace AdventureGameEditor.Models
                 .FirstOrDefault()
                 .IsVisited = true;
 
+            // Step the player to the next field.
             Field playerPosition = gameplayData.CurrentPlayerPosition;
             int newColNumber = playerPosition.ColNumber;
             int newRowNumber = playerPosition.RowNumber;
@@ -171,19 +179,11 @@ namespace AdventureGameEditor.Models
             gameplayData.CurrentPlayerPosition = GetField(gameTitle, newRowNumber, newColNumber);
             gameplayData.StepCount++;
             gameplayData.LastPlayDate = DateTime.Now;
+            // GameCondition just changes here when we are at the target field.
             gameplayData.GameCondition =
                 (IsAtTargetField(gameTitle, newRowNumber, newColNumber) && GetTrial(gameTitle, newColNumber, newRowNumber) == null)
                 ? GameCondition.Won : GameCondition.OnGoing;
-            Trace.WriteLine(gameplayData.ID + " " +
-                gameplayData.PlayerName + " " +
-                gameplayData.GameTitle + " " +
-                gameplayData.CurrentPlayerPosition.ColNumber + " " +
-                gameplayData.CurrentPlayerPosition.RowNumber + " " +
-                gameplayData.StepCount + " " +
-                gameplayData.GameCondition + " " +
-                gameplayData.VisitedFields.Count + " " +
-                gameplayData.StartDate + " " +
-                gameplayData.LastPlayDate);
+          
             _context.SaveChanges();
             return gameplayData.CurrentPlayerPosition;
         }
@@ -213,6 +213,53 @@ namespace AdventureGameEditor.Models
         }
 
         #endregion
+
+        public DirectionButtonsViewModel GetDirectionButtonsAfterTrial(String playerName, String gameTitle, int colNumber,
+            int rowNumber, int trialNumber, Boolean isAtTargetField)
+        {
+            Field field = GetField(gameTitle, rowNumber, colNumber);
+            GameplayData gameplayData = GetGameplayData(playerName, gameTitle);
+            DirectionButtonsViewModel model = new DirectionButtonsViewModel()
+            {
+                GameTitle = gameTitle,
+                RowNumber = rowNumber,
+                ColNumber = colNumber,
+                GameLost = false,
+                GameWon = false,
+                IsDownWay = field.IsDownWay,
+                IsLeftWay = field.IsLeftWay,
+                IsRightWay = field.IsRightWay,
+                IsUpWay = field.IsUpWay
+            };
+            switch (GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType)
+            {
+                case ResultType.GameLost:
+                    gameplayData.LifeCount--;
+
+                    // If this was the last life, game is lost.
+                    if (gameplayData.LifeCount < 1)
+                    {
+                        // Set game lost.
+                        SetGameOver(playerName, gameTitle, false);
+                        model.GameLost = true;
+                    }
+                    _context.SaveChanges();
+                    return model;
+                case ResultType.GameWon:
+                    // Set game won.
+                    SetGameOver(playerName, gameTitle, true);
+                    model.GameWon = true;
+                    return model;
+                default:
+                    if (isAtTargetField)
+                    {
+                        // Set game won.
+                        SetGameOver(playerName, gameTitle, true);
+                        model.GameWon = true;
+                    }
+                    return model;
+            }
+        }
 
         #region Usually used getters
 
@@ -259,6 +306,13 @@ namespace AdventureGameEditor.Models
             byte[] picture = _context.Field.Where(field => field.Image.ID == imageID).Select(field => field.Image.Picture).FirstOrDefault();
             if (picture == null) return null;
             return new FileContentResult(picture, "image/png");
+        }
+
+        public int GetLifeCount(String playerName, String gameTitle)
+        {
+            return _context.GameplayData.Where(data => data.PlayerName == playerName && data.GameTitle == gameTitle)
+                                        .Select(data => data.LifeCount)
+                                        .FirstOrDefault();
         }
         #endregion
 

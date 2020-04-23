@@ -90,6 +90,8 @@ function ChoseTrialAlternative(gameTitle, rowNumber, colNumber, isAtTargetField)
     LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'ChoseAlternativeForTrial', "trialForm");
     LoadDirectionButtonsAfterTrial(gameTitle, rowNumber, colNumber, trialNumber, isAtTargetField,
         'LoadDirectionButtonsAfterTrial', "#directionButtons");
+    setTimeout(function () { RefreshLifeCountAfterTrial(gameTitle, 'GetLifeCount', "LifeCount"); }, 100);
+    
 }
 
 // Helper function: loads  the trial result by ajax call.
@@ -112,6 +114,15 @@ function LoadDirectionButtonsAfterTrial(gameTitle, rowNumber, colNumber, trialNu
         },
         success: function (result) { $(target).html(result); }
     });
+}
+
+function RefreshLifeCountAfterTrial(gameTitle, url, target) {
+    console.log("refreshing");
+    $.ajax({
+        url: url,
+        data: { gameTitle: gameTitle },
+        success: function (result) { document.getElementById(target).innerHTML = result; }
+    })
 }
 
 // ---------- Helper functions ---------- //

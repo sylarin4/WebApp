@@ -4,6 +4,10 @@
 *@
 <p> Sorszám: @Model.RowNumber</p>
 <p>Oszlopszám: @Model.ColNumber</p>
+<div id="LifeCount">
+    <p>Életek száma: @Model.LifeCount</p>
+</div>
+
 
 <div id="directionButtons">
     @if ((Model.Trial == null || Model.IsVisited) && !Model.IsAtTargetField)
