@@ -139,6 +139,8 @@ namespace AdventureGameEditor.Controllers
                     return "Sajnos rossz döntésed következtében elveszítettél egy életpontot!";
                 case ResultType.Teleport:
                     return "Valahol máshol térsz magadhoz...";
+                case ResultType.GetLife:
+                    return "Hirtelen erőre kapsz. Nyertél egy életpontot!";
                 default:
                     return "";
             }

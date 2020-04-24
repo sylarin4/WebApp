@@ -16,6 +16,8 @@ namespace AdventureGameEditor.Models
         [Display(Name ="Játék megnyerése")]
         GameWon,
         [Display(Name = "Teleportáció")]
-        Teleport
+        Teleport,
+        [Display(Name ="Egy életpont adása")]
+        GetLife
     }
 }

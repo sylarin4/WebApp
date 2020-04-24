@@ -260,15 +260,19 @@ namespace AdventureGameEditor.Models
                         model.GameLost = true;
                     }
                     _context.SaveChanges();
-                    return model;
+                    break;
                 case ResultType.GameWon:
                     // Set game won.
                     SetGameOver(playerName, gameTitle, true);
                     model.GameWon = true;
-                    return model;
+                    break;
                 case ResultType.Teleport:
                     model.WillTeleport = true;
-                    return model;
+                    break;
+                case ResultType.GetLife:
+                    gameplayData.LifeCount++;
+                    _context.SaveChanges();
+                    break;
                 default:
                     if (isAtTargetField)
                     {
@@ -276,8 +280,14 @@ namespace AdventureGameEditor.Models
                         SetGameOver(playerName, gameTitle, true);
                         model.GameWon = true;
                     }
-                    return model;
+                    break;
             }
+            if( ! model.GameWon && !model.GameLost && ! model.WillTeleport && isAtTargetField)
+            {
+                SetGameOver(playerName, gameTitle, true);
+                model.GameWon = true;
+            }
+            return model;
         }
         #endregion
 
