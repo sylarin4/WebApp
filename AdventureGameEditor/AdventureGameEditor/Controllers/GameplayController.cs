@@ -9,6 +9,7 @@ using System.Diagnostics;
 
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
+using MySqlX.XDevAPI.Common;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -114,44 +115,36 @@ namespace AdventureGameEditor.Controllers
         #region Step game
         public IActionResult StepGame(String gameTitle, int rowNumber, int colNumber, string direction)
         {
-            Trace.WriteLine("Előtte: rowNumber: " + rowNumber + " colNumber: " + colNumber);
-            Field newPlayerPosition = _gameplayService.StepGame(User.Identity.Name, gameTitle, direction);
-            Trace.WriteLine("rowNumber: " + newPlayerPosition.RowNumber + " colNumber: " + newPlayerPosition.ColNumber);
-            return PartialView("GameplayFieldDetails", new GameplayFieldViewModel()
-            {
-                GameTitle = gameTitle,
-                RowNumber = newPlayerPosition.RowNumber,
-                ColNumber = newPlayerPosition.ColNumber,
-                Text = newPlayerPosition.Text,
-                FieldImageID = newPlayerPosition.Image != null ? newPlayerPosition.Image.ID : -1,
-                Trial = newPlayerPosition.Trial,
-                IsRightWay = newPlayerPosition.IsRightWay,
-                IsLeftWay = newPlayerPosition.IsLeftWay,
-                IsUpWay = newPlayerPosition.IsUpWay,
-                IsDownWay = newPlayerPosition.IsDownWay,
-                IsVisited = _gameplayService.GetIsVisitedField(User.Identity.Name, gameTitle, 
-                    newPlayerPosition.ColNumber, newPlayerPosition.RowNumber),
-                IsAtTargetField = _gameplayService.IsAtTargetField(gameTitle, newPlayerPosition.RowNumber, newPlayerPosition.ColNumber),
-                LifeCount = _gameplayService.GetLifeCount(User.Identity.Name, gameTitle)
-            });
+            Field newPlayerPosition = _gameplayService.StepGame(User.Identity.Name, gameTitle,
+                DirectionConverter.StringToDirection(direction));
+            return PartialView("GameplayFieldDetails", _gameplayService.GetGameplayFieldViewModel(
+                User.Identity.Name, gameTitle, newPlayerPosition));
             
         }
 
+        #endregion
+
+        #region Chose trial
+
         public String ChoseAlternativeForTrial(String gameTitle, int colNumber, int rowNumber, int trialNumber)
-        {
-            Trace.WriteLine("gameTitle: " + gameTitle + " colNumber: " + colNumber + " rowNumber: " + rowNumber + " trialNumber: " + trialNumber);
-
-            String result = _gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.Text;
-            if(_gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType
-                == ResultType.GameLost)
-            {
-                result += "\n Sajnos rossz döntésed következtében elveszítettél egy életpontot!";
-            }               
-
-            return result;
+        {         
+            return _gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.Text;
         }
-        
 
+        public String GetInformTextAboutTrialResult(String gameTitle, int colNumber, int rowNumber, int trialNumber)
+        {
+            switch (_gameplayService.GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType)
+            {
+                case ResultType.LoseLife:
+                    return "Sajnos rossz döntésed következtében elveszítettél egy életpontot!";
+                case ResultType.Teleport:
+                    return "Valahol máshol térsz magadhoz...";
+                default:
+                    return "";
+            }
+        }
+
+        // Ajax function will load it to page after a trial.
         public IActionResult LoadDirectionButtonsAfterTrial(String gameTitle, int colNumber, int rowNumber, int trialNumber,
             Boolean isAtTargetField)
         {
@@ -160,5 +153,38 @@ namespace AdventureGameEditor.Controllers
         }
 
         #endregion
+
+        #region Teleport
+
+        // We will step the player in random directions for 2-5 times, and return the field got this way.
+        public IActionResult DoTeleport(String gameTitle, int rowNumber, int colNumber)
+        {
+            // Get randomly how many times we will step the player.
+            Random randGen = new Random();
+            int stepCount = randGen.Next(1, 6);  // creates a rundom number between 2 and 5
+
+            // Store the start field so we will able to check if return here during stepping.
+            Field startField = _gameplayService.GetField(gameTitle, rowNumber, colNumber);
+
+            // Initialize fields to step.
+            Field stepField = startField;
+            for(int i = 0; i < stepCount; ++i)
+            {
+                stepField = _gameplayService.GetNextField(stepField, _gameplayService.GetGameMapSize(gameTitle),
+                    _gameplayService.GetRandDirection());
+            }
+
+            // Check if we return to the start field.
+            while(stepField == startField)
+            {
+                stepField = _gameplayService.GetNextField(stepField, _gameplayService.GetGameMapSize(gameTitle),
+                    _gameplayService.GetRandDirection());
+            }
+
+            return PartialView("GameplayFieldDetails", _gameplayService.GetGameplayFieldViewModel(
+                User.Identity.Name, gameTitle, stepField));
+
+        }
+        #endregion 
     }
 }

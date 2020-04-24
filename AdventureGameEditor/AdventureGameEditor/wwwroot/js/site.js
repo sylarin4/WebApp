@@ -88,10 +88,16 @@ function ChoseTrialAlternative(gameTitle, rowNumber, colNumber, isAtTargetField)
     var trialNumber = $('#choseTrialForm').serialize().toString()[6];
     document.getElementById("FieldText").innerHTML = "";
     LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'ChoseAlternativeForTrial', "trialForm");
+    LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'GetInformTextAboutTrialResult', "TrialResultInform");
     LoadDirectionButtonsAfterTrial(gameTitle, rowNumber, colNumber, trialNumber, isAtTargetField,
         'LoadDirectionButtonsAfterTrial', "#directionButtons");
     setTimeout(function () { RefreshLifeCountAfterTrial(gameTitle, 'GetLifeCount', "LifeCount"); }, 100);
     
+}
+
+function Teleport(gameTitle, rowNumber, colNumber) {
+    var target = "#fieldDetails";
+    LoadData(target, 'DoTeleport', gameTitle, rowNumber, colNumber);
 }
 
 // Helper function: loads  the trial result by ajax call.
@@ -137,35 +143,6 @@ function LoadData(target, url, gameTitle, rowNumber, colNumber) {
     });
 }
 
-
-// ---------- Currently not used functions ---------- //
-// (Maybe some of them will be needed or can be useful for something.)
-
-
-// This is not needed now. If stay useless, delete.
-//$(document).ready(function () {
-  //  $("button").click(function () {
-        //console.log(this.id);
-        // var target = '#' + this.id.toString()
-        //console.log("target in function calling:" + target);
-        //LoadData(target, 'GetMapImage');
-        //console.log("here");
-    //})
-//})
-
-
-// Now it's not used, because .serialize() method messes up special hungarien characters like "ő", so it doesn't work well now.
-// If possible, we should fix this problem and use this method for posting field content, so we don't have to reload 
-// the whole page for it.
-function SaveTextContent(gameTitle, rowNumber, colNumber) {
-    var textContent = $('#textContentForm').serialize().toString();
-    textContent = textContent.substring(12, textContent.lenght);
-    console.log(textContent);
-    $.ajax({
-        url: 'SaveTextContent',
-        data: { gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber, textContent: textContent }
-    });
-}
 
 function AddNewAlternativeForForm(index, gameTitle, rowNumber, colNumber) {
     var target = '#alternative' + index;

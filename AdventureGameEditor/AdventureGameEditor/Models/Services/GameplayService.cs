@@ -142,9 +142,13 @@ namespace AdventureGameEditor.Models
             _context.SaveChanges();
         }
 
-        public Field StepGame(String userName, String gameTitle, String direction)
+        public Field StepGame(String userName, String gameTitle, Direction direction)
         {
             GameplayData gameplayData = GetGameplayData(userName, gameTitle);
+
+            // If the direction is not valid, return the current field.
+            if (direction == Direction.NotSet) return gameplayData.CurrentPlayerPosition;
+
             // Set the last field to visited.
             gameplayData.VisitedFields
                 .Where(field => field.ColNumber == gameplayData.CurrentPlayerPosition.ColNumber
@@ -153,39 +157,48 @@ namespace AdventureGameEditor.Models
                 .IsVisited = true;
 
             // Step the player to the next field.
-            Field playerPosition = gameplayData.CurrentPlayerPosition;
-            int newColNumber = playerPosition.ColNumber;
-            int newRowNumber = playerPosition.RowNumber;
+            Field newPosition = GetNextField(gameplayData.CurrentPlayerPosition, GetGame(gameTitle).TableSize, direction);
             int tableSize = GetGame(gameTitle).TableSize;
-            switch (direction)
-            {
-                case "Up":
-                    if (playerPosition.IsUpWay && playerPosition.RowNumber > 0)
-                        newRowNumber = playerPosition.RowNumber - 1;
-                    break;
-                case "Right":
-                    if (playerPosition.IsRightWay && playerPosition.ColNumber + 1 < tableSize)
-                        newColNumber = playerPosition.ColNumber + 1;
-                    break;
-                case "Down":
-                    if (playerPosition.IsDownWay && playerPosition.RowNumber + 1 < tableSize)
-                        newRowNumber = playerPosition.RowNumber + 1;
-                    break;
-                case "Left":
-                    if (playerPosition.IsLeftWay && playerPosition.ColNumber > 0)
-                        newColNumber = playerPosition.ColNumber - 1;
-                    break;
-            }
-            gameplayData.CurrentPlayerPosition = GetField(gameTitle, newRowNumber, newColNumber);
+            gameplayData.CurrentPlayerPosition = newPosition;
             gameplayData.StepCount++;
             gameplayData.LastPlayDate = DateTime.Now;
-            // GameCondition just changes here when we are at the target field.
+
+            // GameCondition just changes here if we are at the target field.
             gameplayData.GameCondition =
-                (IsAtTargetField(gameTitle, newRowNumber, newColNumber) && GetTrial(gameTitle, newColNumber, newRowNumber) == null)
+                (IsAtTargetField(gameTitle, newPosition.RowNumber, newPosition.ColNumber) 
+                && GetTrial(gameTitle, newPosition.ColNumber, newPosition.RowNumber) == null)
                 ? GameCondition.Won : GameCondition.OnGoing;
           
             _context.SaveChanges();
             return gameplayData.CurrentPlayerPosition;
+        }
+
+        // Returns the next field in the given direction, if it's exists and available.
+        // If not, returns the same field.
+        public Field GetNextField(Field currentField, int tableSize, Direction direction)
+        {
+            int resultColNumber = currentField.ColNumber;
+            int resultRowNumber = currentField.RowNumber;
+            switch (direction)
+            {
+                case Direction.Up:
+                    if (currentField.IsUpWay && currentField.RowNumber > 0)
+                        resultRowNumber = currentField.RowNumber - 1;
+                    break;
+                case Direction.Right:
+                    if (currentField.IsRightWay && currentField.ColNumber + 1 < tableSize)
+                        resultColNumber = currentField.ColNumber + 1;
+                    break;
+                case Direction.Down:
+                    if (currentField.IsDownWay && currentField.RowNumber + 1 < tableSize)
+                        resultRowNumber = currentField.RowNumber + 1;
+                    break;
+                case Direction.Left:
+                    if (currentField.IsLeftWay && currentField.ColNumber > 0)
+                        resultColNumber = currentField.ColNumber - 1;
+                    break;
+            }
+            return GetField(currentField.GameTitle, resultRowNumber, resultColNumber);
         }
 
         public GameResult GetGameResult(String gameTitle, String userName)
@@ -214,9 +227,11 @@ namespace AdventureGameEditor.Models
 
         #endregion
 
+        #region Do trial
         public DirectionButtonsViewModel GetDirectionButtonsAfterTrial(String playerName, String gameTitle, int colNumber,
             int rowNumber, int trialNumber, Boolean isAtTargetField)
         {
+            Trace.WriteLine("\n\n Here \n\n");
             Field field = GetField(gameTitle, rowNumber, colNumber);
             GameplayData gameplayData = GetGameplayData(playerName, gameTitle);
             DirectionButtonsViewModel model = new DirectionButtonsViewModel()
@@ -224,6 +239,7 @@ namespace AdventureGameEditor.Models
                 GameTitle = gameTitle,
                 RowNumber = rowNumber,
                 ColNumber = colNumber,
+                WillTeleport = false,
                 GameLost = false,
                 GameWon = false,
                 IsDownWay = field.IsDownWay,
@@ -233,7 +249,7 @@ namespace AdventureGameEditor.Models
             };
             switch (GetTrial(gameTitle, colNumber, rowNumber).Alternatives[trialNumber].TrialResult.ResultType)
             {
-                case ResultType.GameLost:
+                case ResultType.LoseLife:
                     gameplayData.LifeCount--;
 
                     // If this was the last life, game is lost.
@@ -250,6 +266,9 @@ namespace AdventureGameEditor.Models
                     SetGameOver(playerName, gameTitle, true);
                     model.GameWon = true;
                     return model;
+                case ResultType.Teleport:
+                    model.WillTeleport = true;
+                    return model;
                 default:
                     if (isAtTargetField)
                     {
@@ -260,8 +279,53 @@ namespace AdventureGameEditor.Models
                     return model;
             }
         }
+        #endregion
+
+        #region Teleport
+
+        public Direction GetRandDirection()
+        {
+            Random randGen = new Random();
+            int randNum = randGen.Next(1, 5);
+            switch (randNum)
+            {
+                case 1: return Direction.Up;
+                case 2: return Direction.Down;
+                case 3: return Direction.Left;
+                case 4: return Direction.Right;
+                default: return Direction.NotSet;
+            }
+        }
+
+        public int GetGameMapSize(String gameTitle)
+        {
+            return GetGame(gameTitle).TableSize;
+        }
+
+        #endregion
 
         #region Usually used getters
+
+        public GameplayFieldViewModel GetGameplayFieldViewModel(String playerName, String gameTitle, Field field)
+        {
+            return new GameplayFieldViewModel()
+            {
+                GameTitle = gameTitle,
+                RowNumber = field.RowNumber,
+                ColNumber = field.ColNumber,
+                Text = field.Text,
+                FieldImageID = field.Image != null ? field.Image.ID : -1,
+                Trial = field.Trial,
+                IsRightWay = field.IsRightWay,
+                IsLeftWay = field.IsLeftWay,
+                IsUpWay = field.IsUpWay,
+                IsDownWay = field.IsDownWay,
+                IsVisited = GetIsVisitedField(playerName, gameTitle,
+                    field.ColNumber, field.RowNumber),
+                IsAtTargetField = IsAtTargetField(gameTitle, field.RowNumber, field.ColNumber),
+                LifeCount = GetLifeCount(playerName, gameTitle)
+            };
+        }
 
         public Boolean GetIsVisitedField(String userName, String gameTitle, int colNumber, int rowNumber)
         {

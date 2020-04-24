@@ -4,59 +4,63 @@
 {
     <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
 }
+else if (Model.WillTeleport)
+{
+    <button type="button" onclick="Teleport('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber')">Teleportáció</button>
+}
 else
 {
-<table>
-    <tr>
-        <td></td>
-        <td>
-            @if (!Model.IsUpWay)
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Up' )" disabled="disabled">Fel</button>
-            }
-            else
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Up' )">Fel</button>
-            }
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            @if (!Model.IsLeftWay)
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Left' )" disabled="disabled">Balra</button>
-            }
-            else
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Left' )">Balra</button>
-            }
-        </td>
-        <td></td>
-        <td>
-            @if (!Model.IsRightWay)
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Right' )" disabled="disabled">Jobbra</button>
-            }
-            else
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Right' )">Jobbra</button>
-            }
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>
-            @if (!Model.IsDownWay)
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Down' )" disabled="disabled">Le</button>
-            }
-            else
-            {
-                <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Down' )">Le</button>
-            }
-        </td>
-        <td></td>
-    </tr>
-</table>
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                @if (!Model.IsUpWay)
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Up' )" disabled="disabled">Fel</button>
+                }
+                else
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Up' )">Fel</button>
+                }
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                @if (!Model.IsLeftWay)
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Left' )" disabled="disabled">Balra</button>
+                }
+                else
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Left' )">Balra</button>
+                }
+            </td>
+            <td></td>
+            <td>
+                @if (!Model.IsRightWay)
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Right' )" disabled="disabled">Jobbra</button>
+                }
+                else
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Right' )">Jobbra</button>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                @if (!Model.IsDownWay)
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Down' )" disabled="disabled">Le</button>
+                }
+                else
+                {
+                    <button onclick="Step('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', 'Down' )">Le</button>
+                }
+            </td>
+            <td></td>
+        </tr>
+    </table>
 }

@@ -9,14 +9,13 @@ namespace AdventureGameEditor.Models
     // Enumerates the type of results of a trial. (Used in TrialResult class.)
     public enum ResultType
     {
-        // Currently not available.
-        //[Display(Name = "Teleportáció")]
-        //Teleport,
         [Display(Name = "Semmi")]
         Nothing,
-        [Display(Name = "Játék elvesztése")]
-        GameLost,
+        [Display(Name = "Egy életpont levonása")]
+        LoseLife,
         [Display(Name ="Játék megnyerése")]
-        GameWon
+        GameWon,
+        [Display(Name = "Teleportáció")]
+        Teleport
     }
 }
