@@ -18,6 +18,8 @@ namespace AdventureGameEditor.Models
         [Display(Name = "Teleportáció")]
         Teleport,
         [Display(Name ="Egy életpont adása")]
-        GetLife
+        GetLife,
+        [Display(Name ="Iránymutatás a célmezőhöz")]
+        GetTargetDirection
     }
 }

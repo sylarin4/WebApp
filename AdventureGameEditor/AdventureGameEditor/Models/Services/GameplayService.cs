@@ -289,6 +289,50 @@ namespace AdventureGameEditor.Models
             }
             return model;
         }
+
+        public CompassPoint GetTargetDirection(String gameTitle, Field field)
+        {
+            Field targetField = GetGame(gameTitle).TargetField;
+
+            // Check if target field is in direction North from the field.
+            if(field.RowNumber > targetField.RowNumber && field.ColNumber == targetField.ColNumber)
+                return CompassPoint.North;
+
+            // Check if target field is in direction South from the field.
+            if(field.RowNumber < targetField.RowNumber && field.ColNumber == targetField.ColNumber)
+                return CompassPoint.South;
+
+            // Check if target field is in direction East from the field.
+            if (field.RowNumber == targetField.RowNumber && field.ColNumber < targetField.ColNumber)
+                return CompassPoint.East;
+
+            // Check if target field is in direction West from the field.
+            if (field.RowNumber == targetField.RowNumber && field.ColNumber > targetField.ColNumber)
+                return CompassPoint.West;
+
+            // Check if target field is in direction Nort-East from the field.
+            if (field.RowNumber > targetField.RowNumber && field.ColNumber < targetField.ColNumber)
+                return CompassPoint.NorthEast;
+
+            // Check if target field is in direction Nort-West from the field.
+            if (field.RowNumber > targetField.RowNumber && field.ColNumber > targetField.ColNumber)
+                return CompassPoint.NorthWest;
+
+            // Check if target field is in direction South-East from the field.
+            if (field.RowNumber < targetField.RowNumber && field.ColNumber < targetField.ColNumber)
+                return CompassPoint.SouthEast;
+
+            // Check if target field is in direction South-West from the field.
+            if (field.RowNumber < targetField.RowNumber && field.ColNumber > targetField.ColNumber)
+                return CompassPoint.SouthWest;
+
+            // Check if the field is the target field.
+            if (field.RowNumber == targetField.RowNumber && field.ColNumber == targetField.ColNumber)
+                return CompassPoint.Here;
+
+            // If didn't find the direction (but it isn't possible) return no direction.
+            return CompassPoint.NoDirection;
+        }
         #endregion
 
         #region Teleport

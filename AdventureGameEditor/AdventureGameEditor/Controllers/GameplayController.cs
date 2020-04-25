@@ -141,6 +141,44 @@ namespace AdventureGameEditor.Controllers
                     return "Valahol máshol térsz magadhoz...";
                 case ResultType.GetLife:
                     return "Hirtelen erőre kapsz. Nyertél egy életpontot!";
+                case ResultType.GetTargetDirection:
+                    String result = "Hirtelen megérzésed azt súgja, hogy ";
+                    switch(_gameplayService.GetTargetDirection(gameTitle, 
+                        _gameplayService.GetField(gameTitle, rowNumber, colNumber)))
+                    {
+                        case CompassPoint.North:
+                            result += "északnak";
+                            break;
+                        case CompassPoint.South:
+                            result += "délnek";
+                            break;
+                        case CompassPoint.East:
+                            result += "kelet felé";
+                            break;
+                        case CompassPoint.West:
+                            result += "nyugatnak";
+                            break;
+                        case CompassPoint.NorthEast:
+                            result += "északkelet felé";
+                            break;
+                        case CompassPoint.NorthWest:
+                            result += "északnyugat felé";
+                            break;
+                        case CompassPoint.SouthEast:
+                            result += "délkelet felé";
+                            break;
+                        case CompassPoint.SouthWest:
+                            result += "délnyugat felé";
+                            break;
+                        case CompassPoint.Here:
+                            result += "megérkeztél.";
+                            return result;
+                        default:
+                            result += "fogalmad sincs, merre";
+                            break;
+                    };
+                    result += " kéne tovább haladnod.";
+                    return result;
                 default:
                     return "";
             }

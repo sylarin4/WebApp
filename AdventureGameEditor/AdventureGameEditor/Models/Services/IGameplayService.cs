@@ -25,5 +25,6 @@ namespace AdventureGameEditor.Models
         public Field GetNextField(Field currentField, int tableSize, Direction direction);
         public int GetGameMapSize(String gameTitle);
         public GameplayFieldViewModel GetGameplayFieldViewModel(String playerName, String gameTitle, Field field);
+        public CompassPoint GetTargetDirection(String gameTitle, Field field);
     }
 }
