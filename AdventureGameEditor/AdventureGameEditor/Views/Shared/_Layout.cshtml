@@ -1,58 +1,60 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AdventureGameEditor</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="@Url.Content("~/css/site.css")"
+          rel="stylesheet" type="text/css" />
 </head>
 <body>
     <header>
-        <h1>Antrum</h1>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kezdőlap</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Help">Súgó</a>
+        <div id="title">
+        <h1 id="titleText">Antrum</h1>
+        <h2 id="slogan"> A kalandjátékbarlang.</h2>
+        </div>
+        <div  id="header">
+            <div >
+                <ul >
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Kezdőlap</a>
+                    </li>
+                    <li >
+                        <a  asp-area="" asp-controller="Home" asp-action="Help">Súgó</a>
+                    </li>
+                    @if (ViewBag.CurrentGuestName == null)
+                    {
+                        <li >
+                            <a  asp-area="" asp-controller="Users" asp-action="Register">Regisztráció</a>
                         </li>
-                        @if (ViewBag.CurrentGuestName == null)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Register">Regisztráció</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Bejelentkezés</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">@ViewBag.CurrentGuestName</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Logout">Kijelentkezés</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="GameEditor" asp-action="CreateGame">Játék létrehozása</a>
-                            </li>
-                        }
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="GameViewer" asp-action="Index">Játékok listázása</a>
+                        <li >
+                            <a asp-area="" asp-controller="Users" asp-action="Login">Bejelentkezés</a>
                         </li>
+                    }
+                    else
+                    {
+                        <li >
+                            <a  asp-area="" asp-controller="" asp-action="">@ViewBag.CurrentGuestName</a>
+                        </li>
+                        <li >
+                            <a  asp-area="" asp-controller="Users" asp-action="Logout">Kijelentkezés</a>
+                        </li>
+                        <li >
+                            <a asp-area="" asp-controller="GameEditor" asp-action="CreateGame">Játék létrehozása</a>
+                        </li>
+                    }
+
+                    <li >
+                        <a  asp-area="" asp-controller="GameViewer" asp-action="Index">Játékok listázása</a>
+                    </li>
 
 
-                    </ul>
-                </div>
+                </ul>
             </div>
-        </nav>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">

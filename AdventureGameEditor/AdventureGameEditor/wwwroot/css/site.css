@@ -1,6 +1,68 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+/*------------------- Title --------------------*/
+#titleText{
+    font-size: 100px;
+    color: beige;
+    font-weight: 100;
+    font-family: Papyrus;
+    text-align: center;
+}
+
+#title {
+    border-bottom: 2px solid #ccc;
+    margin: 1em 0;
+    border-bottom-color:burlywood;
+}
+
+#slogan{
+    font-size: 40px;
+    text-align: center;
+    color: bisque;
+    font-style:italic;
+    font-family:Papyrus;
+}
+
+/*--------------------- Background ----------------------- */
+body {
+    font-size: 14px;
+    background-image: url("tunnel_background_edited.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: beige;
+    width: 100% !important;
+    background-attachment: fixed;
+}
+
+/*-------------------- Header --------------------*/
+#header {
+    border: 0px;
+    background-color: transparent !important;
+    font-size: 20px;
+    color: lightgray;
+    font-family: Papyrus;
+    border-bottom: 2px solid #ccc;
+    margin: 1em 0;
+    border-bottom-color: burlywood;
+    width: 100% !important;
+}
+
+#header ul li {
+    display:inline-block;
+    padding: 10px;
+    list-style:none;
+    align-content:center;
+}
+
+#header ul li a:hover{
+    text-decoration:none;
+}
+
+#header a{
+    color: lightgray;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -9,26 +71,17 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: blue;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
+
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
+  
+  /*background-color: #1b6ec2;*/
   border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
 @media (min-width: 768px) {
   html {
     font-size: 16px;
