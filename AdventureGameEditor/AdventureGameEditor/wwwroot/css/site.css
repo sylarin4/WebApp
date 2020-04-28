@@ -2,22 +2,26 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 /*------------------- Title --------------------*/
-#titleText{
-    font-size: 100px;
+
+#title {
+    border-bottom: 2px solid #ccc;
+    border-bottom-color: burlywood;
+    text-align: center;
+    width: 100%;
+    position: center;
+}
+
+#titleText {
+    font-size: 70px;
     color: beige;
     font-weight: 100;
     font-family: Papyrus;
     text-align: center;
-}
-
-#title {
-    border-bottom: 2px solid #ccc;
-    margin: 1em 0;
-    border-bottom-color:burlywood;
+    width: 100%;
 }
 
 #slogan{
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
     color: bisque;
     font-style:italic;
@@ -26,17 +30,18 @@ for details on configuring this project to bundle and minify static web assets. 
 
 /*--------------------- Background ----------------------- */
 body {
-    font-size: 14px;
+    font-size: 16px;
     background-image: url("tunnel_background_edited.png");
     background-repeat: no-repeat;
     background-size: cover;
     color: beige;
     width: 100% !important;
     background-attachment: fixed;
+    font-family: 'Baskerville Old Face';
 }
 
-/*-------------------- Header --------------------*/
-#header {
+/*-------------------- Main menu --------------------*/
+#mainMenu {
     border: 0px;
     background-color: transparent !important;
     font-size: 20px;
@@ -46,20 +51,25 @@ body {
     margin: 1em 0;
     border-bottom-color: burlywood;
     width: 100% !important;
+    position:fixed;
+    font-weight:bold;
 }
 
-#header ul li {
+#mainMenu ul li {
     display:inline-block;
-    padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     list-style:none;
     align-content:center;
 }
 
-#header ul li a:hover{
+#mainMenu ul li a:hover{
     text-decoration:none;
 }
 
-#header a{
+#mainMenu a{
     color: lightgray;
 }
 
@@ -69,9 +79,220 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+/*-------------------- Header --------------------*/
+
+header {
+    position: fixed;
+    text-align: center;
+    position: center;
+    width: 100%;
+}
+
+/*-------------------- Home --------------------*/
+
+.display-4{
+    font-family: Papyrus;
+    font-style: italic;
+    font-size: 30px !important;
+}
+
+/*-------------------- Content --------------------*/
+
+#content{
+    padding-top: 220px;
+}
+
+
+/*-------------------- Register --------------------*/
+.register {
+    background-image: url("old_book_page.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 40px;
+    align-content: center;
+    text-align: center;
+    column-count: 2;
+    column-gap: 60px;
+    width: 70%;
+    margin: auto;
+    color: black !important;
+    font-family: 'Bookman Old Style';
+    padding-bottom: 100px;
+    padding-top: 70px;
+}
+
+.register h2{
+    border-bottom: 2px solid #ccc;
+    border-bottom-color: black;
+    font-family: Papyrus;
+}
+
+.register a{
+    color: black;
+}
+
+.register input
+{
+    font-size:16px;
+    font-family: 'Bookman Old Style';
+    font-style: italic;
+    text-align:center;
+    background-color:transparent !important;
+    color: midnightblue;
+    border: none;
+    border-bottom:dashed;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+}
+
+.register input:hover{
+    background-color:transparent !important;
+    color:midnightblue;
+}
+
+.register input[type=submit]{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 20px;
+    border: none;
+    color: black;
+    font-style:normal;
+}
+.register input[type=submit]:hover{
+    text-decoration: underline;
+}
+
+.register label{
+    padding-top:10px;
+}
+
+
+/*-------------------- Login --------------------*/
+
+.login{
+    background-image: url("login_background.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: auto;
+    width: 40%;
+    padding: 20px;
+    font-family:'Bookman Old Style';
+    color: black;
+    text-align:center;
+    padding-top: 100px;
+    padding-bottom:100px;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+
+.login h2{
+    font-family:Papyrus;
+    border-bottom: 2px solid #ccc;
+    border-bottom-color: black;
+}
+
+.login input
+{
+    font-size:16px;
+    font-family: 'Bookman Old Style';
+    font-style: italic;
+    text-align:center;
+    background-color:transparent !important;
+    color: midnightblue;
+    border: none;
+    border-bottom:dashed;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+}
+
+.login input[type=submit]{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 20px;
+    border: 1px;
+    color: black;
+    font-style: normal !important;
+}
+
+.login input[type=submit]:hover{
+    text-decoration: underline;
+    color:black !important;
+}
+
+.login input:hover{
+    background-color:transparent !important;
+    color:midnightblue;
+}
+
+
+/*-------------------- List games --------------------*/
+
+.menu {
+    float: left;
+    width: 160pt;
+    position: fixed;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-size: 14pt;
+    font-family: 'Bookman Old Style';
+    text-align: left;
+    color: burlywood;
+    margin-left: 0px;
+}
+
+.menu ul li{
+    list-style: none;
+    padding-bottom: 20px;
+    border-bottom: 1px;
+    border-bottom-color: burlywood;
+}
+
+.menu ul li a{
+    color: burlywood;
+}
+
+.menu ul li a:hover{
+    text-decoration: none;
+    color: white;
+    background-color: black;
+}
+
+
+.menu h6{
+    font-family:Papyrus;
+    text-align: center;
+    font-size: 18pt;
+    color: burlywood;
+    font-weight: bold;
+    border-bottom: 1px solid;
+}
+
+.game-list {
+    padding-left: 225pt;
+    padding-top: 60pt;
+    height: 450pt;
+    overflow-y: scroll;
+}
+
+#game-title{
+    font-family:Papyrus;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+}
+
+
+.error-messages{
+    text-align: center;
+    color: orangered;
+    font-style: italic;
+    border-top: 1px solid;
+    border-top-color: burlywood;
+}
+
 /* Provide sufficient contrast against white background */
 a {
-  color: blue;
+    color: Highlight;
 }
 
 
@@ -121,4 +342,5 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+  position: fixed;
 }

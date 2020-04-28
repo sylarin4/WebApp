@@ -1,75 +1,77 @@
 ﻿@model IEnumerable<AdventureGameEditor.Models.Game>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Játékok";
 }
-
-<h1>Játékok</h1>
 <head>
     <link rel="stylesheet" type="text/css" href="~/css/site.css" />
     <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
 </head>
 
-<div class="ErorrMessages"> 
-    @if (ViewBag.CurrentGuestName == null)
-        {
-             <p>Be kell jelentkezned ahhoz, hogy játszhass, vagy játékot szerkeszthess!</p>
-        }
-</div>
 
-<div class="Menu">
-    <h6>Rendezés</h6>
+<div class="menu">
+    <h6>Játékok rendezése</h6>
     <ul>
-        <li><a asp-controller="GameViewer" asp-action="OrderByTitle" >Cím szerint</a></li>
-        <li><a asp-controller="GameViewer" asp-action="OrderByOwner" >Készítő szerint</a></li>
-        <li><a asp-controller="GameViewer" asp-action="OrderByPopularity" >Népszerűség szerint</a></li>
-        <li><a asp-controller="GameViewer" asp-action="GetOwnGames" >Csak saját játékok megjelenítése</a></li>
-        <li><a asp-controller="GameViewer" asp-action="Index" >Nincs rendezés</a></li>
-
+        <li><a asp-controller="GameViewer" asp-action="OrderByTitle">Cím szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="OrderByOwner">Készítő szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="OrderByPopularity">Népszerűség szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="GetOwnGames">Csak saját játékok megjelenítése</a></li>
+        <li><a asp-controller="GameViewer" asp-action="Index">Nincs rendezés</a></li>
     </ul>
+    <div class="error-messages">
+        @if (ViewBag.CurrentGuestName == null)
+        {
+            <p>Be kell jelentkezned ahhoz, hogy játszhass, vagy játékot szerkeszthess!</p>
+        }
+    </div>
 </div>
 
-<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="game-list">   
 
-<table class="table">
-    <tbody>
-       @{int rowCount = 5; /*number of elements in a row*/ }
-       @for(int i = 0; i < (Model.Count()/rowCount) + 1; ++i)
-       {
-        <tr>
-            @for (int j = 0; j < rowCount; ++j)
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <table >
+        <tbody>
+            @{int rowCount = 5; /*number of elements in a row*/ }
+            @for (int i = 0; i < (Model.Count() / rowCount) + 1; ++i)
             {
-                @if ((i * rowCount) + j < Model.Count())
-                {
-                    var item = Model.ElementAt((i * rowCount) + j);
-            <td>
-                @if (item.CoverImage != null)
-                {
-                    <img src="@Url.Action("RenderCoverImage", new { imageID = item.CoverImage.ID })" class="contentImage" height=100 />
-                }
-                @if (item.CoverImage == null)
-                {
-                    <img src="~/empty_pic.jpg" height="100" />
-                }
-
-                <p>Cím: @item.Title</p>
-                <p>Készítette: @item.Owner.NickName </p>
-                <p>Térkép mérete: @item.TableSize x @item.TableSize</p>
-                <p> @item.PlayCounter alkalommal játszottak vele.</p>
-                <p>
-                    @if (ViewBag.CurrentGuestName != null)
+                <tr>
+                    @for (int j = 0; j < rowCount; ++j)
                     {
-                        <a asp-controller="GameViewer" asp-action="RedirectToPrelude" asp-route-gameTitle="@item.Title">Játék</a>
+                        @if ((i * rowCount) + j < Model.Count())
+                        {
+                            var item = Model.ElementAt((i * rowCount) + j);
+                            <td>
+                                @if (item.CoverImage != null)
+                                {
+                                    <img src="@Url.Action("RenderCoverImage", new { imageID = item.CoverImage.ID })" class="contentImage" height=100 />
+                                }
+                                @if (item.CoverImage == null)
+                                {
+                                    <img src="~/empty_pic.jpg" height="100" />
+                                }
+
+                                <p>Cím: @item.Title</p>
+                                <p>Készítette: @item.Owner.NickName </p>
+                                <p>Térkép mérete: @item.TableSize x @item.TableSize</p>
+                                <p> @item.PlayCounter alkalommal játszottak vele.</p>
+                                <p>
+                                    @if (ViewBag.CurrentGuestName != null)
+                                    {
+                                        <a asp-controller="GameViewer" asp-action="RedirectToPrelude" asp-route-gameTitle="@item.Title">Játék</a>
+                                    }
+                                </p>
+                                @if (ViewBag.CurrentGuestName == item.Owner.UserName)
+                                {
+                                    <a asp-controller="GameEditor" asp-action="EditGame" asp-route-gameTitle="@item.Title">Játék szerkesztése</a>
+                                }
+                            </td>
+                        }
                     }
-                </p>
-                @if (ViewBag.CurrentGuestName == item.Owner.UserName)
-                {
-                    <a asp-controller="GameEditor" asp-action="EditGame" asp-route-gameTitle="@item.Title">Játék szerkesztése</a>
-                }
-            </td>
-                }
+                </tr>
             }
-        </tr>
-       }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+</div>
+

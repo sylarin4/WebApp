@@ -4,11 +4,8 @@
     ViewData["Title"] = "Bejelentkezés";
 }
 
-<body class="login">
+<div class="login">
     <h2>Bejelentkezés</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
             <form asp-action="Login">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
@@ -27,17 +24,10 @@
                     <input type="submit" value="Bejelentkezés" class="btn btn-default" />
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-controller="Home" asp-action="Index">Vissza a kezdőlapra</a>
-    </div>
-</body>
-
+</div>
 
 @section Scripts
 {
-    @await Html.PartialAsync("_ValidationScriptsPartial"); 
+    @await Html.PartialAsync("_ValidationScriptsPartial") 
     
 }

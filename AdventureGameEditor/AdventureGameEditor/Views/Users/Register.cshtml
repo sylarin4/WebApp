@@ -4,57 +4,56 @@
     ViewData["Title"] = "Regisztráció";
 }
 
-<body class="register">
-    <h2>Regisztráció</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Register">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="UserName" class="control-label"></label>
-                    <input asp-for="UserName" class="form-control" />
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="NickName" class="control-label"></label>
-                    <input asp-for="NickName" class="form-control" />
-                    <span asp-validation-for="NickName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmailAddress" class="control-label"></label>
-                    <input asp-for="EmailAddress" class="form-control" />
-                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ValidateEmailAddress" class="control-label"></label>
-                    <input asp-for="ValidateEmailAddress" class="form-control" />
-                    <span asp-validation-for="ValidateEmailAddress" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="control-label"></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ValidatePassword" class="control-label"></label>
-                    <input asp-for="ValidatePassword" class="form-control" />
-                    <span asp-validation-for="ValidatePassword" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Regisztráció" class="btn btn-default" />
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="register">
 
-    <div>
-        <a asp-controller="Home" asp-action="Index">Vissza a kezdőlapra</a>
-    </div>
-</body>
+    <form asp-action="Register">
+
+        <h2>Regisztráció</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div>
+            <label asp-for="UserName" class="control-label"></label>
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="NickName" class="control-label"></label>
+            <input asp-for="NickName" class="form-control" />
+            <span asp-validation-for="NickName" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="EmailAddress" class="control-label"></label>
+            <input asp-for="EmailAddress" class="form-control" />
+            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="ValidateEmailAddress" class="control-label"></label>
+            <input asp-for="ValidateEmailAddress" class="form-control" />
+            <span asp-validation-for="ValidateEmailAddress" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="ValidatePassword" class="control-label"></label>
+            <input asp-for="ValidatePassword" class="form-control" />
+            <span asp-validation-for="ValidatePassword" class="text-danger"></span>
+        </div>
+
+        <div>
+            <input type="submit" value="Regisztráció" class="btn btn-default" />
+        </div>
+    </form>
+</div>
 
 
 @section Scripts
 {
-    @await Html.PartialAsync("_ValidationScriptsPartial"); 
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
