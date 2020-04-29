@@ -26,7 +26,7 @@ namespace AdventureGameEditor.Models
         [Compare(nameof(EmailAddress), ErrorMessage = "Az email címek nem egyeznek.")]
         public String ValidateEmailAddress { get; set; }
 
-        [Display(Name = "Jelszó (Minimum 8, maximum 40 karakter hosszú lehet, csak betűt, számot és kötőjelet tartalmathat.")]
+        [Display(Name = "Jelszó (Minimum 8, maximum 40 karakter hosszú lehet, csak betűt, számot és kötőjelet tartalmathat.)S")]
         [Required(ErrorMessage = "A jelszó mezőt kötelező kitölteni.")]
         [RegularExpression("^[A-Za-z0-9_-]{8,40}$", ErrorMessage = "A jelszó formátuma nem megfelelő.")]
         [DataType(DataType.Password)]

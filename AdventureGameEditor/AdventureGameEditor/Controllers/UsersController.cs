@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 
 using AdventureGameEditor.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -109,7 +110,7 @@ namespace AdventureGameEditor.Controllers
 
         private async Task<bool> DoRegister(String userName, String userNickName, String userEmailAddress, String userPassword)
         {
-            //TODO: check repeats in database (nickname and name hace to be uniq)
+            //TODO: check repeats in database (nickname and name have to be unique)
             if (!ModelState.IsValid)
                 return false;
             User user = new User
@@ -118,6 +119,15 @@ namespace AdventureGameEditor.Controllers
                 NickName = userNickName,
                 Email = userEmailAddress
             };
+            if(_context.User.Any(u => u.UserName == user.UserName))
+            {
+                ModelState.AddModelError("", "Ez a felhasználónév már foglalt!");
+            }
+            if(_context.User.Any(u => u.NickName == user.NickName))
+            {
+                ModelState.AddModelError("", "Ez a nick név már foglalt!");
+            }
+            if (!ModelState.IsValid) return false;
             var result = await _userManager.CreateAsync(user, userPassword);
             if (!result.Succeeded)
             {

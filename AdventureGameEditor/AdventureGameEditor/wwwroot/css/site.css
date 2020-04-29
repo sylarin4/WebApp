@@ -9,6 +9,7 @@ for details on configuring this project to bundle and minify static web assets. 
     text-align: center;
     width: 100%;
     position: center;
+    z-index: 2;
 }
 
 #titleText {
@@ -38,6 +39,7 @@ body {
     width: 100% !important;
     background-attachment: fixed;
     font-family: 'Baskerville Old Face';
+    overflow: auto;
 }
 
 /*-------------------- Main menu --------------------*/
@@ -86,6 +88,7 @@ header {
     text-align: center;
     position: center;
     width: 100%;
+    overflow: auto;
 }
 
 /*-------------------- Home --------------------*/
@@ -225,7 +228,30 @@ header {
     color:midnightblue;
 }
 
+/*------------------- User --------------------*/
 
+#user {
+    width: 50pt;
+    height: 50pt;
+    background-image: url("user_image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: right;
+    padding-top: 35pt;
+    right:10pt;
+    top: 10pt;
+    z-index: 1;
+    position: fixed;
+    vertical-align: bottom;
+    color: black;
+    font-family: 'Bookman Old Style';
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+#user a{
+    color: burlywood;
+}
 /*-------------------- List games --------------------*/
 
 .menu {
