@@ -1,0 +1,42 @@
+﻿@model AdventureGameEditor.Models.Game
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    </head>
+
+    <div class="game-details">
+        @if (Model.CoverImage != null)
+        {
+            <img class="details-img" src="@Url.Action("RenderCoverImage", new { imageID = Model.CoverImage.ID })" width="500px" />
+        }
+        @if (Model.CoverImage == null)
+        {
+            <img class="details-img" src="~/empty_pic.jpg" height="100" />
+        }
+        <p>Cím: @Model.Title</p>
+        <p>Készítette: @Model.Owner.NickName</p>
+        <p>Térkép mérete: @Model.TableSize x @Model.TableSize</p>
+        <p>@Model.PlayCounter alkalommal játszottak vele.</p>
+        <h2> Előtörténet: </h2>
+        @if (Model.Prelude != null)
+        {
+            <p> @Model.Prelude.Text</p>
+        }
+        else
+        {
+            <p>A játék mépg félkész állapotban van, és még nem készült el az előtörténete.</p>
+        }
+        <p>
+            @if (ViewBag.CurrentGuestName != null)
+            {
+                <a asp-controller="GameViewer" asp-action="RedirectToPrelude" asp-route-gameTitle="@Model.Title">Játék</a>
+            }
+        </p>
+        @if (ViewBag.CurrentGuestName == Model.Owner.UserName)
+        {
+            <a asp-controller="GameEditor" asp-action="EditGame" asp-route-gameTitle="@Model.Title">Játék szerkesztése</a>
+        }
+        <div>
+            <a asp-controller="GameViewer" asp-action="Index">Vissza a játékokhoz</a>
+        </div>
+    </div>

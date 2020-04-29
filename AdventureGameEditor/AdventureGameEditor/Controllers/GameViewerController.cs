@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
 using System.IO;
+using System.Diagnostics;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -86,6 +87,18 @@ namespace AdventureGameEditor.Controllers
         public FileContentResult RenderCoverImage(int imageID)
         {
             return _gameEditorService.GetCoverImage(imageID);
+        }
+
+        public IActionResult GameViewerDetails(String gameTitle)
+        {
+            Trace.WriteLine("\n\n\n GameViewerDetails\n\n\n");
+            Game game = _context.Game.Where(game => game.Title == gameTitle)
+                                                        .Include(game => game.CoverImage)
+                                                        .Include(game => game.Prelude)
+                                                        .Include(game => game.Owner)
+                                                        .FirstOrDefault();
+            Trace.WriteLine(game.Title);
+            return PartialView("GameViewerDetails",game);
         }
     }
 }

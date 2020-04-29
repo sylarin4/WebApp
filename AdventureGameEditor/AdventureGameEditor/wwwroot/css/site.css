@@ -183,6 +183,7 @@ header {
     padding-bottom:100px;
     padding-right: 40px;
     padding-left: 40px;
+    height: 100%;
 }
 
 .login h2{
@@ -269,9 +270,29 @@ header {
 
 .game-list {
     padding-left: 225pt;
-    padding-top: 60pt;
+    padding-top: 15pt;
     height: 450pt;
+}
+
+.scrollable{
     overflow-y: scroll;
+}
+
+.index-img{
+    height: 150px;
+    max-width: 150px;
+}
+
+.game-list table tr td{
+    border: 35px solid;
+    border-color: transparent;
+    align-content: center;
+}
+
+.game-list table button{
+    background-color: transparent;
+    color: burlywood;
+    border:none;
 }
 
 #game-title{
@@ -281,13 +302,35 @@ header {
     width: 100%;
 }
 
-
 .error-messages{
     text-align: center;
     color: orangered;
     font-style: italic;
     border-top: 1px solid;
     border-top-color: burlywood;
+}
+
+
+/*-------------------- GameViewerDetails --------------------*/
+
+.details-img{
+    width: 80%;
+    margin:auto;
+}
+
+.game-details{
+    background-image: url("old_book_page.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding: 20pt;
+    column-count: 2;
+    column-gap: 45pt;
+    height: 95%;
+    width: 90%;
+    color: black;
+    font-family: 'Bookman Old Style';
+    font-size: 100%;
+    padding-top: 40pt;
 }
 
 /* Provide sufficient contrast against white background */

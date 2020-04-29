@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Játékok";
 }
-<head>
-    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
-    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
-</head>
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+        <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+    </head>
 
 
 <div class="menu">
@@ -26,52 +26,41 @@
     </div>
 </div>
 
-<div class="game-list">   
+    <div class="game-list"id="index-content">
+        <div class="scrollable">
 
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <table >
-        <tbody>
-            @{int rowCount = 5; /*number of elements in a row*/ }
-            @for (int i = 0; i < (Model.Count() / rowCount) + 1; ++i)
-            {
-                <tr>
-                    @for (int j = 0; j < rowCount; ++j)
+            <table>
+                <tbody>
+                    @{int rowCount = 4; /*number of elements in a row*/ }
+                    @for (int i = 0; i < (Model.Count() / rowCount) + 1; ++i)
                     {
-                        @if ((i * rowCount) + j < Model.Count())
-                        {
-                            var item = Model.ElementAt((i * rowCount) + j);
-                            <td>
-                                @if (item.CoverImage != null)
+                        <tr>
+                            @for (int j = 0; j < rowCount; ++j)
+                            {
+                                @if ((i * rowCount) + j < Model.Count())
                                 {
-                                    <img src="@Url.Action("RenderCoverImage", new { imageID = item.CoverImage.ID })" class="contentImage" height=100 />
+                                    var item = Model.ElementAt((i * rowCount) + j);
+                                    <td>
+                                        <button type="button" onclick="LoadDetails('@item.Title')">
+                                            @if (item.CoverImage != null)
+                                            {
+                                                <img class="index-img" src="@Url.Action("RenderCoverImage", new { imageID = item.CoverImage.ID })" class="contentImage" />
+                                            }
+                                            else
+                                            {
+                                                <img class="index-img" src="~/empty_pic.jpg" height="100" />
+                                            }
+                                            <p>@item.Title</p>
+                                        </button>
+                                    </td>
                                 }
-                                @if (item.CoverImage == null)
-                                {
-                                    <img src="~/empty_pic.jpg" height="100" />
-                                }
-
-                                <p>Cím: @item.Title</p>
-                                <p>Készítette: @item.Owner.NickName </p>
-                                <p>Térkép mérete: @item.TableSize x @item.TableSize</p>
-                                <p> @item.PlayCounter alkalommal játszottak vele.</p>
-                                <p>
-                                    @if (ViewBag.CurrentGuestName != null)
-                                    {
-                                        <a asp-controller="GameViewer" asp-action="RedirectToPrelude" asp-route-gameTitle="@item.Title">Játék</a>
-                                    }
-                                </p>
-                                @if (ViewBag.CurrentGuestName == item.Owner.UserName)
-                                {
-                                    <a asp-controller="GameEditor" asp-action="EditGame" asp-route-gameTitle="@item.Title">Játék szerkesztése</a>
-                                }
-                            </td>
-                        }
+                            }
+                        </tr>
                     }
-                </tr>
-            }
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
 
-</div>
-
+    </div>

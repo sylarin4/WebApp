@@ -131,6 +131,18 @@ function RefreshLifeCountAfterTrial(gameTitle, url, target) {
     })
 }
 
+// ---------- Functions for Index of GameViewer controller ----------//
+
+function LoadDetails(gameTitle) {
+    var target = "#index-content";
+    console.log(gameTitle);
+    $.ajax({
+        url: '../GameViewer/GameViewerDetails',
+        data: { gameTitle: gameTitle },
+        success: function (result) { $(target).html(result); }
+    });
+}
+
 // ---------- Helper functions ---------- //
 
 
