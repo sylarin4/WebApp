@@ -30,45 +30,42 @@
         </div>
         
 
-            <div id="mainMenu">
-                <div>
-                    <ul>
+        <div id="mainMenu">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Kezdőlap</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Help">Súgó</a>
+                    </li>
+                    @if (ViewBag.CurrentGuestName == null)
+                    {
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="Index">Kezdőlap</a>
+                            <a asp-area="" asp-controller="Users" asp-action="Register">Regisztráció</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="Help">Súgó</a>
+                            <a asp-area="" asp-controller="Users" asp-action="Login">Bejelentkezés</a>
                         </li>
-                        @if (ViewBag.CurrentGuestName == null)
-                        {
-                            <li>
-                                <a asp-area="" asp-controller="Users" asp-action="Register">Regisztráció</a>
-                            </li>
-                            <li>
-                                <a asp-area="" asp-controller="Users" asp-action="Login">Bejelentkezés</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a asp-area="" asp-controller="Users" asp-action="Logout">Kijelentkezés</a>
-                            </li>
-                            <li>
-                                <a asp-area="" asp-controller="GameEditor" asp-action="CreateGame">Játék létrehozása</a>
-                            </li>
-                        }
-
+                    }
+                    else
+                    {
                         <li>
-                            <a asp-area="" asp-controller="GameViewer" asp-action="Index">Játékok listázása</a>
+                            <a asp-area="" asp-controller="Users" asp-action="Logout">Kijelentkezés</a>
                         </li>
+                        <li>
+                            <a asp-area="" asp-controller="GameEditor" asp-action="CreateGame">Játék létrehozása</a>
+                        </li>
+                    }
 
+                    <li>
+                        <a asp-area="" asp-controller="GameViewer" asp-action="Index">Játékok listázása</a>
+                    </li>
 
-                    </ul>
-                </div>
-            </div>
-        </header>
+                </ul>
+        </div>
+    </header>
 
-    <div class="container" id="content">
+    <div  id="content">
         <main role="main" class="pb-3">
             <div class="page-content">
                 @RenderBody()

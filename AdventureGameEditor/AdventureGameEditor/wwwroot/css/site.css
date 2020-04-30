@@ -1,47 +1,81 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+/*-------------------- Scrollbar --------------------*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background-color:transparent; 
+} 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color:black; 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color:black; 
+}
+
+/*-------------------- Header --------------------*/
+
+header {
+    position: fixed;
+    text-align: center;
+    position: center;
+    width: 100% !important;
+    background-image: url("tunnel_background_edited.png");
+    background-size: cover;
+    height: 235px;
+    width: auto ;
+}
+
 /*------------------- Title --------------------*/
 
 #title {
     border-bottom: 2px solid #ccc;
     border-bottom-color: burlywood;
     text-align: center;
-    width: 100%;
+    width: 100% ;
     position: center;
-    z-index: 2;
 }
-
 #titleText {
     font-size: 70px;
     color: beige;
     font-weight: 100;
     font-family: Papyrus;
     text-align: center;
-    width: 100%;
+    width: 100% ;
 }
-#slogan{
+#slogan {
     font-size: 30px;
     text-align: center;
     color: bisque;
-    font-style:italic;
-    font-family:Papyrus;
+    font-style: italic;
+    font-family: Papyrus;
 }
 
 /*--------------------- Background ----------------------- */
+
 body {
     font-size: 16px;
     background-image: url("tunnel_background_edited.png");
     background-repeat: no-repeat;
     background-size: cover;
     color: beige;
-    width: 100% !important;
     background-attachment: fixed;
     font-family: 'Baskerville Old Face';
     overflow: auto;
-    height:100%;
     overflow: auto;
+    min-width: 1100px;
+    width: auto !important;
+    min-height: 450px;
+    height: auto !important;
 }
+
 /*-------------------- Main menu --------------------*/
 
 #mainMenu {
@@ -78,21 +112,6 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-/*-------------------- Header --------------------*/
-
-#inner.fixed {
-    height: 250px;
-    overflow-y: hidden;
-    overflow-x: hidden;
-}
-
-header {
-    position: fixed;
-    text-align: center;
-    position: center;
-    width: 100%;
-}
-
 /*-------------------- Home --------------------*/
 
 .display-4{
@@ -107,12 +126,13 @@ header {
     /*overflow-y:scroll;
     bottom: 20pt;
     height:80%;*/
-    border-top:220px solid;
+    border-top:240px solid;
     border-top-color:transparent;
+    text-align:center;
 }
 
-
 /*-------------------- Register --------------------*/
+
 .register {
     background-image: url("old_book_page.jpg");
     background-repeat: no-repeat;
@@ -128,18 +148,16 @@ header {
     font-family: 'Bookman Old Style';
     padding-bottom: 100px;
     padding-top: 70px;
+    height:450pt;
 }
-
 .register h2{
     border-bottom: 2px solid #ccc;
     border-bottom-color: black;
     font-family: Papyrus;
 }
-
 .register a{
     color: black;
 }
-
 .register input
 {
     font-size:16px;
@@ -171,7 +189,9 @@ header {
 .register label{
     padding-top:10px;
 }
-
+.register form{
+    break-inside: avoid-column;
+}
 
 /*-------------------- Single page  --------------------*/
 /*(Used: Login, CreateGame*/
@@ -181,7 +201,7 @@ header {
     background-repeat: no-repeat;
     background-size: 100%;
     margin: auto;
-    width: 40%;
+    width: 35%;
     padding: 20px;
     font-family:'Bookman Old Style';
     color: black;
@@ -190,7 +210,7 @@ header {
     padding-bottom:100px;
     padding-right: 40px;
     padding-left: 40px;
-    height: 100%;
+    height: 440pt;
 }
 .single-page h2{
     font-family:Papyrus;
@@ -239,7 +259,6 @@ header {
     padding-top: 35pt;
     right:10pt;
     top: 10pt;
-    z-index: 1;
     position: fixed;
     vertical-align: bottom;
     color: black;
@@ -247,18 +266,18 @@ header {
     font-size: 11pt;
     font-weight: bold;
 }
-
 #user a{
     color: burlywood;
 }
-/*-------------------- List games --------------------*/
+
+/*-------------------- Menu --------------------*/
 
 .menu {
-    float: left;
+    left:20pt;
     width: 160pt;
     position: fixed;
-    padding-top: 0px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     font-size: 14pt;
     font-family: 'Bookman Old Style';
     text-align: left;
@@ -288,10 +307,11 @@ header {
     border-bottom: 1px solid;
 }
 
+/*-------------------- List games --------------------*/
+
 .game-list {
-    padding-left: 225pt;
-    padding-top: 15pt;
-    justify-content: center;
+    padding:30pt;
+    padding-left:210pt;
 }
 .scrollable{
     overflow-y: scroll;
@@ -300,7 +320,7 @@ header {
 }
 .index-img{
     height: 150px;
-    max-width: 150px;
+    max-width: 300px;
 }
 .game-list button {
     background-color: transparent;
@@ -335,14 +355,13 @@ header {
     padding: 20pt;
     column-count: 2;
     column-gap: 45pt;
-    height: 95%;
+    height:450pt;
     width: 90%;
     color: black;
     font-family: 'Bookman Old Style';
     font-size: 100%;
     padding-top: 40pt;
 }
-
 
 /*-------------------- Create game --------------------*/
 
@@ -371,7 +390,7 @@ header {
     font-size: 16pt;
     text-align: center;
     color:burlywood;
-    padding-bottom:15pt;
+    padding-bottom:5pt;
 }
 .map-field-image{
     width: 60px;
@@ -397,6 +416,7 @@ header {
 .map{
     float:right;
     width:59%;
+    padding-right:20pt;
 }
 .map table tr td button{
     padding:0px;
@@ -482,7 +502,7 @@ header {
     border-color:black;
 }
 .form{
-    height:300pt;
+    height:280pt;
 }
 .form h6{    
     border-top:1pt solid;
@@ -525,8 +545,8 @@ header {
 }
 
 /*Create game result*/
-.create-game-result{
-    height:470pt;
+.create-game-result {
+    height: 440pt;
 }
 .create-game-result-form{
     height: 300pt;
@@ -560,7 +580,6 @@ header {
     height: 450pt;
     left: 10pt !important;
     background-image: none !important;
-    z-index: 10;
     padding: 20px;
     font-family: 'Bookman Old Style';
     color: black;
@@ -582,9 +601,11 @@ header {
     background-image: url("old_book_page.jpg");
     background-size:cover;
     background-repeat:no-repeat;
-    width:80%;
+    width:70%;
     height:450pt;
     float:right;
+    border-right:20pt solid;
+    border-right-color:transparent;
 }
 .game-details-form{
     height:350pt !important;
@@ -613,7 +634,17 @@ header {
     height:50px;
 }
 .check-game{
-    height: 450pt !important;
+    height: 440pt !important;
+}
+.check-game h4{
+    border-bottom:2pt solid;
+    border-bottom-color: black;
+}
+.check-game ul li{
+    font-family:'Bookman Old Style';
+    font-size:13pt;
+    font-style:italic;
+    color:midnightblue;
 }
 .check-list{
     height:300pt !important;
@@ -629,7 +660,7 @@ header {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: Highlight;
+    color: midnightblue;
 }
 
 

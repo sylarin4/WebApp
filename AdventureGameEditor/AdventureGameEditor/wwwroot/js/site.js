@@ -155,19 +155,3 @@ function LoadData(target, url, gameTitle, rowNumber, colNumber) {
     });
 }
 
-
-function AddNewAlternativeForForm(index, gameTitle, rowNumber, colNumber) {
-    var target = '#alternative' + index;
-    console.log(target);
-    console.log(index);
-    $.ajax({
-        url: "GetNewAlternative",
-        data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
-        success: function (result) { $(target).html(result); }
-    });
-    $.ajax({
-        url: "RefreshAddAlternativeButton",
-        data: { index: index, gameTitle: gameTitle, rowNumber: rowNumber, colNumber: colNumber },
-        success: function (result) { $("#addAlternativeButton").html(result); }
-    });
-}

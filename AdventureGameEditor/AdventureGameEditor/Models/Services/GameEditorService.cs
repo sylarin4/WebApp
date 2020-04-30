@@ -754,16 +754,20 @@ namespace AdventureGameEditor.Models
 
         public Boolean IsStartFieldSet(String userName, String gameTitle)
         {
-            return _context.Game.Any(game => game.Owner.UserName == userName &&
-                                             game.Title == gameTitle &&
-                                             game.StartField != null);
+            Game game = _context.Game.Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
+                                       .Include(game => game.StartField)
+                                       .FirstOrDefault();
+            return game.StartField != null && (game.StartField.IsDownWay || game.StartField.IsLeftWay
+                                                || game.StartField.IsRightWay || game.StartField.IsUpWay);
         }
 
         public Boolean IsTargetFieldSet(String userName, String gameTitle)
         {
-            return _context.Game.Any(game => game.Owner.UserName == userName &&
-                                             game.Title == gameTitle &&
-                                             game.TargetField != null);
+            Game game = _context.Game.Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
+                                       .Include(game => game.TargetField)
+                                       .FirstOrDefault();
+            return game.TargetField != null && (game.TargetField.IsDownWay || game.TargetField.IsLeftWay
+                                                || game.TargetField.IsRightWay || game.TargetField.IsUpWay);
         }
 
         public Boolean IsPreludeFilled(String userName, String gameTitle)

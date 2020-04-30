@@ -12,10 +12,10 @@ namespace AdventureGameEditor.Models
         [Display(Name ="A térkép valid: ")]
         public Boolean IsMapValid { get; set; }
 
-        [Display(Name = "A kezdőmező be van állítva: ")]
+        [Display(Name = "Valid kezdőmező van beállítva: ")]
         public Boolean IsStartFieldSet { get; set; }
 
-        [Display(Name = "A célmező be van állítva: ")]
+        [Display(Name = "Valid célmező van beállítva: ")]
         public Boolean IsTargetFieldSet { get; set; }
 
         [Display(Name = "Az előtörténet ki van töltve: ")]
