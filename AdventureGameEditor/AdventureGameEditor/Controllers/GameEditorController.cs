@@ -133,6 +133,9 @@ namespace AdventureGameEditor.Controllers
             model.Action = "térkép mezőinek kitöltése";
             model.NextControllerAction = "CreateMapStartField";
             model.IsFieldSelected = false;
+            model.Guide = "Kattintson a térkép egyik mezőjére, hogy bal oldalt megjelenjen a tartalom " +
+                "hozzáadásához szükséges eszközkészlet, majd a megjelenő gombok segítségével adjon szöveget " +
+                "vagy próbát a mezőhöz.";
             return View("CreateMapContent", model);
         }
 
@@ -196,6 +199,9 @@ namespace AdventureGameEditor.Controllers
             model.IsFieldSelected = true;
             model.SelectedField = _gameEditorService.GetField(User.Identity.Name, fieldData.GameTitle, fieldData.RowNumber, fieldData.ColNumber);
             model.ErrorMessage = errorMessage;
+            model.Guide = "Kattintson a térkép egyik mezőjére, hogy bal oldalt megjelenjen a tartalom " +
+                "hozzáadásához szükséges eszközkészlet, majd a megjelenő gombok segítségével adjon szöveget " +
+                "vagy próbát a mezőhöz.";
             return View("CreateMapContent", model);
         }
 
@@ -224,6 +230,9 @@ namespace AdventureGameEditor.Controllers
             model.Action = "térkép mezőinek kitöltése";
             model.NextControllerAction = "CreateMapStartField";
             model.IsFieldSelected = true;
+            model.Guide = "Kattintson a térkép egyik mezőjére, hogy bal oldalt megjelenjen a tartalom " +
+                "hozzáadásához szükséges eszközkészlet, majd a megjelenő gombok segítségével adjon szöveget " +
+                "vagy próbát a mezőhöz.";
             model.SelectedField = _gameEditorService.GetField(User.Identity.Name, trialData.GameTitle, trialData.RowNumber, trialData.ColNumber);
             return View("CreateMapContent", model);
         }
@@ -242,6 +251,7 @@ namespace AdventureGameEditor.Controllers
             model.FunctionName = "SaveStartField";
             model.Action = "kezdő mezőjének kiválasztása";
             model.NextControllerAction = "CreateMapTargetField";
+            model.Guide = "A kezdőmező megadásához kattintson a térkép egy mezőjére!";
             return View("CreateMapContent", model);
         }
 
@@ -251,6 +261,7 @@ namespace AdventureGameEditor.Controllers
             model.FunctionName = "SaveTargetField";
             model.Action = "célmezőjének kiválasztása";
             model.NextControllerAction = "CreateGameResult";
+            model.Guide = "A célmező megadásához kattintson a térkép egyik mezőjére!";
             return View("CreateMapContent", model);
         }
 
@@ -261,13 +272,13 @@ namespace AdventureGameEditor.Controllers
         public String SetStartField(String gameTitle, int rowNumber, int colNumber)
         {
             _gameEditorService.SaveStartField(User.Identity.Name, gameTitle, rowNumber, colNumber);
-            return "Start mező sorszáma " + rowNumber + ", oszlopszáma " + colNumber + " lett beállítva.";
+            return "<h4>A kiválasztott start mező indexe (sorszám, oszlopszám): " + (rowNumber+1) + ", " + (colNumber+1) + ".</h4>";
         }
 
         public String SetTargetField(String gameTitle, int rowNumber, int colNumber)
         {
             _gameEditorService.SaveTargetField(User.Identity.Name, gameTitle, rowNumber, colNumber);
-            return "Célmező sorszáma " + rowNumber + ", oszopszáma " + colNumber + "lett beállítva.";
+            return "<h4>A kiválasztott célmező indexe (sorszám, oszlopszám): " + (rowNumber+1) + ", " + (colNumber+1) + ".</h4>";
         }
         #endregion
 
@@ -413,7 +424,7 @@ namespace AdventureGameEditor.Controllers
                 IsSolutionExists = false
             };
             int? solution = null;
-            if (model.IsMapValid)
+            if (model.IsMapValid && model.IsStartFieldSet && model.IsTargetFieldSet)
             {
                 solution = _gameEditorService.SearchForSolution(User.Identity.Name, gameTitle);
                 model.IsSolutionExists = solution != null;

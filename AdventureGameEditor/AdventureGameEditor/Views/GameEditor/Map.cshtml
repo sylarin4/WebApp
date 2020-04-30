@@ -4,13 +4,13 @@
 }
 
 
-<table border="1" frame="box" rules="all">
+<table>
     @foreach (MapRow row in Model.Map)
     {
         <tr>
             @foreach (Field field in row.Row)
             {
-                <td style="height:100px;width:100px" >
+                <td >
                     <button type="button"  onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.RowNumber', '@field.ColNumber');">
                         <div id="@field.RowNumber@field.ColNumber">
                             @{

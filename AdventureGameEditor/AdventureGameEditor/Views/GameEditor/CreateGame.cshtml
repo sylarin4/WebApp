@@ -4,11 +4,9 @@
     ViewData["Title"] = "Játék létrehozása";
 }
 
-<body class="login">
+<div class="single-page create-game">
     <h2> Játék létrehozása</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
+
             <form enctype="multipart/form-data" asp-action="CreateGame">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
@@ -17,7 +15,7 @@
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div >
                     <label asp-for="Visibility" class="control-label"></label>
                     <p>
                         <select asp-for="Visibility" asp-items="Html.GetEnumSelectList<Visibility>()"></select>
@@ -25,33 +23,27 @@
                     <span asp-validation-for="Visibility" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div >
                     <label asp-for="TableSize" class="control-label"></label>
                     <input asp-for="TableSize" class="form-control" />
                     <span asp-validation-for="TableSize" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div >
                     <label asp-for="CoverImage" class="control-label"></label>
-                    <input asp-for="CoverImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                    <input asp-for="CoverImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg" value="Kép választása">
                     <span asp-validation-for="CoverImage" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div >
                     <input type="submit" value="Játék létrehozása" class="btn btn-default" />
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-controller="Home" asp-action="Index">Vissza a kezdőlapra</a>
-    </div>
-</body>
+</div>
 
 
 @section Scripts
 {
-    @await Html.PartialAsync("_ValidationScriptsPartial"); 
+    @await Html.PartialAsync("_ValidationScriptsPartial")
     
 }

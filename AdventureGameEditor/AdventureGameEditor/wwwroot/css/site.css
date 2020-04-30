@@ -20,7 +20,6 @@ for details on configuring this project to bundle and minify static web assets. 
     text-align: center;
     width: 100%;
 }
-
 #slogan{
     font-size: 30px;
     text-align: center;
@@ -40,9 +39,12 @@ body {
     background-attachment: fixed;
     font-family: 'Baskerville Old Face';
     overflow: auto;
+    height:100%;
+    overflow: hidden;
 }
 
 /*-------------------- Main menu --------------------*/
+
 #mainMenu {
     border: 0px;
     background-color: transparent !important;
@@ -56,7 +58,6 @@ body {
     position:fixed;
     font-weight:bold;
 }
-
 #mainMenu ul li {
     display:inline-block;
     padding-right: 20px;
@@ -66,15 +67,12 @@ body {
     list-style:none;
     align-content:center;
 }
-
 #mainMenu ul li a:hover{
     text-decoration:none;
 }
-
 #mainMenu a{
     color: lightgray;
 }
-
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -147,12 +145,10 @@ header {
     border-bottom-width: 1px;
     border-bottom-color: black;
 }
-
 .register input:hover{
     background-color:transparent !important;
     color:midnightblue;
 }
-
 .register input[type=submit]{
     padding-bottom: 20px;
     padding-top: 20px;
@@ -164,15 +160,15 @@ header {
 .register input[type=submit]:hover{
     text-decoration: underline;
 }
-
 .register label{
     padding-top:10px;
 }
 
 
-/*-------------------- Login --------------------*/
+/*-------------------- Single page  --------------------*/
+/*(Used: Login, CreateGame*/
 
-.login{
+.single-page{
     background-image: url("login_background.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
@@ -188,14 +184,12 @@ header {
     padding-left: 40px;
     height: 100%;
 }
-
-.login h2{
+.single-page h2{
     font-family:Papyrus;
     border-bottom: 2px solid #ccc;
     border-bottom-color: black;
 }
-
-.login input
+.single-page input
 {
     font-size:16px;
     font-family: 'Bookman Old Style';
@@ -208,8 +202,7 @@ header {
     border-bottom-width: 1px;
     border-bottom-color: black;
 }
-
-.login input[type=submit]{
+.single-page input[type=submit]{
     padding-bottom: 20px;
     padding-top: 20px;
     font-size: 20px;
@@ -217,13 +210,11 @@ header {
     color: black;
     font-style: normal !important;
 }
-
-.login input[type=submit]:hover{
+.single-page input[type=submit]:hover{
     text-decoration: underline;
     color:black !important;
 }
-
-.login input:hover{
+.single-page input:hover{
     background-color:transparent !important;
     color:midnightblue;
 }
@@ -266,25 +257,20 @@ header {
     color: burlywood;
     margin-left: 0px;
 }
-
 .menu ul li{
     list-style: none;
     padding-bottom: 20px;
     border-bottom: 1px;
     border-bottom-color: burlywood;
 }
-
 .menu ul li a{
     color: burlywood;
 }
-
 .menu ul li a:hover{
     text-decoration: none;
     color: white;
     background-color: black;
 }
-
-
 .menu h6{
     font-family:Papyrus;
     text-align: center;
@@ -297,37 +283,28 @@ header {
 .game-list {
     padding-left: 225pt;
     padding-top: 15pt;
-    height: 450pt;
+    justify-content: center;
 }
-
 .scrollable{
     overflow-y: scroll;
+    overflow-x: hidden;
+    height: 440pt;
 }
-
 .index-img{
     height: 150px;
     max-width: 150px;
 }
-
-.game-list table tr td{
-    border: 35px solid;
-    border-color: transparent;
-    align-content: center;
-}
-
-.game-list table button{
+.game-list button {
     background-color: transparent;
     color: burlywood;
-    border:none;
+    border-color: transparent;
 }
-
 #game-title{
     font-family:Papyrus;
     text-align: center;
     position: fixed;
     width: 100%;
 }
-
 .error-messages{
     text-align: center;
     color: orangered;
@@ -343,7 +320,6 @@ header {
     width: 80%;
     margin:auto;
 }
-
 .game-details{
     background-image: url("old_book_page.jpg");
     background-size: 100%;
@@ -358,6 +334,290 @@ header {
     font-size: 100%;
     padding-top: 40pt;
 }
+
+
+/*-------------------- Create game --------------------*/
+
+/*Create game form*/
+.create-game select{
+    background-color: transparent;
+    font-style: italic;
+    color: midnightblue;
+}
+.create-game input[type=file]{
+    background-color: transparent;
+}
+
+/*Create game map*/
+.create-game-content{
+    padding-left: 220pt;
+}
+.create-game-content h1{
+    font-family:'Bookman Old Style';
+    color:burlywood;
+    text-align:center;
+    font-size:20pt;
+}
+.create-game-content h2 {
+    font-family: 'Bookman Old Style';
+    font-size: 16pt;
+    text-align: center;
+    color:burlywood;
+    padding-bottom:15pt;
+}
+.map-field-image{
+    width: 60px;
+}
+.map-fields{
+    float:left;
+    background-color:transparent;
+    background-image: url("old_paper.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    padding:10pt;
+}
+.map-fields table tr td button{
+    background-color:transparent;
+    border:none;
+    padding-bottom: 10pt;
+}
+.map-fields a{
+    color:black;
+    font-size:14pt;
+    font-family:'Bookman Old Style';
+}
+.map{
+    float:right;
+    width:59%;
+}
+.map table tr td button{
+    padding:0px;
+    margin:0px;
+    border:none;
+
+}
+.map table{
+    border-collapse:collapse;
+}
+.map-piece-image{
+    width:100%;
+}
+
+/*Create map content*/
+.create-map-content{
+    padding:20pt;
+    width:45%;
+    vertical-align:central;
+    float:left;
+}
+.create-game-content-wrap{
+    height:400pt !important;
+}
+.create-map-content table tr td button {
+    background-color: transparent;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+.create-map-content table{    
+    border-collapse:collapse;
+}
+.create-map-content a{
+    font-family:'Bookman Old Style';
+    color:black;
+    text-align:center;
+    font-size:16pt;
+    margin:auto;
+}
+.create-map-content p{
+    font-family:'Bookman Old Style';
+    font-size:11pt;
+    color:midnightblue;
+    font-style:italic;
+}
+.forms {
+    float: right;
+    padding: 20pt;
+    font-family: 'Book Antiqua';
+    font-size:11pt;
+    color: black;
+    text-align:center;
+    width: 50%;
+}
+.forms button{
+    background-color:transparent;
+    border-color:black;
+}
+.forms input{
+    background-color:transparent;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.forms select{
+    background-color:transparent;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.forms textarea{
+    background-color:transparent;
+    padding-bottom:10pt;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.forms textarea:hover{
+    background-color:transparent;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.form{
+    height:300pt;
+}
+.form h6{    
+    border-top:1pt solid;
+    border-top-color:black;
+    padding-top:10pt;
+    border-bottom:1pt solid;
+    border-bottom-color:black;
+}
+.form input[type=submit]{
+    border:1pt solid;
+    border-color:black;
+}
+.form hr{
+    color:black;
+}
+.forms table{
+    width:100%;
+}
+.forms table td {
+    max-width: 80%;
+    border: 1pt solid;
+    border-color: black;
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+}
+.forms table th {
+    border: 1pt solid;
+    border-color: black;
+}
+.forms h4{
+    padding-top:8pt;
+    padding-bottom:8pt;
+}
+.forms h5{
+    padding-top:5pt;
+    padding-bottom:5pt;
+}
+.forms img{
+    max-width:100%;
+}
+
+/*Create game result*/
+.create-game-result{
+    height:470pt;
+}
+.create-game-result-form{
+    height: 300pt;
+}
+.create-game-result-form textarea{
+    background-color:transparent;
+    font-family:'Bookman Old Style';
+    font-size:12pt;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.create-game-result-form textarea:hover{
+    background-color:transparent;
+    font-family:'Bookman Old Style';
+    font-size:12pt;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.create-game-result-form input[type=file]{
+    background-color:transparent;
+    font-family:'Bookman Old Style';
+    font-size:12pt;
+    color:midnightblue;
+    font-style:italic;
+}
+
+/*Show game details during creating*/
+.create-game-details {
+    height: 450pt;
+    left: 10pt !important;
+    background-image: none !important;
+    z-index: 10;
+    padding: 20px;
+    font-family: 'Bookman Old Style';
+    color: black;
+    text-align: center;
+    height: 100%;
+    width: 50%;
+    float: left !important;
+    width: 50%;
+}
+.create-game-details table tr td{
+    border: 1pt solid;
+    border-color:black;
+}
+.create-game-details table tr th{
+    border: 1pt solid;
+    border-color:black;
+}
+.two-page-content{
+    background-image: url("old_book_page.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    width:80%;
+    height:450pt;
+    float:right;
+}
+.game-details-form{
+    height:350pt !important;
+}
+.game-details-form p{
+    font-family:'Bookman Old Style';
+    color:midnightblue;
+    font-style:italic;
+    font-size:12pt;
+}
+.game-details-form button{
+    background-color:transparent;
+    border-collapse:collapse;
+    padding:0pt;
+    border:none;
+}
+.field-details{
+    float:right !important;
+    width:50% !important;
+    padding:20pt;
+    background-image:none !important;
+}
+
+/*Check game*/
+.check-game img{
+    height:50px;
+}
+.check-game{
+    height: 450pt !important;
+}
+.check-list{
+    height:300pt !important;
+}
+.check-game table tr{
+    border-bottom: 1pt solid;
+    border-bottom-color: black;
+    border-top:1pt solid;
+    border-top-color:black;
+}
+
+
 
 /* Provide sufficient contrast against white background */
 a {

@@ -3,13 +3,14 @@
     ViewData["Title"] = "CreateGameResultView";
 }
 
-    <body>
-        <h2> Játék eredményének hozzáadása</h2>
+<div class="menu">
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+</div>
 
-        <div class="menu">
-            @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
-        </div>
+<div class="single-page create-game-result">
+    <h2> Játék eredményének hozzáadása</h2>
 
+    <div class="scrollable create-game-result-form">
         <div>
             @if (Model.ErrorMessages != null && Model.ErrorMessages.Count > 0)
             {
@@ -21,77 +22,76 @@
                 </ul>
             }
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <form enctype="multipart/form-data" asp-action="CreateGameResult">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="Prelude" class="control-label"></label>
-                        <textarea asp-for="Prelude" class="form-control">@Model.Prelude</textarea>
-                        <span asp-validation-for="Prelude" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PreludeImage" class="control-label"></label>
-                        <input asp-for="PreludeImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
-                        <span asp-validation-for="PreludeImage" class="text-danger"></span>
-                    </div>
-                    @if (Model.PreludeImageID > 0)
-                    {
-                        <div class="form-group">
-                            <label asp-for="PreludeImageID" class="control-label"></label>
-                            <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
-                        </div>
-                    }
-
-                    <div class="form-group">
-                        <label asp-for="GameWonResult" class="control-label"></label>
-                        <textarea asp-for="GameWonResult" class="form-control">@Model.GameWonResult</textarea>
-                        <span asp-validation-for="GameWonResult" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="GameWonImage" class="control-label"></label>
-                        <input asp-for="GameWonImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
-                        <span asp-validation-for="GameWonImage" class="text-danger"></span>
-                    </div>
-
-                    @if (Model.GameWonImageID > 0)
-                    {
-                        <div class="form-group">
-                            <label asp-for="GameWonImageID" class="control-label"></label>
-                            <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameWonImageID })" class="contentImage" height=100 />
-                        </div>
-                    }
-
-
-                    <div class="form-group">
-                        <label asp-for="GameLostResult" class="control-label"></label>
-                        <textarea asp-for="GameLostResult" class="form-control">@Model.GameLostResult</textarea>
-                        <span asp-validation-for="GameLostResult" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="GameLostImage" class="control-label"></label>
-                        <input asp-for="GameLostImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
-                        <span asp-validation-for="GameLostImage" class="text-danger"></span>
-                    </div>
-                    @if (Model.GameLostImageID > 0)
-                    {
-                        <div class="form-group">
-                            <label asp-for="GameLostImageID" class="control-label"></label>
-                            <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameLostImageID })" class="contentImage" height=100 />
-                        </div>
-                    }
-
-                    <div class="form-group">
-                        <input type="submit" value="Mentés" class="btn btn-default" />
-                    </div>
-                </form>
+        <form enctype="multipart/form-data" asp-action="CreateGameResult">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
             </div>
-        </div>
-    </body>
+
+            <div>
+                <label asp-for="Prelude" class="control-label"></label>
+                <textarea asp-for="Prelude" class="form-control">@Model.Prelude</textarea>
+                <span asp-validation-for="Prelude" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="PreludeImage" class="control-label"></label>
+                <input asp-for="PreludeImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                <span asp-validation-for="PreludeImage" class="text-danger"></span>
+            </div>
+            @if (Model.PreludeImageID > 0)
+            {
+                <div>
+                    <label asp-for="PreludeImageID" class="control-label"></label>
+                    <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
+                </div>
+            }
+
+            <div>
+                <label asp-for="GameWonResult" class="control-label"></label>
+                <textarea asp-for="GameWonResult" class="form-control">@Model.GameWonResult</textarea>
+                <span asp-validation-for="GameWonResult" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="GameWonImage" class="control-label"></label>
+                <input asp-for="GameWonImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                <span asp-validation-for="GameWonImage" class="text-danger"></span>
+            </div>
+
+            @if (Model.GameWonImageID > 0)
+            {
+                <div>
+                    <label asp-for="GameWonImageID" class="control-label"></label>
+                    <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameWonImageID })" class="contentImage" height=100 />
+                </div>
+            }
+
+
+            <div>
+                <label asp-for="GameLostResult" class="control-label"></label>
+                <textarea asp-for="GameLostResult" class="form-control">@Model.GameLostResult</textarea>
+                <span asp-validation-for="GameLostResult" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="GameLostImage" class="control-label"></label>
+                <input asp-for="GameLostImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                <span asp-validation-for="GameLostImage" class="text-danger"></span>
+            </div>
+            @if (Model.GameLostImageID > 0)
+            {
+                <div>
+                    <label asp-for="GameLostImageID" class="control-label"></label>
+                    <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameLostImageID })" class="contentImage" height=100 />
+                </div>
+            }
+
+            <div>
+                <input type="submit" value="Mentés" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+
+    
+</div>
 
 
 

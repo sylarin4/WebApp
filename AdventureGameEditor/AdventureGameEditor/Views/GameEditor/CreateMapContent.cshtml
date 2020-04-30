@@ -6,47 +6,70 @@
 <head>
     <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
     <meta name="viewport" content="width=device-width" />
-    <title>CreateMapContent</title>
+    <title>Térkép tartalmának szerkesztése</title>
 </head>
 <body>
-
-    <h1> @Model.GameTitle c. játék </h1>
-    <h2>@Model.Action</h2>
-
     <div class="menu">
         @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
     </div>
 
-        @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
-            {
-                MapSize = Model.MapSize,
-                GameTitle = Model.GameTitle,
-                Map = Model.Map,
-                FunctionName = Model.FunctionName
-            });}
-        <div id="ButtonsPlace">
 
-            @if (Model.IsFieldSelected == true)
-            {
-                await Html.RenderPartialAsync("ButtonsForAddFieldContentPartialView", new MapPieceViewModel()
+    <div class="create-game-content">
+        <h1>@Model.GameTitle c. játék</h1>
+        <h2> @Model.Action</h2>
+    </div>
+
+
+    <div class="two-page-content create-game-content-wrap">
+
+
+        <div class="create-game-content create-map-content">
+            @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
                 {
+                    MapSize = Model.MapSize,
                     GameTitle = Model.GameTitle,
-                    Field = Model.SelectedField
+                    Map = Model.Map,
+                    FunctionName = Model.FunctionName
+                });}
+            <p>@Model.Guide</p>
+            <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+        </div>
+
+
+        <div class="forms">
+
+            <div id="ButtonsPlace">
+
+                @if (Model.IsFieldSelected == true)
+                {
+                    await Html.RenderPartialAsync("ButtonsForAddFieldContentPartialView", new MapPieceViewModel()
+                    {
+                        GameTitle = Model.GameTitle,
+                        Field = Model.SelectedField
+                    }
+                    );
                 }
-                );
-            }
-        </div>
-        <div id="InputArea"> </div>
-        <div id="ErrorMessage">
-            @if (Model.ErrorMessage != null && Model.ErrorMessage.Length > 0)
-            {
-                @Model.ErrorMessage
-            }
+            </div>
+
+            <div class="scrollable form">
+                <div id="InputArea"> </div>
+                <div id="ErrorMessage">
+                    @if (Model.ErrorMessage != null && Model.ErrorMessage.Length > 0)
+                    {
+                        @Model.ErrorMessage
+                    }
+                </div>
+
+                <div id="fieldDetails"></div>
+            </div>
+
         </div>
 
-        <div id="fieldDetails"></div>
 
-        <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+    </div>
+    
+    
+
 </body>
 
 

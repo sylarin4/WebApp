@@ -18,6 +18,9 @@ namespace AdventureGameEditor.Models
         // can he/she make there.
         public String Action { get; set; }
 
+        // Short guide about how to do the current editing method by the program.
+        public String Guide { get; set; }
+
         // The next creation phase's controller action.
         // (The function's name which will be called from the GameEditorController after user 
         // clicked on the "Tovább" (next) link.)

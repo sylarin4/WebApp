@@ -1,101 +1,103 @@
 ﻿@model AdventureGameEditor.Models.FieldDetailsViewModel
 
-        <h4>A kiválasztott mező adatai</h4>
-        <hr />
-        <dl class="row">
+    <div>
+        <h3>A kiválasztott mező adatai</h3>
 
-            @*Field informations.*@
+        @*Field informations.*@
+        <table>
 
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ColNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ColNumber)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.RowNumber)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.RowNumber)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TextContent)
-            </dt>
-            <dd class="col-sm-10">
-                @if (Model.TextContent == null || Model.TextContent.Length <= 0)
-                {
-                    <p>A mező nem rendelkezik szöveggel.</p>
-                }
-                @Html.DisplayFor(model => model.TextContent)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.PictureID)
-            </dt>
-            <dd class="col-sm-10">
-                @if (Model.PictureID < 0 )
-                {
-                    <p>A mező nem rendelkezik képpel.</p>
-                }
-                else
-                {
-                    <img src="@Url.Action("RenderFieldImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
-                }
-                
-            </dd>
+            <tr>
+                <th>A mező indexei (sor, oszlop)</th>
+                <td>
+                    @Html.DisplayFor(model => model.ColNumber),
+                    @Html.DisplayFor(model => model.RowNumber)
+                </td>
+            </tr>
 
-            @*Trial informations.*@
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TextContent)
+                </th>
+                <td>
+                    @if (Model.TextContent == null || Model.TextContent.Length <= 0)
+                    {
+                        <p>A mező nem rendelkezik szöveggel.</p>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => model.TextContent)
+                    }
+                </td>
+            </tr>
 
-            @if (!Model.IsTrial)
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PictureID)
+                </th>
+                <td>
+                    @if (Model.PictureID < 0)
+                    {
+                        <p>A mező nem rendelkezik képpel.</p>
+                    }
+                    else
+                    {
+                        <img src="@Url.Action("RenderFieldImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
+                    }
+                </td>
+            </tr>
+        </table>
+
+        <h4>Próba</h4>
+
+        @if (!Model.IsTrial)
+        {
+            <p>Nincs próba.</p>
+        }
+        else
+        {
+            <h5>Szövege</h5>
+            <table>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.TrialText)
+                    </td>
+                </tr>
+            </table>
+            
+
+            <h5>Alternatívái</h5>
+            @for (int i = 1; i <= Model.AlternativeTexts.Count; ++i)
             {
-                <dt class="col-sm-2">
-                    @*@Html.DisplayNameFor(model => model.TrialType) *@
-                </dt>
-                <dd class="col-sm-10">
-                    Nincs próba.
-                </dd>
+                <h6> @i . alternatíva  </h6>
+                <table>
+                    <tr>
+                        <th>
+                            szövege
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.AlternativeTexts[i-1])
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            eredményének szövege
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.TrialResults[i-1].Text)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            típusa
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.TrialResults[i-1].ResultType)
+                        </td>
+                    </tr>
+                </table>
             }
-            else
-            {
-                @* Now only one type of trial available.*@
-                @*
-                <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TrialType)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TrialType)
-            </dd>
-                *@
+        }
 
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.TrialText)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.TrialText)
-                </dd>
-
-                @for (int i = 0; i < Model.AlternativeTexts.Count; ++i)
-                {
-
-                    <dt class="col-sm-2">
-                        @i. @Html.DisplayNameFor(model => model.AlternativeTexts)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.AlternativeTexts[i])
-                    </dd>
-
-                    <dt class="col-sm-2">
-                        @i. alternatíva szövege
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrialResults[i].Text)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @i. alternatíva típusa
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.TrialResults[i].ResultType)
-                    </dd>
-                }
-
-            }
-        </dl>
+    </div>
+        

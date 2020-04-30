@@ -205,7 +205,8 @@ namespace AdventureGameEditor.Models
                 {
                     TrialResult = new TrialResult()
                     {
-                        ResultType = ResultType.Nothing
+                        ResultType = ResultType.Nothing,
+                        Text=""
                     }
                 });
             }
@@ -261,7 +262,7 @@ namespace AdventureGameEditor.Models
                 trialResults.Add(new TrialResult()
                 {
                     ResultType = ResultType.Nothing,
-                    Text = "test text"
+                    Text = ""
                 });
             }
             return trialResults;
@@ -829,7 +830,12 @@ namespace AdventureGameEditor.Models
             Field targetField = _context.Game.Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
                                             .Select(game => game.TargetField)
                                             .FirstOrDefault();
-
+            // Check start and target field
+            if(startField == null || targetField == null)
+            {
+                return null;
+            }            
+            
             // Initialize graph.
             for(int i = 0; i < map.Count; ++i)
             {

@@ -3,8 +3,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-<p>Sorszám: @Model.Field.RowNumber</p>
-<p>Oszlopszám: @Model.Field.ColNumber</p>
+<h6>A kiválasztott mező indexe (sorszám, oszlopszám): @Model.Field.RowNumber, @Model.Field.ColNumber</h6>
 
 <button type="button" onclick=" LoadFormForAddFieldContent ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Tartalom hozzáadása </button>
 <button type="button" onclick=" LoadFormForAddFieldTrial ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Próba hozzáadása </button>
