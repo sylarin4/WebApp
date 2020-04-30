@@ -251,7 +251,7 @@ header {
     float: left;
     width: 160pt;
     position: fixed;
-    padding-top: 40px;
+    padding-top: 0px;
     padding-bottom: 20px;
     font-size: 14pt;
     font-family: 'Bookman Old Style';
