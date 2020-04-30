@@ -14,18 +14,21 @@
 <body>
 
     <header>
-        @if (ViewBag.CurrentGuestName != null)
-        {
-            <div id="user">
+        <div id="inner">
+            @if (ViewBag.CurrentGuestName != null)
+            {
+                <div id="user">
 
-                <a asp-area="" asp-controller="" asp-action="">@ViewBag.CurrentGuestName</a>
+                    <a asp-area="" asp-controller="" asp-action="">@ViewBag.CurrentGuestName</a>
 
-            </div>
-        }
+                </div>
+            }
             <div id="title">
                 <h1 id="titleText">Antrum</h1>
                 <h2 id="slogan"> A kalandjátékbarlang.</h2>
             </div>
+        </div>
+        
 
             <div id="mainMenu">
                 <div>
