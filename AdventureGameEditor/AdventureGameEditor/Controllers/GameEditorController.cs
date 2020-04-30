@@ -62,6 +62,7 @@ namespace AdventureGameEditor.Controllers
 
         public IActionResult EditGame(String gameTitle)
         {
+            _gameEditorService.SetNotReadyToPlay(User.Identity.Name, gameTitle);
             return GetGameDetailsPartialView(gameTitle);
         }
 

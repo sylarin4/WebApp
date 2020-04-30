@@ -42,7 +42,6 @@ body {
     height:100%;
     overflow: hidden;
 }
-
 /*-------------------- Main menu --------------------*/
 
 #mainMenu {
@@ -86,7 +85,7 @@ header {
     text-align: center;
     position: center;
     width: 100%;
-    overflow: auto;
+    overflow-y: scroll;
 }
 
 /*-------------------- Home --------------------*/
@@ -99,8 +98,12 @@ header {
 
 /*-------------------- Content --------------------*/
 
-#content{
-    padding-top: 220px;
+.page-content{
+    /*overflow-y:scroll;
+    bottom: 20pt;
+    height:80%;*/
+    border-top:220px solid;
+    border-top-color:transparent;
 }
 
 
