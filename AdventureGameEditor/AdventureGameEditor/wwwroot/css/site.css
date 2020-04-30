@@ -80,6 +80,12 @@ a.navbar-brand {
 
 /*-------------------- Header --------------------*/
 
+#inner.fixed {
+    height: 250px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 header {
     position: fixed;
     text-align: center;
