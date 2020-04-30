@@ -3,14 +3,24 @@
     ViewData["Title"] = "PreludeView";
 }
 
-<h1>Bevezető</h1>
 
-<div>
-    @if(Model.PictureID != null)
-    {
-        <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
-    }    
-    <p>@Model.Text</p>
-</div>
+    <div class="prelude">
+        <div class="prelude-left-column">
+            <h1>Bevezető</h1>
 
-<a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+            @if (Model.PictureID != null)
+            {
+                <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
+            }
+        </div>
+        <div class="prelude-right-column">
+            <div class="prelude-text">
+                @Model.Text
+            </div>
+            <div class="prelude-link">
+                <a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+            </div>
+            
+        </div>
+        
+    </div>

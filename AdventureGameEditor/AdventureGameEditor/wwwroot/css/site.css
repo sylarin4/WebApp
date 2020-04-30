@@ -345,28 +345,49 @@ a.navbar-brand {
 /*-------------------- GameViewerDetails --------------------*/
 
 .details-img{
-    width: 80%;
+    max-width: 80%;
+    height:60%;
     margin:auto;
+    padding-bottom:5pt;
 }
 .game-details{
     background-image: url("old_book_page.jpg");
     background-size: 100%;
     background-repeat: no-repeat;
-    padding: 20pt;
-    column-count: 2;
-    column-gap: 45pt;
-    height:450pt;
-    width: 90%;
+    padding-right: 20pt;
+    padding-left:20pt;
+    height:370pt;
+    width: 80%;
     color: black;
     font-family: 'Bookman Old Style';
     font-size: 100%;
     padding-top: 40pt;
 }
+.game-details table tr th{
+    border: 1pt solid;
+    border-color:black;
+}
+.game-details table tr td{
+    border: 1pt solid;
+    border-color:black;
+}
+.game-details-story {
+    overflow-x: hidden;
+    overflow: auto;
+    height: 200pt;
+}
+.game-details-left-column{
+    float:left;
+    width: 45%;
+}
+.game-details-right-column{
+    float:right;
+    width:45%;
+}
 
 /*-------------------- Create game --------------------*/
-
 /*Create game form*/
-.create-game select{
+.create-game select {
     background-color: transparent;
     font-style: italic;
     color: midnightblue;
@@ -656,6 +677,64 @@ a.navbar-brand {
     border-top-color:black;
 }
 
+/*-------------------- Gameplay --------------------*/
+
+/*Prelude*/
+.prelude{
+    background-image: url("old_book_page.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+    margin:auto;
+    width:70%;
+    height:440pt;
+}
+.prelude h1{
+    font-size:20pt;
+    font-family:'Bookman Old Style';
+    text-align:center;
+    color: black;
+}
+.prelude-left-column{
+    float:left;
+    padding: 20pt;
+    text-align:center;
+    width:50%;
+    height:440pt;
+    vertical-align:central;
+}
+.prelude-left-column img{
+    width:80%;
+    height:80%;
+}
+.prelude-right-column{
+    float: right;
+    padding: 20pt;
+    width: 50%;
+    text-align: left;
+    width: 50%;
+    margin: auto;
+    height: 440pt;
+}
+.prelude-link {
+    margin: auto;
+    font-size: 14pt;
+    text-align: center !important;
+    font-family: 'Bookman Old Style';
+    color: midnightblue;
+    width: 50%;
+    padding-top:20pt;
+}
+.prelude-text {
+    padding-top: 20pt;
+    padding-bottom: 20pt;
+    font-family: 'Bookman Old Style';
+    font-size: 13pt;
+    color: black;
+    overflow-y: scroll;
+    height:350pt;
+    padding-top:10pt;
+    padding-bottom:10pt;
+}
 
 
 /* Provide sufficient contrast against white background */
