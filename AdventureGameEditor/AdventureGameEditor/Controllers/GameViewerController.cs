@@ -72,7 +72,7 @@ namespace AdventureGameEditor.Controllers
         {
              if(! _context.Game.Where(game=> game.Title == gameTitle).FirstOrDefault().IsReadyToPlay)
             {
-                ModelState.AddModelError("", "A " + gameTitle + " c. játék még nincsen befejezve, ezért sajnos még nem lehet vele játszani.");                
+                ModelState.AddModelError("", "A " + gameTitle + " játék még nincsen befejezve, ezért sajnos még nem lehet vele játszani.");                
                 return View("~/Views/GameViewer/Index.cshtml", _context.Game
                                 .Include(game => game.CoverImage)
                                 .Include(game => game.Owner)

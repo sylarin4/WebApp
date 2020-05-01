@@ -1,13 +1,13 @@
 ﻿@model AdventureGameEditor.Models.GameplayViewModel
 @{
-    ViewData["Title"] = "GameplayView";
+    ViewData["Title"] = "Játékmenet";
 }
 
-    <head>
-        <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
-        <title>Gameplay</title>
-    </head>
-<h1>GameplayView</h1>
+<head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+    <title>Gameplay</title>
+</head>
+
 <div id="map">
     @{ await Html.RenderPartialAsync("GameplayMapPartialView", new GameplayMapViewModel()
         {

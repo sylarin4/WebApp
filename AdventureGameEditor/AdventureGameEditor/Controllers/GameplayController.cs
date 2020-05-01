@@ -105,9 +105,9 @@ namespace AdventureGameEditor.Controllers
             return _gameEditorService.GetGameResultImage(imageID);
         }
 
-        public String GetLifeCount(String gameTitle)
+        public IActionResult GetLifeCount(String gameTitle)
         {
-            return "Életek száma: " + _gameplayService.GetLifeCount(User.Identity.Name, gameTitle);
+            return PartialView("LifeCountPartialView", _gameplayService.GetLifeCount(User.Identity.Name, gameTitle));
         }
 
         #endregion

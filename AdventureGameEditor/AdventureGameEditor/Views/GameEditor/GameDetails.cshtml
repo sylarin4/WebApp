@@ -1,4 +1,7 @@
 ﻿@model AdventureGameEditor.Models.GameDetailsViewModel
+@{
+    ViewData["Title"] = "Játék adatai";
+}
 
 <head>
     <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
@@ -211,8 +214,8 @@
         <a asp-controller="GameEditor" asp-action="CheckGame" asp-route-gameTitle="@Model.Title">Tovább</a>
 
     </div>
-        <div class="field-details forms scrollable">
-            <div id="fieldDetails"></div>
-            <div id="InputArea"></div>
-        </div>
+    <div class="field-details forms scrollable">
+        <div id="fieldDetails"></div>
+        <div id="InputArea"></div>
+    </div>
 </div>

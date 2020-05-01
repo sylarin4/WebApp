@@ -86,12 +86,12 @@ function Step(gameTitle, rowNumber, colNumber, direction) {
 
 function ChoseTrialAlternative(gameTitle, rowNumber, colNumber, isAtTargetField) {
     var trialNumber = $('#choseTrialForm').serialize().toString()[6];
-    document.getElementById("FieldText").innerHTML = "";
+    document.getElementById("gameplay-field-text").innerHTML = "";
     LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'ChoseAlternativeForTrial', "trialForm");
     LoadTrialResult(gameTitle, rowNumber, colNumber, trialNumber, 'GetInformTextAboutTrialResult', "TrialResultInform");
     LoadDirectionButtonsAfterTrial(gameTitle, rowNumber, colNumber, trialNumber, isAtTargetField,
-        'LoadDirectionButtonsAfterTrial', "#directionButtons");
-    setTimeout(function () { RefreshLifeCountAfterTrial(gameTitle, 'GetLifeCount', "LifeCount"); }, 100);
+        'LoadDirectionButtonsAfterTrial', "#direction-buttons");
+    setTimeout(function () { RefreshLifeCountAfterTrial(gameTitle, 'GetLifeCount', "#life-count"); }, 100);
     
 }
 
@@ -127,7 +127,7 @@ function RefreshLifeCountAfterTrial(gameTitle, url, target) {
     $.ajax({
         url: url,
         data: { gameTitle: gameTitle },
-        success: function (result) { document.getElementById(target).innerHTML = result; }
+        success: function (result) { $(target).html(result); }
     })
 }
 

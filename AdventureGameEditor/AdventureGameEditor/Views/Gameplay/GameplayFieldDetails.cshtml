@@ -1,76 +1,86 @@
 ﻿@model AdventureGameEditor.Models.GameplayFieldViewModel
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-<p> Sorszám: @Model.RowNumber</p>
-<p>Oszlopszám: @Model.ColNumber</p>
-<div id="LifeCount">
-    <p>Életek száma: @Model.LifeCount</p>
-</div>
 
 
-<div id="directionButtons">
-    @if ((Model.Trial == null || Model.IsVisited) && !Model.IsAtTargetField)
-    {
-        await Html.RenderPartialAsync("DirectionButtonsPartialView", new DirectionButtonsViewModel()
-        {
-            GameTitle = Model.GameTitle,
-            RowNumber = Model.RowNumber,
-            ColNumber = Model.ColNumber,
-            GameLost = false,
-            GameWon = Model.IsAtTargetField,
-            IsDownWay = Model.IsDownWay,
-            IsLeftWay = Model.IsLeftWay,
-            IsRightWay = Model.IsRightWay,
-            IsUpWay = Model.IsUpWay
-        });
-    }
-    @if (Model.IsAtTargetField && (Model.Trial == null || Model.IsVisited))
-    {
-        <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
-    }
-</div>
 
-<div>
-    @if (Model.FieldImageID > 0)
-    {
-        <img src="@Url.Action("RenderFieldImage", new { imageID = Model.FieldImageID })" class="contentImage" height=100 />
-    }
-</div>
+<div class="gameplay-field-details">
 
-<div id="FieldText">
-    @if(Model.Text != null && Model.Text.Length > 0)
-    {
-        <p> @Model.Text </p>
-    }
-    else
-    {
-        <p>Tovább jöttél.</p>
-    }
-
-</div>
-<div id="trialForm">
-    @if (Model.Trial != null && Model.IsVisited == false)
-    {
-
-    <p>@Model.Trial.Text</p>
-    <form method="post" id="choseTrialForm" >
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="form-group">
-            <label><input value="0" type="radio" checked="checked" asp-for="Trial.Alternatives[0].Text" id="trial" name="trial">@Model.Trial.Alternatives[0].Text</label>
+    <div class="gameplay-field-details-left-column">
+        <div id="life-count">
+            @{await Html.RenderPartialAsync("LifeCountPartialView", Model.LifeCount); }
         </div>
-        @for (int i = 1; i < Model.Trial.Alternatives.Count; ++i)
-        {
-            <div class="form-group">
-                <label><input value="@i" type="radio" asp-for="Trial.Alternatives[i].Text" id="trial" name="trial">@Model.Trial.Alternatives[i].Text</label>
-            </div>
-        }
-    </form>
-        <div class="form-group">
-            <button class="btn btn-primary" onclick="ChoseTrialAlternative('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', '@Model.IsAtTargetField')">Választ</button>
-        </div>
-    }
-</div>
-<div id="TrialResultInform"></div>
 
+        <div class="gameplay-field-image">
+            @if (Model.FieldImageID > 0)
+            {
+                <img src="@Url.Action("RenderFieldImage", new { imageID = Model.FieldImageID })" class="contentImage" height=100 />
+            }
+        </div>
+
+        <div id="direction-buttons">
+            @if ((Model.Trial == null || Model.IsVisited) && !Model.IsAtTargetField)
+            {
+                await Html.RenderPartialAsync("DirectionButtonsPartialView", new DirectionButtonsViewModel()
+                {
+                    GameTitle = Model.GameTitle,
+                    RowNumber = Model.RowNumber,
+                    ColNumber = Model.ColNumber,
+                    GameLost = false,
+                    GameWon = Model.IsAtTargetField,
+                    IsDownWay = Model.IsDownWay,
+                    IsLeftWay = Model.IsLeftWay,
+                    IsRightWay = Model.IsRightWay,
+                    IsUpWay = Model.IsUpWay
+                });
+            }
+            @if (Model.IsAtTargetField && (Model.Trial == null || Model.IsVisited))
+            {
+                <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+            }
+        </div>
+    </div>
+
+    <div class="gameplay-field-details-right-column">
+        <div id="gameplay-field-text" class="scrollable">
+            @if (Model.Text != null && Model.Text.Length > 0)
+            {
+                <p> @Model.Text </p>
+            }
+            else
+            {
+                <p>Itt nincs semmi...</p>
+            }
+
+        </div>
+        <div id="trialForm">
+            @if (Model.Trial != null && Model.IsVisited == false)
+            {
+                <div class="scrollable gameplay-trial-form">
+
+                    <p>@Model.Trial.Text</p>
+                    <form method="post" id="choseTrialForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div>
+                            <label><input value="0" type="radio" checked="checked" asp-for="Trial.Alternatives[0].Text" id="trial" name="trial">@Model.Trial.Alternatives[0].Text</label>
+                        </div>
+                        @for (int i = 1; i < Model.Trial.Alternatives.Count; ++i)
+                        {
+                            <div>
+                                <label><input value="@i" type="radio" asp-for="Trial.Alternatives[i].Text" id="trial" name="trial">@Model.Trial.Alternatives[i].Text</label>
+                            </div>
+                        }
+                    </form>
+                </div>
+
+                <div>
+                    <button onclick="ChoseTrialAlternative('@Model.GameTitle', '@Model.RowNumber', '@Model.ColNumber', '@Model.IsAtTargetField')">Választ</button>
+                </div>
+            }
+        </div>
+        <div id="TrialResultInform"></div>
+    </div>
+
+
+
+
+</div>

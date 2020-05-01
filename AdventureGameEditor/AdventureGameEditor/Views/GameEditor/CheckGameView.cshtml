@@ -1,132 +1,137 @@
 ﻿@model AdventureGameEditor.Models.CheckGameViewModel
 
+@{
+    ViewData["Title"] = "Játék ellenőrzése";
+}
 
-    <div class="menu">
-        @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
-    </div>
+<div class="menu">
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+</div>
 
-    <div class="single-page check-game">
+<div class="single-page check-game">
 
-        <div>
-            <h4>A játék validációjának eredménye</h4>
+    <div>
+        <h4>A játék validációjának eredménye</h4>
 
-            <div class="scrollable check-list">
+        <div class="scrollable check-list">
 
-                @if (Model.IsMapValid && Model.IsStartFieldSet && Model.IsTargetFieldSet && Model.IsPreludeFilled
-               && Model.IsGameLostFilled && Model.IsGameLostFilled && Model.IsSolutionExists)
+            @if (Model.IsMapValid && Model.IsStartFieldSet && Model.IsTargetFieldSet && Model.IsPreludeFilled
+          && Model.IsGameLostFilled && Model.IsGameLostFilled && Model.IsSolutionExists)
+            {
+                <h5>Gratulálunk, az általad szerkesztett játék már játszható!</h5>
+            }
+            else
+            {
+                <h5> Sajnos az általad készített játék még nem felel meg a követelményeknek, ezért még nem játszható.</h5>
+            }
+            <table>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsMapValid)
+                    </th>
+                    <td>
+                        @if (Model.IsMapValid)
+                        {<img src="~/pictures/pipe.png" />}
+                        else
+                        { <img src="~/pictures/cross.png" />}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsStartFieldSet)
+                    </th>
+                    <td>
+                        @if (Model.IsStartFieldSet)
+                        {<img src="~/pictures/pipe.png" />}
+                        else
+                        { <img src="~/pictures/cross.png" />}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsTargetFieldSet)
+                    </th>
+                    <td>
+                        @if (Model.IsTargetFieldSet)
+                        {<img src="~/pictures/pipe.png" />}
+                        else
+                        { <img src="~/pictures/cross.png" />}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsPreludeFilled)
+                    </th>
+                    <td>
+                        @if (Model.IsPreludeFilled)
+                        {<img src="~/pictures/pipe.png" />}
+                        else
+                        { <img src="~/pictures/cross.png" />}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsGameWonFilled)
+                    </th>
+                    <td>
+                        @if (Model.IsGameWonFilled)
+                        {<img src="~/pictures/pipe.png" />}
+                        else
+                        { <img src="~/pictures/cross.png" />}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsGameLostFilled)
+                    </th>
+                    <td>
+                        @if (Model.IsGameLostFilled)
+                        {<img src="~/pictures/pipe.png" />}
+                        else
+                        { <img src="~/pictures/cross.png" />}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsSolutionExists)
+                    </th>
+                    <td>
+                        @if (Model.IsSolutionExists)
+                        {<img src="~/pictures/pipe.png" />}
+                        else
+                        { <img src="~/pictures/cross.png" />}
+                    </td>
+                </tr>
+
+                @if (Model.IsSolutionExists)
                 {
-                    <h5>Gratulálunk, az általad szerkesztett játék már játszható!</h5>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PathLenght)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.PathLenght)
+                        </td>
+                    </tr>
+
                 }
-                else
-                {
-                    <h5> Sajnos az általad készített játék még nem felel meg a követelményeknek, ezért még nem játszható.</h5>
-                }
-                <table>
 
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IsMapValid)
-                        </th>
-                        <td>
-                            @if (Model.IsMapValid)
-                            {<img src="~/pictures/pipe.png" />}
-                            else
-                            { <img src="~/pictures/cross.png" />}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IsStartFieldSet)
-                        </th>
-                        <td>
-                            @if (Model.IsStartFieldSet)
-                            {<img src="~/pictures/pipe.png" />}
-                            else
-                            { <img src="~/pictures/cross.png" />}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IsTargetFieldSet)
-                        </th>
-                        <td>
-                            @if (Model.IsTargetFieldSet)
-                            {<img src="~/pictures/pipe.png" />}
-                            else
-                            { <img src="~/pictures/cross.png" />}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IsPreludeFilled)
-                        </th>
-                        <td>
-                            @if (Model.IsPreludeFilled)
-                            {<img src="~/pictures/pipe.png" />}
-                            else
-                            { <img src="~/pictures/cross.png" />}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IsGameWonFilled)
-                        </th>
-                        <td>
-                            @if (Model.IsGameWonFilled)
-                            {<img src="~/pictures/pipe.png" />}
-                            else
-                            { <img src="~/pictures/cross.png" />}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IsGameLostFilled)
-                        </th>
-                        <td>
-                            @if (Model.IsGameLostFilled)
-                            {<img src="~/pictures/pipe.png" />}
-                            else
-                            { <img src="~/pictures/cross.png" />}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IsSolutionExists)
-                        </th>
-                        <td>
-                            @if (Model.IsSolutionExists)
-                            {<img src="~/pictures/pipe.png" />}
-                            else
-                            { <img src="~/pictures/cross.png" />}
-                        </td>
-                    </tr>
-
-                    @if (Model.IsSolutionExists)
-                    {
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PathLenght)
-                            </th>
-                            <td>
-                                @Html.DisplayFor(model => model.PathLenght)
-                            </td>
-                        </tr>
-
-                    }
-
-                </table>
-                <ul>
-                    <li>Egy kezdő- vagy célmező akkor valid, ha legalább egy út vezet oda.</li>
-                    <li>A kezdőmezőből akkor érhető el a célmező, ha legalább egy összefüggő útvonal 
-                    létezik közöttük, amelyen végighaladva a kezdőmezőből a célmezőbe érkezhetünk.</li>
-                </ul>
-            </div>
-            
+            </table>
+            <ul>
+                <li>Egy kezdő- vagy célmező akkor valid, ha legalább egy út vezet oda.</li>
+                <li>
+                    A kezdőmezőből akkor érhető el a célmező, ha legalább egy összefüggő útvonal
+                    létezik közöttük, amelyen végighaladva a kezdőmezőből a célmezőbe érkezhetünk.
+                </li>
+            </ul>
         </div>
+
     </div>
+</div>

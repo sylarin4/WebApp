@@ -1,9 +1,9 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-/*-------------------- Scrollbar --------------------*/
+/* =====--------------- Scrollbar ---------------===== */
 
-/* width */
+/* Width */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -20,7 +20,7 @@ for details on configuring this project to bundle and minify static web assets. 
   background-color:black; 
 }
 
-/*-------------------- Header --------------------*/
+/* =====--------------- Header ---------------===== */
 
 header {
     position: fixed;
@@ -33,7 +33,7 @@ header {
     width: auto ;
 }
 
-/*------------------- Title --------------------*/
+/* =====-------------- Title ---------------===== */
 
 #title {
     border-bottom: 2px solid #ccc;
@@ -58,7 +58,7 @@ header {
     font-family: Papyrus;
 }
 
-/*--------------------- Background ----------------------- */
+/* =====---------------- Background ------------------===== */
 
 body {
     font-size: 16px;
@@ -76,7 +76,7 @@ body {
     height: auto !important;
 }
 
-/*-------------------- Main menu --------------------*/
+/* =====--------------- Main menu ---------------===== */
 
 #mainMenu {
     border: 0px;
@@ -112,7 +112,7 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-/*-------------------- Home --------------------*/
+/* =====--------------- Home --------------===== */
 
 .display-4{
     font-family: Papyrus;
@@ -120,7 +120,7 @@ a.navbar-brand {
     font-size: 30px !important;
 }
 
-/*-------------------- Content --------------------*/
+/* =====--------------- Content ---------------===== */
 
 .page-content{
     /*overflow-y:scroll;
@@ -131,7 +131,7 @@ a.navbar-brand {
     text-align:center;
 }
 
-/*-------------------- Register --------------------*/
+/* =====--------------- Register ---------------===== */
 
 .register {
     background-image: url("old_book_page.jpg");
@@ -193,8 +193,8 @@ a.navbar-brand {
     break-inside: avoid-column;
 }
 
-/*-------------------- Single page  --------------------*/
-/*(Used: Login, CreateGame*/
+/* =====--------------- Single page  ---------------===== */
+/* (Used: Login, CreateGame */
 
 .single-page{
     background-image: url("login_background.jpg");
@@ -247,7 +247,7 @@ a.navbar-brand {
     color:midnightblue;
 }
 
-/*------------------- User --------------------*/
+/* =====-------------- User ---------------===== */
 
 #user {
     width: 50pt;
@@ -270,7 +270,7 @@ a.navbar-brand {
     color: burlywood;
 }
 
-/*-------------------- Menu --------------------*/
+/* =====--------------- Menu ---------------===== */
 
 .menu {
     left:20pt;
@@ -307,7 +307,7 @@ a.navbar-brand {
     border-bottom: 1px solid;
 }
 
-/*-------------------- List games --------------------*/
+/* =====--------------- List games ---------------===== */
 
 .game-list {
     padding:30pt;
@@ -342,11 +342,12 @@ a.navbar-brand {
 }
 
 
-/*-------------------- GameViewerDetails --------------------*/
+/* =====--------------- GameViewerDetails ---------------===== */
 
 .details-img{
     max-width: 80%;
     height:60%;
+    max-height:200pt;
     margin:auto;
     padding-bottom:5pt;
 }
@@ -385,8 +386,8 @@ a.navbar-brand {
     width:45%;
 }
 
-/*-------------------- Create game --------------------*/
-/*Create game form*/
+/* =====--------------- Create game ---------------===== */
+/* Create game form */
 .create-game select {
     background-color: transparent;
     font-style: italic;
@@ -396,7 +397,7 @@ a.navbar-brand {
     background-color: transparent;
 }
 
-/*Create game map*/
+/* Create game map */
 .create-game-content{
     padding-left: 220pt;
 }
@@ -452,7 +453,7 @@ a.navbar-brand {
     width:100%;
 }
 
-/*Create map content*/
+/* Create map content */
 .create-map-content{
     padding:20pt;
     width:45%;
@@ -565,7 +566,7 @@ a.navbar-brand {
     max-width:100%;
 }
 
-/*Create game result*/
+/* Create game result */
 .create-game-result {
     height: 440pt;
 }
@@ -596,7 +597,7 @@ a.navbar-brand {
     font-style:italic;
 }
 
-/*Show game details during creating*/
+/* Show game details during creating */
 .create-game-details {
     height: 450pt;
     left: 10pt !important;
@@ -650,7 +651,7 @@ a.navbar-brand {
     background-image:none !important;
 }
 
-/*Check game*/
+/* Check game */
 .check-game img{
     height:50px;
 }
@@ -677,9 +678,9 @@ a.navbar-brand {
     border-top-color:black;
 }
 
-/*-------------------- Gameplay --------------------*/
+/* =====--------------- Gameplay ---------------===== */
 
-/*Prelude*/
+/* Prelude */
 .prelude{
     background-image: url("old_book_page.jpg");
     background-repeat:no-repeat;
@@ -736,12 +737,120 @@ a.navbar-brand {
     padding-bottom:10pt;
 }
 
+/* Gameplay */
+.gameplay-field-details{
+    background-image: url("old_book_page.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    margin: auto;
+    height:440pt;
+    width: 70%;
+    color:black;
+    font-size:12pt;
+    font-family:'Bookman Old Style';
+}
+.gameplay-field-details-left-column{
+    float:left;
+    width:50%;
+    padding:20pt;
+    padding:20pt;
+    height:100%;
+}
+.gameplay-field-image img{
+    width:100%;
+    height:100%;
+    max-height:240pt;
+    border:2pt solid;
+    border-color:black;
+    border-style:groove;
+}
+#life-count img{
+    height:15pt;
+    width:15pt;
+}
+#life-count{
+    text-align:left;
+}
+.gameplay-field-details-right-column{
+    float:right;
+    width:50%;
+    padding:20pt;
+    border: 1pt solid;
+    border-color: black;
+    height:100%;
+}
+#gameplay-field-text{
+    height:100pt;
+    padding:10pt;
+    vertical-align:central;
+    padding-bottom:20pt;
+}
+.gameplay-trial-form{
+    height:250pt;
+}
+.gameplay-field-details-right-column button{
+    background-color:transparent;
+    color:black;
+    border-color:black;
+}
+.direction-buttons{
+    background:url("compass.png");
+    background-repeat: no-repeat;
+    background-size:cover;
+    width:150pt;
+    margin:auto;
+    height:150pt;
+    vertical-align:central;
+}
+.direction-buttons button{
+    background-color:transparent;
+    border-color: black;
+}
+.up-button{
+    padding-left:52pt;
+}
+.left-button{
+    padding-top:46pt;
+}
+.right-button{
+    padding-top:46pt;
+    padding-left:54pt;
+}
+.down-button{
+    padding-top:49pt;
+    padding-left:52pt;
+}
+.direction-button{
+    width:13pt;
+    height:13pt;
+}
+.hidden-button{
+    border-color:transparent !important;
+}
+.result-button {
+    padding-top: 60pt;
+}
+.result-button button{    
+    background-color:burlywood !important;
+}
+
+/* Game result */
+.game-result-text{
+    height:150pt !important;
+}
+.game-result{
+    padding-top:20pt !important;
+}
+.game-result img{
+    width:100%;
+    height:100%;
+    max-height: 200pt !important;
+}
 
 /* Provide sufficient contrast against white background */
 a {
     color: midnightblue;
 }
-
 
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {

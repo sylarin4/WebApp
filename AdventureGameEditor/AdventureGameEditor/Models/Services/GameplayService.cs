@@ -203,6 +203,18 @@ namespace AdventureGameEditor.Models
 
         public GameResult GetGameResult(String gameTitle, String userName)
         {
+            if(GetGameplayData(userName, gameTitle) == null)
+            {
+                Game game = GetGame(gameTitle);
+                return new GameResult()
+                {
+                    Owner = game.Owner,
+                    GameTitle = gameTitle,
+                    IsGameWonResult = true,
+                    Image = game.GameWonResult != null ? game.GameWonResult.Image : null,
+                    Text = game.GameWonResult != null ? game.GameWonResult.Text : ""
+                };
+            }
             Boolean isgameWon = GetGameplayData(userName, gameTitle).GameCondition == GameCondition.Won;
             DeleteGameplayData(userName, gameTitle);
             return _context.GameResult
@@ -442,6 +454,10 @@ namespace AdventureGameEditor.Models
         {
             return _context.Game
                 .Where(game => game.Title == gameTitle)
+                .Include(game =>game.GameWonResult)
+                .ThenInclude(result=> result.Image)
+                .Include(game=>game.GameLostResult)
+                .ThenInclude(result=>result.Image)
                 .Include(game => game.Map)
                 .ThenInclude(map => map.Row)
                 .ThenInclude(field => field.Trial)
