@@ -17,11 +17,17 @@
         <div id="inner">
             @if (ViewBag.CurrentGuestName != null)
             {
-                <div id="user">
+            <div id="user">
+                @if (ViewBag.CurrentGuestName.Length <= 11)
+                {
+                    <a asp-area="" asp-controller="Users" asp-action="GetProfile">@ViewBag.CurrentGuestName</a>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="" asp-action="">@ViewBag.CurrentGuestName.Substring(0,8)..</a>
+                }
 
-                    <a asp-area="" asp-controller="" asp-action="">@ViewBag.CurrentGuestName</a>
-
-                </div>
+            </div>
             }
             <div id="title">
                 <h1 id="titleText">Antrum</h1>

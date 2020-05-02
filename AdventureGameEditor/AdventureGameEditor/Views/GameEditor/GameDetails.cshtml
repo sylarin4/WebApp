@@ -22,7 +22,7 @@
                         @Html.DisplayNameFor(model => model.OwnerName)
                     </th>
                     <td>
-                        @Html.DisplayFor(model => model.OwnerName)
+                        <p>@Html.DisplayFor(model => model.OwnerName)</p>
                     </td>
                 </tr>
 
@@ -31,7 +31,7 @@
                         @Html.DisplayNameFor(model => model.Title)
                     </th>
                     <td>
-                        @Html.DisplayFor(model => model.Title)
+                        <p>@Html.DisplayFor(model => model.Title)</p>
                     </td>
                 </tr>
 
@@ -56,7 +56,7 @@
                         @Html.DisplayNameFor(model => model.Visibility)
                     </th>
                     <td>
-                        @Html.DisplayFor(model => model.Visibility)
+                        <p>@Html.DisplayFor(model => model.Visibility)</p>
                     </td>
                 </tr>
 
@@ -65,7 +65,7 @@
                         @Html.DisplayNameFor(model => model.TableSize)
                     </th>
                     <td>
-                        @Html.DisplayFor(model => model.TableSize)
+                        <p>@Html.DisplayFor(model => model.TableSize)</p>
                     </td>
                 </tr>
 
@@ -130,6 +130,21 @@
                         else
                         {
                             <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Summary)
+                    </th>
+                    <td>
+                        @if (Model.Summary != "" || Model.Summary != null)
+                        {
+                            <p>@Html.DisplayFor(model => model.Summary)</p>
+                        }
+                        else
+                        {
+                            <p>Nem rendelkezik összefoglalóval.</p>
                         }
                     </td>
                 </tr>

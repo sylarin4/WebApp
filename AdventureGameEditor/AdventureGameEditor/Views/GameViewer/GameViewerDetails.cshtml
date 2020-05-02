@@ -40,15 +40,15 @@
 
 
     <div class="game-details-right-column">
-        <h2> Előtörténet: </h2>
+        <h2> Tartalom: </h2>
         <div class="game-details-story">
-            @if (Model.Prelude != null)
+            @if (Model.Summary != null && Model.Summary != "")
             {
-                <p> @Model.Prelude.Text</p>
+                <p> @Model.Summary</p>
             }
             else
             {
-                <p>A játék mépg félkész állapotban van, és még nem készült el az előtörténete.</p>
+                <p>A játéknak nincs összefoglalója.</p>
             }
         </div>
 

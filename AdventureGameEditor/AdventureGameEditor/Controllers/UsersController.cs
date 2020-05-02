@@ -54,6 +54,20 @@ namespace AdventureGameEditor.Controllers
 
         #endregion
 
+        #region Get and edit profile
+
+        public IActionResult GetProfile()
+        {
+            User user = _context.User.Where(user => user.UserName == User.Identity.Name).FirstOrDefault();
+            return View("Profile", new ProfileViewModel()
+            {
+                UserName = user.UserName,
+                NickName = user.NickName,
+                EmailAddress = user.Email
+            });
+        }
+
+        #endregion
 
         #region Login and logout
         public IActionResult Login()

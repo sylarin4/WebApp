@@ -56,5 +56,8 @@ namespace AdventureGameEditor.Models
         [Display(Name ="Előtörténet illusztrációja")]
         public int PreludeImageID { get; set; }
 
+        [Display(Name ="Tartalom összefoglalója")]
+        public String Summary { get; set; }
+
     }
 }

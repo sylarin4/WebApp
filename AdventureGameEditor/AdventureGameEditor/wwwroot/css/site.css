@@ -263,11 +263,31 @@ a.navbar-brand {
     vertical-align: bottom;
     color: black;
     font-family: 'Bookman Old Style';
-    font-size: 11pt;
-    font-weight: bold;
+    font-size: 10pt;
 }
 #user a{
     color: burlywood;
+}
+
+/* =====--------------- Profile ---------------===== */
+
+.profile table{
+    margin:auto;
+    text-align:left;
+}
+.profile table tr td, th{    
+    border: 10pt solid;
+    border-color:transparent;
+    
+}
+.profile img{
+    width:60%;
+    height:60%;
+}
+.profile{
+    float:right;
+    width:100%;
+    margin:auto;
 }
 
 /* =====--------------- Menu ---------------===== */
@@ -296,7 +316,6 @@ a.navbar-brand {
 .menu ul li a:hover{
     text-decoration: none;
     color: white;
-    background-color: black;
 }
 .menu h6{
     font-family:Papyrus;

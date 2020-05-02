@@ -32,6 +32,34 @@ namespace AdventureGameEditor.Models
 
         #endregion
 
+        #region Edit game
+
+        // Try to delete tha game. If done, return true, if not, return false.
+        public Boolean DeleteGame(String userName, String gameTitle)
+        {
+            Game game = _context.Game.Where(g => g.Title == gameTitle && g.Owner.UserName == userName)
+                                     .Include(g => g.Map)
+                                     .ThenInclude(g => g.Row)
+                                     .FirstOrDefault();
+            if(game == null)
+            {
+                return false;
+            }
+            try
+            {
+                _context.Game.Remove(game);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            
+            return true;
+        }
+
+        #endregion
+
         #region Create game
         public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner, 
             IFormFile coverImage)
@@ -526,7 +554,9 @@ namespace AdventureGameEditor.Models
                 GameWonImageID = game.GameWonResult != null && game.GameWonResult.Image != null ?
                                                             game.GameWonResult.Image.ID : -1,
                 Prelude = game.Prelude != null ? game.Prelude.Text : null,
-                PreludeImageID = game.Prelude != null && game.Prelude.Image != null ? game.Prelude.Image.ID : -1
+                PreludeImageID = game.Prelude != null && game.Prelude.Image != null ? game.Prelude.Image.ID : -1,
+
+                Summary= game.Summary != null ? game.Summary : ""
             };
         }
 
@@ -598,7 +628,7 @@ namespace AdventureGameEditor.Models
         #region Create game result
 
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
-            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage)
+            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage, String summary)
         {
             Trace.WriteLine("gameWonResult: " + gameWonResult + " gameLostResult: " + gameLostResult );
             // If the results empty or not set, don't save them.
@@ -685,7 +715,10 @@ namespace AdventureGameEditor.Models
                     Name = preludeImage.FileName,
                     Picture = ConvertIFormFileToImage(preludeImage)
                 };
-            }           
+            }
+
+            // Saveing summary.
+            game.Summary = summary;
                  
             _context.SaveChanges();
             return true;
@@ -702,7 +735,8 @@ namespace AdventureGameEditor.Models
                 GameLostResult = game.GameLostResult != null ? game.GameLostResult.Text : "",
                 GameWonImageID = game.GameWonResult != null && game.GameWonResult.Image != null ? game.GameWonResult.Image.ID : -1,
                 GameLostImageID = game.GameLostResult != null && game.GameLostResult.Image != null ? game.GameLostResult.Image.ID : -1,
-                PreludeImageID = game.Prelude != null && game.Prelude.Image != null ? game.Prelude.Image.ID : -1
+                PreludeImageID = game.Prelude != null && game.Prelude.Image != null ? game.Prelude.Image.ID : -1,
+                Summary = game.Summary != null ? game.Summary : ""
             };
             return model;
         }

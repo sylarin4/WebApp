@@ -14,6 +14,7 @@ using System.IO;
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
 using AdventureGameEditor.Utilities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -70,6 +71,20 @@ namespace AdventureGameEditor.Controllers
         public IActionResult CreateMap(String gameTitle)
         {
             return View("CreateMap", _gameEditorService.GetMapViewModel(User.Identity.Name, gameTitle));
+        }
+
+        public IActionResult DeleteGame(String gameTitle)
+        {
+            if(ModelState.IsValid && _gameEditorService.DeleteGame(User.Identity.Name, gameTitle))
+            {
+                ModelState.AddModelError("", "A " + gameTitle + " játék törlése sikeres volt!");
+                return View("CreateGame");
+            }
+            else
+            {
+                ModelState.AddModelError("", "A " + gameTitle + " játék törlése siekrtelen volt.");
+                return View("GameDetails", _gameEditorService.GetGameDetailsViewModel(User.Identity.Name, gameTitle));
+            }
         }
 
         #endregion
@@ -345,7 +360,7 @@ namespace AdventureGameEditor.Controllers
             // Save form attributes if all fields filled and no other problems occured.
             if( _gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
                 gameResult.GameLostResult, gameResult.Prelude, gameResult.PreludeImage, gameResult.GameWonImage,
-                gameResult.GameLostImage))
+                gameResult.GameLostImage, gameResult.Summary))
             {
                 if(errorMessages.Count > 0)
                 {

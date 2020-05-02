@@ -46,6 +46,9 @@ namespace AdventureGameEditor.Models
         [Display(Name ="Korábban feltöltött kép:")]
         public int GameLostImageID { get; set; }
 
+        [Display(Name ="A játék történetének rövid ismertetője:")]
+        public String Summary { get; set; }
+
         public List<String> ErrorMessages { get; set; }
  
         

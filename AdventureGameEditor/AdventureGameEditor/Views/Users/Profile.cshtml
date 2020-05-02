@@ -1,0 +1,51 @@
+﻿@model AdventureGameEditor.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profil";
+}
+
+<div class="profile">
+    <div class="single-page">
+        <h2>Profil</h2>
+        <img class="index-img" src="~/css/user_image.jpg" />
+        @if (Model != null)
+        {
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.UserName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NickName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.NickName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmailAddress)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.EmailAddress)
+                    </td>
+                </tr>
+            </table>
+        }
+
+    </div>
+</div>
+
+<div class="menu profile-menu">
+    <h6>Profil szerkesztése</h6>
+    <ul>
+        <li><a asp-controller="" asp-action="">Email cím módosítása</a></li>
+        <li><a asp-controller="" asp-action="">Jelszó módosítása</a></li>
+        <li><a asp-controller="" asp-action="">Regisztráció törlése</a></li>
+    </ul>
+</div>

@@ -9,6 +9,9 @@ namespace AdventureGameEditor.Models
 {
     public interface IGameEditorService
     {
+        #region Edit game
+        public Boolean DeleteGame(String userName, String gameTitle);
+        #endregion
         #region Create game
         public Boolean InicializeGame(String title, int mapSize, Visibility visibility, User owner, 
             IFormFile CoverImage);
@@ -63,7 +66,7 @@ namespace AdventureGameEditor.Models
         #endregion
         #region Create game result
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
-            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage);
+            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage, String summary);
         public GameResultViewModel GetGameResult(String userName, String gameTitle);
         #endregion
         #region Check game

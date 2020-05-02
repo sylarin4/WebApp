@@ -85,6 +85,12 @@
             }
 
             <div>
+                <label asp-for="Summary" class="control-label"></label>
+                <textarea asp-for="Summary" class="form-control">@Model.Summary</textarea>
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+
+            <div>
                 <input type="submit" value="Mentés" class="btn btn-default" />
             </div>
         </form>
