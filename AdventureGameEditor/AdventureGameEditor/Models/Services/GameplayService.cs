@@ -75,7 +75,7 @@ namespace AdventureGameEditor.Models
                 TargetField = game.TargetField,
                 StepCount = gameplayData.StepCount,
                 IsGameOver = gameplayData.GameCondition != GameCondition.OnGoing,
-                GameplayMap = InitializeGameplayMap(game.Map.ToList()),
+                //GameplayMap = InitializeGameplayMap(game.Map.ToList()),
                 StartDate = gameplayData.StartDate,
                 LastPlayDate = DateTime.Now,
                 LifeCount = gameplayData.LifeCount,

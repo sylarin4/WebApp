@@ -8,13 +8,16 @@
     <title>Gameplay</title>
 </head>
 
-<div id="map">
-    @{ await Html.RenderPartialAsync("GameplayMapPartialView", new GameplayMapViewModel()
-        {
-            GameTitle = Model.GameTitle,
-            GameplayMap = Model.GameplayMap
-        });}
-</div>
+@*
+        <div id="map">
+        @{ await Html.RenderPartialAsync("GameplayMapPartialView", new GameplayMapViewModel()
+            {
+                GameTitle = Model.GameTitle,
+                GameplayMap = Model.GameplayMap
+            });}
+    </div>
+*@
+
 
 <div id="fieldDetails">
     @{ await Html.RenderPartialAsync("GameplayFieldDetails", new GameplayFieldViewModel()

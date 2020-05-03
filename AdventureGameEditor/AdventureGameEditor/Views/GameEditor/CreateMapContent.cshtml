@@ -27,13 +27,16 @@
 
 
         <div class="create-game-content create-map-content">
-            @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
-                {
-                    MapSize = Model.MapSize,
-                    GameTitle = Model.GameTitle,
-                    Map = Model.Map,
-                    FunctionName = Model.FunctionName
-                });}
+            <div class="map-content">
+                @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
+                    {
+                        MapSize = Model.MapSize,
+                        GameTitle = Model.GameTitle,
+                        Map = Model.Map,
+                        FunctionName = Model.FunctionName
+                    });}
+            </div>
+            
             <p>@Model.Guide</p>
             <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
         </div>

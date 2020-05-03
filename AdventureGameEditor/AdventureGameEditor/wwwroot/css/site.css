@@ -484,7 +484,7 @@ a.navbar-brand {
 
 /* Create map content */
 .create-map-content{
-    padding:20pt;
+    padding:15pt;
     width:45%;
     vertical-align:central;
     float:left;
@@ -492,14 +492,33 @@ a.navbar-brand {
 .create-game-content-wrap{
     height:400pt !important;
 }
+.create-game-content table tr {
+    border: none !important;
+    padding: 0pt !important;
+    margin: 0pt !important;
+    border-collapse: collapse !important;
+}
+.create-game-content table tr td{
+    border-collapse:collapse !important;
+}
 .create-map-content table tr td button {
     background-color: transparent;
-    padding: 0px;
-    margin: 0px;
-    border: none;
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
 }
 .create-map-content table{    
-    border-collapse:collapse;
+    border-collapse:collapse !important;
+    padding:0pt !important;
+}
+.create-map-content table img{
+    width:100%;
+    border:none !important;
+    padding:0px !important;
+    margin:0px !important;
+}
+.map-content{
+   
 }
 .create-map-content a{
     font-family:'Bookman Old Style';

@@ -57,8 +57,8 @@ function LoadFieldDetails(gameTitle, rowNumber, colNumber) {
 // Used at: "CreateMap" view.
 // Refreshes the field ("FieldPartialView" partial view) which is changed by the user.
 function RefreshField(gameTitle, rowNumber, colNumber) {
-    var target = '#' + rowNumber + colNumber;
-    //console.log("tareget in test:" + target);
+    var target = '#' + rowNumber + '-' + colNumber;
+    console.log("tareget in test:" + target);
     LoadData(target, 'RefreshField', gameTitle, rowNumber, colNumber);
 }
 

@@ -12,7 +12,8 @@
             {
                 <td >
                     <button type="button"  onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.RowNumber', '@field.ColNumber');">
-                        <div id="@field.RowNumber@field.ColNumber">
+                        @{ String btId = field.RowNumber.ToString() + "-" + field.ColNumber.ToString();}
+                        <div id="@btId">
                             @{
                                 await Html.RenderPartialAsync("FieldPartialView",
                                 new MapPieceViewModel

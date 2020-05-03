@@ -154,8 +154,7 @@ namespace AdventureGameEditor.Controllers
             model.NextControllerAction = "CreateMapStartField";
             model.IsFieldSelected = false;
             model.Guide = "Kattintson a térkép egyik mezőjére, hogy bal oldalt megjelenjen a tartalom " +
-                "hozzáadásához szükséges eszközkészlet, majd a megjelenő gombok segítségével adjon szöveget " +
-                "vagy próbát a mezőhöz.";
+                "hozzáadásához szükséges eszközkészlet.";
             return View("CreateMapContent", model);
         }
 
