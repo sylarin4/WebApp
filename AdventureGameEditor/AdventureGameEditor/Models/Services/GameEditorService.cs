@@ -109,7 +109,7 @@ namespace AdventureGameEditor.Models
                     row.Row.Add(
                         new Field
                         {
-                            Owner = _context.User.Where(user => user.Id == owner.Id).FirstOrDefault(),
+                            UserName = owner.UserName,
                             GameTitle = title,
                             RowNumber = i,
                             ColNumber = j,
@@ -1061,7 +1061,7 @@ namespace AdventureGameEditor.Models
         public String GetFieldTextContent(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             String textContent =_context.Field
-                .Where(field => field.Owner.UserName == userName && field.GameTitle == gameTitle
+                .Where(field => field.UserName == userName && field.GameTitle == gameTitle
                 && field.RowNumber == rowNumber && field.ColNumber == colNumber)
                 .Select(field => field.Text)
                 .FirstOrDefault();
@@ -1123,7 +1123,7 @@ namespace AdventureGameEditor.Models
         private Field GetFieldAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             return _context.Field
-                .Where(field => field.Owner.UserName == userName && field.GameTitle == gameTitle)
+                .Where(field => field.UserName == userName && field.GameTitle == gameTitle)
                 .Where(field => field.ColNumber == colNumber && field.RowNumber == rowNumber)
                 .Include(field => field.Image)
                 .Include(field => field.Trial)

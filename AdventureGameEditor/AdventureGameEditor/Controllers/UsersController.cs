@@ -19,11 +19,13 @@ namespace AdventureGameEditor.Controllers
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        protected readonly IGameEditorService _gameEditorService;
         public UsersController(AdventureGameEditorContext context, UserManager<User> userManager,
-            SignInManager<User> signInManager) : base(context)
+            SignInManager<User> signInManager, IGameEditorService gameEditorService) : base(context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _gameEditorService = gameEditorService;
         }
 
         #region Index
@@ -99,7 +101,6 @@ namespace AdventureGameEditor.Controllers
                 return View("EditPassword");
             }
         }
-
   
         public IActionResult EditEmailAddress()
         {
@@ -128,8 +129,43 @@ namespace AdventureGameEditor.Controllers
             }
             ViewBag.Succeeded = true;
             return View("EditEmailAddress");
-
             
+        }
+
+        public IActionResult EnsureDelteUser()
+        {
+            return View("EnsureDeleteRegistration");
+        }
+
+        public async  Task<IActionResult> DelteUser()
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "A regisztráció törlése sikertelen volt!");
+                return View("EnsureDeleteRegistration");
+            }
+            
+            // Get the user we would like to delte.
+            User user = await _userManager.FindByNameAsync(User.Identity.Name);
+            
+            // If we couldn't find, send error message.
+            if(user == null)
+            {
+                ModelState.AddModelError("", "A regisztráció törlése sikertelen volt!");
+                return View("EnsureDeleteRegistration");
+            }
+
+            // Delte games which is visible only for this user, or unfinished.
+            foreach(Game game in _context.Game.Where(g => g.Owner == user))
+            {
+                _gameEditorService.DeleteGame(user.UserName, game.Title);
+            }
+            await _context.SaveChangesAsync();
+            
+            // Sign out the user, then delete.
+            await _signInManager.SignOutAsync();
+            await _userManager.DeleteAsync(user);
+            return RedirectToAction("Index", "Home");
         }
 
 

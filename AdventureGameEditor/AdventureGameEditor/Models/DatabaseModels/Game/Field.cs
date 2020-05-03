@@ -10,7 +10,7 @@ namespace AdventureGameEditor.Models
     {
         public int ID { get; set; }
         //public FieldCoordinate FieldCoordinate { get; set; }
-        public User Owner { get; set; }
+        public String UserName { get; set; }
         public String GameTitle { get; set; }
         public int RowNumber { get; set; }
         public int ColNumber { get; set; }

@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20200422221407_RemoveFriendsFromVisibilitiyEnumClass.Designer.cs" />
     <Compile Remove="Migrations\20200424155540_AddTeleportToResultType.cs" />
     <Compile Remove="Migrations\20200424155540_AddTeleportToResultType.Designer.cs" />
+    <Compile Remove="Migrations\20200503032410_VhangeOwnerToUserNameInField.cs" />
+    <Compile Remove="Migrations\20200503032410_VhangeOwnerToUserNameInField.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

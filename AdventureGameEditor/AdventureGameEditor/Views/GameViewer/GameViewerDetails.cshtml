@@ -25,7 +25,17 @@
             </tr>
             <tr>
                 <th>Készítette</th>
-                <td>@Model.Owner.NickName</td>
+                <td>
+                    @if (Model.Owner == null)
+                    {
+                        <p>Törölt felhasználó</p>
+                    }
+                    else
+                    {
+                        @Model.Owner.NickName
+
+                    }
+                </td>
             </tr>
             <tr>
                 <th>Térkép mérete</th>
@@ -59,7 +69,7 @@
             }
         </p>
         <p>
-            @if (ViewBag.CurrentGuestName == Model.Owner.UserName)
+            @if (Model.Owner != null && ViewBag.CurrentGuestName == Model.Owner.UserName)
             {
                 <a asp-controller="GameEditor" asp-action="EditGame" asp-route-gameTitle="@Model.Title">Játék szerkesztése</a>
             }

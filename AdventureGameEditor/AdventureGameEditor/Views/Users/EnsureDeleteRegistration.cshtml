@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "Regisztráció törlése";
+}
+
+@{await Html.RenderPartialAsync("EditUserMenu");}
+
+<div class="profile">
+    <div class="single-page">
+        <h2>Regisztráció törlése</h2>
+        <img class="index-img" src="~/css/user_image.jpg" />
+        <div class="delete-register">
+            <p>Biztosan törlni szeretné a regisztrációt?</p>
+            <p>Amennyiben törli a regisztrációját, minden Ön által alkotott kalandjáték is 
+            törlésre fog kerülni.</p>
+        </div>
+        <a asp-controller="Users" asp-action="DelteUser">Regisztráció törlése</a>
+    </div>
+</div>
+
