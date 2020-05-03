@@ -1,0 +1,21 @@
+﻿@model String
+@{
+    ViewData["Title"] = "Játék törlése";
+}
+
+<div class="menu">
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model });}
+</div>
+
+
+    <div class="single-page check-game">
+        <h2>Játék törlése</h2>
+        <div class="delete-game">
+            <h6>Biztosan törlni szeretné a játékot?</h6>
+            <p>
+                Amennyiben törli a játékot, minden azzal kapcsolatos információ is törlésre kerül.
+            </p>
+        </div>
+        <a asp-controller="GameEditor" asp-action="DeleteGame" asp-route-gameTitle="@Model">Játék törlése</a>
+    </div>
+

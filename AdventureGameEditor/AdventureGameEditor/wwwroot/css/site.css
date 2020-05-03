@@ -707,6 +707,15 @@ a.navbar-brand {
     border-top-color:black;
 }
 
+/* Delete game*/
+.delete-game h6{
+    padding-top:40pt;
+    padding-bottom:10pt;
+}
+.delete-game p{
+    padding-bottom:30pt;
+}
+
 /* =====--------------- Gameplay ---------------===== */
 
 /* Prelude */

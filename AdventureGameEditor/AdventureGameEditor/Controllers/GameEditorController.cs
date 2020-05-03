@@ -86,6 +86,10 @@ namespace AdventureGameEditor.Controllers
                 return View("GameDetails", _gameEditorService.GetGameDetailsViewModel(User.Identity.Name, gameTitle));
             }
         }
+        public IActionResult EnsureDelteGame(String gameTitle)
+        {
+            return View("EnsureDeleteGame", gameTitle);
+        }
 
         #endregion
 
