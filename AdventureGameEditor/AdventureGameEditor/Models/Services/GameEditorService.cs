@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using System.Security.Policy;
 using System.Drawing.Text;
 using Org.BouncyCastle.Asn1.X509;
+using System.Runtime.CompilerServices;
 
 namespace AdventureGameEditor.Models
 {
@@ -39,7 +40,16 @@ namespace AdventureGameEditor.Models
         {
             Game game = _context.Game.Where(g => g.Title == gameTitle && g.Owner.UserName == userName)
                                      .Include(g => g.Map)
-                                     .ThenInclude(g => g.Row)
+                                     .ThenInclude(m => m.Row)
+                                     .ThenInclude(r => r.Trial)
+                                     .ThenInclude(t => t.Alternatives)
+                                     .ThenInclude(a => a.TrialResult)
+                                     .Include(g => g.Prelude)
+                                     .ThenInclude(p => p.Image)
+                                     .Include(g => g.GameLostResult)
+                                     .ThenInclude(gr => gr.Image)
+                                     .Include(g => g.GameWonResult)
+                                     .ThenInclude(gr => gr.Image)
                                      .FirstOrDefault();
             if(game == null)
             {
@@ -47,6 +57,25 @@ namespace AdventureGameEditor.Models
             }
             try
             {
+                // Delte all the fields.
+                List<Field> fieldsToDelete = _context.Field.Where(f => f.GameTitle == game.Title)
+                                                            .Include(f => f.Image)
+                                                            .Include(f => f.Trial)
+                                                            .ThenInclude(t => t.Alternatives)
+                                                            .ThenInclude(a => a.TrialResult)
+                                                            .ToList();
+                foreach(Field field in fieldsToDelete)
+                {
+                    _context.Field.Remove(field);
+                }
+
+                foreach(GameResult gameResult in _context.GameResult
+                                                          .Where(gr => gr.GameTitle == game.Title)
+                                                          .Include(gr=>gr.Image)
+                                                          .ToList())
+                {
+                    _context.GameResult.Remove(gameResult);
+                }
                 _context.Game.Remove(game);
                 _context.SaveChanges();
             }

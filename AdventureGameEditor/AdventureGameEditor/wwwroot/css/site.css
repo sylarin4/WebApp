@@ -82,8 +82,8 @@ body {
     border: 0px;
     background-color: transparent !important;
     font-size: 20px;
-    color: lightgray;
-    font-family: Papyrus;
+    color: darkgoldenrod;
+    font-family: 'Bookman Old Style';
     border-bottom: 2px solid #ccc;
     margin: 1em 0;
     border-bottom-color: burlywood;
@@ -102,9 +102,10 @@ body {
 }
 #mainMenu ul li a:hover{
     text-decoration:none;
+    color:chocolate
 }
 #mainMenu a{
-    color: lightgray;
+    color: lightsalmon;
 }
 a.navbar-brand {
   white-space: normal;
