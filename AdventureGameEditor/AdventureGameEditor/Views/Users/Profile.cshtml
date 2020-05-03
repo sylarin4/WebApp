@@ -4,6 +4,8 @@
     ViewData["Title"] = "Profil";
 }
 
+@{await Html.RenderPartialAsync("EditUserMenu");}
+
 <div class="profile">
     <div class="single-page">
         <h2>Profil</h2>
@@ -39,13 +41,4 @@
         }
 
     </div>
-</div>
-
-<div class="menu profile-menu">
-    <h6>Profil szerkesztése</h6>
-    <ul>
-        <li><a asp-controller="" asp-action="">Email cím módosítása</a></li>
-        <li><a asp-controller="" asp-action="">Jelszó módosítása</a></li>
-        <li><a asp-controller="" asp-action="">Regisztráció törlése</a></li>
-    </ul>
 </div>

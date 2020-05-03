@@ -20,7 +20,7 @@ namespace AdventureGameEditor.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         public UsersController(AdventureGameEditorContext context, UserManager<User> userManager,
-            SignInManager<User> signInManager):base(context)
+            SignInManager<User> signInManager) : base(context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -30,7 +30,7 @@ namespace AdventureGameEditor.Controllers
 
         // GET: Users
         public IActionResult Index()
-        { 
+        {
             return View();
         }
 
@@ -66,6 +66,72 @@ namespace AdventureGameEditor.Controllers
                 EmailAddress = user.Email
             });
         }
+
+        public IActionResult GetEditUserMenuPartialView()
+        {
+            return PartialView("EditUserMenu");
+        }
+
+        public IActionResult EditPassword()
+        {
+            return View("EditPassword");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPassword(EditPasswordViewModel editPasswordData)
+        {
+            if (!ModelState.IsValid)
+                return View("EditPassword");
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var result = await _userManager.ResetPasswordAsync(user, token, editPasswordData.NewPassword);
+            if (result.Succeeded)
+            {
+                ViewBag.Succeeded = true;
+                return View("EditPassword");
+            }
+            else
+            {
+                ModelState.AddModelError("", "A jelszó módosítása sikertelen volt!");
+                return View("EditPassword");
+            }
+        }
+
+  
+        public IActionResult EditEmailAddress()
+        {
+            return View("EditEmailAddress");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEmailAddress(EditEmailAddressViewModel editEmailData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("EditEmailAddress");
+            }
+            try
+            {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                user.Email = editEmailData.NewEmailAddress;
+                await _userManager.UpdateAsync(user);
+            }
+            catch
+            {
+                ViewBag.Succeeded = false;
+                ModelState.AddModelError("", "A jelszó módosítása sikertelen volt.");
+                return View("EditEmailAddress");
+            }
+            ViewBag.Succeeded = true;
+            return View("EditEmailAddress");
+
+            
+        }
+
 
         #endregion
 

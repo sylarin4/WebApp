@@ -1,0 +1,41 @@
+﻿@model AdventureGameEditor.Models.EditEmailAddressViewModel
+@{
+    ViewData["Title"] = "Email cím módosítása";
+}
+
+@{await Html.RenderPartialAsync("EditUserMenu");}
+
+<div class="profile edit-password">
+    <div class="single-page">
+        <h2>Email cím módosítása</h2>
+        <div class="edit-password-result">
+            @if (ViewBag.Succeeded != null && ViewBag.Succeeded)
+            {
+                <p>Az email cím módosítása sikeres volt!</p>
+            }
+        </div>
+        <form asp-action="EditEmailAddress">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NewEmailAddress" class="control-label"></label>
+                <input asp-for="NewEmailAddress" class="form-control" />
+                <span asp-validation-for="NewEmailAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ValidateEmailAddress" class="control-label"></label>
+                <input asp-for="ValidateEmailAddress" class="form-control" />
+                <span asp-validation-for="ValidateEmailAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Mentés" class="btn btn-default" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+

@@ -290,6 +290,15 @@ a.navbar-brand {
     margin:auto;
 }
 
+/* =====--------------- Edit password ---------------===== */
+.edit-password form{
+   padding-top:35pt;
+}
+.edit-password-result{
+    color:midnightblue;
+    font-style:italic;
+}
+
 /* =====--------------- Menu ---------------===== */
 
 .menu {
