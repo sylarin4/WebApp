@@ -8,7 +8,6 @@ namespace AdventureGameEditor.Models
     public enum MapTheme
     {
         Test,
-        Basic,
-        Dragons
+        Default
     }
 }

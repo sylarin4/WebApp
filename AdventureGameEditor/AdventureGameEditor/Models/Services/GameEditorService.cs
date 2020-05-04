@@ -183,7 +183,7 @@ namespace AdventureGameEditor.Models
         {
             // TODO: do it for not only the test theme
             if (wayDirectionsCode == null) wayDirectionsCode = 0;
-            Byte[] imageContent = GetImage((int)wayDirectionsCode, MapTheme.Test);
+            Byte[] imageContent = GetImage((int)wayDirectionsCode, MapTheme.Default);
             return new FileContentResult(imageContent, "image/png");
         }
 

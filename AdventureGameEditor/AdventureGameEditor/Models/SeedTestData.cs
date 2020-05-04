@@ -37,8 +37,8 @@ namespace AdventureGameEditor.Models
                     return; // DB has been seeded
                 }
 
-                SeedUsers(context);
-                SeedMapImages(context);
+                SeedDefaultMapImages(context);
+                SeedTestMapImages(context);
             }
         }
 
@@ -49,16 +49,11 @@ namespace AdventureGameEditor.Models
 
         }
 
-        // TODO: implement or delete it.
-        public static void SeedUsers(AdventureGameEditorContext context)
-        {
-        }
 
-        public static void SeedMapImages(AdventureGameEditorContext context)
+        public static void SeedTestMapImages(AdventureGameEditorContext context)
         {
-            foreach (String filePath in Directory.GetFiles("Pictures/MapPictures"))
+            foreach (String filePath in Directory.GetFiles("Pictures/MapPictures/Test"))
             {
-                // TODO: make it more effective
                 int wayDirectionsCode = 0;
                 for(int i = 0; i < 4; ++i)
                 {
@@ -76,6 +71,32 @@ namespace AdventureGameEditor.Models
                     WayDirectionsCode = wayDirectionsCode
                     
                 });
+            }
+            context.SaveChanges();
+        }
+
+        public static void SeedDefaultMapImages(AdventureGameEditorContext context)
+        {
+            foreach (String filePath in Directory.GetFiles("Pictures/MapPictures/Default"))
+            {
+                // TODO: make it more effective
+                int wayDirectionsCode = 0;
+                for (int i = 0; i < 4; ++i)
+                {
+                    if (filePath[(filePath.Length) - 5 - i] == '1')
+                    {
+                        wayDirectionsCode += (int)Math.Pow(10, i);
+                    }
+                }
+
+                context.MapImage.Add(
+                    new MapImage
+                    {
+                        Image = File.ReadAllBytes(filePath),
+                        Theme = MapTheme.Default,
+                        WayDirectionsCode = wayDirectionsCode
+
+                    });
             }
             context.SaveChanges();
         }
