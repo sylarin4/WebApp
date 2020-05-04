@@ -35,7 +35,7 @@ namespace AdventureGameEditor.Models
 
         #region Edit game
 
-        // Try to delete tha game. If done, return true, if not, return false.
+        // Try to delete the game. If done, return true, if not, return false.
         public Boolean DeleteGame(String userName, String gameTitle)
         {
             Game game = _context.Game.Where(g => g.Title == gameTitle && g.Owner.UserName == userName)
@@ -199,7 +199,6 @@ namespace AdventureGameEditor.Models
         {
             int wayDirectionsCode = GetCurrentWayDirectionsCode(userName, gameTitle);
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            //Trace.WriteLine("Is field null?: " + field == null);
             if(field != null)
             {
                 // Set direction "left".
@@ -225,9 +224,6 @@ namespace AdventureGameEditor.Models
                     field.IsUpWay = false;
                 else
                     field.IsUpWay = true;
-                Trace.WriteLine("\n\n\nWayDirectionsCode: " + wayDirectionsCode);
-                Trace.WriteLine("IsUpWay: " + field.IsUpWay + " IsDownWay: " + field.IsDownWay +
-                    " IsLeftWay: " + field.IsLeftWay + " IsRightWay: " + field.IsRightWay);
                 _context.SaveChanges();
             }
         }
@@ -236,7 +232,6 @@ namespace AdventureGameEditor.Models
         {
             Game game = GetGameAtTitle(userName, gameTitle);
             game.CurrentWayDirectionsCode = newWayDirectionsCode;
-            Trace.WriteLine("The new currentwayDirectionsCode: " + GetCurrentWayDirectionsCode(userName, gameTitle));
             _context.SaveChanges();
         }
 
@@ -276,10 +271,6 @@ namespace AdventureGameEditor.Models
             // Save initialization.
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             field.Trial = trial;
-            for(int i = 0; i < 4; ++i)
-            {
-                Trace.WriteLine(GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber).Trial.Alternatives.ElementAt(i).Text);
-            }
             _context.SaveChanges();
             return trial;
         }
@@ -351,18 +342,6 @@ namespace AdventureGameEditor.Models
             Trial trial = new Trial();
             trial.Alternatives = new List<Alternative>();
             trial.TrialType = trialType;
-
-            // Test writing.
-            Trace.WriteLine("\n\n\n" + trialText + "\n\n\n");
-            foreach(String text in alternativeTexts)
-            {
-                Trace.WriteLine(text);
-            }
-            foreach(TrialResult result in alternativeTrialResults)
-            {
-                Trace.WriteLine(result.Text);
-                Trace.WriteLine(result.ResultType);
-            }
 
             for(int i = 0; i < alternativeTexts.Count; ++i)
             {
@@ -659,18 +638,15 @@ namespace AdventureGameEditor.Models
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
             String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage, String summary)
         {
-            Trace.WriteLine("gameWonResult: " + gameWonResult + " gameLostResult: " + gameLostResult );
             // If the results empty or not set, don't save them.
             if (gameLostResult == null || gameWonResult == null || gameLostResult == "" || gameWonResult == "")
             {
-                Trace.WriteLine("gameLost or gameWon result is the problem");
                 return false;
             }
 
             Game game = GetGameAtTitle(userName, gameTitle);
             if (game == null)
             {
-                Trace.WriteLine("We didn't find the game.");
                 return false;
             }
 
@@ -934,67 +910,65 @@ namespace AdventureGameEditor.Models
             openedNodes.Add(graph[startField.RowNumber][startField.ColNumber]);
 
             Boolean isDetermined = false;
-            int? solutionPathLength = null;
             GraphNode currentNode;
-
-            Trace.Write("Path: ");
-            foreach(GraphNode node in path)
-            {
-                Trace.Write(node.RowNumber + ", " + node.ColNumber);
-            }
-            Trace.WriteLine("");
-            Trace.Write("Opened node:");
-            foreach (GraphNode node in openedNodes)
-            {
-                Trace.Write(node.RowNumber + ", " + node.ColNumber);
-            }
-            Trace.WriteLine("");
 
             //==----- The algorithm -----==//
 
             int loopCount = 1;
             while (!isDetermined)
             {
-                Trace.WriteLine("\n" + loopCount + "-edik alkalommal futtatjuk a ciklust");
                 loopCount++;
+
+                // If there's no more opened nodes, that means we analysed all and don't find the target.
+                // So there's no solution.
                 if (!openedNodes.Any())
                 {
-                    Trace.WriteLine("A nyitott csúcsok listája üres: nincs megoldás.");
                     isDetermined = true;
-                    solutionPathLength = null;
                     return null;
                 }
+
+                // Get the most optimal node to analyse from the opened nodes.
                 currentNode = SearchNextNode(openedNodes, targetField);
-                Trace.WriteLine("Ez alkalommal vizsgált csúcs indexei: " + currentNode.RowNumber + "," + currentNode.ColNumber);
+
+                // If this node is the target, we found the solution.
                 if(currentNode.ColNumber == targetField.ColNumber && currentNode.RowNumber == targetField.RowNumber)
                 {
-                    Trace.WriteLine("Ez a cél csúcs. Ide vezető legrövidebb talált út: " + currentNode.PathLength);
                     isDetermined = true;
                     return currentNode.PathLength;
                 }
+
+                // Remove the current node from opened nodes, because we will analyse it now, so it will be no 
+                // longer opened.
                 openedNodes.Remove(currentNode);
-                Trace.WriteLine("Megvizsgáljuk a feldolgozás alatt álló csúcs gyerekeit, amelyeket még nem dolgoztunk fel.");
+
+                // Analyse the current node.
                 foreach(GraphNode node in GetChildren(currentNode, graph))
                 {
-                    // The children of the currentNode are 1 the neighbors of it, so theirs distance from each other is 1.
-                    // So: ( c(node, currentNode) == 1 ).
+                    // If this is an unvisited node, add it to the path,
+                    // if this is a visited node but we found a better way to it, refresh the node with this 
+                    // better way's data.
                     if(!path.Contains(node) || currentNode.PathLength + 1 < node.PathLength)
                     {
-                        Trace.WriteLine(node.RowNumber + "," + node.ColNumber + "indexű gyereket vizsgáljuk.");
+                        // The children of the currentNode are the neighbors of it, so theirs distance from 
+                        // each other is 1. So: ( c(node, currentNode) == 1 ).
                         node.Parent = currentNode;
-                        Trace.WriteLine("Parent beállítása " + currentNode.RowNumber + "," + currentNode.ColNumber + "indexű csúcsra.");
                         node.PathLength = currentNode.PathLength + 1;
-                        Trace.WriteLine("Úthossz beállítása " + node.PathLength + "-re.");
                         openedNodes.Add(node);
                         path.Add(node);
                     }
                 }
             }
+            
+            // We will never reach this point normally, but if it happens somehow, 
+            // return that we didn't find solution.
             return null;
         }
 
-        //===---------- Helper functions ----------===//
 
+        #region Helper functions
+
+        // Calculates a number, which represents that the node is how far from the target field
+        // and how many ways go out of it. (The closer to the target, the more outgoing way is the better.)
         private int HeuristicFunction(GraphNode node, Field targetField)
         {
             // Count the numbers of ways we can go out of the field represented by this node.
@@ -1008,30 +982,25 @@ namespace AdventureGameEditor.Models
             return Math.Abs(node.RowNumber - targetField.RowNumber) + Math.Abs(node.ColNumber - targetField.ColNumber) + ways;
         }
 
+
         // Gets the most optimal node from the opened nodes list.
         private GraphNode SearchNextNode(List<GraphNode> openedNodes, Field targetField)
         {
-            Trace.WriteLine("A következő csúcs kiválasztása a nyílt csúcsok halmazából.");
+            // Search for the node with the best heuristic number in the opened node's set.
             GraphNode minNode = openedNodes[0];
             foreach(GraphNode node in openedNodes)
             {
-                Trace.WriteLine(node.RowNumber + "," + node.ColNumber + " indexű csúcs vizsgálata.");
-                Trace.WriteLine("Heurisztikánk erre a csúcsra: " + HeuristicFunction(node, targetField));
-                Trace.WriteLine("Ide vezető út hossza:" + node.PathLength);
                 if(HeuristicFunction(node, targetField) 
                     < HeuristicFunction(minNode, targetField) )
                 {
-                    Trace.WriteLine("Ez jobb, mint a korábbi min csúcs, amire: ");
-                    Trace.WriteLine("Heurisztika:" + HeuristicFunction(minNode, targetField));
-                    Trace.WriteLine("Úthossz: " + minNode.PathLength);
                     minNode = node;
                 }
-                Trace.WriteLine("");
             }
-            Trace.WriteLine(minNode.RowNumber + "," + minNode.ColNumber + "indexű csúcs lett kiválasztva.");
             return minNode;
         }
 
+
+        // Get all the children of a node (which is it's neighbours).
         private List<GraphNode> GetChildren(GraphNode node, List<List<GraphNode>> graph)
         {
             List<GraphNode> neighbors = new List<GraphNode>();
@@ -1053,6 +1022,7 @@ namespace AdventureGameEditor.Models
             }
             return neighbors;
         }
+        #endregion
 
         #endregion
 
