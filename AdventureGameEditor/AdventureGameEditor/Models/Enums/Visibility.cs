@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.Enums
 {
     // Enum class for the Game class visibility attribute.
     public enum Visibility

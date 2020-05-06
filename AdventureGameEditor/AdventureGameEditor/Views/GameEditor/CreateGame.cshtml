@@ -18,7 +18,7 @@
                 <div >
                     <label asp-for="Visibility" class="control-label"></label>
                     <p>
-                        <select asp-for="Visibility" asp-items="Html.GetEnumSelectList<Visibility>()"></select>
+                        <select asp-for="Visibility" asp-items="Html.GetEnumSelectList<AdventureGameEditor.Models.Enums.Visibility>()"></select>
                     </p>
                     <span asp-validation-for="Visibility" class="text-danger"></span>
                 </div>

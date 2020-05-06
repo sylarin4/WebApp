@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using AdventureGameEditor.Models.ViewModels.Gameplay;
+using AdventureGameEditor.Models.Enums;
 
 namespace AdventureGameEditor.Models.Services
 {

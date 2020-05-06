@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
 using AdventureGameEditor.Models.Services;
 using AdventureGameEditor.Models.ViewModels.Gameplay;
+using AdventureGameEditor.Models.Enums;
 
 namespace AdventureGameEditor.Controllers
 {

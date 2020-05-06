@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.Enums
 {
     // Stores the type of a trial for Trial class.
     public enum TrialType

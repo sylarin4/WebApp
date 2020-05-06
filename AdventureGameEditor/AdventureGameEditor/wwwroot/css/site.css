@@ -322,7 +322,7 @@ a.navbar-brand {
 }
 .menu ul li{
     list-style: none;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     border-bottom: 1px;
     border-bottom-color: burlywood;
 }

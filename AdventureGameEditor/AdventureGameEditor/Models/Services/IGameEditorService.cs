@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
 using AdventureGameEditor.Models.ViewModels.GameEditor;
+using AdventureGameEditor.Models.Enums;
 
 namespace AdventureGameEditor.Models.Services
 {

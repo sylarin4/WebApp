@@ -19,7 +19,7 @@
     <div >
         <label hidden="hidden" asp-for="TrialType" class="control-label"></label>
         <p>
-            <select hidden="hidden" asp-for="TrialType" asp-items="Html.GetEnumSelectList<TrialType>()"></select>
+            <select hidden="hidden" asp-for="TrialType" asp-items="Html.GetEnumSelectList< AdventureGameEditor.Models.Enums.TrialType>()"></select>
         </p>
         <span hidden="hidden" asp-validation-for="TrialType" class="text-danger"></span>
     </div>
@@ -47,7 +47,7 @@
             <div>
                 <label  class="control-label">Eredménye </label>
                 <p>
-                    <select asp-for="TrialResults[i-1].ResultType" asp-items="Html.GetEnumSelectList<ResultType>()"></select>
+                    <select asp-for="TrialResults[i-1].ResultType" asp-items="Html.GetEnumSelectList<AdventureGameEditor.Models.Enums.ResultType>()"></select>
                 </p>
                 <span asp-validation-for="TrialResults[i-1].ResultType" class="text-danger"></span>
             </div>

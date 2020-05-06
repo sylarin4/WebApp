@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+using AdventureGameEditor.Models.Enums;
+
 namespace AdventureGameEditor.Models.ViewModels.GameEditor
 {
     public class BasicGameDataViewModel

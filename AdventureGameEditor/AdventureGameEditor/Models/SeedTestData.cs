@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
-using Microsoft.AspNetCore.Builder;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 using AdventureGameEditor.Data;
+using AdventureGameEditor.Models.Enums;
 
 namespace AdventureGameEditor.Models
 {
