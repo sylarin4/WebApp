@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdventureGameEditor.Models.Game>
+﻿@model IEnumerable<AdventureGameEditor.Models.DatabaseModels.Game.Game>
 
 @{
     ViewData["Title"] = "Játékok";
@@ -30,7 +30,7 @@
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    @foreach (Game item in Model)
+    @foreach (AdventureGameEditor.Models.DatabaseModels.Game.Game item in Model)
     {
         <button type="button" onclick="LoadDetails('@item.Title')">
             @if (item.CoverImage != null)

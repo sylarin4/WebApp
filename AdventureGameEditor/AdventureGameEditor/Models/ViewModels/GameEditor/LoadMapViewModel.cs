@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using AdventureGameEditor.Models.DatabaseModels.Game;
 
 namespace AdventureGameEditor.Models.ViewModels.GameEditor
 {

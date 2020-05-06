@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using AdventureGameEditor.Models.Enums;
+using AdventureGameEditor.Models.DatabaseModels.Game;
 
 namespace AdventureGameEditor.Models.ViewModels.GameEditor
 {

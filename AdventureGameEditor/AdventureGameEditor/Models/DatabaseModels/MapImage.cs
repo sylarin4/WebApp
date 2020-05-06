@@ -1,6 +1,6 @@
 ﻿using AdventureGameEditor.Models.Enums;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.DatabaseModels
 {
     public class MapImage
     {

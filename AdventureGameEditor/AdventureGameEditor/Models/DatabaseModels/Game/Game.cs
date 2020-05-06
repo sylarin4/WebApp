@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using AdventureGameEditor.Models.Enums;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.DatabaseModels.Game
 {
     // Stores the data of a game.
     public class Game

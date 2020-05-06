@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using AdventureGameEditor.Models.Enums;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.DatabaseModels.Game
 {
     // Stores the result of a trial. (Used in Alternative class.)
     public class TrialResult

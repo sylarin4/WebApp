@@ -12,7 +12,7 @@ using System.Diagnostics;
 using AdventureGameEditor.Models;
 using AdventureGameEditor.Models.ViewModels.UserAutentication;
 using AdventureGameEditor.Models.Services;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using AdventureGameEditor.Models.DatabaseModels.Game;
 
 namespace AdventureGameEditor.Controllers
 {

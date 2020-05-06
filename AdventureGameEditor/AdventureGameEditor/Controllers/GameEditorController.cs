@@ -16,6 +16,7 @@ using AdventureGameEditor.Models;
 using AdventureGameEditor.Models.ViewModels.GameEditor;
 using AdventureGameEditor.Models.Services;
 using AdventureGameEditor.Utilities;
+using AdventureGameEditor.Models.DatabaseModels.Game;
 
 namespace AdventureGameEditor.Controllers
 {

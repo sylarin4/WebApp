@@ -24,15 +24,15 @@ namespace AdventureGameEditor.Data
 
         public DbSet<AdventureGameEditor.Models.User> User { get; set; }
 
-        public DbSet<AdventureGameEditor.Models.Game> Game { get; set; }
+        public DbSet<AdventureGameEditor.Models.DatabaseModels.Game.Game> Game { get; set; }
 
-        public DbSet<AdventureGameEditor.Models.MapImage> MapImage { get; set; }
+        public DbSet<AdventureGameEditor.Models.DatabaseModels.MapImage> MapImage { get; set; }
 
-        public DbSet<AdventureGameEditor.Models.Field> Field { get; set; }
+        public DbSet<AdventureGameEditor.Models.DatabaseModels.Game.Field> Field { get; set; }
 
         public DbSet<AdventureGameEditor.Models.GameplayData> GameplayData { get; set; }
 
-        public DbSet<AdventureGameEditor.Models.GameResult> GameResult { get; set; }
+        public DbSet<AdventureGameEditor.Models.DatabaseModels.Game.GameResult> GameResult { get; set; }
 
         //public DbSet<AdventureGameEditor.Models.Feedback> Feedback { get; set; }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.DatabaseModels.Game
 {
     // Stores an alternative what can be happen when doing a trial.
     public class Alternative

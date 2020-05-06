@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 using AdventureGameEditor.Models.Enums;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.DatabaseModels.Game
 {
     public class Trial
     {

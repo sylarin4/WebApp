@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models.ViewModels.GameEditor;
 using AdventureGameEditor.Models.Enums;
+using AdventureGameEditor.Models.DatabaseModels.Game;
 
 namespace AdventureGameEditor.Models.Services
 {

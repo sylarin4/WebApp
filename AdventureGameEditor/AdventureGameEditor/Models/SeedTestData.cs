@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 
 using AdventureGameEditor.Data;
+using AdventureGameEditor.Models.DatabaseModels;
 using AdventureGameEditor.Models.Enums;
 
 namespace AdventureGameEditor.Models

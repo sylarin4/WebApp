@@ -10,6 +10,7 @@ using System.IO;
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models.ViewModels.Gameplay;
 using AdventureGameEditor.Models.Enums;
+using AdventureGameEditor.Models.DatabaseModels.Game;
 
 namespace AdventureGameEditor.Models.Services
 {

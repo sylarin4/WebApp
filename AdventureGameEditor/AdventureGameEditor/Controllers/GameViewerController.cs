@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 using AdventureGameEditor.Data;
-using AdventureGameEditor.Models;
+using AdventureGameEditor.Models.DatabaseModels.Game;
 using AdventureGameEditor.Models.Services;
 using AdventureGameEditor.Models.Enums;
 

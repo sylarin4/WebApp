@@ -8,6 +8,7 @@ using AdventureGameEditor.Models;
 using AdventureGameEditor.Models.Services;
 using AdventureGameEditor.Models.ViewModels.Gameplay;
 using AdventureGameEditor.Models.Enums;
+using AdventureGameEditor.Models.DatabaseModels.Game;
 
 namespace AdventureGameEditor.Controllers
 {
