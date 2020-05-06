@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 using AdventureGameEditor.Models.ViewModels.GameEditor;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.Services
 {
     public interface IGameEditorService
     {

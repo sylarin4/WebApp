@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using AdventureGameEditor.Models.ViewModels.Gameplay;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.Services
 {
     public interface IGameplayService
     {

@@ -78,8 +78,8 @@ namespace AdventureGameEditor
             services.Configure<GoogleConfig>(Configuration.GetSection("Google"));
 
             // Set dependency injections for GameEditorService service.
-            services.AddTransient<IGameEditorService, GameEditorService>();
-            services.AddTransient<IGameplayService, GameplayService>();
+            services.AddTransient<Models.Services.IGameEditorService, Models.Services.GameEditorService>();
+            services.AddTransient<Models.Services.IGameplayService, Models.Services.GameplayService>();
         }
 
 

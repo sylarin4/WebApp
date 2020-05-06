@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 using AdventureGameEditor.Models;
 using AdventureGameEditor.Models.ViewModels.UserAutentication;
+using AdventureGameEditor.Models.Services;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AdventureGameEditor.Controllers

@@ -10,7 +10,7 @@ using System.IO;
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models.ViewModels.Gameplay;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.Services
 {
     public class GameplayService : IGameplayService
     {

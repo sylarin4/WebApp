@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models.ViewModels.GameEditor;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.Services
 {
     public class GameEditorService : IGameEditorService
     {
