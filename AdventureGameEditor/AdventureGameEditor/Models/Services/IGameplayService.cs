@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
+using AdventureGameEditor.Models.ViewModels.Gameplay;
+
 namespace AdventureGameEditor.Models
 {
     public interface IGameplayService

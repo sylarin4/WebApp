@@ -1,4 +1,4 @@
-﻿@model AdventureGameEditor.Models.GameplayViewModel
+﻿@model AdventureGameEditor.Models.ViewModels.Gameplay.GameplayViewModel
 @{
     ViewData["Title"] = "Játékmenet";
 }
@@ -20,7 +20,8 @@
 
 
 <div id="fieldDetails">
-    @{ await Html.RenderPartialAsync("GameplayFieldDetails", new GameplayFieldViewModel()
+    @{ await Html.RenderPartialAsync("GameplayFieldDetails", 
+           new AdventureGameEditor.Models.ViewModels.Gameplay.GameplayFieldViewModel()
         {
             GameTitle = Model.GameTitle,
             RowNumber = Model.CurrentPlayerPosition.RowNumber,

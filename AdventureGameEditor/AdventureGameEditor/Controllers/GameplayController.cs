@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
-using MySqlX.XDevAPI.Common;
+using AdventureGameEditor.Models.ViewModels.Gameplay;
 
 namespace AdventureGameEditor.Controllers
 {

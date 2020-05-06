@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
 using AdventureGameEditor.Data;
-using Org.BouncyCastle.Asn1.X509;
-using AdventureGameEditor.Migrations;
-using Org.BouncyCastle.Asn1.Mozilla;
+using AdventureGameEditor.Models.ViewModels.Gameplay;
 
 namespace AdventureGameEditor.Models
 {

@@ -1,4 +1,4 @@
-﻿@model AdventureGameEditor.Models.GameplayMapViewModel
+﻿@model AdventureGameEditor.Models.ViewModels.Gameplay.GameplayMapViewModel
 @{
     ViewData["Title"] = "Térkép";
 }
@@ -6,10 +6,10 @@
 
 
 <table  border="1" frame="box" rules="all">
-    @foreach (List<GameplayFieldViewModel> row in Model.GameplayMap)
+    @foreach (List<AdventureGameEditor.Models.ViewModels.Gameplay.GameplayFieldViewModel> row in Model.GameplayMap)
     {
         <tr>
-            @foreach (GameplayFieldViewModel field in row)
+            @foreach (AdventureGameEditor.Models.ViewModels.Gameplay.GameplayFieldViewModel field in row)
             {
                 <td style="height:100px;width:100px">
                     @*<button type="button" onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.RowNumber', '@field.ColNumber');">*@
