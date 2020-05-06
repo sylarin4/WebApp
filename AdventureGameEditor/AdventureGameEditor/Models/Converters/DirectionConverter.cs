@@ -2,7 +2,7 @@
 
 using AdventureGameEditor.Models.Enums;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.Converters
 {
     public static class DirectionConverter
     {
