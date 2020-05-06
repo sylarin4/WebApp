@@ -12,7 +12,7 @@ namespace AdventureGameEditor.Models
         [Required(ErrorMessage = "A felhasználó név mezőjét kötelező kitölteni.")]
         public String UserName { get; set; }
 
-        [Display(Name = "Játékon belüli név (amit a többi felhasználó lát)")]
+        [Display(Name = "Becenév (amit a többi felhasználó lát)")]
         [Required(ErrorMessage = "A játékon belüli név mezőt kötelező kitölteni.")]
         public String NickName { get; set; }
 

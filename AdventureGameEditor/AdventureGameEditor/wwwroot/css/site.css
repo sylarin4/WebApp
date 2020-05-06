@@ -456,7 +456,7 @@ a.navbar-brand {
 .map-fields{
     float:left;
     background-color:transparent;
-    background-image: url("pictrues/old_paper.jpg");
+    background-image: url("pictures/old_paper.jpg");
     background-size:cover;
     background-repeat:no-repeat;
     padding:10pt;
@@ -626,7 +626,7 @@ a.navbar-brand {
     height: 300pt;
 }
 .create-game-result-form textarea{
-    background-color:transparent;
+    background-color:transparent !important;
     font-family:'Bookman Old Style';
     font-size:12pt;
     color:midnightblue;
@@ -634,7 +634,7 @@ a.navbar-brand {
     border-color:black;
 }
 .create-game-result-form textarea:hover{
-    background-color:transparent;
+    background-color:transparent !important;
     font-family:'Bookman Old Style';
     font-size:12pt;
     color:midnightblue;
@@ -724,20 +724,13 @@ a.navbar-brand {
     height:300pt !important;
 }
 .check-game table tr{
-    border-bottom: 1pt solid;
-    border-bottom-color: black;
-    border-top:1pt solid;
-    border-top-color:black;
+    border:none ;
 }
 .check-game table th {
-    border-bottom: 1pt solid;
-    border-bottom-color: black;
-    border-top: 1pt solid;
-    border-top-color: black;
+    border: none;
 }
-.check-game table{
-    border: 1pt solid;
-    border-color: black;
+.check-game table {
+    border: none;
 }
 
 /* Delete game*/

@@ -125,11 +125,18 @@
 
             </table>
             <ul>
-                <li>Egy kezdő- vagy célmező akkor valid, ha legalább egy út vezet oda.</li>
-                <li>
-                    A kezdőmezőből akkor érhető el a célmező, ha legalább egy összefüggő útvonal
-                    létezik közöttük, amelyen végighaladva a kezdőmezőből a célmezőbe érkezhetünk.
-                </li>
+                @if(!Model.IsTargetFieldSet || !Model.IsStartFieldSet)
+                {
+                    <li>Egy kezdő- vagy célmező akkor valid, ha legalább egy út vezet oda.</li>
+                }
+                @if (!Model.IsSolutionExists)
+                {
+                    <li>
+                        A kezdőmezőből akkor érhető el a célmező, ha legalább egy összefüggő útvonal
+                        létezik közöttük, amelyen végighaladva a kezdőmezőből a célmezőbe érkezhetünk.
+                    </li>
+                }
+                
             </ul>
         </div>
 

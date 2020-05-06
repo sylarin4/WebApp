@@ -11,7 +11,7 @@ namespace AdventureGameEditor.Models
         [Display(Name = "Felhasználó név")]
         public String UserName { get; set; }
 
-        [Display(Name = "Nick név")]
+        [Display(Name = "Becenév")]
         public String NickName { get; set; }
 
         [Display(Name = "Email cím")]
