@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
+using AdventureGameEditor.Models.ViewModels.GameEditor;
+
 namespace AdventureGameEditor.Models
 {
     public interface IGameEditorService

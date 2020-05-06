@@ -1,4 +1,4 @@
-﻿@model AdventureGameEditor.Models.LoadMapViewModel
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.LoadMapViewModel
 @{
     ViewData["Title"] = "Map";
 }
@@ -16,7 +16,7 @@
                         <div id="@btId">
                             @{
                                 await Html.RenderPartialAsync("FieldPartialView",
-                                new MapPieceViewModel
+                                new AdventureGameEditor.Models.ViewModels.GameEditor.MapPieceViewModel
                                 {
                                     GameTitle = Model.GameTitle,
                                     Field = field

@@ -13,6 +13,7 @@ using System.IO;
 
 using AdventureGameEditor.Data;
 using AdventureGameEditor.Models;
+using AdventureGameEditor.Models.ViewModels.GameEditor;
 using AdventureGameEditor.Utilities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 

@@ -4,7 +4,8 @@
 }
 
 <div class="menu">
-    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model });}
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+           new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() { GameTitle = Model });}
 </div>
 
 

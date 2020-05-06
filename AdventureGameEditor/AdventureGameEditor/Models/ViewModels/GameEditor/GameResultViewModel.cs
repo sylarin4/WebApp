@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.ViewModels.GameEditor
 {
     public class GameResultViewModel
     {

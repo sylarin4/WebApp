@@ -1,11 +1,12 @@
-﻿@model AdventureGameEditor.Models.CheckGameViewModel
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.CheckGameViewModel
 
 @{
     ViewData["Title"] = "Játék ellenőrzése";
 }
 
 <div class="menu">
-    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+           new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
 </div>
 
 <div class="single-page check-game">

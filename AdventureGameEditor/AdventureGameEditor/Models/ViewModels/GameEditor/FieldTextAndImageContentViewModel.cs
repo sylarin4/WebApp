@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.ViewModels.GameEditor
 {
     public class FieldTextAndImageContentViewModel
     {

@@ -151,7 +151,7 @@ a.navbar-brand {
     font-family: 'Bookman Old Style';
     padding-bottom: 100px;
     padding-top: 70px;
-    height:450pt;
+    height:420pt;
 }
 .register h2{
     border-bottom: 2px solid #ccc;
@@ -213,7 +213,7 @@ a.navbar-brand {
     padding-bottom:100px;
     padding-right: 40px;
     padding-left: 40px;
-    height: 440pt;
+    height: 420pt;
 }
 .single-page h2{
     font-family:Papyrus;
@@ -351,7 +351,7 @@ a.navbar-brand {
 .scrollable{
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 440pt;
+    height: 420pt;
 }
 .index-img{
     height: 150px;
@@ -676,13 +676,13 @@ a.navbar-brand {
     background-size:cover;
     background-repeat:no-repeat;
     width:70%;
-    height:450pt;
+    height:420pt;
     float:right;
     border-right:20pt solid;
     border-right-color:transparent;
 }
 .game-details-form{
-    height:350pt !important;
+    height:340pt !important;
 }
 .game-details-form p{
     font-family:'Bookman Old Style';
@@ -705,10 +705,10 @@ a.navbar-brand {
 
 /* Check game */
 .check-game img{
-    height:45px;
+    height:50px;
 }
 .check-game{
-    height: 440pt !important;
+    height: 420pt !important;
 }
 .check-game h4{
     border-bottom:2pt solid;
@@ -721,7 +721,7 @@ a.navbar-brand {
     color:midnightblue;
 }
 .check-list{
-    height:300pt !important;
+    height:280pt !important;
 }
 .check-game table tr{
     border:none ;

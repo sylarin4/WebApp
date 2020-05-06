@@ -1,4 +1,4 @@
-﻿@model AdventureGameEditor.Models.MapViewModel
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.MapViewModel
 @{
     ViewData["Title"] = "Térkép létrehozása";
 }
@@ -8,7 +8,8 @@
 </head>
 
 <div class="menu">
-    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+           new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
 </div>
 
 <div class="create-game-content">
@@ -20,32 +21,64 @@
         <table>
 
             <tr>
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0110 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0111 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0011 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0110 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0111 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0011 });}
             </tr>
             <tr>
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1110 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1111 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1011 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1110 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1111 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1011 });}
             </tr>
             <tr>
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1100 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1101 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1001 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1100 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1101 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1001 });}
             </tr>
             <tr>
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0100 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0101 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0001 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0100 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0101 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0001 });}
             </tr>
             <tr>
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0010 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1010 });}
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 0000 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0010 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1010 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0000 });}
             </tr>
             <tr>
-                @{await Html.RenderPartialAsync("WayDirectionsPiece", new WayDirectionsPieceViewModel { GameTitle = Model.GameTitle, WayDirectionsCode = 1000 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1000 });}
                 <td></td>
                 <td>
                     <a asp-controller="GameEditor" asp-action="CreateMapContent" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
@@ -58,7 +91,7 @@
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="map">
-        @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
+        @{await Html.RenderPartialAsync("Map", new AdventureGameEditor.Models.ViewModels.GameEditor.LoadMapViewModel
             {
                 MapSize = Model.MapSize,
                 GameTitle = Model.GameTitle,

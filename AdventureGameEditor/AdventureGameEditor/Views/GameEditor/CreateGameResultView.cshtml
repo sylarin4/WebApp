@@ -1,10 +1,11 @@
-﻿@model AdventureGameEditor.Models.GameResultViewModel
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.GameResultViewModel
 @{
     ViewData["Title"] = "Játék eredményeinek és bevezetésének szerkesztése";
 }
 
 <div class="menu">
-    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+           new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
 </div>
 
 <div class="single-page create-game-result">

@@ -1,4 +1,4 @@
-﻿@model AdventureGameEditor.Models.GameDetailsViewModel
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.GameDetailsViewModel
 @{
     ViewData["Title"] = "Játék adatai";
 }
@@ -9,7 +9,8 @@
     <title>Játék adatai</title>
 </head>
 <div class="menu">
-    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", new GameEditorMenuViewModel() { GameTitle = Model.Title });}
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+           new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() { GameTitle = Model.Title });}
 </div>
 <div class="two-page-content">
     <div class="create-game-details">
@@ -217,7 +218,8 @@
                 @Html.DisplayNameFor(model => model.Map)
             </h5>
 
-            @{await Html.RenderPartialAsync("Map", new LoadMapViewModel
+            @{await Html.RenderPartialAsync("Map", 
+                  new AdventureGameEditor.Models.ViewModels.GameEditor.LoadMapViewModel
                 {
                     MapSize = Model.TableSize,
                     GameTitle = Model.Title,

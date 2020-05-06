@@ -7,13 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Internal;
 
 using AdventureGameEditor.Data;
-using Microsoft.EntityFrameworkCore.Internal;
-using System.Security.Policy;
-using System.Drawing.Text;
-using Org.BouncyCastle.Asn1.X509;
-using System.Runtime.CompilerServices;
+using AdventureGameEditor.Models.ViewModels.GameEditor;
 
 namespace AdventureGameEditor.Models
 {
