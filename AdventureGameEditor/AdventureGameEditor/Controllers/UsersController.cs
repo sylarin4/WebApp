@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 
 using AdventureGameEditor.Models;
+using AdventureGameEditor.Models.ViewModels.UserAutentication;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AdventureGameEditor.Controllers

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json.Serialization;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.ViewModels.UserAutentication
 { 
     public class EditEmailAddressViewModel
     {
