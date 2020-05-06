@@ -243,7 +243,6 @@ namespace AdventureGameEditor.Models
         public DirectionButtonsViewModel GetDirectionButtonsAfterTrial(String playerName, String gameTitle, int colNumber,
             int rowNumber, int trialNumber, Boolean isAtTargetField)
         {
-            Trace.WriteLine("\n\n Here \n\n");
             Field field = GetField(gameTitle, rowNumber, colNumber);
             GameplayData gameplayData = GetGameplayData(playerName, gameTitle);
             DirectionButtonsViewModel model = new DirectionButtonsViewModel()

@@ -27,7 +27,7 @@ header {
     text-align: center;
     position: center;
     width: 100% !important;
-    background-image: url("tunnel_background_edited.png");
+    background-image: url("pictures/tunnel_background_edited.png");
     background-size: cover;
     height: 235px;
     width: auto ;
@@ -62,7 +62,7 @@ header {
 
 body {
     font-size: 16px;
-    background-image: url("tunnel_background_edited.png");
+    background-image: url("pictures/tunnel_background_edited.png");
     background-repeat: no-repeat;
     background-size: cover;
     color: beige;
@@ -137,7 +137,7 @@ a.navbar-brand {
 /* =====--------------- Register ---------------===== */
 
 .register {
-    background-image: url("old_book_page.jpg");
+    background-image: url("pictures/old_book_page.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     padding: 40px;
@@ -200,7 +200,7 @@ a.navbar-brand {
 /* (Used: Login, CreateGame */
 
 .single-page{
-    background-image: url("login_background.jpg");
+    background-image: url("pictures/login_background.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
     margin: auto;
@@ -233,6 +233,10 @@ a.navbar-brand {
     border-bottom-width: 1px;
     border-bottom-color: black;
 }
+.single-page input::selection{
+    background-color:transparent !important;
+    color: midnightblue;
+}
 .single-page input[type=submit]{
     padding-bottom: 20px;
     padding-top: 20px;
@@ -255,7 +259,7 @@ a.navbar-brand {
 #user {
     width: 50pt;
     height: 50pt;
-    background-image: url("user_image.jpg");
+    background-image: url("pictures/user_image.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     text-align: right;
@@ -383,7 +387,7 @@ a.navbar-brand {
     padding-bottom:5pt;
 }
 .game-details{
-    background-image: url("old_book_page.jpg");
+    background-image: url("pictures/old_book_page.jpg");
     background-size: 100%;
     background-repeat: no-repeat;
     padding-right: 20pt;
@@ -423,9 +427,10 @@ a.navbar-brand {
     background-color: transparent;
     font-style: italic;
     color: midnightblue;
+    border-color:black;
 }
 .create-game input[type=file]{
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 /* Create game map */
@@ -451,7 +456,7 @@ a.navbar-brand {
 .map-fields{
     float:left;
     background-color:transparent;
-    background-image: url("old_paper.jpg");
+    background-image: url("pictrues/old_paper.jpg");
     background-size:cover;
     background-repeat:no-repeat;
     padding:10pt;
@@ -519,9 +524,6 @@ a.navbar-brand {
     padding:0px !important;
     margin:0px !important;
 }
-.map-content{
-   
-}
 .create-map-content a{
     font-family:'Bookman Old Style';
     color:black;
@@ -561,14 +563,14 @@ a.navbar-brand {
     border-color:black;
 }
 .forms textarea{
-    background-color:transparent;
+    background-color:transparent !important;
     padding-bottom:10pt;
     color:midnightblue;
     font-style:italic;
     border-color:black;
 }
 .forms textarea:hover{
-    background-color:transparent;
+    background-color:transparent !important;
     color:midnightblue;
     font-style:italic;
     border-color:black;
@@ -670,7 +672,7 @@ a.navbar-brand {
     border-color:black;
 }
 .two-page-content{
-    background-image: url("old_book_page.jpg");
+    background-image: url("pictures/old_book_page.jpg");
     background-size:cover;
     background-repeat:no-repeat;
     width:70%;
@@ -703,7 +705,7 @@ a.navbar-brand {
 
 /* Check game */
 .check-game img{
-    height:50px;
+    height:45px;
 }
 .check-game{
     height: 440pt !important;
@@ -727,6 +729,16 @@ a.navbar-brand {
     border-top:1pt solid;
     border-top-color:black;
 }
+.check-game table th {
+    border-bottom: 1pt solid;
+    border-bottom-color: black;
+    border-top: 1pt solid;
+    border-top-color: black;
+}
+.check-game table{
+    border: 1pt solid;
+    border-color: black;
+}
 
 /* Delete game*/
 .delete-game h6{
@@ -741,7 +753,7 @@ a.navbar-brand {
 
 /* Prelude */
 .prelude{
-    background-image: url("old_book_page.jpg");
+    background-image: url("pictures/old_book_page.jpg");
     background-repeat:no-repeat;
     background-size:cover;
     margin:auto;
@@ -798,7 +810,7 @@ a.navbar-brand {
 
 /* Gameplay */
 .gameplay-field-details{
-    background-image: url("old_book_page.jpg");
+    background-image: url("pictures/old_book_page.jpg");
     background-size:cover;
     background-repeat:no-repeat;
     margin: auto;
@@ -853,7 +865,7 @@ a.navbar-brand {
     border-color:black;
 }
 .direction-buttons{
-    background:url("compass.png");
+    background:url("pictures/compass.png");
     background-repeat: no-repeat;
     background-size:cover;
     width:150pt;
