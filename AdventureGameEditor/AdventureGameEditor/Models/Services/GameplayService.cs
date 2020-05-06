@@ -11,6 +11,8 @@ using AdventureGameEditor.Data;
 using AdventureGameEditor.Models.ViewModels.Gameplay;
 using AdventureGameEditor.Models.Enums;
 using AdventureGameEditor.Models.DatabaseModels.Game;
+using AdventureGameEditor.Models.DatabaseModels.Gameplay;
+
 
 namespace AdventureGameEditor.Models.Services
 {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using AdventureGameEditor.Models.Enums;
 using AdventureGameEditor.Models.DatabaseModels.Game;
 
-namespace AdventureGameEditor.Models
+namespace AdventureGameEditor.Models.DatabaseModels.Gameplay
 {
     public class GameplayData
     {

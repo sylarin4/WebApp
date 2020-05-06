@@ -30,7 +30,7 @@ namespace AdventureGameEditor.Data
 
         public DbSet<AdventureGameEditor.Models.DatabaseModels.Game.Field> Field { get; set; }
 
-        public DbSet<AdventureGameEditor.Models.GameplayData> GameplayData { get; set; }
+        public DbSet<AdventureGameEditor.Models.DatabaseModels.Gameplay.GameplayData> GameplayData { get; set; }
 
         public DbSet<AdventureGameEditor.Models.DatabaseModels.Game.GameResult> GameResult { get; set; }
 
