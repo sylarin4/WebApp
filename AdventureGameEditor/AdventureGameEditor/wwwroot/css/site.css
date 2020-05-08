@@ -119,6 +119,20 @@ a.navbar-brand {
     font-family: Papyrus;
     font-size: 30px !important;
 }
+.index{
+    width:60%;
+    margin:auto;
+    text-align:left;
+    font-family:'Bookman Old Style';
+    font-size: 12pt;
+    color:sandybrown;
+}
+.index h6{
+    font-size:14pt;
+    padding-bottom:10pt;
+    padding-top:10pt;
+    color:burlywood;
+}
 
 /* =====--------------- Content ---------------===== */
 
