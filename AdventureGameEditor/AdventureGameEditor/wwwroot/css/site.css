@@ -163,7 +163,7 @@ a.navbar-brand {
     margin: auto;
     color: black !important;
     font-family: 'Bookman Old Style';
-    padding-bottom: 100px;
+    padding-bottom: 50px;
     padding-top: 70px;
     height:420pt;
 }
@@ -837,7 +837,7 @@ a.navbar-brand {
 .gameplay-field-image img{
     width:100%;
     height:100%;
-    max-height:240pt;
+    max-height:210pt;
     border:2pt solid;
     border-color:black;
     border-style:groove;
@@ -914,7 +914,7 @@ a.navbar-brand {
 
 /* Game result */
 .game-result-text{
-    height:150pt !important;
+    height:140pt !important;
 }
 .game-result{
     padding-top:20pt !important;

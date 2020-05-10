@@ -362,10 +362,18 @@ namespace AdventureGameEditor.Controllers
                 gameResult.GameLostImage = null;
             }
 
+            if(gameResult.NewCoverImage != null && !FormFileExtensions.IsImage(gameResult.NewCoverImage))
+            {
+                errorMessages.Add("A játék új borítóképének megadott fájl  formátuma nem támogatott.\n" +
+                    "A fájl mentése siekertelen volt.\n" +
+                    "Lehet, hogy nem képet adott meg?");
+                gameResult.NewCoverImage= null;
+            }
+
             // Save form attributes if all fields filled and no other problems occured.
             if( _gameEditorService.SaveGameResults(User.Identity.Name, gameResult.GameTitle, gameResult.GameWonResult,
                 gameResult.GameLostResult, gameResult.Prelude, gameResult.PreludeImage, gameResult.GameWonImage,
-                gameResult.GameLostImage, gameResult.Summary))
+                gameResult.GameLostImage, gameResult.NewCoverImage, gameResult.Summary))
             {
                 if(errorMessages.Count > 0)
                 {

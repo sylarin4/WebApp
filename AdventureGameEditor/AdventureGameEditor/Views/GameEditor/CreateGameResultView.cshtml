@@ -92,6 +92,12 @@
             </div>
 
             <div>
+                <label asp-for="NewCoverImage" class="control-label"></label>
+                <input asp-for="NewCoverImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+                <span asp-validation-for="NewCoverImage" class="text-danger"></span>
+            </div>
+
+            <div>
                 <input type="submit" value="Mentés" class="btn btn-default" />
             </div>
         </form>

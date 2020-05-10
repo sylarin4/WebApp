@@ -14,6 +14,8 @@ namespace AdventureGameEditor.Models.ViewModels.GameEditor
     {
         [Display(Name = "A játék címe")]
         [Required(ErrorMessage = "A játék cím mezője nem lehet üres.")]
+        [StringLength(40, MinimumLength = 7, 
+            ErrorMessage ="A játék címének legalább 7, és maximum 40 karakter hosszúnak kell lennie!")]
         public String Title { get; set; }
         [Display(Name ="Ki láthatja a játékot?")]
         public Visibility Visibility { get; set; }

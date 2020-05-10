@@ -70,7 +70,8 @@ namespace AdventureGameEditor.Models.Services
         #endregion
         #region Create game result
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
-            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage, String summary);
+            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage, 
+            IFormFile newCoverImage, String summary);
         public GameResultViewModel GetGameResult(String userName, String gameTitle);
         #endregion
         #region Check game

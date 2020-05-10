@@ -355,6 +355,7 @@ namespace AdventureGameEditor.Models.Services
 
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
             field.Trial = trial;
+            Trace.WriteLine(field.Trial.Text);
             _context.SaveChanges();
         }
 
@@ -503,7 +504,8 @@ namespace AdventureGameEditor.Models.Services
                 RowNumber = rowNumber,
                 TrialType = trialType,
                 AlternativeTexts = alternativeTexts,
-                TrialResults = alternativeTrialResults
+                TrialResults = alternativeTrialResults,
+                Text= field.Trial != null ? field.Trial.Text : ""
             };
 
             return model;
@@ -580,6 +582,7 @@ namespace AdventureGameEditor.Models.Services
             };
             if(field.Trial != null)
             {
+                Trace.WriteLine(field.Trial.Text);
                 fieldDetails.TrialText = field.Trial.Text;
                 fieldDetails.AlternativeTexts = new List<string>();
                 fieldDetails.TrialResults = new List<TrialResult>();
@@ -635,7 +638,8 @@ namespace AdventureGameEditor.Models.Services
         #region Create game result
 
         public Boolean SaveGameResults(String userName, String gameTitle, String gameWonResult, String gameLostResult,
-            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage, String summary)
+            String prelude, IFormFile preludeImage, IFormFile gameWonImage, IFormFile gameLostImage, 
+            IFormFile newCoverImage, String summary)
         {
             // If the results empty or not set, don't save them.
             if (gameLostResult == null || gameWonResult == null || gameLostResult == "" || gameWonResult == "")
@@ -719,6 +723,13 @@ namespace AdventureGameEditor.Models.Services
                     Name = preludeImage.FileName,
                     Picture = ConvertIFormFileToImage(preludeImage)
                 };
+            }
+
+            //Saveing the new cover image if it's set.
+            if(newCoverImage != null)
+            {
+                game.CoverImage.Name = newCoverImage.FileName;
+                game.CoverImage.Picture= ConvertIFormFileToImage(newCoverImage);
             }
 
             // Saveing summary.

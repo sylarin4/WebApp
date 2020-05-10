@@ -49,6 +49,10 @@ namespace AdventureGameEditor.Models.ViewModels.GameEditor
         [Display(Name ="A játék történetének rövid ismertetője:")]
         public String Summary { get; set; }
 
+        [Display(Name = "Új borítókép feltöltése")]
+        [BindProperty]
+        public IFormFile NewCoverImage { get; set; }
+
         public List<String> ErrorMessages { get; set; }
  
         

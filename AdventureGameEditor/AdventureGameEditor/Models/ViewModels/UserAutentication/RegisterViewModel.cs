@@ -10,10 +10,12 @@ namespace AdventureGameEditor.Models.ViewModels.UserAutentication
     {
         [Display(Name = "Felhasználó név")]
         [Required(ErrorMessage = "A felhasználó név mezőjét kötelező kitölteni.")]
+        [RegularExpression("^[A-Za-z0-9_-]{4,40}$", ErrorMessage = "A felhasználó név formátuma nem megfelelő.")]
         public String UserName { get; set; }
 
         [Display(Name = "Becenév (amit a többi felhasználó lát)")]
-        [Required(ErrorMessage = "A játékon belüli név mezőt kötelező kitölteni.")]
+        [Required(ErrorMessage = "A becenévnév mezőt kötelező kitölteni.")]
+        [RegularExpression("^[A-Za-z0-9_-]{4,40}$", ErrorMessage = "A becenév formátuma nem megfelelő.")]
         public String NickName { get; set; }
 
         [Display(Name = "Email cím")]

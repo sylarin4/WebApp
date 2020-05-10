@@ -41,7 +41,14 @@
             {
                 <img class="index-img" src="~/empty_pic.jpg" height="100" />
             }
-            <p>@item.Title</p>
+            @if(item.Title.Length > 15)
+            {
+                <p>@item.Title.Substring(0,15)..</p>
+            }
+            else
+            {
+                <p>@item.Title</p>
+            }            
         </button>
     }
 

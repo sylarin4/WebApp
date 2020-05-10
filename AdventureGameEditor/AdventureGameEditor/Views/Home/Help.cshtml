@@ -7,6 +7,67 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="index">
+
+    <h6>Regisztráció</h6>
+    <p>
+        A regisztrációhoz navigálhatunk a weboldal bármely részéről a fejlécben található főmenű "Regisztráció" feliratú
+        linkjén keresztül, majd az oldalon megjelenő utasításoknak megfelelően töltsük ki azt. A kitöltést követően az űrlap
+        alján találhsató "Regisztráció" gomb segítségével küldhetjük be az adatinkat.
+    </p>
+    
+
+    <h6>Bejelentkezés</h6>
+
+    <p>
+        A főmenüből válasszuk ki a "Bejelentkezés menüpontot", majd a megjelenő űrlap első szövegmezőjébe adjuk meg a korábbi
+        regisztráció során bevitt felhasználó nevünkt és jelszavunkat. Az űrlap kitöltését követően az annak alján elhelyezkedő
+        "Bejelentkezés" feliratú linkre kattintva küldhetjük be az adatokat. Amennyiben helyesen adtuk meg azokat, az alkalmazás
+        bejelentkeztet.
+    </p>
+   
+
+    <h6>Kijelentkezés</h6>
+    <p>
+        A főmenüből válasszuk ki a "Kijelentkezés" menüpontot. Ezt követően az alkalmazás kijelentkezteti a felhasználót,
+        majd a kezdőlapra irányítja át.
+    </p>
+    <p>
+        Ez az opció csak akkor érhető el, ha korábban bejelentkeztünk a weboldalra.
+    </p>
+    
+
+    <h6>Profil megjelenítése, módosítása és törlése</h6>
+
+    <p>
+        A bejelentkezést követően válasszuk ki a weboldal jobb felső sarkában megjelenő felhasználó nevünket.
+        Ekkor betöltődik a profil, valamint az annak módosítását valamint törlését elérhetővé tevő bal oldali almenüsor.
+    </p>
+    <ul>
+        <li>
+            Az email cím módosításához válassszuk a ki a bal oldali menüből az "Email cím módosítása" menüpontot, majd a 
+            megjelenő űrlap két mezőjébe adjuk meg hibátlanul az új email címet, majd küldjük el az űrlapot az annak alján
+            található "Mentés" feliratú gomb segítségével.
+        </li>
+        <li>
+            A jelszó módosítása az email cím módosításához hasonlóan zajlik a "Jelszó módosítása" menüpont bal oldali menüből
+            való kiválasztását követően.
+        </li>
+        <li>
+            A profil törléséhez a bal oldali menüből válasszuk ki a "Regisztráció törlése" menüpontot! Az ezt követően megjelenő
+            oldalon nincs más dolgunk, mint rákattintani a "Regisztráció törlése" linkre. Ekkor törlődik minden adatunk 
+            az alkalmazás adatbázisából, ide értve az általunk alkotott kalandjátékokat is.
+        </li>
+    </ul>
+
+    <h6>Játékok listázása</h6>
+
+    <p>
+        A főmenüből válasszuk ki a "Játékok listázása" menüpontot. Ezt követően megjelennek azok az adatbázisban tárolt
+        kalandjátékok, melyekre legalább megtekintési joggal rendelkezünk.
+    </p>
+    <p>
+        A bal oldali menü segítségével különböző szempontok szerint módosíthatjuk a játékok sorrendjét.
+    </p>
     <h6>Hogyan játszhatok?</h6>
     <ul>
         <li>Válaszd ki a fejlécben található főmenüből a "Játékok listázása" opciót.</li>
@@ -27,16 +88,24 @@
         <li>A játék kezdőmezőjére fogsz ez után kerülni. </li>
         <li>Minden mezőn a bal felső sarokban fog megjelenni az ahhoz tartozó illusztráció.</li>
         <li>
-            A illusztráció felett az életpontjaidat láthatod. Kezdetben 3 vagy 5 vagy 7 életponttal rendelkezel a térkép
+            A illusztráció felett az életpontjaidat láthatod. Kezdetben 3, 5 vagy 7 életponttal rendelkezel a térkép
             nagyságától függően.
         </li>
         <li>A mezőhöz tartozó történetet a jobb fölső sarokban olvashatod.</li>
         <li>Amennyiben a mezőhöz tartozik próbatétel, azt az oldal bal oldalán fogod megtalálni.</li>
         <li>
-            A próbatétel elvégzéséhez ki kell választanod egy opciót a szöveg alatt megjelenő alternatívák közül
+            A próbatétel elvégzéséhez ki kell választanod egy opciót a próbatétel szövege alatt megjelenő alternatívák közül
             (az opció szövege mellett megjelenő rádiógomb kijelölésével választhatsz), majd a kérdőív alatt található "Választ"
             gomb segítségével véglegesítheted döntésedet, melyet követően ugyan itt fog megjelenni az általad választott
-            alternatíva eredménye.
+            alternatíva eredménye. Az eredmény minden esetben magában foglal egy szöveges leírást, valamint a következő 
+            játékbeli események közül tartalmazhat egyet:
+            <ul>
+                <li>kapsz egy életpontot</li>
+                <li>elveszítesz egy életpontot</li>
+                <li>teleportáció egy random, a jelenlegitől különböző mezőre</li>
+                <li>iránymutatást kapsz a célmezőhöz</li>
+                <li>megnyered a játékot</li>
+            </ul>
         </li>
         <li>
             Ha nem tartozik próbatétel az aktuális mezőhöz, onnan rögtön tovább is haladhatsz egy szomszédos mezőre,
@@ -53,11 +122,11 @@
         </li>
         <li>
             Amennyiben a célmezőre érkeztél, és ha az rendelkezik próbatétellel, akkor a próbatétel sikeres végrehajtása
-            után az iránytű közepén meg fog jelenni egy "Tovább" feliratú gomb. Erre kattintva navigálhatsz tovább a játék
+            után az iránytű alatt meg fog jelenni egy "Tovább" feliratú gomb. Erre kattintva navigálhatsz tovább a játék
             eredményére.
         </li>
         <li>
-            Amennyiben a próbatételek során elveszíted az összes életpontodat, vereséget szenvedsz. Az iránytűn, ahogy győzelem
+            Amennyiben a próbatételek során elveszíted az összes életpontodat, vereséget szenvedsz. Az iránytű alatt, ahogy győzelem
             esetén is, egy "Tovább" feliratú gomb fog megjelenni, amely tovább irányít a játék végkimeneteléhez.
         </li>
         <li>
@@ -72,8 +141,7 @@
         <li>
             Kattints az oldal fejlécében találhatú főmenü "Játék létrehozása" linkjére.
         </li>
-        <li>
-            A megjelenő űrlap kitöltésével tudsz létrehozni egy játékot, melynek adatait később szerkesztheted majd.
+        <li>A megjelenő űrlap kitöltésével tudsz létrehozni egy játékot, melynek adatait később szerkesztheted majd.</li>
             <ul>
                 <li>
                     Ezeket az adatokat körültekintően add meg, mivel a későbbiekben ezeket nem lesz lehetőséged módosítani.
@@ -101,33 +169,151 @@
                     tovább.
                 </li>
             </ul>
-        </li>
 
-        <li>Ezt követően a térkép ösvényeit alkodhatod meg.</li>
-        <lu>
             <li>
-                Az oldal bal oldalán egy menü található, mely segítségével a játék szerkesztésében bármelyik lépéshez
-                navigálhatsz. Amennyiben még tapasztalatlan vagy, javasoljuk, hogy haladj pontról pontja, és az egyik
-                lépésből a másikba az oldal bal oldalának alsó részében található "Tovább" link segítségével menj, amennyiben
-                az éppen aktuális folyamattal végeztél.
+                Ezt követően a térkép ösvényeit alkodhatod meg.
+                <ul>
+                    <li>
+                        Az oldal bal oldalán egy menü található, mely segítségével a játék szerkesztésében bármelyik lépéshez
+                        navigálhatsz. Amennyiben még tapasztalatlan vagy, javasoljuk, hogy haladj pontról pontja, és az egyik
+                        lépésből a másikba az oldal bal alsó részében található "Tovább" link segítségével navigálj a következő
+                        lépésre, amennyiben az éppen aktuális folyamattal végeztél.
+                    </li>
+                    <li>
+                        A menü mellett, bal oldalt az elhelyezhető útkártyákat taálod, jobb oldalt pedig a még üres térképet.
+                    </li>
+                    <li>
+                        Ahhoz, hogy a térképedet utakkal töltsd meg, kattints a bal oldalt elhelyezkedő útkártyák egyikére.
+                    </li>
+                    <li>
+                        Ezt követően kattints a térkép azon mezőjére, amelybe az útkártyát helyezni szeretnéd.
+                    </li>
+                    <li>
+                        Az utóbbi két műveletet ismételd tetszőleges alkalommal: azon térképmezők tartalmát is módosíthatod, amelyre
+                        már korábban helyeztél útkártyát, valamint amíg a bal oldali útkártyák listájából nem választasz újat,
+                        tetszőleges alkalommal helyezheted el a kiválasztott fajtájú útkártyát a térképen anélkül, hogy a bal oldali
+                        útkártyák valamelyikére kéne ismételten kattintanod.
+                    </li>
+                    <li>
+                        Ügyelj rá, hogy az egyes útkártyák illeszkedjenek egymáshoz és ne vezesen ösvény a térkép szélén elhelyezkedő
+                        mezőkről a térképen kívülre!
+                    </li>
+                    <li>
+                        A bal oldal alsó felében elhelyezkedő "Tovább" linkre kattintva haladhatsz tovább a következő lépésre a
+                        térkép kitöltését követően.
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                A térkép mezőihez tartalom feltöltése
+                <ul>
+                    <li>
+                        Minden mezőhöz egyedi tartalmakat adhatsz meg: egy szöveget, amely leírja, hogy a játékos mivel találkozik az
+                        adott mezőn, képet tölthetsz fel, amely illusztrálja ezt, valamint próbatételt adhatsz meg.
+                    </li>
+                    <li>
+                        Ahhoz, hogy tartalmad adhass egy térképmezőhöz, válaszd ki, azt amelyhez ezt meg szeretnéd adni a felület
+                        bal oldalán megjelenő térkép egyik mezőjére való kattintással.
+                    </li>
+                    <li>
+                        Az utóbbit követően a falület jobb oldalán 3 gomb jelenik meg, amelyek a különböző tartalmak hozzáadásához szükséges
+                        űrlapok megjelenítésére hivatottak.
+                    </li>
+                    <li>Az első, "Tartalom hozzáadása" feliratú gomb segítségével képet tölthetsz fel és szöveget vihetsz be a mezőhöz.</li>
+                    <li>
+                        A második, "Próba hozzáadása" feliratú gomb segítségével próbatételt adhatsz meg. Ehhez a megjelenő űrlap első
+                        szövegmezőjébe írd le a próbát: mivel néz szembe a játékos annak során, milyen ügyben kell döntést hoznia.
+                        A továbbiakban 4 alternatívát kell magadnod, amelyek közül a játékos választhat. Az alternatíva szövegének mezőjében
+                        írd le a döntést (pl. "Elmenekülök a hatalmas szörny elől."), adj meg egy játékbeli eseményt, amely bekövetkezik az
+                        aktuális alternatíva kiválasztását követően (életpont nyerése vagy vesztése, teleportáció, iránymutatás a célmezőhöz,
+                        játék megnyerése) valamint az eremény szövegét (pl. "Nekiiramodsz, ahogyan csak lábad bírja. Alaposan kifulladsz,
+                        de sierült lerázni.").
+                    </li>
+
+                    <li>
+                        Miután végeztél a próba űrlapjának kitöltésével, az annak alján található "Mentés" gomb segítségével
+                        mentheted az adatbázisba.
+                    </li>
+                </ul>
+                
             </li>
             <li>
-                A menü mellett, bal oldalt az elhelyezhető útkártyákat taálod, jobb oldalt pedig a még üres térképet.
+                Start mező beállítása
+
+                <p>
+                    Az oldal bal oldalán megjelenő térkép mezői közül válaszd ki, azt amelyről a játékos megkezdheti majd
+                    a térkép felfedezését. Ezt követően a felület jobb oldalán megjelennek majd a kiválaszott mező indexei.
+                    Ha ismét rákatinttasz a térkép egy mezőjére, azzal módosíthatod arra a start mezőt. (Az aktuális start mező
+                    indexei ezt követően frissülni fognak a felület jobb oldalán.)
+                </p>
+
             </li>
+
             <li>
-                Ahhoz, hogy a térképedet utakkal töltsd meg, kattints a bal oldalt elhelyezkedő útkártyák egyikére.
+                Célmező beállítása
+                <p>A célmező beállítása ugyan úgy vitelezhető ki, mint a kezdőmezőé.</p>
             </li>
+
+            <li>Játék eredményeinek megadása
+                <p>
+                    A megjelenő űrlap szövegmezőibe adjuk meg a címke által elvárt adatokat, illetve azok alatt 
+                    illusztrációnak képet is tölthetünk fel hozzájuk.
+                </p>
+            </li>
+
             <li>
-                Ezt követően kattints a térkép azon mezőjére, amelybe az útkártyát helyezni szeretnéd.
+                Játék adatainak megjelenítése
+                <p>
+                    A megjelnő felület bal oldalán láthatjuk táblázatba rendezve azokat az adatokat, melyekből minden
+                    kalandjátékhoz egy tartozik. A táblázat alatt jelenik meg a térkép. Annak egy mezőjének
+                    kiválasztását követően a felület jobb oldalán megjelenik valamennyi, azon mezőhöz tartozó tartalom 
+                    (szöveg, illusztráció és próba). Amennyiben másik térképmezőt választunk fel a jobb oldali tartalom frissül
+                    az új mezőhöz tartozó adatokkal.
+                </p>
             </li>
+
             <li>
-                Ügyelj rá, hogy az egyes útkártyák illeszkedjenek egymáshoz!
+                Játék késznek nyilvánítása
+                <p>
+                    A funkció kiválasztását követően (vagy az előző lépésből a "Tovább" link, vagy a bal oldali menü segítségével)
+                    az alkalmazás leellenőrzi, hogy a játék telejsíti-e az alapvetőe elvárásokat. Amennyiben igen, leellenőrzi azt
+                    is, hogy a kezdőmezőből vezet-e ösvény a célemzőbe. Amennyiben igen, a megjelenő felületeten láthatjuk a
+                    legrövidebb ilyen út hosszát.
+                </p>
+                <p>
+                    Az ellenőrzést követően megjelenő felületen láthatjuk a követelmények listáját, amelyek mellet pipa szerepel,
+                    amennyiben a kalandjáték telejsíti aztés "X" amennyiben nem.
+                </p>
+
+                <p>
+                    Ha a játékunk megfelel valamennyi követelménynek, akkor az alkalmazás azt késznek jelöli meg, így az innentől kezdve
+                    játszhatóvá vlik mindenki számára, akinek láthatóvá tettük azt.
+                </p>
             </li>
+
             <li>
-                A bal oldal alsó felében elhelyezkedő "Tovább" linkre kattintva haladhatsz tovább a következő lépésre a
-                térkép kitöltését követően.
+                Játék módosítása a létrehozás után.
+
+                <p>
+                    Amennyiben a játékok listájából kiválasztunk egy általunk készített játékot, annak adatai alatt
+                    megjelenik a "Játék szerkesztése" link is. Ennek kiválasztásával visszatérhetünk a szerkesztő felületre,
+                    ahol módosíthatjuk annak adatait. Azonban a szerkesztői felület megnyitásával a játék ha a korábbiakban
+                    késznek volt nyilvánítva, az alkalmazás ismét félkésznek fogja azt tekinteni, és nem lesz játszható, amíg
+                    ismét nem validáljuk azt. (Annak elkerülése végett, hogy a amennyiben módosítások következményében sérül
+                    valamelyik feltétel, mgengedjük, hogy az alapvető követelményeknek nem eleget tevő játék is játszható legyen
+                    a játékosok számára.)
+                </p>
             </li>
-        </lu>
+
+            <li>
+                Játék törlése
+                <p>
+                    A játék szerkesztői felület bal oldalán található menü legalsó, "Játék törlése" menüpontjának segítségével
+                    törölhetjük a játékot. A menüpont kiválasztását követően a weboldal megkérdezi, hogy valóban törlni 
+                    szeretnénk-e a játékot, és amennyiben kitartunk döntésünk mellett, törli is azt.
+                </p>
+            </li>
     </ul>
 
 </div>
