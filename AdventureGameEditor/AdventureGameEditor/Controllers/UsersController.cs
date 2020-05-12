@@ -30,33 +30,6 @@ namespace AdventureGameEditor.Controllers
             _gameEditorService = gameEditorService;
         }
 
-        #region Index
-
-        // GET: Users
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        #endregion
 
         #region Get and edit profile
 
@@ -207,13 +180,11 @@ namespace AdventureGameEditor.Controllers
 
         #region Register
 
-        // GET: Users/Register
         public IActionResult Register()
         {
             return View("Register");
         }
 
-        // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("UserName, NickName, EmailAddress, ValidateEmailAddress, Password, ValidatePassword")] RegisterViewModel registerData)
@@ -228,7 +199,6 @@ namespace AdventureGameEditor.Controllers
 
         private async Task<bool> DoRegister(String userName, String userNickName, String userEmailAddress, String userPassword)
         {
-            //TODO: check repeats in database (nickname and name have to be unique)
             if (!ModelState.IsValid)
                 return false;
             User user = new User

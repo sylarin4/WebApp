@@ -89,32 +89,6 @@ namespace AdventureGameEditor.Models.Services
             return gameplayViewModel;
         }
 
-        public List<List<GameplayFieldViewModel>> InitializeGameplayMap(List<MapRow> map)
-        {
-            List<List<GameplayFieldViewModel>> gameplayMap = new List<List<GameplayFieldViewModel>>();
-            foreach (MapRow row in map)
-            {
-                List<GameplayFieldViewModel> gameplayRow = new List<GameplayFieldViewModel>();
-                foreach (Field field in row.Row)
-                {
-                    gameplayRow.Add(new GameplayFieldViewModel()
-                    {
-                        RowNumber = field.RowNumber,
-                        ColNumber = field.ColNumber,
-                        Text = field.Text,
-                        Trial = field.Trial,
-                        IsRightWay = field.IsRightWay,
-                        IsLeftWay = field.IsLeftWay,
-                        IsUpWay = field.IsUpWay,
-                        IsDownWay = field.IsDownWay,
-                        IsVisited = false
-                    });
-                }
-                gameplayMap.Add(gameplayRow);
-            }
-            gameplayMap = OrderGameplayMap(gameplayMap);
-            return gameplayMap;
-        }
 
         public List<IsVisitedField> InitializeVisitedFields(int mapSize)
         {
@@ -473,15 +447,6 @@ namespace AdventureGameEditor.Models.Services
                 .Where(data => data.PlayerName == userName && data.GameTitle == gameTitle)
                 .Include(data => data.VisitedFields)
                 .FirstOrDefault();
-        }
-
-        private List<List<GameplayFieldViewModel>> OrderGameplayMap(List<List<GameplayFieldViewModel>> map)
-        {
-            for (int i = 0; i < map.Count; ++i)
-            {
-                map[i] = map[i].OrderBy(row => row.ColNumber).ToList();
-            }
-            return map;
         }
 
         private void DeleteGameplayData(String playerName, String gameTitle)

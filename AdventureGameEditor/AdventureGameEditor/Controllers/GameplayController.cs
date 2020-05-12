@@ -84,7 +84,6 @@ namespace AdventureGameEditor.Controllers
         }
 
         // Get the image of the field which is specified by the code. 
-        // TODO: we will need the style of the map when will have more then one style. (The currently is the 'test" style.)
         public FileResult GetMapImage(int? wayDirectionsCode)
         {
             return _gameEditorService.ImageForMap(wayDirectionsCode);

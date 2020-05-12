@@ -361,24 +361,6 @@ namespace AdventureGameEditor.Models.Services
 
         #endregion
 
-        // Currently not used.
-        public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber)
-        {
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            for(int i = 0; i < 10; ++i)
-            {
-                field.Trial.Alternatives.Add(new Alternative()
-                {
-                    Text = "",
-                    TrialResult = new TrialResult()
-                    {
-                        ResultType = ResultType.Nothing,
-                        Text = ""
-                    }
-                });
-            }
-            
-        }
         #endregion
 
 
@@ -423,50 +405,6 @@ namespace AdventureGameEditor.Models.Services
             return new FileContentResult(picture , "image/png");
         }
 
-        //Currently not used.
-        // Get the data from the database we need and convert it to a FieldContentViewModel, then return it.
-        public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
-        {
-            // Load the field.
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-
-            // Initializeing.
-            List<String> alternativeTexts = new List<String>();
-            List<TrialResult> alternativeTrialResults = new List<TrialResult>();
-            TrialType trialType = TrialType.LuckTrial;
-
-            // If trial wasn't created previously, initialize it.
-            if(field.Trial == null)
-            {
-                alternativeTexts = InitializeAlternativeTexts(4);
-                alternativeTrialResults = InitializeTrialResults(4);
-            }
-
-            // If trial was created previously, load that data.
-            else
-            {
-                trialType = field.Trial.TrialType;
-                foreach(Alternative alternative in field.Trial.Alternatives)
-                {
-                    alternativeTexts.Add(alternative.Text);
-                    alternativeTrialResults.Add(alternative.TrialResult);
-                }                
-            }
-
-            // Convert data to FieldContentViewModel type.
-            FieldContentViewModel model = new FieldContentViewModel()
-                {
-                    GameTitle = gameTitle,
-                    ColNumber = colNumber,
-                    RowNumber = rowNumber,
-                    TextContent = field.Text,
-                    TrialType = trialType,
-                    AlternativeTexts = alternativeTexts,
-                    TrialResults = alternativeTrialResults
-                };
-
-            return model;
-        }
 
         public FieldTrialContentViewModel GetFieldTrialContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber)
         {

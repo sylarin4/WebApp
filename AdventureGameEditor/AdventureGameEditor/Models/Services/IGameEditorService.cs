@@ -43,14 +43,11 @@ namespace AdventureGameEditor.Models.Services
         public void AddTextAndImageForField(String userName, String gameTitle, int rowNumber, int colNumber, String Text, IFormFile image);
         public void SaveTrial(String userName, String gameTitle, int rowNumber, int colNumber, List<String> alternativeTexts,
            List<TrialResult> alternativeTrialResults, TrialType trialType, String trialText);
-        public void AddNewAlternativeToForm(String userName, String gameTitle, int rowNumber, int colNumber);
+ 
         #endregion
         #region Getters
         public MapContentViewModel GetMapContentViewModel(String userName, String gameTitle);
         public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber);
-
-        // Currently unused.
-         public FieldContentViewModel GetFieldContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
         public FieldTrialContentViewModel GetFieldTrialContentViewModel(String userName, String gameTitle, int rowNumber, int colNumber);
         public FileContentResult GetFieldImage(int imageID);
         #endregion
