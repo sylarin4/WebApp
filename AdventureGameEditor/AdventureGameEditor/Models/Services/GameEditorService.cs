@@ -810,28 +810,97 @@ namespace AdventureGameEditor.Models.Services
         public int? SearchForSolution(String userName, String gameTitle)
         {
 
-            //==----- Initialize the Graph from the map. -----==//
+            //==----- Initialize variables for the algorithm. -----==//
 
-            List<MapRow> map = GetMap(userName, gameTitle);
-            List<List<GraphNode>> graph = new List<List<GraphNode>>();
+            // Initialize graph from the map.
+            List<List<GraphNode>> graph = InitializeGraphFromMap(userName, gameTitle);
 
+            // Intialize and check start and target field
             Field startField = _context.Game.Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
                                             .Select(game => game.StartField)
                                             .FirstOrDefault();
             Field targetField = _context.Game.Where(game => game.Owner.UserName == userName && game.Title == gameTitle)
                                             .Select(game => game.TargetField)
                                             .FirstOrDefault();
-            // Check start and target field
             if(startField == null || targetField == null)
             {
                 return null;
-            }            
+            }  
+
+            // Intilaize start field distance from the start field to 0.
+            graph[startField.RowNumber][startField.ColNumber].PathLength = 0;
+
+            // Intialize the known nodes' list.
+            List<GraphNode> knownNodes = new List<GraphNode>();
+            knownNodes.Add(graph[startField.RowNumber][startField.ColNumber]);
+
+            // Initialize opened nodes with the start field.
+            List<GraphNode> openedNodes = new List<GraphNode>();
+            openedNodes.Add(graph[startField.RowNumber][startField.ColNumber]);
+
+            // Intitleize currentNode.
+            GraphNode currentNode;
+
+            //==----- The algorithm -----==//
+
+            // If there's no more opened nodes, that means we analysed all and don't find the target.
+            // So there's no solution.
+            while (openedNodes.Any())
+            {
+
+                // Get the most optimal node to analyse from the opened nodes.
+                currentNode = SearchNextNode(openedNodes, targetField);
+
+                // If this node is the target, we found the solution.
+                if(currentNode.ColNumber == targetField.ColNumber && currentNode.RowNumber == targetField.RowNumber)
+                {
+                    return currentNode.PathLength;
+                }
+
+                // Remove the current node from opened nodes, because we will analyse it now, so it will be no 
+                // longer opened.
+                openedNodes.Remove(currentNode);
+
+                // Analyse the current node.
+                foreach(GraphNode node in GetChildren(currentNode, graph))
+                {
+                    // If this is an unvisited node, add it to the path,
+                    // if this is a visited node but we found a better way to it, refresh the node with this 
+                    // better way's data.
+                    if(!knownNodes.Contains(node) || currentNode.PathLength + 1 < node.PathLength)
+                    {
+                        // The children of the currentNode are the neighbors of it, so theirs distance from 
+                        // each other is 1. So: ( c(node, currentNode) == 1 ).
+                        node.Parent = currentNode;
+                        node.PathLength = currentNode.PathLength + 1;
+                        openedNodes.Add(node);
+                        knownNodes.Add(node);
+                    }
+                }
+            }
             
-            // Initialize graph.
-            for(int i = 0; i < map.Count; ++i)
+            // If the loop eneds, that means there's no more opened nodes and we didn't find the target field.
+            // It means that there's no way from the start field to the target field, so there's no solution.
+            return null;
+        }
+
+
+        #region Helper functions
+
+        // Intializes the graph from the game map for searching.
+        private List<List<GraphNode>> InitializeGraphFromMap(String userName, String gameTitle)
+        {
+            // Get the game's map from the database.
+            List<MapRow> map = GetMap(userName, gameTitle);
+
+            // Initialize the empty graph.
+            List<List<GraphNode>> graph = new List<List<GraphNode>>();
+
+            // Fill the empty graph with information from the game's map.
+            for (int i = 0; i < map.Count; ++i)
             {
                 graph.Add(new List<GraphNode>());
-                for(int j = 0; j < map[i].Row.Count; ++j)
+                for (int j = 0; j < map[i].Row.Count; ++j)
                 {
                     Field field = map[i].Row.Where(field => field.ColNumber == j && field.RowNumber == i).FirstOrDefault();
                     graph[i].Add(new GraphNode());
@@ -848,72 +917,8 @@ namespace AdventureGameEditor.Models.Services
                     };
                 }
             }
-
-            //==----- Initialize variables for the algorithm. -----==//
-
-            graph[startField.RowNumber][startField.ColNumber].PathLength = 0;
-            List<GraphNode> path = new List<GraphNode>();
-            path.Add(graph[startField.RowNumber][startField.ColNumber]);
-            List<GraphNode> openedNodes = new List<GraphNode>();
-            openedNodes.Add(graph[startField.RowNumber][startField.ColNumber]);
-
-            Boolean isDetermined = false;
-            GraphNode currentNode;
-
-            //==----- The algorithm -----==//
-
-            int loopCount = 1;
-            while (!isDetermined)
-            {
-                loopCount++;
-
-                // If there's no more opened nodes, that means we analysed all and don't find the target.
-                // So there's no solution.
-                if (!openedNodes.Any())
-                {
-                    isDetermined = true;
-                    return null;
-                }
-
-                // Get the most optimal node to analyse from the opened nodes.
-                currentNode = SearchNextNode(openedNodes, targetField);
-
-                // If this node is the target, we found the solution.
-                if(currentNode.ColNumber == targetField.ColNumber && currentNode.RowNumber == targetField.RowNumber)
-                {
-                    isDetermined = true;
-                    return currentNode.PathLength;
-                }
-
-                // Remove the current node from opened nodes, because we will analyse it now, so it will be no 
-                // longer opened.
-                openedNodes.Remove(currentNode);
-
-                // Analyse the current node.
-                foreach(GraphNode node in GetChildren(currentNode, graph))
-                {
-                    // If this is an unvisited node, add it to the path,
-                    // if this is a visited node but we found a better way to it, refresh the node with this 
-                    // better way's data.
-                    if(!path.Contains(node) || currentNode.PathLength + 1 < node.PathLength)
-                    {
-                        // The children of the currentNode are the neighbors of it, so theirs distance from 
-                        // each other is 1. So: ( c(node, currentNode) == 1 ).
-                        node.Parent = currentNode;
-                        node.PathLength = currentNode.PathLength + 1;
-                        openedNodes.Add(node);
-                        path.Add(node);
-                    }
-                }
-            }
-            
-            // We will never reach this point normally, but if it happens somehow, 
-            // return that we didn't find solution.
-            return null;
+            return graph;
         }
-
-
-        #region Helper functions
 
         // Calculates a number, which represents that the node is how far from the target field
         // and how many ways go out of it. (The closer to the target, the more outgoing way is the better.)
