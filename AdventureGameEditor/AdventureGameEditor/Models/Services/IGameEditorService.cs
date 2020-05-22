@@ -34,8 +34,6 @@ namespace AdventureGameEditor.Models.Services
         #endregion
         #region Create map content
         #region Initializers
-        public Trial InitializeTrial(String userName, String gameTitle, int rowNumber, int colNumber);
-        public List<Alternative> InitializeAlternatives(int count);
         public List<String> InitializeAlternativeTexts(int count);
         public List<TrialResult> InitializeTrialResults(int count);
         #endregion

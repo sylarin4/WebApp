@@ -13,6 +13,7 @@ using AdventureGameEditor.Data;
 using AdventureGameEditor.Models.ViewModels.GameEditor;
 using AdventureGameEditor.Models.Enums;
 using AdventureGameEditor.Models.DatabaseModels.Game;
+using MySqlX.XDevAPI.Relational;
 
 namespace AdventureGameEditor.Models.Services
 {
@@ -180,7 +181,6 @@ namespace AdventureGameEditor.Models.Services
 
         public FileResult ImageForMap(int? wayDirectionsCode)
         {
-            // TODO: do it for not only the test theme
             if (wayDirectionsCode == null) wayDirectionsCode = 0;
             Byte[] imageContent = GetImage((int)wayDirectionsCode, MapTheme.Default);
             return new FileContentResult(imageContent, "image/png");
@@ -197,7 +197,8 @@ namespace AdventureGameEditor.Models.Services
         public void SetExitRoads(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             int wayDirectionsCode = GetCurrentWayDirectionsCode(userName, gameTitle);
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            Field field = _context.Field.Where(f => f.UserName == userName && f.GameTitle == gameTitle
+                    && f.RowNumber == rowNumber && f.ColNumber == colNumber).FirstOrDefault();
             if(field != null)
             {
                 // Set direction "left".
@@ -229,8 +230,10 @@ namespace AdventureGameEditor.Models.Services
 
         public void SetCurrentWayDirectionsCode(String userName, String gameTitle, int newWayDirectionsCode)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
-            game.CurrentWayDirectionsCode = newWayDirectionsCode;
+            _context.Game
+                .Where(g => g.Title == gameTitle && g.Owner.UserName == userName)
+                .FirstOrDefault()
+                .CurrentWayDirectionsCode = newWayDirectionsCode;
             _context.SaveChanges();
         }
 
@@ -243,53 +246,7 @@ namespace AdventureGameEditor.Models.Services
 
         #region //---------- Setters ----------//
 
-        #region Initializing
-        //Currently not used.
-        public Trial InitializeTrial(String userName, String gameTitle, int rowNumber, int colNumber)
-        {
-            // Initialize trial.
-            List<Alternative> alternatives = new List<Alternative>();
-            
-            for(int i = 0; i < 4; ++i)
-            {
-                alternatives.Add(new Alternative()
-                {
-                    TrialResult = new TrialResult()
-                    {
-                        ResultType = ResultType.Nothing,
-                        Text=""
-                    }
-                });
-            }
-                        
-            Trial trial = new Trial()
-            {
-                TrialType = TrialType.MultipleChoice,
-                Alternatives = alternatives
-            };
-            // Save initialization.
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            field.Trial = trial;
-            _context.SaveChanges();
-            return trial;
-        }
-
-        //Currently not used.
-        public List<Alternative> InitializeAlternatives(int count)
-        {
-            List<Alternative> alternatives = new List<Alternative>();
-            for(int i = 0; i < count; ++i)
-            {
-                alternatives.Add(new Alternative()
-                {
-                    TrialResult = new TrialResult()
-                    {
-                        ResultType = ResultType.Nothing
-                    }
-                });
-            }
-            return alternatives;
-        }
+        #region Initializing      
 
         public List<String> InitializeAlternativeTexts(int count)
         {
@@ -321,7 +278,8 @@ namespace AdventureGameEditor.Models.Services
          public void AddTextAndImageForField(String userName, String gameTitle, int rowNumber, int colNumber,
              String text, IFormFile image)
         {
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            Field field = _context.Field.Where(f => f.UserName == userName && f.GameTitle == gameTitle && 
+                f.RowNumber == rowNumber && f.ColNumber == colNumber).FirstOrDefault();
             field.Text = text;
 
             if(image != null)
@@ -368,19 +326,7 @@ namespace AdventureGameEditor.Models.Services
         public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber)
         {
             Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            // TODO: we have to include alternatives to the trial. we may store gametitle and owner's name for it. 
-            // Look at in the hoework, maybe there's a special way for automatice it
             return field.Trial;
-        }
-        public List<MapRow> GetMap(String userName, String gameTitle)
-        {
-            return SortMap(_context.Game
-                .Where(game => game.Owner.UserName == userName & game.Title == gameTitle)
-                .Include(game => game.Map)
-                .ThenInclude(map => map.Row)
-                .Select(game => game.Map)
-                .FirstOrDefault()
-                .ToList());
         }
 
         public MapContentViewModel GetMapContentViewModel(String userName, String gameTitle)
@@ -762,7 +708,8 @@ namespace AdventureGameEditor.Models.Services
             return _context.Game.Any(game => game.Owner.UserName == userName &&
                                              game.Title == gameTitle &&
                                              game.Prelude != null &&
-                                             game.Prelude.Text != null);
+                                             game.Prelude.Text != null&&
+                                             game.Prelude.Text != "");
         }
 
         public Boolean IsGameWonFilled(String userName, String gameTitle)
@@ -770,7 +717,8 @@ namespace AdventureGameEditor.Models.Services
             return _context.Game.Any(game => game.Owner.UserName == userName &&
                                              game.Title == gameTitle &&
                                              game.GameWonResult != null&&
-                                             game.GameWonResult.Text != null);
+                                             game.GameWonResult.Text != null &&
+                                             game.GameWonResult.Text != "");
         }
 
         public Boolean IsGameLostFilled(String userName, String gameTitle)
@@ -778,7 +726,8 @@ namespace AdventureGameEditor.Models.Services
             return _context.Game.Any(game => game.Owner.UserName == userName &&
                                              game.Title == gameTitle &&
                                              game.GameLostResult != null &&
-                                             game.GameLostResult.Text != null);
+                                             game.GameLostResult.Text != null&&
+                                             game.GameLostResult.Text != "");
         }
 
         public void SetReadyToPlay(String userName, String gameTitle)
@@ -891,7 +840,7 @@ namespace AdventureGameEditor.Models.Services
         private List<List<GraphNode>> InitializeGraphFromMap(String userName, String gameTitle)
         {
             // Get the game's map from the database.
-            List<MapRow> map = GetMap(userName, gameTitle);
+            List<MapRow> map = SortMap(GetMap(userName, gameTitle));
 
             // Initialize the empty graph.
             List<List<GraphNode>> graph = new List<List<GraphNode>>();
@@ -902,7 +851,8 @@ namespace AdventureGameEditor.Models.Services
                 graph.Add(new List<GraphNode>());
                 for (int j = 0; j < map[i].Row.Count; ++j)
                 {
-                    Field field = map[i].Row.Where(field => field.ColNumber == j && field.RowNumber == i).FirstOrDefault();
+                    Field field = _context.Field.Where(field => field.GameTitle == gameTitle && field.UserName == userName
+                            && field.ColNumber == j && field.RowNumber == i).FirstOrDefault();
                     graph[i].Add(new GraphNode());
                     graph[i][j] = new GraphNode()
                     {
@@ -1000,6 +950,17 @@ namespace AdventureGameEditor.Models.Services
         public Field GetField(String userName, String gameTitle, int rowNumber, int colNumber)
         {
             return GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+        }
+
+        public List<MapRow> GetMap(String userName, String gameTitle)
+        {
+            return SortMap(_context.Game
+                .Where(game => game.Owner.UserName == userName & game.Title == gameTitle)
+                .Include(game => game.Map)
+                .ThenInclude(map => map.Row)
+                .Select(game => game.Map)
+                .FirstOrDefault()
+                .ToList());
         }
 
         #endregion
