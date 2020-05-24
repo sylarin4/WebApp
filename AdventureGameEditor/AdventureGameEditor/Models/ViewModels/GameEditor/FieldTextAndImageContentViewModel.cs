@@ -14,7 +14,7 @@ namespace AdventureGameEditor.Models.ViewModels.GameEditor
         public int ColNumber { get; set; }
         public int RowNumber { get; set; }
 
-        [Display(Name = "Az előtörténethez tartozó kép")]
+        [Display(Name = "A mezőhöz tartozó kép")]
         [BindProperty]
         public IFormFile NewImage { get; set; }
         public int? CurrentImageID { get; set; }

@@ -637,7 +637,7 @@ a.navbar-brand {
     height: 440pt;
 }
 .create-game-result-form{
-    height: 300pt;
+    height: 270pt;
 }
 .create-game-result-form textarea{
     background-color:transparent !important;
@@ -765,7 +765,7 @@ a.navbar-brand {
     background-size:cover;
     margin:auto;
     width:70%;
-    height:440pt;
+    height:420pt;
 }
 .prelude h1{
     font-size:20pt;
@@ -821,7 +821,7 @@ a.navbar-brand {
     background-size:cover;
     background-repeat:no-repeat;
     margin: auto;
-    height:440pt;
+    height:420pt;
     width: 70%;
     color:black;
     font-size:12pt;

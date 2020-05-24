@@ -13,6 +13,7 @@ using AdventureGameEditor.Models;
 using AdventureGameEditor.Models.ViewModels.UserAutentication;
 using AdventureGameEditor.Models.Services;
 using AdventureGameEditor.Models.DatabaseModels.Game;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AdventureGameEditor.Controllers
 {
@@ -92,14 +93,23 @@ namespace AdventureGameEditor.Controllers
             }
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                user.Email = editEmailData.NewEmailAddress;
-                await _userManager.UpdateAsync(user);
+                if(_context.User.Any(u => u.Email == editEmailData.NewEmailAddress))
+                {
+                    ModelState.AddModelError("", "Ez az email cím már foglalt!");
+                    ViewBag.Succeeded = false;
+                    return View("EditEmailAddress");
+                }
+                else
+                {
+                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                    user.Email = editEmailData.NewEmailAddress;
+                    await _userManager.UpdateAsync(user);
+                }
             }
             catch
             {
                 ViewBag.Succeeded = false;
-                ModelState.AddModelError("", "A jelszó módosítása sikertelen volt.");
+                ModelState.AddModelError("", "Az email cím módosítása sikertelen volt.");
                 return View("EditEmailAddress");
             }
             ViewBag.Succeeded = true;
@@ -192,6 +202,10 @@ namespace AdventureGameEditor.Controllers
             bool registerIsSucceeded = await DoRegister(registerData.UserName, registerData.NickName, registerData.EmailAddress, registerData.Password);
             if (!registerIsSucceeded)
             {
+                if(_context.User.Any(u => u.Email == registerData.EmailAddress))
+                {
+                    ModelState.AddModelError("", "Ez az email cím már foglalt!");
+                }
                 return View("Register");
             }
             return RedirectToAction("Index", "Home");

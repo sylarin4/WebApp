@@ -678,7 +678,7 @@ namespace AdventureGameEditor.UnitTests
         }
 
         [Fact]
-        public void TestGetGameResult()
+        public void TestGetGameResults()
         {
             MakeUniqueTestGames(50, true);
             for (int i = 50; i < 100; ++i)
