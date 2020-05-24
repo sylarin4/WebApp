@@ -10,6 +10,8 @@ using AdventureGameEditor.Models;
 using AdventureGameEditor.Models.DatabaseModels.Game;
 using AdventureGameEditor.Models.Enums;
 using AdventureGameEditor.Models.ViewModels.GameEditor;
+using SQLitePCL;
+using AdventureGameEditor.Models.DatabaseModels.Gameplay;
 
 namespace AdventureGameEditor.UnitTests
 {
@@ -38,18 +40,20 @@ namespace AdventureGameEditor.UnitTests
 
         public void InitializeTestUsers()
         {
+            List<User> users = new List<User>();
             for (int i = 0; i < 50; ++i)
             {
                 if (!context.User.Any(u => u.UserName == "TestUser" + i))
                 {
-                    context.User.Add(new User()
+                    users.Add(new User()
                     {
-                        UserName = "TestUser" + i,
+                        UserName = "GameplayTestUser" + i,
                         NickName = "TestUSerNick" + i,
-                        Email = "testiser" + i + "@gmail.com"
+                        Email = "testuser" + i + "@gmail.com"
                     });
                 }
             }
+            context.User.AddRange(users);
             context.SaveChanges();
         }
 
@@ -190,57 +194,77 @@ namespace AdventureGameEditor.UnitTests
             InitializeTestUsers();
             for (int i = 50; i < 50 + gameCount; ++i)
             {
-                String userName = "TestUser" + (i - 50);
-                String gameTitle = "GameTitle" + i;
+                String userName = "TestUserGameplay" + (i - 50);
+                String gameTitle = "GameTitleGameplay" + i;
                 Random rnd = new Random();
+                if (!context.Game.Any(g => g.Owner.UserName == userName && g.Title == gameTitle))
+                {
+                    int random = rnd.Next(1, 4);
+                    Visibility randomVisibility = Visibility.Everyone;
+                    switch (random)
+                    {
+                        case 1:
+                            randomVisibility = Visibility.Everyone;
+                            break;
+                        case 2:
+                            randomVisibility = Visibility.LoggedIn;
+                            break;
+                        default:
+                            randomVisibility = Visibility.Owner;
+                            break;
+                    }
+                    int mapSize = rnd.Next(3, 16);
+                    InitializeGame(userName, gameTitle, mapSize, randomVisibility);
 
-                int random = rnd.Next(1, 4);
-                Visibility randomVisibility = Visibility.Everyone;
-                switch (random)
-                {
-                    case 1:
-                        randomVisibility = Visibility.Everyone;
-                        break;
-                    case 2:
-                        randomVisibility = Visibility.LoggedIn;
-                        break;
-                    default:
-                        randomVisibility = Visibility.Owner;
-                        break;
+                    ICollection<MapRow> map = context.Game
+                                                  .Where(g => g.Title == gameTitle && g.Owner.UserName == userName)
+                                                  .Select(g => g.Map)
+                                                  .FirstOrDefault();
+                    map = EditDefaultMap(map, isAddAllContent);
+                    Game game = GetTestGame(gameTitle, userName);
+                    game.StartField = GetField(gameTitle, userName, rnd.Next(0, mapSize), rnd.Next(0, mapSize));
+                    game.TargetField = GetField(gameTitle, userName, rnd.Next(0, mapSize), rnd.Next(0, mapSize));
+                    game.Summary = "Test summary text.";
+                    game.GameLostResult = new GameResult()
+                    {
+                        Owner = context.User.Where(u => u.UserName == userName).FirstOrDefault(),
+                        GameTitle = gameTitle,
+                        IsGameWonResult = false,
+                        Text = "Test game lost result text."
+                    };
+                    game.GameWonResult = new GameResult()
+                    {
+                        Owner = context.User.Where(u => u.UserName == userName).FirstOrDefault(),
+                        GameTitle = gameTitle,
+                        IsGameWonResult = true,
+                        Text = "Test game won result text."
+                    };
+                    game.Prelude = new Prelude()
+                    {
+                        Text = "Tet prelude text.",
+                        GameTitle = gameTitle,
+                        Owner = context.User.Where(u => u.UserName == userName).FirstOrDefault()
+                    };
+                    context.SaveChanges();
                 }
-                int mapSize = rnd.Next(3, 16);
-                InitializeGame(userName, gameTitle, mapSize, randomVisibility);
-                
-                ICollection<MapRow> map = context.Game
-                                              .Where(g => g.Title == gameTitle && g.Owner.UserName == userName)
-                                              .Select(g => g.Map)
-                                              .FirstOrDefault();
-                map = EditDefaultMap(map, isAddAllContent);
-                Game game = GetTestGame(gameTitle, userName);
-                game.StartField = GetField(gameTitle, userName, rnd.Next(0, mapSize), rnd.Next(0, mapSize));
-                game.TargetField = GetField(gameTitle, userName, rnd.Next(0, mapSize), rnd.Next(0, mapSize));
-                game.Summary = "Test summary text.";
-                game.GameLostResult = new GameResult()
-                {
-                    Owner = context.User.Where(u => u.UserName == userName).FirstOrDefault(),
-                    GameTitle = gameTitle,
-                    IsGameWonResult = false,
-                    Text = "Test game lost result text."
-                };
-                game.GameWonResult = new GameResult()
-                {
-                    Owner = context.User.Where(u => u.UserName == userName).FirstOrDefault(),
-                    GameTitle = gameTitle,
-                    IsGameWonResult = true,
-                    Text = "Test game won result text."
-                };
-                game.Prelude = new Prelude()
-                {
-                    Text = "Tet prelude text.",
-                    GameTitle = gameTitle,
-                    Owner = context.User.Where(u => u.UserName == userName).FirstOrDefault()
-                };
-                context.SaveChanges();
+            }
+        }
+
+        public void DeleteGame(String userName, String gameTitle)
+        {
+            Game game = context.Game.Where(g => g.Title == gameTitle && g.Owner.UserName == userName).FirstOrDefault();
+            foreach(Field field in context.Field.Where(f => f.GameTitle == gameTitle && f.UserName == userName).ToList())
+            {
+                context.Field.Remove(field);
+            }
+            foreach(GameResult gameResult in context.GameResult.Where(r => r.GameTitle == gameTitle && 
+                r.Owner.UserName == userName).ToList())
+            {
+                context.GameResult.Remove(gameResult);
+            }
+            foreach(GameplayData data in context.GameplayData.Where(d => d.GameTitle == gameTitle).ToList())
+            {
+                context.GameplayData.Remove(data);
             }
         }
 

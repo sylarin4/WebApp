@@ -149,7 +149,7 @@ namespace AdventureGameEditor.Models.Services
         }
 
         // Returns the next field in the given direction, if it's exists and available.
-        // If not, returns the same field.
+        // If not, returns the same field. (Used in function StepGame.)
         public Field GetNextField(Field currentField, int tableSize, Direction direction)
         {
             int resultColNumber = currentField.ColNumber;
