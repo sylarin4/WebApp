@@ -20,6 +20,8 @@
     <Compile Remove="Migrations\20200424155540_AddTeleportToResultType.Designer.cs" />
     <Compile Remove="Migrations\20200503032410_VhangeOwnerToUserNameInField.cs" />
     <Compile Remove="Migrations\20200503032410_VhangeOwnerToUserNameInField.Designer.cs" />
+    <Compile Remove="Migrations\20200526131247_AddIsVisitedFieldToContext.cs" />
+    <Compile Remove="Migrations\20200526131247_AddIsVisitedFieldToContext.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

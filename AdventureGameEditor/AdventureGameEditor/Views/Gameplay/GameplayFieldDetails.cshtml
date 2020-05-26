@@ -17,7 +17,7 @@
         </div>
 
         <div id="direction-buttons">
-            @if ((Model.Trial == null || Model.IsVisited) && !Model.IsAtTargetField)
+            @if ((Model.Trial == null || Model.IsVisited) && !Model.IsAtTargetField && !Model.IsGameOver)
             {
                 await Html.RenderPartialAsync("DirectionButtonsPartialView", 
                     new AdventureGameEditor.Models.ViewModels.Gameplay.DirectionButtonsViewModel()
@@ -33,8 +33,9 @@
                     IsUpWay = Model.IsUpWay
                 });
             }
-            @if (Model.IsAtTargetField && (Model.Trial == null || Model.IsVisited))
+            @if ((Model.IsAtTargetField && (Model.Trial == null || Model.IsVisited)) || Model.IsGameOver)
             {
+                <p>Játék vége!</p>
                 <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
             }
         </div>

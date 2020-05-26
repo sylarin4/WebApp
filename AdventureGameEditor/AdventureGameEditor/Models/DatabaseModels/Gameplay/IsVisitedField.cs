@@ -11,5 +11,6 @@ namespace AdventureGameEditor.Models.DatabaseModels.Gameplay
         public Boolean IsVisited { get; set; }
         public int ColNumber { get; set; }
         public int RowNumber { get; set; }
+        public GameplayData GameplayData { get; set; }
     }
 }

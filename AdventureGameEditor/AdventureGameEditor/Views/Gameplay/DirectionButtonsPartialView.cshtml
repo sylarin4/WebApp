@@ -1,5 +1,7 @@
 ﻿@model AdventureGameEditor.Models.ViewModels.Gameplay.DirectionButtonsViewModel
 
+@if (!Model.GameWon && !Model.GameLost)
+{
     <div class="direction-buttons">
 
         @if (Model.WillTeleport)
@@ -9,7 +11,7 @@
             </div>
 
         }
-        else if (!Model.GameWon && !Model.GameLost)
+        else
         {
             <table>
                 <tr>
@@ -80,10 +82,11 @@
         }
 
     </div>
-    @if(Model.GameWon || Model.GameLost)
-    {
-    <div >
+}
+else
+{
+    <div class="game-result-link">
+        <p>Játék vége!</p>
         <a asp-controller="Gameplay" asp-action="GetGameResult" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
     </div>
-
-    }
+}

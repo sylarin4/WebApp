@@ -58,7 +58,7 @@ namespace AdventureGameEditor.Models.Services
                     CurrentPlayerPosition = game.StartField,
                     StepCount = 0,
                     GameCondition = GameCondition.OnGoing,
-                    VisitedFields = InitializeVisitedFields(game.TableSize),
+                    VisitedFields = InitializeVisitedFields(game.TableSize, gameplayData),
                     StartDate = DateTime.Now,
                     LastPlayDate = DateTime.Now,
                     LifeCount = lifeCount
@@ -84,12 +84,15 @@ namespace AdventureGameEditor.Models.Services
                     .Where(field => field.RowNumber == gameplayData.CurrentPlayerPosition.RowNumber
                     && field.ColNumber == gameplayData.CurrentPlayerPosition.ColNumber).FirstOrDefault().IsVisited
             };
-
+            if (gameplayViewModel.IsGameOver)
+            {
+                DeleteGameplayData(userName, gameTitle);
+            }
             return gameplayViewModel;
         }
 
 
-        public List<IsVisitedField> InitializeVisitedFields(int mapSize)
+        public List<IsVisitedField> InitializeVisitedFields(int mapSize, GameplayData gameplayData)
         {
             List<IsVisitedField> visitedFields = new List<IsVisitedField>();
             for (int i = 0; i < mapSize; ++i)
@@ -100,7 +103,8 @@ namespace AdventureGameEditor.Models.Services
                     {
                         IsVisited = false,
                         ColNumber = i,
-                        RowNumber = j
+                        RowNumber = j,
+                        GameplayData = gameplayData
                     });
                 }
             }
@@ -363,7 +367,9 @@ namespace AdventureGameEditor.Models.Services
                 IsVisited = GetIsVisitedField(playerName, gameTitle,
                     field.ColNumber, field.RowNumber),
                 IsAtTargetField = IsAtTargetField(gameTitle, field.RowNumber, field.ColNumber),
-                LifeCount = GetLifeCount(playerName, gameTitle)
+                LifeCount = GetLifeCount(playerName, gameTitle),
+                IsGameOver = _context.GameplayData.Where(g => g.GameTitle == gameTitle && g.PlayerName == playerName).FirstOrDefault()
+                    .GameCondition != GameCondition.OnGoing
             };
         }
 
@@ -448,13 +454,17 @@ namespace AdventureGameEditor.Models.Services
                 .FirstOrDefault();
         }
 
-        private void DeleteGameplayData(String playerName, String gameTitle)
+        public void DeleteGameplayData(String playerName, String gameTitle)
         {
             GameplayData dataToDelete = _context.GameplayData.Where(data => data.PlayerName == playerName && data.GameTitle == gameTitle
-            ).FirstOrDefault();
+            ).Include(d => d.VisitedFields).FirstOrDefault();
             if(dataToDelete != null)
             {
-            _context.GameplayData.Remove(dataToDelete);
+                foreach(IsVisitedField field in dataToDelete.VisitedFields)
+                {
+                    _context.IsVisitedField.Remove(field);
+                }
+                _context.GameplayData.Remove(dataToDelete);
             }
             _context.SaveChanges();
         }

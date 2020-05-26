@@ -27,5 +27,6 @@ namespace AdventureGameEditor.Models.Services
         public int GetGameMapSize(String gameTitle);
         public GameplayFieldViewModel GetGameplayFieldViewModel(String playerName, String gameTitle, Field field);
         public CompassPoint GetTargetDirection(String gameTitle, Field field);
+        public void DeleteGameplayData(String playerName, String gameTitle);
     }
 }

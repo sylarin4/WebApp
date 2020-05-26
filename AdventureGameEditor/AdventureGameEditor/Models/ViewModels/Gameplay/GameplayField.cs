@@ -18,6 +18,7 @@ namespace AdventureGameEditor.Models.ViewModels.Gameplay
         public Boolean IsDownWay { get; set; }
         public Boolean IsVisited { get; set; }
         public Boolean IsAtTargetField { get; set; }
+        public Boolean IsGameOver { get; set; }
         public int LifeCount { get; set; }
     }
 }
