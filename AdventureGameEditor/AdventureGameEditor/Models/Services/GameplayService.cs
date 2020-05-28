@@ -224,6 +224,10 @@ namespace AdventureGameEditor.Models.Services
         {
             Field field = GetField(gameTitle, rowNumber, colNumber);
             GameplayData gameplayData = GetGameplayData(playerName, gameTitle);
+            _context.IsVisitedField
+                .Where(f => f.GameplayData == gameplayData && f.ColNumber == colNumber && f.RowNumber == rowNumber)
+                .FirstOrDefault().IsVisited = true;
+            _context.SaveChanges();
             DirectionButtonsViewModel model = new DirectionButtonsViewModel()
             {
                 GameTitle = gameTitle,
