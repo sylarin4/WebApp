@@ -341,7 +341,7 @@ namespace AdventureGameEditor.Controllers
             if (gameResult.PreludeImage != null && !FormFileExtensions.IsImage(gameResult.PreludeImage))
             {
                 errorMessages.Add("Az előtörténethez kiválasztott fájl formátuma nem támogatott. \n" +
-                    "A fájl mentése siekertelen volt.\n" +
+                    "A fájl mentése sikertelen volt.\n" +
                     "Lehet, hogy nem képet adott meg?");
                 gameResult.PreludeImage = null;
             }
@@ -349,7 +349,7 @@ namespace AdventureGameEditor.Controllers
             if(gameResult.GameWonImage != null && !FormFileExtensions.IsImage(gameResult.GameWonImage))
             {
                 errorMessages.Add("A győzelem esetén megjelenítendő kép formátuma nem támogatott.\n" +
-                    "A fájl mentése siekertelen volt.\n" +
+                    "A fájl mentése sikertelen volt.\n" +
                     "Lehet, hogy nem képet adott meg?");
                 gameResult.GameWonImage = null;
             }
@@ -357,7 +357,7 @@ namespace AdventureGameEditor.Controllers
             if(gameResult.GameLostImage != null && !FormFileExtensions.IsImage(gameResult.GameLostImage))
             {
                 errorMessages.Add("A vereség esetén megejelenítendő kép formátuma nem támogatott.\n" +
-                    "A fájl mentése siekertelen volt.\n" +
+                    "A fájl mentése sikertelen volt.\n" +
                     "Lehet, hogy nem képet adott meg?");
                 gameResult.GameLostImage = null;
             }
@@ -365,7 +365,7 @@ namespace AdventureGameEditor.Controllers
             if(gameResult.NewCoverImage != null && !FormFileExtensions.IsImage(gameResult.NewCoverImage))
             {
                 errorMessages.Add("A játék új borítóképének megadott fájl  formátuma nem támogatott.\n" +
-                    "A fájl mentése siekertelen volt.\n" +
+                    "A fájl mentése sikertelen volt.\n" +
                     "Lehet, hogy nem képet adott meg?");
                 gameResult.NewCoverImage= null;
             }
