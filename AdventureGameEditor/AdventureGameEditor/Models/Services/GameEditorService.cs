@@ -162,7 +162,11 @@ namespace AdventureGameEditor.Models.Services
         #region // ---------- Getters ---------- //
         public MapViewModel GetMapViewModel(String userName, String gameTitle)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
+            Game game = _context.Game
+                .Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
+                .Include(g => g.Map)
+                .ThenInclude(m => m.Row)
+                .FirstOrDefault();
             return new MapViewModel
             {
                 MapSize = game.TableSize,
@@ -189,8 +193,10 @@ namespace AdventureGameEditor.Models.Services
 
         public String GetTextAtCoordinate(String userName, String gameTitle, int rowNumber, int colNumber)
         {
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            return field.Text;
+            return _context.Field.Where(f => f.GameTitle == gameTitle && f.UserName == userName && f.ColNumber == colNumber
+                        && f.RowNumber == rowNumber)
+                .Select(f => f.Text)
+                .FirstOrDefault();
         }
         #endregion
 
@@ -312,9 +318,10 @@ namespace AdventureGameEditor.Models.Services
 
             trial.Text = trialText;
 
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            Field field = _context.Field
+                .Where(f => f.UserName == userName && f.GameTitle == gameTitle && f.ColNumber == colNumber && f.RowNumber == rowNumber)
+                .FirstOrDefault();
             field.Trial = trial;
-            Trace.WriteLine(field.Trial.Text);
             _context.SaveChanges();
         }
 
@@ -326,13 +333,22 @@ namespace AdventureGameEditor.Models.Services
         #region //---------- Getters ----------// 
         public Trial GetTrial(String userName, String gameTitle, int colNumber, int rowNumber)
         {
-            Field field = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
-            return field.Trial;
+            return _context.Field
+                .Where(field => field.UserName == userName && field.GameTitle == gameTitle)
+                .Where(field => field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .Include(field => field.Trial)
+                .ThenInclude(trial => trial.Alternatives)
+                .ThenInclude(alternatives => alternatives.TrialResult)
+                .Select(field => field.Trial)
+                .FirstOrDefault();
         }
 
         public MapContentViewModel GetMapContentViewModel(String userName, String gameTitle)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
+            Game game = _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
+                .Include(g => g.Map)
+                .ThenInclude(map => map.Row)
+                .FirstOrDefault();
             return new MapContentViewModel()
             {
                 GameTitle = game.Title,
@@ -408,15 +424,15 @@ namespace AdventureGameEditor.Models.Services
         // Save the start field which's coordinates are given in the function's attributes (rowNumber and colNumber).
         public void SaveStartField(String userName, String gameTitle, int rowNumber, int colNumber)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
-            game.StartField = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            Game game = GetGameWithoutIncludes(userName, gameTitle);
+            game.StartField = GetFieldWithoutIncludes(userName, gameTitle, rowNumber, colNumber);
             _context.SaveChanges();
         }
 
         public void SaveTargetField(String userName, String gameTitle, int rowNumber, int colNumber)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
-            game.TargetField = GetFieldAtCoordinate(userName, gameTitle, rowNumber, colNumber);
+            Game game = GetGameWithoutIncludes(userName, gameTitle);
+            game.TargetField = GetFieldWithoutIncludes(userName, gameTitle, rowNumber, colNumber);
             _context.SaveChanges();
         }
 
@@ -532,7 +548,16 @@ namespace AdventureGameEditor.Models.Services
                 return false;
             }
 
-            Game game = GetGameAtTitle(userName, gameTitle);
+            Game game = _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
+                .Include(g => g.Owner)
+                .Include(g => g.CoverImage)
+                .Include(g => g.GameLostResult)
+                .ThenInclude(result => result.Image)
+                .Include(g => g.GameWonResult)
+                .ThenInclude(result => result.Image)
+                .Include(g => g.Prelude)
+                .ThenInclude(p => p.Image)
+                .FirstOrDefault();
             if (game == null)
             {
                 return false;
@@ -613,8 +638,11 @@ namespace AdventureGameEditor.Models.Services
             //Saveing the new cover image if it's set.
             if(newCoverImage != null)
             {
-                game.CoverImage.Name = newCoverImage.FileName;
-                game.CoverImage.Picture= ConvertIFormFileToImage(newCoverImage);
+                game.CoverImage = new Image()
+                {
+                    Name = newCoverImage.FileName,
+                    Picture = ConvertIFormFileToImage(newCoverImage)
+                };
             }
 
             // Saveing summary.
@@ -626,7 +654,16 @@ namespace AdventureGameEditor.Models.Services
 
         public GameResultViewModel GetGameResult(String userName, String gameTitle)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
+            Game game = _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle)
+                .Include(g => g.Owner)
+                .Include(g => g.CoverImage)
+                .Include(g => g.GameLostResult)
+                .ThenInclude(result => result.Image)
+                .Include(g => g.GameWonResult)
+                .ThenInclude(result => result.Image)
+                .Include(g => g.Prelude)
+                .ThenInclude(p => p.Image)
+                .FirstOrDefault();
             GameResultViewModel model = new GameResultViewModel()
             {
                 GameTitle = gameTitle,
@@ -733,7 +770,7 @@ namespace AdventureGameEditor.Models.Services
 
         public void SetReadyToPlay(String userName, String gameTitle)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
+            Game game = GetGameWithoutIncludes(userName, gameTitle);
             if (!game.IsReadyToPlay)
             {
                 game.IsReadyToPlay = true;
@@ -743,7 +780,7 @@ namespace AdventureGameEditor.Models.Services
 
         public void SetNotReadyToPlay(String userName, String gameTitle)
         {
-            Game game = GetGameAtTitle(userName, gameTitle);
+            Game game = GetGameWithoutIncludes(userName, gameTitle);
             if (game.IsReadyToPlay)
             {
                 game.IsReadyToPlay = false;
@@ -967,6 +1004,18 @@ namespace AdventureGameEditor.Models.Services
         #endregion
 
         #region Private helper functions
+
+        private Field GetFieldWithoutIncludes(String userName, String gameTitle, int rowNumber, int colNumber)
+        {
+            return _context.Field.Where(f => f.UserName == userName && f.GameTitle == gameTitle &&
+                    f.RowNumber == rowNumber && f.ColNumber == colNumber)
+                .FirstOrDefault();
+        }
+
+        private Game GetGameWithoutIncludes(String userName, String gameTitle)
+        {
+            return _context.Game.Where(g => g.Owner.UserName == userName && g.Title == gameTitle).FirstOrDefault();
+        }
 
         private byte[] ConvertIFormFileToImage(IFormFile file)
         {

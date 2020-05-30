@@ -117,7 +117,7 @@ namespace AdventureGameEditor.Models.Services
 
         public void StepPlayCounter(String gameTitle)
         {
-            GetGame(gameTitle).PlayCounter++;
+            GetGameWithoutIncludes(gameTitle).PlayCounter++;
             _context.SaveChanges();
         }
 
@@ -136,8 +136,8 @@ namespace AdventureGameEditor.Models.Services
                 .IsVisited = true;
 
             // Step the player to the next field.
-            Field newPosition = GetNextField(gameplayData.CurrentPlayerPosition, GetGame(gameTitle).TableSize, direction);
-            int tableSize = GetGame(gameTitle).TableSize;
+            Field newPosition = GetNextField(gameplayData.CurrentPlayerPosition, GetGameWithoutIncludes(gameTitle).TableSize, direction);
+            int tableSize = GetGameWithoutIncludes(gameTitle).TableSize;
             gameplayData.CurrentPlayerPosition = newPosition;
             gameplayData.StepCount++;
             gameplayData.LastPlayDate = DateTime.Now;
@@ -182,9 +182,14 @@ namespace AdventureGameEditor.Models.Services
 
         public GameResult GetGameResult(String gameTitle, String userName)
         {
-            if(GetGameplayData(userName, gameTitle) == null)
+            if(GetGameplayDataWithoutIncludes(userName, gameTitle) == null)
             {
-                Game game = GetGame(gameTitle);
+                Game game = _context.Game
+                    .Where(g => g.Title == gameTitle)
+                    .Include(g => g.Owner)
+                    .Include(g => g.GameWonResult)
+                    .ThenInclude(r => r.Image)
+                    .FirstOrDefault();
                 return new GameResult()
                 {
                     Owner = game.Owner,
@@ -194,7 +199,7 @@ namespace AdventureGameEditor.Models.Services
                     Text = game.GameWonResult != null ? game.GameWonResult.Text : ""
                 };
             }
-            Boolean isgameWon = GetGameplayData(userName, gameTitle).GameCondition == GameCondition.Won;
+            Boolean isgameWon = GetGameplayDataWithoutIncludes(userName, gameTitle).GameCondition == GameCondition.Won;
             DeleteGameplayData(userName, gameTitle);
             return _context.GameResult
                 .Where(result => result.GameTitle == gameTitle && result.IsGameWonResult == isgameWon)
@@ -204,7 +209,7 @@ namespace AdventureGameEditor.Models.Services
 
         public void SetGameOver(String playerName, String gameTitle, Boolean isGameWon)
         {
-            GameplayData gameplayData = GetGameplayData(playerName, gameTitle);
+            GameplayData gameplayData = GetGameplayDataWithoutIncludes(playerName, gameTitle);
             if (isGameWon)
             {
                 gameplayData.GameCondition = GameCondition.Won;
@@ -222,8 +227,8 @@ namespace AdventureGameEditor.Models.Services
         public DirectionButtonsViewModel GetDirectionButtonsAfterTrial(String playerName, String gameTitle, int colNumber,
             int rowNumber, int trialNumber, Boolean isAtTargetField)
         {
-            Field field = GetField(gameTitle, rowNumber, colNumber);
-            GameplayData gameplayData = GetGameplayData(playerName, gameTitle);
+            Field field = GetFieldWithoutIncludes(gameTitle, rowNumber, colNumber);
+            GameplayData gameplayData = GetGameplayDataWithoutIncludes(playerName, gameTitle);
             _context.IsVisitedField
                 .Where(f => f.GameplayData == gameplayData && f.ColNumber == colNumber && f.RowNumber == rowNumber)
                 .FirstOrDefault().IsVisited = true;
@@ -414,6 +419,13 @@ namespace AdventureGameEditor.Models.Services
                 .FirstOrDefault();
         }
 
+        public Field GetFieldWithoutIncludes(String gameTitle, int rowNumber, int colNumber)
+        {
+            return _context.Field
+                .Where(field => field.GameTitle == gameTitle && field.ColNumber == colNumber && field.RowNumber == rowNumber)
+                .FirstOrDefault();
+        }
+
         public FileContentResult GetFieldImage(int imageID)
         {
             if (imageID < 0) return null;
@@ -432,8 +444,6 @@ namespace AdventureGameEditor.Models.Services
 
         #region Helper functions
 
-
-
         private Game GetGame(String gameTitle)
         {
             return _context.Game
@@ -449,12 +459,26 @@ namespace AdventureGameEditor.Models.Services
                 .FirstOrDefault();
         }
 
+        private Game GetGameWithoutIncludes(String gameTitle)
+        {
+            return _context.Game
+                .Where(game => game.Title == gameTitle)
+                .FirstOrDefault();
+        }
+
         private GameplayData GetGameplayData(String userName, String gameTitle)
         {
             return _context.GameplayData
                 .Include(data => data.CurrentPlayerPosition)
                 .Where(data => data.PlayerName == userName && data.GameTitle == gameTitle)
                 .Include(data => data.VisitedFields)
+                .FirstOrDefault();
+        }
+
+        private GameplayData GetGameplayDataWithoutIncludes(String userName, String gameTitle)
+        {
+            return _context.GameplayData
+                .Where(data => data.PlayerName == userName && data.GameTitle == gameTitle)
                 .FirstOrDefault();
         }
 

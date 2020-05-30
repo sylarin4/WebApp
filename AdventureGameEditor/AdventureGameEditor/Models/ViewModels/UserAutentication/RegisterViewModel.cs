@@ -17,11 +17,13 @@ namespace AdventureGameEditor.Models.ViewModels.UserAutentication
 
         [Display(Name = "Email cím")]
         [Required(ErrorMessage = "Az email cím mezőjét kötelező kitölteni.")]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Nem megfelelő email formátum.")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Nem megfelelő email formátum.")]
         public String EmailAddress { get; set; }
 
         [Display(Name = "Email cím megerősítése")]
         [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Nem megfelelő email formátum.")]
         [Compare(nameof(EmailAddress), ErrorMessage = "Az email címek nem egyeznek.")]
         public String ValidateEmailAddress { get; set; }
 

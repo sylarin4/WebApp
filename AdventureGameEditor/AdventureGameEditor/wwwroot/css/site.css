@@ -395,7 +395,8 @@ a.navbar-brand {
 
 .details-img{
     max-width: 80%;
-    height:60%;
+    height:auto;
+    width:auto;
     max-height:200pt;
     margin:auto;
     padding-bottom:5pt;
@@ -465,7 +466,7 @@ a.navbar-brand {
     padding-bottom:5pt;
 }
 .map-field-image{
-    width: 60px;
+    width: 86px;
 }
 .map-fields{
     float:left;
@@ -477,8 +478,9 @@ a.navbar-brand {
 }
 .map-fields table tr td button{
     background-color:transparent;
-    border:none;
-    padding-bottom: 10pt;
+    border:5px;
+    padding:0px;
+    margin:0px;
 }
 .map-fields a{
     color:black;
