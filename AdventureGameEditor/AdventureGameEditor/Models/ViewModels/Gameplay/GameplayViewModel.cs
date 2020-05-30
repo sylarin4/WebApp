@@ -16,6 +16,5 @@ namespace AdventureGameEditor.Models.ViewModels.Gameplay
         public Boolean IsVisitiedCurrentPlayerPosition { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime LastPlayDate { get; set; }
-        //public List<List<GameplayFieldViewModel>> GameplayMap { get; set; }
     }
 }

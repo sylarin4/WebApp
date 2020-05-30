@@ -1,7 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// ---------- Functions for "CreateMapContent" view ---------- //
+﻿// ---------- Functions for "CreateMapContent" view ---------- //
 
 // Load buttons for a field, which make available to add text or trial or just show the already added content of it.
 function LoadButtonsForAddFieldContent(gameTitle, rowNumber, colNumber) {

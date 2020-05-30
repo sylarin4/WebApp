@@ -24,7 +24,6 @@ namespace AdventureGameEditor.Models
 
                 context.Database.Migrate();
 
-                // Look for any users.
                 if (context.MapImage.Any())
                 {
 
@@ -73,7 +72,6 @@ namespace AdventureGameEditor.Models
         {
             foreach (String filePath in Directory.GetFiles("Pictures/MapPictures/Default"))
             {
-                // TODO: make it more effective
                 int wayDirectionsCode = 0;
                 for (int i = 0; i < 4; ++i)
                 {

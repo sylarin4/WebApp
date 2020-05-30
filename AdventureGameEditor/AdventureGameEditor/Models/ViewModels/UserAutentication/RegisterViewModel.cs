@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace AdventureGameEditor.Models.ViewModels.UserAutentication
@@ -14,12 +11,12 @@ namespace AdventureGameEditor.Models.ViewModels.UserAutentication
         public String UserName { get; set; }
 
         [Display(Name = "Becenév (amit a többi felhasználó lát)")]
-        [Required(ErrorMessage = "A becenévnév mezőt kötelező kitölteni.")]
+        [Required(ErrorMessage = "A becenév mezőt kötelező kitölteni.")]
         [RegularExpression("^[A-Za-z0-9_-]{4,40}$", ErrorMessage = "A becenév formátuma nem megfelelő.")]
         public String NickName { get; set; }
 
         [Display(Name = "Email cím")]
-        [Required(ErrorMessage = "Az email mezőt kötelező kitölteni.")]
+        [Required(ErrorMessage = "Az email cím mezőjét kötelező kitölteni.")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Nem megfelelő email formátum.")]
         public String EmailAddress { get; set; }
 
@@ -28,7 +25,7 @@ namespace AdventureGameEditor.Models.ViewModels.UserAutentication
         [Compare(nameof(EmailAddress), ErrorMessage = "Az email címek nem egyeznek.")]
         public String ValidateEmailAddress { get; set; }
 
-        [Display(Name = "Jelszó (Minimum 8, maximum 40 karakter hosszú lehet, csak betűt, számot és kötőjelet tartalmathat.)")]
+        [Display(Name = "Jelszó (Minimum 8, maximum 40 karakter hosszú lehet, csak betűt, számot és kötőjelet tartalmazhat.)")]
         [Required(ErrorMessage = "A jelszó mezőt kötelező kitölteni.")]
         [RegularExpression("^[A-Za-z0-9_-]{8,40}$", ErrorMessage = "A jelszó formátuma nem megfelelő.")]
         [DataType(DataType.Password)]

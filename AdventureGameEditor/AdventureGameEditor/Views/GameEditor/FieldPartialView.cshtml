@@ -1,21 +1,13 @@
 ﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.MapPieceViewModel
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-        @{/*<a asp-area="" asp-controller="GameEditor" asp-action="Test"
-               asp-route-gameTitle=@Model.GameTitle asp-route-rowNumber=@Model.Field.HorizontalCord
-               asp-route-colNumber=@Model.Field.VerticalCord>*/
-        }
-            @{ int way = 0;
-                if (Model.Field.IsLeftWay)
-                    way += 1;
-                if (Model.Field.IsDownWay)
-                    way += 10;
-                if (Model.Field.IsRightWay)
-                    way += 100;
-                if (Model.Field.IsUpWay)
-                    way += 1000;
-            }
-            <img src="@Url.Action("GetMapImage", new { wayDirectionsCode = way })" class="map-piece-image" />
-        @{//</a>
-        }
+
+@{ int way = 0;
+    if (Model.Field.IsLeftWay)
+        way += 1;
+    if (Model.Field.IsDownWay)
+        way += 10;
+    if (Model.Field.IsRightWay)
+        way += 100;
+    if (Model.Field.IsUpWay)
+        way += 1000;
+}
+<img src="@Url.Action("GetMapImage", new { wayDirectionsCode = way })" class="map-piece-image" />
