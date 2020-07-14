@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Antrum</title>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="@Url.Content("~/css/site.css")"
+          rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <header>
+        <div id="inner">
+            @if (ViewBag.CurrentGuestName != null)
+            {
+            <div id="user">
+                @if (ViewBag.CurrentGuestName.Length <= 11)
+                {
+                    <a asp-area="" asp-controller="Users" asp-action="GetProfile">@ViewBag.CurrentGuestName</a>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="" asp-action="">@ViewBag.CurrentGuestName.Substring(0,8)..</a>
+                }
+
+            </div>
+            }
+            <div id="title">
+                <h1 id="titleText">Antrum</h1>
+                <h2 id="slogan"> A kalandjátékbarlang.</h2>
+            </div>
+        </div>
+        
+
+        <div id="mainMenu">
+                <ul>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Kezdőlap</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Help">Súgó</a>
+                    </li>
+                    @if (ViewBag.CurrentGuestName == null)
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Users" asp-action="Register">Regisztráció</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Users" asp-action="Login">Bejelentkezés</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Users" asp-action="Logout">Kijelentkezés</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="GameEditor" asp-action="CreateGame">Játék létrehozása</a>
+                        </li>
+                    }
+
+                    <li>
+                        <a asp-area="" asp-controller="GameViewer" asp-action="Index">Játékok listázása</a>
+                    </li>
+
+                </ul>
+        </div>
+    </header>
+
+    <div  id="content">
+        <main role="main" class="pb-3">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿@model AdventureGameEditor.Models.DatabaseModels.Game.GameResult
+
+@{
+    ViewData["Title"] = "Játék vége";
+}
+<div class="game-result single-page">
+    <h1>Játék vége!</h1>
+    <div>
+        @if (Model.Image != null)
+        {
+            <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.Image.ID })" class="contentImage" height=100 />
+        }
+
+        <div class="scrollable game-result-text">
+            <p>@Model.Text</p>
+        </div> 
+        
+        @if (Model.IsGameWonResult)
+        {
+            <h6>Gratulálunk, nyertél!</h6>
+        }
+        else
+        {
+            <h6>Sajnos Vesztettél!</h6>
+        }
+    </div>
+</div>
+
+

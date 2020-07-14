@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Library.Models.BooksController">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AICASACAAAABRACAAAAgCAAAAAEAAEACAAEAAEAAAAA=</HashCode>
+      <FileName>Controllers\BooksController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Models.GuestsController">
+    <Position X="2.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAABJACAAAAAAAIAAAEBAEACAAEQAAAAAAA=</HashCode>
+      <FileName>Controllers\GuestsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.Models.LendingsController">
+    <Position X="4.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAABBACAAAAAAAAAIAEAAEACAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\LendingsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

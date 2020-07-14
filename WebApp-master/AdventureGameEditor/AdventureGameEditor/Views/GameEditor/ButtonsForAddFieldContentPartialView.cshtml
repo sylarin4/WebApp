@@ -1,0 +1,13 @@
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.MapPieceViewModel
+
+@{ 
+    int rowNumber = @Model.Field.RowNumber + 1;
+    int colNumber = @Model.Field.ColNumber + 1;
+}
+
+<h6>A kiválasztott mező indexe (sorszám, oszlopszám):</h6>
+<h6>@rowNumber, @colNumber</h6>
+
+<button type="button" onclick=" LoadFormForAddFieldContent ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Tartalom hozzáadása </button>
+<button type="button" onclick=" LoadFormForAddFieldTrial ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Próba hozzáadása </button>
+<button type="button" onclick=" LoadFieldDetails ('@Model.GameTitle', '@Model.Field.RowNumber', '@Model.Field.ColNumber');"> Tartalom megjelenítése </button>

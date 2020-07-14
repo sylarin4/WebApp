@@ -1,0 +1,103 @@
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.MapViewModel
+@{
+    ViewData["Title"] = "Térkép létrehozása";
+}
+
+<head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+</head>
+
+<div class="menu">
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+           new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() { GameTitle = Model.GameTitle });}
+</div>
+
+<div class="create-game-content">
+
+    <h1> @Model.GameTitle játék </h1>
+    <h2>térképének létrehozása</h2>
+
+    <div class="map-fields">
+        <table>
+
+            <tr>
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0110 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0111 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0011 });}
+            </tr>
+            <tr>
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1110 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1111 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1011 });}
+            </tr>
+            <tr>
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1100 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1101 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1001 });}
+            </tr>
+            <tr>
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0100 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0101 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0001 });}
+            </tr>
+            <tr>
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0010 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1010 });}
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 0000 });}
+            </tr>
+            <tr>
+                @{await Html.RenderPartialAsync("WayDirectionsPiece", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.WayDirectionsPieceViewModel 
+                      { GameTitle = Model.GameTitle, WayDirectionsCode = 1000 });}
+                <td></td>
+                <td>
+                    <a asp-controller="GameEditor" asp-action="CreateMapContent" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+                </td>             
+                
+            </tr>
+
+        </table>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="map">
+        @{await Html.RenderPartialAsync("Map", new AdventureGameEditor.Models.ViewModels.GameEditor.LoadMapViewModel
+            {
+                MapSize = Model.MapSize,
+                GameTitle = Model.GameTitle,
+                Map = Model.Map,
+                FunctionName = "RefreshField"
+            });}
+    </div>
+
+</div>

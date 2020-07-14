@@ -1,0 +1,83 @@
+﻿@model AdventureGameEditor.Models.DatabaseModels.Game.Game
+@{
+    ViewData["Title"] = "Játék adatai";
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+
+<div class="game-details">
+    <div class="game-details-left-column">
+        @if (Model.CoverImage != null)
+        {
+            <img class="details-img" src="@Url.Action("RenderCoverImage", new { imageID = Model.CoverImage.ID })" width="500px" />
+        }
+        @if (Model.CoverImage == null)
+        {
+            <img class="details-img" src="~/empty_pic.jpg" height="100" />
+        }
+
+        <table>
+            <tr>
+                <th>Cím</th>
+                <td>@Model.Title</td>
+            </tr>
+            <tr>
+                <th>Készítette</th>
+                <td>
+                    @if (Model.Owner == null)
+                    {
+                        <p>Törölt felhasználó</p>
+                    }
+                    else
+                    {
+                        @Model.Owner.NickName
+
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th>Térkép mérete</th>
+                <td>@Model.TableSize x @Model.TableSize</td>
+            </tr>
+            <tr>
+                <th>Játékmenetek száma</th>
+                <td>@Model.PlayCounter alkalommal játszottak vele.</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="game-details-right-column">
+        <h2> Tartalom: </h2>
+        <div class="game-details-story">
+            @if (Model.Summary != null && Model.Summary != "")
+            {
+                <p> @Model.Summary</p>
+            }
+            else
+            {
+                <p>A játéknak nem rendelkezik összefoglalóval.</p>
+            }
+        </div>
+
+        <p>
+            @if (ViewBag.CurrentGuestName != null)
+            {
+                <a asp-controller="GameViewer" asp-action="RedirectToPrelude" asp-route-gameTitle="@Model.Title">Játék</a>
+            }
+        </p>
+        <p>
+            @if (Model.Owner != null && ViewBag.CurrentGuestName == Model.Owner.UserName)
+            {
+                <a asp-controller="GameEditor" asp-action="EditGame" asp-route-gameTitle="@Model.Title">Játék szerkesztése</a>
+            }
+        </p>
+        <p>
+            <a asp-controller="GameViewer" asp-action="Index">Vissza a játékokhoz</a>
+        </p>
+    </div>
+
+
+</div>

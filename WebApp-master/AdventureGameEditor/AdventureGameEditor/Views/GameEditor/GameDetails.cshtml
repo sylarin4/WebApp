@@ -1,0 +1,238 @@
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.GameDetailsViewModel
+@{
+    ViewData["Title"] = "Játék adatai";
+}
+
+<head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Játék adatai</title>
+</head>
+<div class="menu">
+    @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+           new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() { GameTitle = Model.Title });}
+</div>
+<div class="two-page-content">
+    <div class="create-game-details">
+        <h4>A játék adatai</h4>
+        <hr />
+        <div class="scrollable form game-details-form">
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OwnerName)
+                    </th>
+                    <td>
+                        <p>@Html.DisplayFor(model => model.OwnerName)</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <td>
+                        <p>@Html.DisplayFor(model => model.Title)</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CoverImageID)
+                    </th>
+                    <td>
+                        @if (Model.CoverImageID == -1)
+                        {
+                            <p>Nincs kép.</p>
+                        }
+                        else
+                        {
+                            <img src="@Url.Action("RenderCoverImage", new { imageID = Model.CoverImageID })" class="contentImage" height=100 />
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Visibility)
+                    </th>
+                    <td>
+                        <p>@Html.DisplayFor(model => model.Visibility)</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TableSize)
+                    </th>
+                    <td>
+                        <p>@Html.DisplayFor(model => model.TableSize)</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartField)
+                    </th>
+                    <td>
+                        @if (Model.StartField != null)
+                        {
+                            <p>Sorszám: @Model.StartField.RowNumber, Oszlopszám: @Model.StartField.ColNumber</p>
+                        }
+                        else
+                        {
+                            <p>Még nincs beállítva.</p>
+                        }
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TargetField)
+                    </th>
+                    <td>
+                        @if (Model.TargetField != null)
+                        {
+                            <p>Sorszám: @Model.TargetField.RowNumber, Oszlopszám: @Model.TargetField.ColNumber</p>
+                        }
+                        else
+                        {
+                            <p>Még nincs beállítva</p>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prelude)
+                    </th>
+                    <td>
+                        @if (Model.Prelude != null)
+                        {
+                            <p>@Html.DisplayFor(model => model.Prelude)</p>
+                        }
+                        else
+                        {
+                            <p>Még nincs kitöltve</p>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PreludeImageID)
+                    </th>
+                    <td>
+                        @if (Model.PreludeImageID == -1)
+                        {
+                            <p>Nincs kép.</p>
+                        }
+                        else
+                        {
+                            <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PreludeImageID })" class="contentImage" height=100 />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Summary)
+                    </th>
+                    <td>
+                        @if (Model.Summary != "" || Model.Summary != null)
+                        {
+                            <p>@Html.DisplayFor(model => model.Summary)</p>
+                        }
+                        else
+                        {
+                            <p>Nem rendelkezik összefoglalóval.</p>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GameWonResult)
+                    </th>
+                    <td>
+                        @if (Model.GameWonResult != null)
+                        {
+                            <p>@Html.DisplayFor(model => model.GameWonResult)</p>
+                        }
+                        else
+                        {
+                            <p>Még nincs kitöltve.</p>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GameWonImageID)
+                    </th>
+                    <td>
+                        @if (Model.GameWonImageID == -1)
+                        {
+                            <p>Nincs kép.</p>
+                        }
+                        else
+                        {
+                            <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameWonImageID })" class="contentImage" height=100 />
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GameLostResult)
+                    </th>
+                    <td>
+                        @if (Model.GameLostResult != null)
+                        {
+                            <p>@Html.DisplayFor(model => model.GameLostResult)</p>
+                        }
+                        else
+                        {
+                            <p>Még nincs kitöltve</p>
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GameLostImageID)
+                    </th>
+                    <td>
+                        @if (Model.GameWonImageID == -1)
+                        {
+                            <p>Nincs kép.</p>
+                        }
+                        else
+                        {
+                            <img src="@Url.Action("RenderGameResultImage", new { imageID = Model.GameLostImageID })" class="contentImage" height=100 />
+                        }
+                    </td>
+                </tr>
+            </table>
+            <h5>
+                @Html.DisplayNameFor(model => model.Map)
+            </h5>
+
+            @{await Html.RenderPartialAsync("Map", 
+                  new AdventureGameEditor.Models.ViewModels.GameEditor.LoadMapViewModel
+                {
+                    MapSize = Model.TableSize,
+                    GameTitle = Model.Title,
+                    Map = Model.Map.ToList(),
+                    FunctionName = "LoadFieldDetails"
+                });}
+            <p>Kattintson a térkép egyik mezőjére az ahhoz tartozó információk megjelenítéséhez!</p>
+        </div>
+        <a asp-controller="GameEditor" asp-action="CheckGame" asp-route-gameTitle="@Model.Title">Tovább</a>
+
+    </div>
+    <div class="field-details forms scrollable">
+        <div id="fieldDetails"></div>
+        <div id="InputArea"></div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.MapPieceViewModel
+
+@{ int way = 0;
+    if (Model.Field.IsLeftWay)
+        way += 1;
+    if (Model.Field.IsDownWay)
+        way += 10;
+    if (Model.Field.IsRightWay)
+        way += 100;
+    if (Model.Field.IsUpWay)
+        way += 1000;
+}
+<img src="@Url.Action("GetMapImage", new { wayDirectionsCode = way })" class="map-piece-image" />

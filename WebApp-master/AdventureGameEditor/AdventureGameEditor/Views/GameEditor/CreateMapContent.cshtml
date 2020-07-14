@@ -1,0 +1,86 @@
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.MapContentViewModel
+@{
+    ViewData["Title"] = "Mezők tartalmának szerekesztése";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Térkép tartalmának szerkesztése</title>
+</head>
+<body>
+    <div class="menu">
+        @{ await Html.RenderPartialAsync("GameEditorMenuPartialView", 
+               new AdventureGameEditor.Models.ViewModels.GameEditor.GameEditorMenuViewModel() 
+               { GameTitle = Model.GameTitle });}
+    </div>
+
+
+    <div class="create-game-content">
+        <h1>@Model.GameTitle játék</h1>
+        <h2> @Model.Action</h2>
+    </div>
+
+
+    <div class="two-page-content create-game-content-wrap">
+
+
+        <div class="create-game-content create-map-content">
+            <div class="map-content">
+                @{await Html.RenderPartialAsync("Map", 
+                      new AdventureGameEditor.Models.ViewModels.GameEditor.LoadMapViewModel
+                    {
+                        MapSize = Model.MapSize,
+                        GameTitle = Model.GameTitle,
+                        Map = Model.Map,
+                        FunctionName = Model.FunctionName
+                    });}
+            </div>
+            
+            <p>@Model.Guide</p>
+            <a asp-controller="GameEditor" asp-action="@Model.NextControllerAction" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+        </div>
+
+
+        <div class="forms">
+
+            <div id="ButtonsPlace">
+
+                @if (Model.IsFieldSelected == true)
+                {
+                    await Html.RenderPartialAsync("ButtonsForAddFieldContentPartialView", 
+                        new AdventureGameEditor.Models.ViewModels.GameEditor.MapPieceViewModel()
+                    {
+                        GameTitle = Model.GameTitle,
+                        Field = Model.SelectedField
+                    }
+                    );
+                }
+            </div>
+
+            <div class="scrollable form">
+                <div id="InputArea"> </div>
+                <div id="ErrorMessage">
+                    @if (Model.ErrorMessage != null && Model.ErrorMessage.Length > 0)
+                    {
+                        @Model.ErrorMessage
+                    }
+                </div>
+
+                <div id="fieldDetails"></div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+</body>
+
+
+</html>

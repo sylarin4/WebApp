@@ -1,0 +1,30 @@
+﻿@model AdventureGameEditor.Models.ViewModels.Gameplay.GameplayViewModel
+@{
+    ViewData["Title"] = "Játékmenet";
+}
+
+<head>
+    <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+    <title>Gameplay</title>
+</head>
+
+
+<div id="fieldDetails">
+    @{ await Html.RenderPartialAsync("GameplayFieldDetails", 
+           new AdventureGameEditor.Models.ViewModels.Gameplay.GameplayFieldViewModel()
+        {
+            GameTitle = Model.GameTitle,
+            RowNumber = Model.CurrentPlayerPosition.RowNumber,
+            ColNumber = Model.CurrentPlayerPosition.ColNumber,
+            Text = Model.CurrentPlayerPosition.Text,
+            FieldImageID = Model.CurrentPlayerPosition.Image != null ? Model.CurrentPlayerPosition.Image.ID : -1,
+            Trial = Model.CurrentPlayerPosition.Trial,
+            IsRightWay = Model.CurrentPlayerPosition.IsRightWay,
+            IsLeftWay = Model.CurrentPlayerPosition.IsLeftWay,
+            IsDownWay = Model.CurrentPlayerPosition.IsDownWay,
+            IsUpWay = Model.CurrentPlayerPosition.IsUpWay,
+            IsVisited = Model.IsVisitiedCurrentPlayerPosition,
+            LifeCount = Model.LifeCount,
+            IsGameOver = Model.IsGameOver
+        });}
+</div>

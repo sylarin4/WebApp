@@ -1,0 +1,44 @@
+﻿@model AdventureGameEditor.Models.ViewModels.UserAutentication.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profil";
+}
+
+@{await Html.RenderPartialAsync("EditUserMenu");}
+
+<div class="profile">
+    <div class="single-page">
+        <h2>Profil</h2>
+        <img class="index-img" src="~/css/pictures/user_image.jpg" />
+        @if (Model != null)
+        {
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.UserName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NickName)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.NickName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmailAddress)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(model => model.EmailAddress)
+                    </td>
+                </tr>
+            </table>
+        }
+
+    </div>
+</div>

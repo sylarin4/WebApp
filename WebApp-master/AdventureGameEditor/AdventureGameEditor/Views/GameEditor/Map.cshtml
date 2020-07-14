@@ -1,0 +1,38 @@
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.LoadMapViewModel
+@{
+    ViewData["Title"] = "Map";
+}
+
+
+<table>
+    @foreach (AdventureGameEditor.Models.DatabaseModels.Game.MapRow row in Model.Map)
+    {
+        <tr>
+            @foreach (AdventureGameEditor.Models.DatabaseModels.Game.Field field in row.Row)
+            {
+                <td >
+                    <button type="button"  onclick=" @Model.FunctionName ('@Model.GameTitle', '@field.RowNumber', '@field.ColNumber');">
+                        @{ String btId = field.RowNumber.ToString() + "-" + field.ColNumber.ToString();}
+                        <div id="@btId">
+                            @{
+                                await Html.RenderPartialAsync("FieldPartialView",
+                                new AdventureGameEditor.Models.ViewModels.GameEditor.MapPieceViewModel
+                                {
+                                    GameTitle = Model.GameTitle,
+                                    Field = field
+                                });
+                            }
+                         </div>
+                    </button>
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+
+
+
+
+

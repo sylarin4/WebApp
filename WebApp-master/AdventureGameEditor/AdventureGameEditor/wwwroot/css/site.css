@@ -1,0 +1,988 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+/* =====--------------- Scrollbar ---------------===== */
+
+/* Width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background-color:transparent; 
+} 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color:black; 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color:black; 
+}
+
+/* =====--------------- Header ---------------===== */
+
+header {
+    position: fixed;
+    text-align: center;
+    position: center;
+    width: 100% !important;
+    background-image: url("pictures/tunnel_background_edited.png");
+    background-size: cover;
+    height: 235px;
+    width: auto ;
+}
+
+/* =====-------------- Title ---------------===== */
+
+#title {
+    border-bottom: 2px solid #ccc;
+    border-bottom-color: burlywood;
+    text-align: center;
+    width: 100% ;
+    position: center;
+}
+#titleText {
+    font-size: 70px;
+    color: beige;
+    font-weight: 100;
+    font-family: Papyrus;
+    text-align: center;
+    width: 100% ;
+}
+#slogan {
+    font-size: 30px;
+    text-align: center;
+    color: bisque;
+    font-style: italic;
+    font-family: Papyrus;
+}
+
+/* =====---------------- Background ------------------===== */
+
+body {
+    font-size: 16px;
+    background-image: url("pictures/tunnel_background_edited.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: beige;
+    background-attachment: fixed;
+    font-family: 'Baskerville Old Face';
+    overflow: auto;
+    overflow: auto;
+    min-width: 1100px;
+    width: auto !important;
+    min-height: 450px;
+    height: auto !important;
+}
+
+/* =====--------------- Main menu ---------------===== */
+
+#mainMenu {
+    border: 0px;
+    background-color: transparent !important;
+    font-size: 20px;
+    color: darkgoldenrod;
+    font-family: 'Bookman Old Style';
+    border-bottom: 2px solid #ccc;
+    margin: 1em 0;
+    border-bottom-color: burlywood;
+    width: 100% !important;
+    position:fixed;
+    font-weight:bold;
+}
+#mainMenu ul li {
+    display:inline-block;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    list-style:none;
+    align-content:center;
+}
+#mainMenu ul li a:hover{
+    text-decoration:none;
+    color:chocolate
+}
+#mainMenu a{
+    color: burlywood;
+}
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* =====--------------- Home --------------===== */
+
+.display-4{
+    font-family: Papyrus;
+    font-size: 30px !important;
+}
+.index{
+    width:60%;
+    margin:auto;
+    text-align:left;
+    font-family:'Bookman Old Style';
+    font-size: 12pt;
+    color:sandybrown;
+}
+.index h6{
+    font-size:14pt;
+    padding-bottom:10pt;
+    padding-top:10pt;
+    color:burlywood;
+}
+
+/* =====--------------- Content ---------------===== */
+
+.page-content{
+    /*overflow-y:scroll;
+    bottom: 20pt;
+    height:80%;*/
+    border-top:240px solid;
+    border-top-color:transparent;
+    text-align:center;
+    font-family:'Bookman Old Style';
+}
+.page-content h1{
+    font-family:Papyrus;
+}
+/* =====--------------- Register ---------------===== */
+
+.register {
+    background-image: url("pictures/old_book_page.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 40px;
+    align-content: center;
+    text-align: center;
+    column-count: 2;
+    column-gap: 60px;
+    width: 70%;
+    margin: auto;
+    color: black !important;
+    font-family: 'Bookman Old Style';
+    padding-bottom: 50px;
+    padding-top: 70px;
+    height:420pt;
+}
+.register h2{
+    border-bottom: 2px solid #ccc;
+    border-bottom-color: black;
+    font-family: Papyrus;
+}
+.register a{
+    color: black;
+}
+.register input
+{
+    font-size:16px;
+    font-family: 'Bookman Old Style';
+    font-style: italic;
+    text-align:center;
+    background-color:transparent !important;
+    color: midnightblue;
+    border: none;
+    border-bottom:dashed;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+}
+.register input:hover{
+    background-color:transparent !important;
+    color:midnightblue;
+}
+.register input[type=submit]{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 20px;
+    border: none;
+    color: black;
+    font-style:normal;
+}
+.register input[type=submit]:hover{
+    text-decoration: underline;
+}
+.register label{
+    padding-top:10px;
+}
+.register form{
+    break-inside: avoid-column;
+}
+
+/* =====--------------- Single page  ---------------===== */
+/* (Used: Login, CreateGame */
+
+.single-page{
+    background-image: url("pictures/login_background.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: auto;
+    width: 35%;
+    padding: 20px;
+    font-family:'Bookman Old Style';
+    color: black;
+    text-align:center;
+    padding-top: 100px;
+    padding-bottom:100px;
+    padding-right: 40px;
+    padding-left: 40px;
+    height: 430pt;
+}
+.single-page h2{
+    font-family:Papyrus;
+    border-bottom: 2px solid #ccc;
+    border-bottom-color: black;
+}
+.single-page input
+{
+    font-size:16px;
+    font-family: 'Bookman Old Style';
+    font-style: italic;
+    text-align:center;
+    background-color:transparent !important;
+    color: midnightblue;
+    border: none;
+    border-bottom:dashed;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+}
+.single-page input::selection{
+    background-color:transparent !important;
+    color: midnightblue;
+}
+.single-page input[type=submit]{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 20px;
+    border: 1px;
+    color: black;
+    font-style: normal !important;
+}
+.single-page input[type=submit]:hover{
+    text-decoration: underline;
+    color:black !important;
+}
+.single-page input:hover{
+    background-color:transparent !important;
+    color:midnightblue;
+}
+
+/* =====-------------- User ---------------===== */
+
+#user {
+    width: 50pt;
+    height: 50pt;
+    background-image: url("pictures/user_image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: right;
+    padding-top: 35pt;
+    right:10pt;
+    top: 10pt;
+    position: fixed;
+    vertical-align: bottom;
+    color: black;
+    font-family: 'Bookman Old Style';
+    font-size: 10pt;
+}
+#user a{
+    color: burlywood;
+}
+
+/* =====--------------- Profile ---------------===== */
+
+.profile table{
+    margin:auto;
+    text-align:left;
+}
+.profile table tr td, th{    
+    border: 10pt solid;
+    border-color:transparent;
+    
+}
+.profile img{
+    width:60%;
+    height:60%;
+}
+.profile{
+    float:right;
+    width:100%;
+    margin:auto;
+}
+
+/* =====--------------- Edit password ---------------===== */
+.edit-password form{
+   padding-top:35pt;
+}
+.edit-password-result{
+    color:midnightblue;
+    font-style:italic;
+}
+
+/* =====--------------- Menu ---------------===== */
+
+.menu {
+    left:20pt;
+    width: 160pt;
+    position: fixed;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14pt;
+    font-family: 'Bookman Old Style';
+    text-align: left;
+    color: burlywood;
+    margin-left: 0px;
+}
+.menu ul li{
+    list-style: none;
+    padding-bottom: 10px;
+    border-bottom: 1px;
+    border-bottom-color: burlywood;
+}
+.menu ul li a{
+    color: burlywood;
+}
+.menu ul li a:hover{
+    text-decoration: none;
+    color: white;
+}
+.menu h6{
+    font-family:Papyrus;
+    text-align: center;
+    font-size: 18pt;
+    color: burlywood;
+    font-weight: bold;
+    border-bottom: 1px solid;
+}
+
+/* =====--------------- List games ---------------===== */
+
+.game-list {
+    padding:30pt;
+    padding-left:210pt;
+}
+.scrollable{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 420pt;
+}
+.index-img{
+    height: 150px;
+    max-width: 300px;
+}
+.game-list button {
+    background-color: transparent;
+    color: burlywood;
+    border-color: transparent;
+}
+#game-title{
+    font-family:Papyrus;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+}
+.error-messages{
+    text-align: center;
+    color: orangered;
+    font-style: italic;
+    border-top: 1px solid;
+    border-top-color: burlywood;
+}
+
+
+/* =====--------------- GameViewerDetails ---------------===== */
+
+.details-img{
+    max-width: 80%;
+    height:auto;
+    width:auto;
+    max-height:200pt;
+    margin:auto;
+    padding-bottom:5pt;
+}
+.game-details{
+    background-image: url("pictures/old_book_page.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding-right: 20pt;
+    padding-left:20pt;
+    height:370pt;
+    width: 80%;
+    color: black;
+    font-family: 'Bookman Old Style';
+    font-size: 100%;
+    padding-top: 40pt;
+}
+.game-details table tr th{
+    border: 1pt solid;
+    border-color:black;
+}
+.game-details table tr td{
+    border: 1pt solid;
+    border-color:black;
+}
+.game-details-story {
+    overflow-x: hidden;
+    overflow: auto;
+    height: 200pt;
+}
+.game-details-left-column{
+    float:left;
+    width: 45%;
+}
+.game-details-right-column{
+    float:right;
+    width:45%;
+}
+
+/* =====--------------- Create game ---------------===== */
+/* Create game form */
+.create-game select {
+    background-color: transparent;
+    font-style: italic;
+    color: midnightblue;
+    border-color:black;
+}
+.create-game input[type=file]{
+    background-color: transparent !important;
+}
+
+/* Create game map */
+.create-game-content{
+    padding-left: 220pt;
+}
+.create-game-content h1{
+    font-family:'Bookman Old Style';
+    color:burlywood;
+    text-align:center;
+    font-size:20pt;
+}
+.create-game-content h2 {
+    font-family: 'Bookman Old Style';
+    font-size: 16pt;
+    text-align: center;
+    color:burlywood;
+    padding-bottom:5pt;
+}
+.map-field-image{
+    width: 86px;
+}
+.map-fields{
+    float:left;
+    background-color:transparent;
+    background-image: url("pictures/old_paper.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    padding:10pt;
+}
+.map-fields table tr td button{
+    background-color:transparent;
+    border:5px;
+    padding:0px;
+    margin:0px;
+}
+.map-fields a{
+    color:black;
+    font-size:14pt;
+    font-family:'Bookman Old Style';
+}
+.map{
+    float:right;
+    width:59%;
+    padding-right:20pt;
+}
+.map table tr td button{
+    padding:0px;
+    margin:0px;
+    border:none;
+
+}
+.map table{
+    border-collapse:collapse;
+}
+.map-piece-image{
+    width:100%;
+}
+
+/* Create map content */
+.create-map-content{
+    padding:15pt;
+    width:45%;
+    vertical-align:central;
+    float:left;
+}
+.create-game-content-wrap{
+    height:400pt !important;
+}
+.create-game-content table tr {
+    border: none !important;
+    padding: 0pt !important;
+    margin: 0pt !important;
+    border-collapse: collapse !important;
+}
+.create-game-content table tr td{
+    border-collapse:collapse !important;
+}
+.create-map-content table tr td button {
+    background-color: transparent;
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+}
+.create-map-content table{    
+    border-collapse:collapse !important;
+    padding:0pt !important;
+}
+.create-map-content table img{
+    width:100%;
+    border:none !important;
+    padding:0px !important;
+    margin:0px !important;
+}
+.create-map-content a{
+    font-family:'Bookman Old Style';
+    color:black;
+    text-align:center;
+    font-size:16pt;
+    margin:auto;
+}
+.create-map-content p{
+    font-family:'Bookman Old Style';
+    font-size:11pt;
+    color:midnightblue;
+    font-style:italic;
+}
+.forms {
+    float: right;
+    padding: 20pt;
+    font-family: 'Book Antiqua';
+    font-size:11pt;
+    color: black;
+    text-align:center;
+    width: 50%;
+}
+.forms button{
+    background-color:transparent;
+    border-color:black;
+}
+.forms input{
+    background-color:transparent;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.forms select{
+    background-color:transparent;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.forms textarea{
+    background-color:transparent !important;
+    padding-bottom:10pt;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.forms textarea:hover{
+    background-color:transparent !important;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.form{
+    height:280pt;
+}
+.form h6{    
+    border-top:1pt solid;
+    border-top-color:black;
+    padding-top:10pt;
+    border-bottom:1pt solid;
+    border-bottom-color:black;
+}
+.form input[type=submit]{
+    border:1pt solid;
+    border-color:black;
+}
+.form hr{
+    color:black;
+}
+.forms table{
+    width:100%;
+}
+.forms table td {
+    max-width: 80%;
+    border: 1pt solid;
+    border-color: black;
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+}
+.forms table th {
+    border: 1pt solid;
+    border-color: black;
+}
+.forms h4{
+    padding-top:8pt;
+    padding-bottom:8pt;
+}
+.forms h5{
+    padding-top:5pt;
+    padding-bottom:5pt;
+}
+.forms img{
+    max-width:100%;
+}
+
+/* Create game result */
+.create-game-result {
+    height: 440pt;
+}
+.create-game-result-form{
+    height: 270pt;
+}
+.create-game-result-form textarea{
+    background-color:transparent !important;
+    font-family:'Bookman Old Style';
+    font-size:12pt;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.create-game-result-form textarea:hover{
+    background-color:transparent !important;
+    font-family:'Bookman Old Style';
+    font-size:12pt;
+    color:midnightblue;
+    font-style:italic;
+    border-color:black;
+}
+.create-game-result-form input[type=file]{
+    background-color:transparent;
+    font-family:'Bookman Old Style';
+    font-size:12pt;
+    color:midnightblue;
+    font-style:italic;
+}
+
+/* Show game details during creating */
+.create-game-details {
+    height: 450pt;
+    left: 10pt !important;
+    background-image: none !important;
+    padding: 20px;
+    font-family: 'Bookman Old Style';
+    color: black;
+    text-align: center;
+    height: 100%;
+    width: 50%;
+    float: left !important;
+    width: 50%;
+}
+.create-game-details table tr td{
+    border: 1pt solid;
+    border-color:black;
+}
+.create-game-details table tr th{
+    border: 1pt solid;
+    border-color:black;
+}
+.two-page-content{
+    background-image: url("pictures/old_book_page.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    width:70%;
+    height:420pt;
+    float:right;
+    border-right:20pt solid;
+    border-right-color:transparent;
+}
+.game-details-form{
+    height:340pt !important;
+}
+.game-details-form p{
+    font-family:'Bookman Old Style';
+    color:midnightblue;
+    font-style:italic;
+    font-size:12pt;
+}
+.game-details-form button{
+    background-color:transparent;
+    border-collapse:collapse;
+    padding:0pt;
+    border:none;
+}
+.field-details{
+    float:right !important;
+    width:50% !important;
+    padding:20pt;
+    background-image:none !important;
+}
+
+/* Check game */
+.check-game img{
+    height:50px;
+}
+.check-game{
+    height: 420pt !important;
+}
+.check-game h4{
+    border-bottom:2pt solid;
+    border-bottom-color: black;
+}
+.check-game ul li{
+    font-family:'Bookman Old Style';
+    font-size:13pt;
+    font-style:italic;
+    color:midnightblue;
+}
+.check-list{
+    height:280pt !important;
+}
+.check-game table tr{
+    border:none ;
+}
+.check-game table th {
+    border: none;
+}
+.check-game table {
+    border: none;
+}
+
+/* Delete game*/
+.delete-game h6{
+    padding-top:40pt;
+    padding-bottom:10pt;
+}
+.delete-game p{
+    padding-bottom:30pt;
+}
+
+/* =====--------------- Gameplay ---------------===== */
+
+/* Prelude */
+.prelude{
+    background-image: url("pictures/old_book_page.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+    margin:auto;
+    width:70%;
+    height:420pt;
+}
+.prelude h1{
+    font-size:20pt;
+    font-family:'Bookman Old Style';
+    text-align:center;
+    color: black;
+}
+.prelude-left-column{
+    float:left;
+    padding: 20pt;
+    text-align:center;
+    width:50%;
+    height:440pt;
+    vertical-align:central;
+}
+.prelude-left-column img{
+    max-width:80%;
+    max-height:80%;
+    width:auto;
+    height:auto;
+}
+.prelude-right-column{
+    float: right;
+    padding: 20pt;
+    width: 50%;
+    text-align: left;
+    width: 50%;
+    margin: auto;
+    height: 440pt;
+}
+.prelude-link {
+    margin: auto;
+    font-size: 14pt;
+    text-align: center !important;
+    font-family: 'Bookman Old Style';
+    color: midnightblue;
+    width: 50%;
+    padding-top:20pt;
+}
+.prelude-text {
+    padding-top: 20pt;
+    padding-bottom: 20pt;
+    font-family: 'Bookman Old Style';
+    font-size: 13pt;
+    color: black;
+    overflow-y: scroll;
+    height:350pt;
+    padding-top:10pt;
+    padding-bottom:10pt;
+}
+
+/* Gameplay */
+.gameplay-field-details{
+    background-image: url("pictures/old_book_page.jpg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    margin: auto;
+    height:424pt;
+    width: 70%;
+    color:black;
+    font-size:12pt;
+    font-family:'Bookman Old Style';
+}
+.gameplay-field-details-left-column{
+    float:left;
+    width:50%;
+    padding:20pt;
+    padding:20pt;
+    height:100%;
+}
+.gameplay-field-image img{
+    max-width:100%;
+    max-height:100%;
+    max-height:210pt;
+    width:auto;
+    height:auto;
+    border:2pt solid;
+    border-color:black;
+    border-style:groove;
+}
+#life-count img{
+    height:15pt;
+    width:15pt;
+}
+#life-count{
+    text-align:left;
+}
+.gameplay-field-details-right-column{
+    float:right;
+    width:50%;
+    padding:20pt;
+    border: 1pt solid;
+    border-color: black;
+    height:100%;
+}
+#gameplay-field-text{
+    height:100pt;
+    padding:10pt;
+    vertical-align:central;
+    padding-bottom:20pt;
+}
+.gameplay-trial-form{
+    height:250pt;
+}
+.gameplay-field-details-right-column button{
+    background-color:transparent;
+    color:black;
+    border-color:black;
+}
+.direction-buttons{
+    background:url("pictures/compass.png");
+    background-repeat: no-repeat;
+    background-size:cover;
+    width:150pt;
+    margin:auto;
+    height:150pt;
+    vertical-align:central;
+}
+.direction-buttons button{
+    background-color:transparent;
+    border-color: black;
+}
+.up-button{
+    padding-left:52pt;
+}
+.left-button{
+    padding-top:46pt;
+}
+.right-button{
+    padding-top:46pt;
+    padding-left:54pt;
+}
+.down-button{
+    padding-top:49pt;
+    padding-left:52pt;
+}
+.direction-button{
+    width:13pt;
+    height:13pt;
+}
+.hidden-button{
+    border-color:transparent !important;
+}
+.result-button {
+    padding-top: 60pt;
+}
+.result-button button{    
+    background-color:burlywood !important;
+}
+
+/* Game result */
+.game-result-text{
+    height:140pt !important;
+}
+.game-result{
+    padding-top:20pt !important;
+}
+.game-result img{
+    max-width:100%;
+    max-height:100%;
+    width:auto;
+    height:auto;
+    max-height: 200pt !important;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: midnightblue;
+}
+
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  
+  /*background-color: #1b6ec2;*/
+  border-color: #1861ac;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+  position: fixed;
+}

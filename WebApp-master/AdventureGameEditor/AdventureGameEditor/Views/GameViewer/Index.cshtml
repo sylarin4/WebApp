@@ -1,0 +1,55 @@
+﻿@model IEnumerable<AdventureGameEditor.Models.DatabaseModels.Game.Game>
+
+@{
+    ViewData["Title"] = "Játékok";
+}
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+        <script type="text/javascript" src="@Url.Content("/js/site.js")"></script>
+    </head>
+
+
+<div class="menu">
+    <h6>Játékok rendezése</h6>
+    <ul>
+        <li><a asp-controller="GameViewer" asp-action="OrderByTitle">Cím szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="OrderByOwner">Készítő szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="OrderByPopularity">Népszerűség szerint</a></li>
+        <li><a asp-controller="GameViewer" asp-action="GetOwnGames">Csak saját játékok megjelenítése</a></li>
+        <li><a asp-controller="GameViewer" asp-action="Index">Nincs rendezés</a></li>
+    </ul>
+    <div class="error-messages">
+        @if (ViewBag.CurrentGuestName == null)
+        {
+            <p>Be kell jelentkezned ahhoz, hogy játszhass, vagy játékot szerkeszthess!</p>
+        }
+    </div>
+</div>
+
+<div class="game-list" id="index-content">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @foreach (AdventureGameEditor.Models.DatabaseModels.Game.Game item in Model)
+    {
+        <button type="button" onclick="LoadDetails('@item.Title')">
+            @if (item.CoverImage != null)
+            {
+                <img class="index-img" src="@Url.Action("RenderCoverImage", new { imageID = item.CoverImage.ID })"  />
+            }
+            else
+            {
+                <img class="index-img" src="~/empty_pic.jpg" height="100" />
+            }
+            @if(item.Title.Length > 15)
+            {
+                <p>@item.Title.Substring(0,15)..</p>
+            }
+            else
+            {
+                <p>@item.Title</p>
+            }            
+        </button>
+    }
+
+</div>

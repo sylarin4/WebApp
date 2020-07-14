@@ -1,0 +1,43 @@
+﻿@model Library.Models.RegisterResult
+@{
+    ViewData["Title"] = "Registered successfully!";
+}
+
+<div class="details">
+    @if (Model.IsSuccess)
+    {
+        <h2>Registered successfully!</h2>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+        </dl>
+
+    }
+    else
+    {
+        <h2>Sorry! Register is failed. Maybe the user name is taken.</h2>
+    }
+
+    <div>
+        <a asp-controller="Books" asp-action="Index">Back to List</a>
+        <a asp-controller="Guests" asp-action="Login">Login</a>
+    </div>
+</div>

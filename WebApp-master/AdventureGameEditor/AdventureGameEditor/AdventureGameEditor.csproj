@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\ViewModels\GameEditor\CurrentlyNotUsed\**" />
+    <Content Remove="Models\ViewModels\GameEditor\CurrentlyNotUsed\**" />
+    <EmbeddedResource Remove="Models\ViewModels\GameEditor\CurrentlyNotUsed\**" />
+    <None Remove="Models\ViewModels\GameEditor\CurrentlyNotUsed\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200224160745_AddMapImageTable.cs" />
+    <Compile Remove="Migrations\20200224160745_AddMapImageTable.Designer.cs" />
+    <Compile Remove="Migrations\20200422221407_RemoveFriendsFromVisibilitiyEnumClass.cs" />
+    <Compile Remove="Migrations\20200422221407_RemoveFriendsFromVisibilitiyEnumClass.Designer.cs" />
+    <Compile Remove="Migrations\20200424155540_AddTeleportToResultType.cs" />
+    <Compile Remove="Migrations\20200424155540_AddTeleportToResultType.Designer.cs" />
+    <Compile Remove="Migrations\20200503032410_VhangeOwnerToUserNameInField.cs" />
+    <Compile Remove="Migrations\20200503032410_VhangeOwnerToUserNameInField.Designer.cs" />
+    <Compile Remove="Migrations\20200526131247_AddIsVisitedFieldToContext.cs" />
+    <Compile Remove="Migrations\20200526131247_AddIsVisitedFieldToContext.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pictures\empty_pic.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\0000.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.19" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
+
+
+
+</Project>

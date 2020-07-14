@@ -1,0 +1,115 @@
+﻿@model String
+@{
+    ViewData["Title"] = "Kezdőlap";
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/css/site.css" />
+<div class="text-center">
+    <h1 class="display-4">Üdvözlünk!</h1>
+    <div class="index">
+
+        <h6>Bemutatkozás</h6>
+        <p>
+            Az Antrum kalandjátékbarlangban saját, egyedi játékokat hozhatsz létre és játszhatsz mind saját,
+            mind a többi felhasználó által készített kalandjátékokkal.
+        </p>
+
+        <h6>Szolgáltatások</h6>
+        <p>
+            A játékokat bejelentkezés nélkül is meg lehet tekinteni, azonban játékmenet indításához, illetve
+            új kalandjáték létrehozásához be kell jelentkezned!
+        </p>
+        <p>
+            Javasoljuk, hogy regisztrálj az oldalra, ha felkeltette érdeklődésedet!
+        </p>
+        <p>
+            Az oldal használatáról rövid ismertető találsz az alábbiakban. Részletes útmutatásért látogass el a
+            fejléc főmenüjéből elérhető Súgó oldalra!
+        </p>
+
+        <h6>A játékok megtekintése</h6>
+
+        <p>
+            A fejlécben található főmenü "Játékok listázása" linkre kattintva tekintheted meg az eddig elkészített játékok
+            listáját.
+        </p>
+
+        <h6>Regisztráció</h6>
+        <p>
+            A főmenü "Regisztráció" feliratú linkjére kattintva érheted el a regisztrációs űrlapot.
+            Az űrlap helyes kitöltésével regisztrálhatsz az oldalra. Ne feledd, hogy felhasználónevednek egyedinek kell
+            lennie!
+        </p>
+
+        <h6>Bejelentkezés</h6>
+
+        <p>
+            A főmenü "Bejelentkezés" feliratú linkjére kattintva érheted el a bejelentkezés űrlapját.
+            A felhasználóneved és jelszavad helyes megadásával jelentkezhetsz be.
+            (Ehhez előbb regisztrálnod kell.)
+        </p>
+
+        <h6>Kijelentkezés</h6>
+
+        <p>
+            A bejelentkezést követően a főmenüben megjelenő "Kijelentkezés" linkre kattintva jelentkezhetsz ki.
+        </p>
+
+        <h6>Profil megtekintése, email cím és jelszó módosítása, regisztráció törlése</h6>
+
+        <p>
+            A bejelentkezést követően a jobb felső sarokban megjelenő felhasználó nevedre kattintva tekintheted meg a profilodat.
+        </p>
+        <p>
+            Az ezt követően bal oldalon megjelenő menü segítségével módosíthatod az email címedet, illetve jelszavadat, és
+            törölheted a regisztrációdat. (Ha törlöd a regisztrációt, minden általad korábban létrehozott kalandjáték is
+            törlődni fog!)
+        </p>
+
+        <h6>Játék</h6>
+
+        <p>
+            A játékok listázást követően megjelenő játékok egyikére való kattintást követően jelennek meg a kiválasztott játék
+            lényegesebb adatai. Ezen az oldalon, amennyiben korábban bejelentkeztél, a jobb alsó sarokban található "Játék"
+            linkre kattintva kezdhetsz új játékmenetbe.
+        </p>
+
+        <h6>Játék folytatása</h6>
+
+        <p>
+            Amennyiben félbehagysz egy játékot, a későbbiekben a fentiekben leírtak szerint való játék kezdeményezését
+            követően folytathatod arról a mezőről, amelyen tartózkodtál, mikor legutóbb megszakítottad azt.
+        </p>
+
+        <h6>Új játék létrehozása</h6>
+
+        <p>
+            A fejlécben található főmenü "Játék létrehozása" linkjére való kattintást követően láthatsz neki saját játék
+            létrehozásához. Ez a menüpont csak a bejelentkezést követően érhető el.
+        </p>
+
+        <h6>Játék módosítása</h6>
+
+        <p>
+            A "Játékok listázása" menüpont alatt megjelenő játékok közül válaszd ki azt az általad létrehozott játékot,
+            amelyet szerkeszteni szeretnél. A jobb alsó sarokban megjelenő "Játék szerkesztése"
+            linkre kattintva módosíthatod a játékot. Ez az opció csak bejelentkezést követően érhető el, és csak azon játékok
+            esetében, melyeket te hoztál létre!
+        </p>
+
+        <h6>Játék törlése</h6>
+        <p>
+            Az előző bekezdésben leírtak szerint navigálj a játék szerkesztéséhez!
+            Ezt követően a bal oldalt megjelenő menü legutolsó "Játék törlése" feliratú linkre kattintva
+            lesz lehetőséged törölni a játékot.
+            Ez a lehetőség csak bejelentkezés után érhető el, és csak abban az esetben, ha te hoztad létre a
+            kiválasztott játékot.
+        </p>
+
+
+    </div>
+</div>
+
+
+<script type="text/javascript" src="@Url.Content("/js/site.js")"></script>

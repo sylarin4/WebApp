@@ -1,0 +1,289 @@
+\chapter{Adatbázis táblák tervei} % User guide
+\label{ch:databases_plan}
+
+Ebben a fejezetben szerepelnek egy kalandjáték adatainak letárolásához szükséges adatbázistáblák és típusok tervei.
+
+\section{Felhasználók autentikációja}
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Identity táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Password  & String  & Jelszó titkosított tárolása.  \\
+		\hline
+		UserName & String & user nevek tárolása azonosítás céljából\\
+		\hline
+	\end{tabular}
+	\caption[Identity adatbázistábla]{Az Identity c. adatbázistábla felépítése.}
+	\label{tab:identity}
+\end{table}
+
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{User táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		NickName & String & játékon belól használt név, egyedi\\
+		\hline
+		Messages & <(String, Date)> & játékon belüli értesítések\\
+		\hline
+		FriendList & <Friend> & barát lista\\
+		\hline
+	\end{tabular}
+	\caption[User adatbázistábla]{A User c. adatbázistábla felépítése.}
+	\label{tab:user}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Friend táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		RequestFrom  & User  & Az a felhasználó aki a meghívást küldte.  \\
+		\hline
+		RequestTo & User & Az a felhasználó, aki kapta a barátmeghívást.\\
+		\hline
+		IsAccepted & Bool & Igaz ha a meghívott fél elfogadta a meghívást.\\
+		\hline
+	\end{tabular}
+	\caption[Friend adatbázistábla]{A Friend c. adatbázistábla felépítése.}
+	\label{tab:friend}
+\end{table}
+
+\section{Kalandjáték}
+
+\subsection{Egy játékkal kapcsolatos adatok tárolása}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Game táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Map  & <MapRows>  & a játékhoz tartozó térkép sorai  \\
+		\hline
+		TargetField & Field & célmező, ahova a játékosnak el kell jutnia a nyeréshez\\
+		\hline
+		StartField & Field & kezdőmező\\
+		\hline
+		PlayCounter & Int & hányszor játszottak vele\\
+		\hline
+		Visibility & Visibility & kik láthatják \newline (csak én/barátok/bejelentkezettek/midnenki)\\
+		\hline
+		Title & String & A játék címe. \\
+		\hline
+		TableSize & Int & A játék térképének mérete (pl. 3x3, 4x4, stb.).\\
+		\hline
+		Owner & User & A játék készítője.\\
+		\hline
+		CurrentWayDirectionsCode & int & Éppen melyik térképkockát helyezzük a térképre. \\
+		\hline
+	\end{tabular}
+	\caption[Game adatbázistábla felépítése]{Egy játék letárolásának módja.}
+	\label{tab:game}
+\end{table}
+
+Visibility felsorolási típus
+\begin{compactitem}
+	\item Owner, Friends, LoggedIn, Everyone
+\end{compactitem}
+
+\subsection{Egy térkép sorainak letárolása}
+
+Erre azért van szükség, mivel egy mátrix túl bonyolult adatfelépítés ahhoz, hogy egy táblázatban tárolhassuk mindet, így ahelyett, hogy mátrixokat tárolnánk egy táblázatban, az össze mátrix sorait tároljuk le egy táblázatban és ID-val hivatkozunk rá, hogy melyik mátrixhoz (térképhez) tartozik.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{A MapRows típus}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Row  & <Field>  & A sorban lévő mezők.  \\
+		\hline
+		ID & Int & A sor azonosítója.\\
+		\hline
+	\end{tabular}
+	\caption[MapRows táblázat]{A MapRows c. adatbázistábla felépítése.}
+	\label{tab:row}
+\end{table}
+
+\subsection{Egy mező adatainak letárolása}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Field táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		VerticalCord  & Int & Hol helyezkedik el a térképen függőlegesen.  \\
+		\hline
+		HorizontalCord & Int & Hol helyezkedik el a térképen vízszintesen.\\
+		\hline
+		Text & String & A térképkockához tartozó történet.\\
+		\hline
+		TrialID & Int? & Ha van próbatétel, annak ID-ja, ha nincs null.\\
+		\hline
+		Illustration & Picture & térképkockához tartozó illusztráció hivatkozása\\
+		\hline
+		ExitRoads & ExitRoads & Milyen irányokba lehet továbbhaladni a mezőről.\\
+		\hline
+	\end{tabular}
+	\caption[Field adatbázistábla]{A Field c. adatbázistábla felépítése.}
+	\label{tab:field}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{A ExitRoads típus}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		IsRightWay  & Boolean  & Igaz, ha \textbf{jobbra} lehet haladni az adott mezőről.  \\
+		\hline
+		IsLeftWay & Boolean & Igaz, ha \textbf{balra} lehet menni az adott mezőről.\\
+		\hline
+		IsUpWay & Boolean & Igaz, ha \textbf{felfelé} lehet haladni az adott mezőről.\\
+		\hline
+		IsDownWay & Boolean & Igaz, ha \textbf{lefelé} lehet továbbhaladni a mezőről.\\
+		\hline
+	\end{tabular}
+	\caption[FielCoordinate típus]{A FieldCoordinate c. típus felépítése.}
+	\label{tab:field}
+\end{table}
+
+Ez itt felesleges:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{A FieldCoordinate típus}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		HorizontalCoordinate  & Int  & Vízszintes koordináta.  \\
+		\hline
+		VerticalCoordinate & Int &Függőleges koordináta.\\
+		\hline
+	\end{tabular}
+	\caption[FielCoordinate típus]{A FieldCoordinate c. típus felépítése.}
+	\label{tab:field}
+\end{table}
+
+\subsection{A képek tárolása}
+
+\begin{itemize}
+	\item Lesz egy külön picture táblázat, amelyből az ID alapján be lehet majd tölteni az illusztrációkat. (Kezdetben a default illusztrációk közül lehet majd választani, később esetleg sajátot is fel lehet majd tölteni ha megfelelő a formátuma.)
+	
+	\item Külön táblázatban lesznek tárolva a térképkockák képei amelyek a tervezés során jelennek meg.
+\end{itemize}
+
+\subsection{Mezőesemények}
+
+(Ez idő közben ki lett szedve, de még nem törlöm, hátha kell majd még.)
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{FieldEvent típus}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		IsTrial  & Boolean  & Igaz, ha valamilyen próba van a mezőn.\\
+		\hline
+		TrialID & Int & Ha valamilyen próba van a mezőn, annak ID-ja.\\
+		\hline
+	\end{tabular}
+	\caption[FieldEvent típus]{A FieldEvent c. típus felépítése.}
+	\label{tab:field}
+\end{table}
+
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Trial táblázat}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		ID & Int & Azonosító, amin keresztül hivatkozhatunk rá. \\
+		\hline
+		Alternatives & <Alternative> & Lehetséges bekövetkező események.\\
+		\hline
+		TrialType & TrialType & a próba típusa (szerencse / játékos választ)\\
+		\hline
+	\end{tabular}
+	\caption[Trial adatbázistába]{A Trial adatbázistábla felépítése.(Az EventId egy Trial táblázatbeli elemre hivatkozik.)}
+	\label{tab:trial}
+\end{table}
+
+A \textbf{TrialType felsorolási típus}
+\begin{compactitem}
+	\item LuckTrial, MultipleChoice
+	\item Megjegyzés: gyakorlatilag azt adja meg, hogy mi alapján választunk a bekövetkezhető alternatívák közül. Szerencsepróba esetén minden alternatíva azonos eséllyel következhet be, ezt kisorsoljuk. A választás esetén a játékos választhatja ki egy listából az opciók szövege alapján, hogy mi történjen (persze ekkor még nem tudja annak következményét).
+\end{compactitem}
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{Az Alternative típus}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		Text  & String  & Az opció szövege.  \\
+		\hline
+		TrialResult & TrialResult & Az opció kiválasztása esetén történő esemény.\\
+		\hline
+	\end{tabular}
+	\caption[Alternative típus]{Az Alternative típus felépítése.}
+	\label{tab:alternative}
+\end{table}
+
+Megjegyzés: későbbiekben esetleg út lezárása, de ez esetben biztosítani kell, hogy ne záruljon le minden út, vagy ha mégis, akkor az a játék végét jelentse.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{3}{|c|}{A TrialResult típus}\\
+		\hline
+		Név & Típus & Cél \\
+		\hline
+		ResultType  & ResultType  & Követkemény lehet teleportálás, játék vége vagy semmi. \\
+		\hline
+		TeleportTarget & Field & Ha teleportálunk, akkor hová.\\
+		\hline
+		Text & String & A történés leírása. \\
+		\hline
+	\end{tabular}
+	\caption[Alternative típus]{Az Alternative típus felépítése.}
+	\label{tab:alternative}
+\end{table}
+
+ResultType
+\begin{compactitem}
+	\item GameOver
+	\item Nothing
+	\item Teleport
+\end{compactitem}
+

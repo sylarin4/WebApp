@@ -1,0 +1,13 @@
+﻿@model AdventureGameEditor.Models.ViewModels.Gameplay.GameplayFieldViewModel
+
+@{ int way = 0;
+    if (Model.IsLeftWay)
+        way += 1;
+    if (Model.IsDownWay)
+        way += 10;
+    if (Model.IsRightWay)
+        way += 100;
+    if (Model.IsUpWay)
+        way += 1000;
+}
+<img src="@Url.Action("GetMapImage", new { wayDirectionsCode = way })" class="contentImage" height=100 />

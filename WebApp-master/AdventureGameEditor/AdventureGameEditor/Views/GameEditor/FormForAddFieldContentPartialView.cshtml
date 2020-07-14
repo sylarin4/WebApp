@@ -1,0 +1,49 @@
+﻿@model AdventureGameEditor.Models.ViewModels.GameEditor.FieldTextAndImageContentViewModel
+
+
+
+<form enctype="multipart/form-data" asp-action="SetTextContentForField">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div>
+        <input type="hidden" asp-for="GameTitle" class="form-control" value="@Model.GameTitle" />
+    </div>
+
+    <div>
+        <input type="hidden" asp-for="ColNumber" class="form-control" value="@Model.ColNumber" />
+    </div>
+
+    <div>
+        <input type="hidden" asp-for="RowNumber" class="form-control" value="@Model.RowNumber" />
+    </div>
+
+    <div>
+        <label asp-for="NewImage" class="control-label"></label>
+        <input asp-for="NewImage" type="file" class="form-control" accept="*.bmp, *.jpg, *.jpeg">
+        <span asp-validation-for="NewImage" class="text-danger"></span>
+    </div>
+    @if (Model.CurrentImageID != -1)
+    {
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        Jelenlegi kép:
+                    </th>
+                    <td>
+                        <img src="@Url.Action("RenderFieldImage", new { imageID = Model.CurrentImageID })"  />
+                    </td>
+                </tr>
+            </table>            
+        </div>
+    }
+
+    <div>
+        <label asp-for="TextContent" class="control-label"></label>
+        <textarea asp-for="TextContent" class="form-control">@Model.TextContent</textarea>
+        <span asp-validation-for="TextContent" class="text-danger"></span>
+    </div>
+    <div>
+        <input type="submit" value="Mentés" class="btn btn-default" />
+    </div>
+</form>

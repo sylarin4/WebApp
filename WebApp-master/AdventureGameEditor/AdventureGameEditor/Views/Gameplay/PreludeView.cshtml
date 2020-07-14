@@ -1,0 +1,26 @@
+﻿@model AdventureGameEditor.Models.ViewModels.Gameplay.PreludeViewModel
+@{
+    ViewData["Title"] = "Előtörténet";
+}
+
+
+    <div class="prelude">
+        <div class="prelude-left-column">
+            <h1>Előtörténet</h1>
+
+            @if (Model.PictureID != null)
+            {
+                <img src="@Url.Action("RenderPreludeImage", new { imageID = Model.PictureID })" class="contentImage" height=100 />
+            }
+        </div>
+        <div class="prelude-right-column">
+            <div class="prelude-text">
+                @Model.Text
+            </div>
+            <div class="prelude-link">
+                <a asp-controller="Gameplay" asp-action="GameplayView" asp-route-gameTitle="@Model.GameTitle">Tovább</a>
+            </div>
+            
+        </div>
+        
+    </div>
